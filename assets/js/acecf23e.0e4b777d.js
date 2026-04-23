@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkla_rebelion_blog=self.webpackChunkla_rebelion_blog||[]).push([["3220"],{1912(e){e.exports=JSON.parse('{"blogBasePath":"/","blogTitle":"La Rebelion Labs","authorsListPath":"/authors"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkla_rebelion_blog=self.webpackChunkla_rebelion_blog||[]).push([["819"],{75390(e,l,r){r.d(l,{createArchitectureServices:()=>c.S});var c=r(65530);r(93345)}}]);
