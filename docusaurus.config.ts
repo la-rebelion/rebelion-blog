@@ -73,6 +73,21 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        gtag: {
+          trackingID: 'G-JJJXXEZWK9',
+        },
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+          createSitemapItems: async (params) => {
+            const { defaultCreateSitemapItems, ...rest } = params;
+            const items = await defaultCreateSitemapItems(rest);
+            return items.filter((item) => !item.url.includes('/page/'));
+          },
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -141,7 +156,7 @@ const config: Config = {
 
   customFields: {
     brand: {
-      phrase: 'Question defaults. Explore everything. Create what’s next.',
+      phrase: 'Question defaults. Explore everything. Create what is next.',
       summary:
         'A content-first field guide for AI systems, DevOps, cloud-native architecture, and product-minded engineering.',
       foundedYear: 2021,
