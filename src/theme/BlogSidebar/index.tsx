@@ -35,10 +35,18 @@ export default function BlogSidebar({sidebar}: Props) {
         </div>
       </div>
       <div className="lr-surface-card lr-sidebar-links">
-        <span className="lr-eyebrow">Feeds</span>
-        <Link href={social.rss}>RSS feed</Link>
-        <Link to="/subscribe">Newsletter</Link>
-        <Link to="/tags">Browse topics</Link>
+        <span className="lr-eyebrow">Feeds</span>        
+          <ul>
+            <li>
+            <Link href={social.rss}>RSS feed</Link>
+            </li>
+            <li>
+            <Link to="/subscribe">Newsletter</Link>
+            </li>
+             <li>
+            <Link to="/tags">Browse topics</Link>
+            </li>
+          </ul>
       </div>
       <NewsletterPanel variant="compact" />
     </div>

@@ -93,8 +93,10 @@ const config: Config = {
       title: 'La Rebelion Labs',
       logo: {
         alt: 'La Rebelion Labs',
-        src: 'img/brand/logo-wordmark.svg',
-        srcDark: 'img/brand/logo-wordmark.svg',
+        src: 'img/brand/la-rebelion-neon.png',
+        srcDark: 'img/brand/favicon.svg',
+        // src: 'img/brand/logo-wordmark.svg',
+        // srcDark: 'img/brand/logo-wordmark.svg',
       },
       items: [
         {to: '/', label: 'Latest', position: 'left'},
