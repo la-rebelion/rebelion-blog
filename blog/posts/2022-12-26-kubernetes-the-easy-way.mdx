@@ -1,0 +1,89 @@
+---
+title: Kubernetes the easy way
+description: Kubernetes is a powerful tool that has the potential to greatly improve your workflow. It’s also an extremely complicated tool that can be difficult to grasp on a fundamental level
+date: 2022-12-26T22:50:51.000Z
+slug: kubernetes-the-easy-way
+authors:
+  - adrianescutia
+tags:
+  - kubernetes
+  - learning
+image: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/7ac08b8cdf2b8b66c2669c39a4d49e94.jpeg
+keywords:
+  - kubernetes
+  - learning
+---
+
+## Introduction
+
+Kubernetes is a powerful tool that has the potential to greatly improve your workflow. It’s also an extremely complicated tool that can be difficult to grasp on a fundamental level. With so many moving pieces, it can be hard to understand how everything works together is time-consuming, and expensive to set up. But there are some ways to get a cluster running with a simplified process by providing a more user-friendly experience while maintaining all of Kubernetes' underlying strengths.
+
+In this post, we will review some of these options to help you in the process of learning and testing with Kubernetes.
+
+## What is Kubernetes (k8s)
+
+Kubernetes (k8s) is an open-source container management platform that automates the deployment and scaling of containers. It's also a framework for automating containerized applications' deployment, scaling, and management.
+
+Kubernetes is a collection of tools and utilities that make it easy to manage docker containers.
+
+To learn more about Kubernetes visit https://kubernetes.io
+
+## Kubernetes Architecture
+
+Kubernetes has a modular architecture. It contains five main components:
+
+* The **API server** provides a RESTful API for the other components to use. The API server is responsible for authenticating requests from user applications and providing access control.
+    
+* The **controller manager** runs controllers that manage your clusters, pods, and nodes. Controllers can be written in Go or Java, but several third-party controllers in Python or C++ also come as part of the standard distribution (like auto-scaling and node management).
+    
+* **Kubelet** runs on each node in your cluster and talks with the Kubernetes API server to ensure that your pods are running correctly and receiving the resources they need such as CPU or memory quotas. As well as managing containers you have running on one machine at a time, `kubelet` also provides advanced container operations like attaching storage volumes to existing containers using Docker volumes or mounting files from host machines using NFS mounts.
+    
+
+You can use a tool like `kubeadm` to set up your own cluster, installing a Vanilla Kubernetes cluster on your own [the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way), but it will require lots of time and you just want to start using it, if that is your case, there are these options for you to start playing with your Kubernetes.
+
+* You can install Kubernetes on a cloud provider like AWS, GCP or Azure.
+    
+* You can use a managed service like Google Container Engine (GKE), Amazon EKS (Elastic Container Service for Kubernetes), or OpenShift by RedHat.
+    
+
+## The Easy way (and cheapest)
+
+If you need something for yesterday because your manager asked you to start with this new project where you have to deploy the application in Kubernetes, but you have no idea what a Pod, a Deployment, or Statefulset is, then, options should be using Minikube, k3s, or K1s to start easily and fast!
+
+### K1s
+
+If you have `kubectl` already installed, you don't need anything else! Start running `kubectl` commands on your laptop to have an instant cluster up and running. It's that easy and won't find any other easier. Forget everything you thought you needed to set up, use, and learn Kubernetes. [**K1s**](https://k1s.me) is a serverless service that allows you to start testing and learning Kubernetes immediately with no experience required, and no need to set up and manage your cluster. **K1s** provides you with a working cluster and all the tools you need to start using it immediately. Check it out now!
+
+```plaintext
+$ kubectl get namespaces \
+    --server=https://api.k1s.me/kubernetes \
+    --insecure-skip-tls-verify
+```
+
+K1s allows you to run any `kubectl` command and create a Kubernetes playground with all the platform's core features. It comes with a free plan that offers a single-node cluster for testing and learning purposes and access to premium features coming soon. Get early access [here](https://k1s.me).
+
+**K1s Terminal**
+
+Even better, K1s offers the "everything included" solution – it's the go-to terminal for Kubernetes. No more worries about installations or configurations. [K1s Terminal](https://t.k1s.me) is your one-stop Kubernetes environment for effortless cluster and resource management.
+
+### Minikube
+
+Minikube is a tool that allows you to run a single-node Kubernetes cluster. Minikube will create a virtual machine on your host and run it with the Kubernetes control plane and Docker engine installed, so you can start playing with it without any hassle.
+
+### k3s
+
+K3s's philosophy is that Kubernetes should be simple, stable, and easy to use. K3s focuses on making it simple for developers to create applications and services on Kubernetes without worrying about the low-level details of running a cluster or managing infrastructure. It's designed from the ground up with high availability in mind so that you can quickly deploy complex applications without sacrificing stability.
+
+### Installing k3s
+
+The installation process for k8s and k3s is similar. For example, **both require Docker** to use the Kubernetes platform. You can install Docker from the official website or follow this [step-by-step guide to install Docker on your computer](/install-kubernetes-docker-offline#install-docker-offline-machine). Next, you need a working internet connection and about ten minutes to complete each tool's installation process.
+
+You can also find tutorials that explain how to install other components such as Kubelet (a component used by Kubernetes), etcetera with helpful steps if you're having problems getting started with either toolkit.
+
+## Choose what fits you better
+
+You now have the knowledge to choose which implementation works best for your needs. If you're a developer or small team, Minikube and K3s are great choices because are lightweight and easier to install than Kubernetes, while still providing many of the same features. If you're an enterprise or large company with strict security requirements, then Kubernetes cloud-managed or on-premise service might be more appropriate. If you are new, to learning and exploring Kubernetes, definitely, K1s is the option for you. It's simple to get started with, and it's an excellent way to learn the fundamentals of Kubernetes.
+
+## Conclusion
+
+We hope this guide has given you a better understanding of how Kubernetes, Minikube, k3s, and K1s work. In the end, all these products offer some great features that can make your life easier as a developer or system administrator depending on the level of your skills and requirements. If you already use Kubernetes in production today, it may be worth considering whether switching over to OpenShift or k3s would make sense for your organization, but for noob Kubernauts, K1s is the must.

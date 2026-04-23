@@ -1,0 +1,164 @@
+---
+title: GitHub’s MCP Registry
+description: 'TL;DR: GitHub just launched the MCP Registry, a central hub to discover, trust, and install Model Context Protocol (MCP) servers. This isn’t just a developer convenience—it’s the f'
+date: 2025-09-25T21:18:04.000Z
+slug: github-mcp-registry
+authors:
+  - adrianescutia
+tags:
+  - ai
+  - mcp
+image: /img/hashnode-migrated/bc8cb0cb-b196-4638-8c28-4a85c09c7693.jpeg
+keywords:
+  - ai
+  - mcp
+---
+
+## MCP Registry: A Link for API-to-AI Evolution
+
+**TL;DR**: [GitHub just launched the **MCP Registry**](https://github.blog/ai-and-ml/github-copilot/meet-the-github-mcp-registry-the-fastest-way-to-discover-mcp-servers/?utm_source=rebelion.la), a central hub to discover, trust, and install [Model Context Protocol](https://modelcontextprotocol.io/about) (MCP) servers. This isn’t just a developer convenience—it’s the foundation for how we’ll compose APIs, AI, and agents into workflows. At La Rebelion Labs, we see this as validation of the path we’re already on with the **HAPI MCP Stack**.
+
+---
+
+## Why this matters now
+
+Let’s be real:
+
+* **APIs are everywhere.** Every system has one, but discovery and integration are still messy.
+    
+* **AI agents need context.** Without structured ways to plug into APIs, they hallucinate, break, or fail silently.
+    
+* **Builders are stuck.** Too much time is lost searching for integrations, worrying about trust, and duplicating work.
+    
+
+GitHub’s MCP Registry solves the *discovery* problem: one place to find vetted MCP servers, right inside VS Code or any MCP-compatible environment.
+
+But the bigger story? This is how [**API-first architectures evolve into AI-ready ecosystems**](/from-swagger-to-mcp).
+
+---
+
+## 🧩 What is MCP, really?
+
+* **Model Context Protocol (MCP)** is a standard that lets AI agents fetch fresh, trusted context from external systems.
+    
+* It is the **“API for AI Agents”**: plug in a new server (like Slack, Jira, Stripe, [LinkedIn](https://youtu.be/hwdnyESQVwQ), [Strava](https://youtu.be/QSUlzpOPLwE), Kubernetes, you name it), and your AI agent instantly knows how to use it.
+    
+    We’ve been saying it for months: **API-first solutions are the easiest to transform into AI-first**. MCP is the bridge.
+    
+
+---
+
+## ⚡ GitHub’s big move: The MCP Registry
+
+Here’s what GitHub shipped:
+
+1. **Central Directory** – a hub of MCP servers, from partners and the community. Each point links to a GitHub repo, so you can inspect the code and trust what you install.
+    
+2. **1-Click Install** – With GitHub Copilot in VS Code, you can add MCP servers without digging through documentation or repositories. (I am more in favor of remote servers, but we still have plenty implemented with stdio transport 🤷🏽‍♂️).
+    
+3. **Trust Signals** – ranking and metadata (stars, activity, provenance) help filter noise.
+    
+4. **Open Ecosystem** – anyone can publish to the **OSS MCP Community Registry**, which then syncs into GitHub’s directory.
+    
+
+This can be translated into spending less time searching, reducing the risk of guessing, and increasing building speed.
+
+---
+
+## 💡 Why this aligns with La Rebelion Labs’ vision
+
+At La Rebelion Labs, we’ve been building the **HAPI MCP Stack**—[a framework where APIs and AI meet](https://docs.mcp.com.ai/components):
+
+* **HAPI Server** → [headless API instances](https://youtu.be/tkiJXIcFtOw) that expose REST + MCP endpoints.
+    
+* **OrcA** → an orchestrator to visually design Arazzo-compliant workflows in VS Code.
+    
+* **QBot & runMCP** → tools to simplify how developers test and consume MCP servers.
+    
+    * RunMCP is, by itself, an MCP registry. 🤓
+        
+
+The MCP Registry? It’s the missing puzzle piece that confirms this movement. GitHub just made it mainstream.
+
+When you put [GitHub’s registry](https://github.com/mcp?utm_source=rebelion.la&utm_campaign=mcp-registry-server-launch-2025) + HAPI Stack together, you get a **whole supply chain for AI integrations**:
+
+* **Discover** → find servers in the Registry.
+    
+* **Deploy** → run them via HAPI Server.
+    
+* **Compose** → orchestrate with OrcA.
+    
+* **Consume** → connect through RESTful or MCP Clients!
+    
+
+This isn’t theory. It’s already working in our stack.
+
+---
+
+## 🏢 Business Translation: What leaders should care about
+
+* Faster time-to-market with safer, standardized AI integrations. The risk of “shadow AI tools” decreases when discovery and trust are centralized.
+    
+* Accelerate feature delivery. Instead of writing custom integrations, pick from the MCP servers, or [transform Swagger into MCPs](https://youtu.be/tkiJXIcFtOw). Example: Connect your roadmap tool (e.g., Jira, Linear) to AI workflows in days, not quarters.
+    
+* Better UX with AI copilots that actually *know* your stack. Fewer broken prompts, more consistent results.
+    
+* [Stop reinventing integrations](/model-context-protocol-mcp-is-it-a-protocol-or-a-contract). Utilize trusted MCP servers and focus your energy on addressing unique problems.
+    
+
+---
+
+## 🌍 Ecosystem impact
+
+This shift is bigger than GitHub:
+
+* **Standardization**: Just like OCI standardized containers, MCP + registries will standardize AI toolchains.
+    
+* **Open Collaboration**: The OSS MCP Community Registry ensures anyone—startups, enterprises, hobbyists—can contribute.
+    
+* **Trust Layer**: Verified metadata and provenance become the guardrails for enterprise adoption.
+    
+
+The registry is the **App Store moment for MCP servers**.
+
+---
+
+## 🔮 What’s next
+
+We’re still early. Expect:
+
+* **Self-publishing flows**: easier ways to push MCP servers into the registry.
+    
+* **Metadata maturity**: verification, usage metrics, security scans.
+    
+* **Enterprise overlays**: private registries for regulated environments.
+    
+* **Composable AI stacks**: where registries, orchestrators, and agents form complete ecosystems.
+    
+
+La Rebelion Labs is already exploring **airgap registries**, **extended SBOMs for MCP servers**, and **multi-cloud distribution**—bridging GitHub’s registry to zero-trust and enterprise needs.
+
+---
+
+## ✅ What to do now
+
+* **Developers**: Explore the MCP Registry and try installing a server that matches your workflow (e.g., GitHub Issues, Slack, Kubernetes)… or spin up an [MCP Server from your Swagger](/from-swagger-to-mcp).
+    
+* **Product Leaders**: Audit your roadmap. Where could MCP servers accelerate delivery?
+    
+* **Security Teams**: Define Your Internal MCP Trust Policy. What’s approved? What’s blocked?
+    
+* **Innovators**: [Think beyond tools](https://youtu.be/rOTdkSSHBBc). How will MCP reshape your business model?
+    
+
+---
+
+## 🚀 Bottom line
+
+GitHub’s MCP Registry is more than a directory. It’s a signal: the **future of API + AI is composable, discoverable, and trusted**.
+
+At La Rebelion Labs, we’re building alongside this wave with the [**HAPI MCP Stack**](https://hapi.mcp.com.ai).
+
+👉 If you want to survive (and thrive) in the new agentic era, start with MCP servers. The registry is your gateway.
+
+Go Rebels! ✊🏽

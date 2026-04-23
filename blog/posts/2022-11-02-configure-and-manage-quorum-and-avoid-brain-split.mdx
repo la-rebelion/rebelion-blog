@@ -1,0 +1,76 @@
+---
+title: Configure and manage quorum And avoid brain split
+description: 'Quorum is a mechanism that enables you to prevent a split brain. When you have two or more nodes in your cluster, quorum allows you to be sure that only one node can accept writes '
+date: 2022-11-02T13:02:57.808Z
+slug: configure-and-manage-quorum-and-avoid-brain-split
+authors:
+  - adrianescutia
+tags: []
+---
+
+## Introduction
+
+Quorum is a mechanism that enables you to prevent a split brain. When you have two or more nodes in your cluster, quorum allows you to be sure that only one node can accept writes at a time and that the other nodes need to commit their writes before they can accept any new requests. Quorum also ensures that the majority of your nodes are participating in the cluster, so if you lose one or more members, your cluster will continue running as usual.
+
+In this article, we'll talk about why understanding your quorum configuration is important and how it works with each of the available configurations: simple majority, file-based majority, and node majority clusters.
+
+## Quorum configuration
+
+In Failover Clusters, the quorum configuration is determined by the number of votes and quorum type.
+
+The quorum configuration determines how many votes are needed to avoid a brain split in a cluster. A brain split occurs when some nodes in the cluster cannot communicate with each other due to network problems or hardware failures.
+
+### Voting
+
+You can configure quorum in two ways: static or dynamic.
+
+>When you configure a quorum, it is configured as a whole for all nodes within the cluster. If you want to allow some nodes to fail without affecting the availability of your applications, then choose dynamic.
+
+If you want all nodes in your cluster to need to be available before allowing applications to run, then choose static.
+
+Quorum is the mechanism by which a cluster determines whether it can continue to operate or not. If there are an odd number of nodes in the cluster, then the quorum will determine whether there are enough votes to keep running. This is important because if you don’t have enough votes, then your cluster won’t be able to make decisions about what needs to happen when things fail.
+
+### Understanding and calculating quorum votes
+
+To understand how a quorum works, you must first understand the concept of votes. With quorum, all nodes in a cluster have one vote; they can be used together as a group or individually. The minimum number of votes required for a quorum is 3, meaning that at least 3 nodes must be available for the cluster to function properly. The number of votes in your configuration depends on two things: how many nodes are running in your cluster and what type(s) of a voting disk are attached?
+
+Voting disks are special storage devices that act as tiebreakers when there's a tie between which node should be allowed to participate in the cluster. When all else fails, these disks allow data center managers to force their way into the picture and make decisions they feel are best for their infrastructure!
+
+### Witness vote
+
+You configure the witness vote when you are configuring a cluster, or adding nodes to an existing cluster.
+
+The witness vote is needed to determine whether the cluster is still operational. If all of the nodes in a cluster can communicate with one another, then they know that they are up and running with a quorum (a majority of votes). If any node cannot communicate with another node in its group, then it knows that there is no quorum and shuts down gracefully because it doesn't have enough votes to continue running. This means that every node must be able to communicate directly with at least one other member of its group throughout all operations on your computer.
+
+## Quorum formula
+
+The quorum formula is used to calculate the number of votes needed to reach a quorum. This formula is based on the number of nodes in a cluster and the total number of votes available in a cluster.
+
+### Example of quorum calculation
+
+Let's consider the following scenario:
+
+The cluster contains four nodes (nodes 1,2,3 and 4) with different numbers of votes.
+
+Node 1 has 5 votes, node 2 has 1 vote, node 3 has 2, and node 4 has 3. There are a total of 10 votes in the cluster as a whole.
+
+To form a quorum and make decisions on behalf of the entire system we need at least 5 out of 10 votes (50%).  Our quorum is therefore 50%.
+
+## Consensus and Quorum, difference and relation 
+
+Consensus and Quorum are two related concepts but they are not the same. Consensus is a process used to reach an agreement on some aspect of a system whereas a quorum is a property of that system that determines who can make decisions on behalf of it. Consensus means all of those present (essentially) agree. Quorum means enough of the parties that have an interest is present to create a consensus that is binding even over the wishes of those not present. For example, if a group of people votes on something, but one person is absent, the vote doesn’t count. When it comes to cluster quorum configuration, this means that when there is a majority present, they must all agree on what happens next.
+
+There are two types of quorum-based consensus: strong and weak. Strong is when all the nodes in the cluster agree that they want to do something, while weak is when only a majority agree. The benefit of a strong quorum is that it’s very fast. The downside is that if a node goes down, you could have issues with data consistency. A weak quorum means that the cluster will continue running even if some nodes are down.
+
+All the consensus implementations like [Zab](https://zookeeper.apache.org/doc/r3.4.13/zookeeperInternals.html#sc_atomicBroadcast), [Raft](https://raft.github.io), [Paxos](https://en.wikipedia.org/wiki/Paxos_(computer_science)) are quorum-based and use a majority vote to decide what to do next. The main difference between them is how they handle the case when a node fails or goes down. Zab is a distributed consensus algorithm that uses quorum-based voting to make decisions. Unlike Raft, which is deterministic and requires that nodes execute the same code, Zab is probabilistic. This means that even if two nodes have the same view of history, they may still disagree on what happened next because of this assumption.
+
+## Conclusion
+
+Quorum configuration is a critical part of your cluster and understanding it cannot be overstated. If you’re not familiar with quorum or don’t know how to configure it properly, we recommend that you take some time to learn more about this critical topic.
+
+## Additional References
+
+* [Quorum](https://martinfowler.com/articles/patterns-of-distributed-systems/quorum.html)
+* [Raft library](https://github.com/etcd-io/etcd/blob/main/raft/README.md)
+* [Consensus Protocol](https://developer.hashicorp.com/consul/docs/architecture/consensus)
+* [Understanding the Raft consensus](https://www.freecodecamp.org/news/in-search-of-an-understandable-consensus-algorithm-a-summary-4bc294c97e0d/)

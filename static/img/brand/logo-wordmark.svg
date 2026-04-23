@@ -1,0 +1,20 @@
+<svg width="1024" height="260" viewBox="0 0 1024 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="260" rx="36" fill="#06070A"/>
+  <g transform="translate(40,28) scale(0.42)">
+    <path d="M165 406V318C123 285 96 237 96 184C96 112 149 58 225 58" stroke="#F8FAFC" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M347 406V318C389 285 416 237 416 184C416 112 363 58 287 58" stroke="#F8FAFC" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M256 182V406" stroke="#F8FAFC" stroke-width="34" stroke-linecap="round"/>
+    <path d="M256 182L190 141" stroke="#F8FAFC" stroke-width="30" stroke-linecap="round"/>
+    <path d="M256 182L322 141" stroke="#F8FAFC" stroke-width="30" stroke-linecap="round"/>
+    <path d="M190 141L214 141L197 118" fill="#F8FAFC"/>
+    <path d="M190 141L214 141L197 118" stroke="#F8FAFC" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M322 141L298 141L315 118" fill="#F8FAFC"/>
+    <path d="M322 141L298 141L315 118" stroke="#F8FAFC" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M117 406L165 372" stroke="#F8FAFC" stroke-width="30" stroke-linecap="round"/>
+    <path d="M395 406L347 372" stroke="#F8FAFC" stroke-width="30" stroke-linecap="round"/>
+  </g>
+  <text x="260" y="120" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="3">LA REBELION</text>
+  <rect x="262" y="145" rx="10" ry="10" width="176" height="56" fill="#C8FF2E" />
+  <text x="307" y="184" fill="#06070A" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="900" letter-spacing="7">LABS</text>
+  <text x="472" y="184" fill="#A8B3C7" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="1.6">QUESTION DEFAULTS. BUILD WHAT'S NEXT.</text>
+</svg>

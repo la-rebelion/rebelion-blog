@@ -1,0 +1,427 @@
+---
+title: Simplifying Multi-Environment in Helm Deployments on Kubernetes Clusters (Dev, Stage, Prod)
+description: Managing environment-specific configurations, such as database URLs, API keys, and log levels, is crucial for deploying applications using Helm charts. In this blog post, we'll exp
+date: 2023-07-06T01:41:59.000Z
+slug: simplifying-multi-environment-in-helm
+authors:
+  - adrianescutia
+tags: []
+image: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/Ww_qIN5JodU/upload/8630b35ec050e98aa547b2460474283d.jpeg
+---
+
+Managing environment-specific configurations, such as database URLs, API keys, and log levels, is crucial for deploying applications using Helm charts. In this blog post, we'll explore various approaches to simplify the injection of environment variables into Helm chart deployments. We'll cover techniques like using `.env` files, Helmfile, Kustomize, Helm Secrets, and custom chart helper scripts.
+
+## Conquer the chaos of multi-environments
+
+When we embark on the journey of deploying a Helm chart in different environments, we are often confronted with the daunting challenge of managing an array of variables specific to each environment. From database connection URLs to API keys and logging levels, the multitude of configurations can quickly become overwhelming. It's like a puzzle with countless pieces scattered across different landscapes, requiring a clever solution to bring them all together seamlessly. But fear not! This blog post will unravel the secrets of simplifying environment variable injection in Helm chart deployments. Get ready to unlock the secret sauce and conquer the chaos!
+
+## Understanding the Importance of Environment Variable Injection
+
+In the vast realm of application deployment, the importance of environment-specific configurations cannot be overstated. Every environment—be it development, staging, or production—comes with its unique set of requirements and settings. These can include database connections, API keys, credentials, endpoints, and logging configurations, among others. Ensuring that these variables are correctly injected into the deployed Helm charts is paramount for achieving consistent behavior and maintaining the desired functionality across different environments.
+
+**Managing multiple environments** with their associated configurations can quickly become a challenging endeavor. Manually updating values for each environment introduces room for human error and increases the risk of inconsistency between deployments. Furthermore, maintaining separate sets of values for each environment requires meticulous attention to detail, making the entire process time-consuming and prone to errors.
+
+Enter **environment variable injection**—a dynamic and flexible approach to managing these configurations. By utilizing environment variables, we gain the ability to decouple configuration values from the Helm charts themselves, making deployments more adaptable and streamlined. Environment variables allow for centralization and provide a standardized method to control application behavior across different environments.
+
+With environment variable injection, we can easily modify and update configurations based on specific requirements, all without touching the Helm charts directly. This approach empowers DevOps teams to swiftly adapt to changing environments, seamlessly switch between different deployment stages, and effortlessly accommodate varying infrastructure setups. By abstracting the configurations into environment variables, we achieve a modular and scalable deployment approach that can be efficiently managed, modified, and shared.
+
+### Examples
+
+#### .env.production
+
+```makefile
+DATABASE_URL=production_db_url
+API_KEY=production_api_key
+LOG_LEVEL=info
+```
+
+#### .env.stage
+
+```plaintext
+DATABASE_URL=staging_db_url
+API_KEY=staging_api_key
+LOG_LEVEL=debug
+```
+
+#### values.yaml:
+
+```yaml
+database:
+  url: REPLACE_WITH_DATABASE_URL
+api:
+  key: REPLACE_WITH_API_KEY
+logging:
+  level: REPLACE_WITH_LOG_LEVEL
+```
+
+In this example, the `.env.production` and `.env.stage` files contain environment-specific configurations for the database URL, API key, and log level. The `values.yaml` file uses placeholder values (`REPLACE_WITH_...`) for these variables.
+
+In the following sections, **we will explore several techniques and tools that facilitate environment variable injection for Helm chart deployments**. From utilizing `.env` files to automating with [**Helmfile**](https://helmfile.readthedocs.io/en/latest/) and leveraging the power of [**Kustomize**](http://kubectl.docs.kubernetes.io/installation/kustomize/) and [**Helm Secrets**](https://github.com/jkroepke/helm-secrets), we will delve into the world of possibilities, providing you with the knowledge and tools to simplify your deployment workflows. Let's dive in and unlock the potential of environment variable injection in Helm charts!
+
+## Leveraging `.env` Files for Helm Chart Deployments
+
+When it comes to managing environment-specific variables in Helm chart deployments, `.env` files emerge as a powerful tool in our arsenal. `.env` files, short for environment files, provide a structured and convenient approach to storing and organizing configuration values for different environments. They act as a central repository for variables that are specific to each deployment stage, eliminating the need to scatter these values across multiple files or configurations.
+
+By separating the configuration values from the Helm charts themselves, `.env` files enable a higher level of flexibility and modularity. This decoupling allows us to tailor the deployment to a particular environment without making modifications directly to the chart or its `values.yaml` file. Instead, we can update the `.env` file associated with the environment, making it easier to manage and maintain the configurations across different stages of the deployment pipeline.
+
+Using `.env` files in Helm chart deployments offer numerous benefits. Firstly, it simplifies the process of managing environment-specific variables. With a well-structured `.env` file, we can easily locate and update the necessary values, ensuring consistency and accuracy throughout the deployment process. Additionally, `.env` files provide an intuitive format, usually in a key-value pair structure, which allows for easy comprehension and readability.
+
+Another advantage of utilizing `.env` files is the ability to leverage existing tools and libraries that support environment file parsing. These tools can automatically load the variables from the `.env` file and make them available for consumption by the Helm deployment process. This streamlined workflow minimizes manual intervention, reduces the risk of errors, and boosts productivity.
+
+To incorporate `.env` files into your Helm chart deployment workflow, you can utilize various methods such as custom scripts or third-party plugins like [**Helm Secrets**](https://github.com/jkroepke/helm-secrets) or [**Helmfile**](https://github.com/helmfile/helmfile#installation). These tools seamlessly integrate with Helm, allowing for the straightforward and efficient injection of environment variables into the deployment process.
+
+By embracing the power of `.env` files, Helm chart deployments become more agile and adaptable. They offer a scalable approach to managing environment-specific configurations, paving the way for smoother transitions between development, staging, and production environments. With `.env` files in your toolkit, you gain control over your deployment variables, ensuring that each environment has the precise configurations it requires, without the hassle of manual updates or complex configuration management.
+
+**Please, please, please note** that while this approach can inject environment variables into Helm charts, **it's crucial to handle sensitive information securely, such as ensuring appropriate access permissions for the** `.env` files and considering using a secret management solution for sensitive data like API keys or database credentials.
+
+:::note 💡 Insight
+One tool that could be very helpful here is <a target="_blank" rel="noopener noreferrer nofollow" href="https://www.dotenv.org?utm_campaign=blog_post&amp;utm_medium=la-rebelion&amp;utm_source=la-rebelion-labs">dotenv</a>, take a look, they have a free plan that I occasionally use for my experiments. 🧪
+:::
+
+In the next section, we will explore how Helmfile can be combined with `.env` files to further simplify and automate the deployment process, enabling you to orchestrate your Helm deployments with ease. Get ready for an exciting journey into the world of Helmfile and environment variables!
+
+## Simplifying Deployment with `helmfile` and `.env` Files
+
+[`helmfile`](https://helmfile.readthedocs.io/en/), a powerful declarative tool for managing Helm chart deployments, provides a streamlined approach to orchestrate and manage multiple Helm releases. When combined with `.env` files, Helmfile becomes even more potent, simplifying the deployment process and enhancing the management of environment-specific configurations.
+
+By leveraging Helmfile's capabilities alongside `.env` files, you can define your Helm releases in a single declarative YAML file, while the **environment-specific configurations reside in separate** `.env` **files**. This separation of concerns allows for efficient management of environment variables without cluttering the Helmfile itself.
+
+To get started, you define your Helm releases in the Helmfile YAML, specifying the chart name, release name, chart version, and other parameters. **Instead of hardcoding the environment-specific values, you can reference the corresponding variables defined in the** `.env` **file for each environment**. This approach decouples the release configurations from the specific environment, providing flexibility and modularity.
+
+When it's time to deploy, Helmfile dynamically loads the variables from the associated `.env` file and injects them into the Helm chart deployments. **This automation eliminates the need for manual intervention and ensures that the correct variables are applied to each environment consistently**.
+
+The use of `helmfile` and `.env` files in tandem offers several benefits. Firstly, it simplifies the management of multiple environments by centralizing the configurations in dedicated `.env` files. This organization reduces the risk of misconfiguration or confusion between environments and ensures that the appropriate values are utilized for each deployment stage.
+
+Furthermore, Helmfile enables the definition of dependencies between releases, allowing for orchestrated deployments and easier management of complex application stacks. With the ability to define and control the deployment order, you can ensure that dependent services are deployed in the correct sequence, minimizing potential errors and ensuring a smooth deployment process.
+
+Additionally, Helmfile integrates with popular source control systems, **enabling version-controlled management of Helm releases and configurations**. This integration facilitates collaboration, auditability, and reproducibility of deployments, enhancing the overall reliability of your application delivery pipeline.
+
+### Example combining `helmfile` with `.env` files
+
+Combining `helmfile` with `.env` files, you achieve a powerful and efficient workflow for managing environment-specific configurations in Helm chart deployments. The ability to declaratively define releases and reference environment variables simplifies the management of configurations across different environments, eliminating the need for manual adjustments or modifications to Helm charts.
+
+`helmfile.yaml`:
+
+```yaml
+releases:
+  - name: myapp-stage
+    chart: myapp-chart
+    values:
+      - values.yaml
+    envValues:
+      - .env.common
+      - .env.stage
+```
+
+In this example, the `helmfile.yaml` specifies the releases to deploy. The `myapp-stage` release uses the `myapp-chart` chart and includes `values.yaml` as the values file.
+
+The `envValues` section allows you to inject values from multiple `.env` files. In this case, it includes `.env.common` and `.env.stage`. You can add more `.env` files if needed.
+
+`.env.common`:
+
+```plaintext
+NAMESPACE=myapp-namespace
+```
+
+The `.env.common` file contains common environment variables **used across all environments**. In this example, it defines the `NAMESPACE` variable.
+
+`.env.stage`:
+
+```plaintext
+DATABASE_URL=staging_db_url
+API_KEY=staging_api_key
+LOG_LEVEL=debug
+```
+
+The `.env.stage` file contains environment-specific variables for the staging environment, such as `DATABASE_URL`, `API_KEY`, and `LOG_LEVEL`.
+
+`values.yaml`:
+
+```yaml
+database:
+  url: ${DATABASE_URL}
+api:
+  key: ${API_KEY}
+logging:
+  level: ${LOG_LEVEL}
+```
+
+The `values.yaml` file uses placeholders (e.g., `${DATABASE_URL}`) to reference the variables from the `.env` files. Helmfile will replace these placeholders with the corresponding values from the loaded `.env` files during deployment.
+
+Remember to replace the placeholders in `values.yaml` with the appropriate syntax based on your chart's structure.
+
+[Install helmfile](https://helmfile.readthedocs.io/en/latest/#installation) and execute:
+
+```sh
+helmfile apply
+```
+
+Finally, when you run the command above, `helmfile` will read the `helmfile.yaml` file and perform the deployments specified in the file. It will handle loading the `.env` files and injecting the values into the Helm charts based on the `envValues` section.
+
+Make sure you have `helmfile` and `helm` CLI is installed on your system before running the command. `helmfile` acts as a wrapper around `helm`, providing additional features for managing multiple Helm releases and environments.
+
+Note that you should run this command in the directory where your `helmfile.yaml` file is located. Additionally, ensure that you have the necessary permissions and access to deploy the Helm charts in your target environment.
+
+This example demonstrates how to use `helmfile` to inject values from `.env` files into your Helm charts, providing environment-specific configurations during deployment.
+
+In the next section, we will explore the utilization of **Kustomize alongside** `.env` files to inject variables into Helm charts, providing another approach to streamline and customize deployments. Brace yourself for a deep dive into the realm of Kustomize and environment variables! 🧑🏽‍🚀
+
+## Injecting Variables using `kustomize` and `.env` Files
+
+`kustomize`, a Kubernetes-native configuration management tool that offers a powerful approach to customize and manage Kubernetes resources. When combined with `.env` files, `kustomize` becomes a valuable tool for injecting environment-specific variables into Helm charts, enabling flexible and dynamic deployments.
+
+:::note 💡 Insight
+One important caveat to keep in mind when using <code>kustomize</code> is that it is not designed to directly deploy Helm charts. Instead, <code>kustomize</code> serves as a powerful post-deployment process to modify or patch deployed artifacts. It's important to note that the use of <code>kustomize</code> as a post-deployment process does not change the fundamental nature of Helm chart deployments. <code>helm</code> <strong><mark>remains the primary tool for managing the lifecycle of the chart, and </mark></strong><code>kustomize</code> <mark>acts as a complementary tool for further customization.</mark>
+:::
+
+Said that we still can use `kustomize` with `helm` on the two use case examples below, continue reading. 🤓
+
+![](/img/hashnode-migrated/5b1f7668-e074-4059-8455-ac299797f69b.jpeg)
+
+Source: [Reddit/r/kubernetes](https://www.reddit.com/r/kubernetes/comments/11k4t06/kustomize_vs_helm_charts/)
+
+By utilizing `kustomize` alongside `.env` files, you can separate the environment-specific configurations from the Helm charts themselves, simplifying the customization process. This separation allows you to modify the configurations for each environment without directly modifying the Helm charts or their `values.yaml` files.
+
+To leverage `kustomize` and `.env` files, you define a Kustomization file that describes the desired customizations to be applied to the base Helm chart. In the Kustomization file, you reference the `.env` file associated with the specific environment and define patches or transformations to inject the variables into the Helm chart.
+
+`kustomize` provides a range of customization options, including adding, modifying, or removing environment variables within the Helm chart's deployment manifest. With this flexibility, you can seamlessly inject environment-specific configurations such as database URLs, API keys, or log levels into the Helm chart deployments.
+
+During the deployment process, `kustomize` automatically loads the variables from the `.env` file and applies the defined customizations to the Helm chart. This dynamic injection of environment variables ensures that the correct values are used for each deployment, streamlining the customization process and enabling consistent behavior across different environments.
+
+The combination of `kustomize` and `.env` files brings several advantages to the table. Firstly, it allows for fine-grained customization of Helm chart **deployments without modifying the underlying charts directly**. This separation of concerns enhances maintainability, making it easier to update or replace the Helm charts while preserving the environment-specific configurations.
+
+Moreover, `kustomize` provides an extensible framework that can be combined with other customization tools or techniques. For example, you can integrate `kustomize` with `Helm Secrets` or other encryption tools to securely manage and inject sensitive information into the Helm charts.
+
+Additionally, `kustomize` integrates seamlessly with `helm` and `helmfile`, allowing for a cohesive and integrated deployment workflow. By combining these tools, you can achieve a comprehensive and robust solution for managing environment-specific configurations in Helm chart deployments.
+
+### The example use cases for `kustomize` and `helm`
+
+As explained above, `kustomize` is designed to apply changes on deployed artifacts, then, I provide 2 scenarios to achieve this environment scenarios with `kustomize`:
+
+1. Assuming your application uses a config-map to configure the parameters, this is the more natural and transparent way to use the environment files.
+    
+2. Using a helper script to change the `values.yaml` depending on the environment.
+    
+
+#### `1. kustomize` with Config Map
+
+`configmap.yaml`, to define the common environment variables. Here's an example structure:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-configmap
+data:
+  DATABASE_URL: <default_db_url>
+  API_KEY: <default_api_key>
+  LOG_LEVEL: <default_log_level>
+```
+
+Replace `<default_db_url>`, `<default_api_key>`, and `<default_log_level>` with the default values you want to use.
+
+`.env.common`:
+
+```plaintext
+NAMESPACE=myapp-namespace
+```
+
+`.env.stage`:
+
+```plaintext
+DATABASE_URL=staging_db_url
+API_KEY=staging_api_key
+LOG_LEVEL=debug
+```
+
+`.env.prod`:
+
+```plaintext
+DATABASE_URL=production_db_url
+API_KEY=production_api_key
+LOG_LEVEL=info
+```
+
+Use Kustomize to generate environment-specific ConfigMaps: `kustomization.yaml`
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configmap.yaml
+configMapGenerator:
+  - name: myapp-configmap
+    env: .env.common
+```
+
+`kustomization.stage.yaml`
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configmap.yaml
+configMapGenerator:
+  - name: myapp-configmap
+    env: .env.stage
+```
+
+`kustomization.prod.yaml`
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configmap.yaml
+configMapGenerator:
+  - name: myapp-configmap
+    env: .env.production
+```
+
+For the staging environment, run the following command:
+
+```sh
+kustomize build . | kubectl apply -f -
+```
+
+For the production environment, run the following command:
+
+```sh
+kustomize build . -o production-configmap.yaml
+kubectl apply -f production-configmap.yaml
+```
+
+Assuming the chart's deployment would use the config-map predefined, similar to the following:
+
+`deployment.yaml`
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  namespace: $(NAMESPACE)
+spec:
+  # ...
+  template:
+    spec:
+      containers:
+        - name: myapp-container
+          # ...
+          envFrom:    # Use configMapRef instead of env
+            - configMapRef:
+                name: myapp-configmap
+          # ...
+```
+
+Deploy the Chart:
+
+```sh
+helm install myapp myapp-chart -f values.yaml
+```
+
+#### 2\. `kustomize` with a helper script
+
+Now, if you need to adapt the `values.yaml` per environment, let's do it with following helper to generate the corresponding environment `values.yaml`.
+
+```sh
+#!/bin/bash
+
+ENV_NAME=$1
+ENV_FILE=".env.${ENV_NAME}"
+VALUES_FILE="values.yaml"
+OUTPUT_FILE="values_${ENV_NAME}.yaml"
+
+# Load environment variables from .env file
+if [ -f "$ENV_FILE" ]; then
+  set -o allexport
+  source "$ENV_FILE"
+  set +o allexport
+else
+  echo "Environment file not found: $ENV_FILE"
+  exit 1
+fi
+
+# Generate modified values.yaml file
+cp "$VALUES_FILE" "$OUTPUT_FILE"
+
+# Replace variables in the modified values file
+while IFS='=' read -r key value; do
+  if [[ $key ]]; then
+    sed -i "s/{{$key}}/$value/g" "$OUTPUT_FILE"
+  fi
+done < <(env)
+
+echo "Modified values file generated: $OUTPUT_FILE"
+```
+
+In this script, the environment name is passed as an argument to the script ($1). It then uses that name to construct the corresponding `.env` file name and the modified `values.yaml` file name.
+
+Here's an example of how to use the updated script:
+
+```bash
+./chart_helper.sh stage
+```
+
+This command will load the environment variables from `.env.stage` and generate a modified `values_stage.yaml` file based on the provided environment name.
+
+Please note that you need to ensure the existence of the corresponding `.env` file with the appropriate environment-specific values (e.g., `.env.stage`) for the script to work correctly.
+
+After running the script, you can deploy the Helm chart using the modified `values_stage.yaml` file:
+
+```bash
+helm install myapp myapp-chart -f values_stage.yaml
+```
+
+Remember to replace `myapp` with your desired release name and `myapp-chart` with the name of your Helm chart.
+
+In the final section of this blog post, we will summarize the key takeaways and provide a comprehensive overview of the techniques and tools discussed. Get ready to unlock the full potential of environment variable injection and secure configuration management in your Helm chart deployments!
+
+## Summary and Key Takeaways
+
+In this blog post, we have explored various techniques and tools to simplify environment variable injection and secure configuration management in Helm chart deployments. Let's summarize the key takeaways and highlight the main points covered throughout the article:
+
+1. Environment Variable Injection:
+    
+    * Environment variables provide a flexible and modular approach to managing environment-specific configurations in Helm chart deployments.
+        
+    * Decoupling environment configurations from the Helm charts allow for easy customization and adaptability across different deployment stages.
+        
+2. .env Files:
+    
+    * `.env` files serve as a central repository for environment-specific variables, simplifying the management of configurations.
+        
+    * Separating variables into `.env` files enables efficient updates and reduces the risk of errors or inconsistencies.
+        
+3. Helmfile:
+    
+    * `helmfile` allows for declarative management of Helm chart deployments and integrates well with `.env` files.
+        
+    * With `helmfile`, you can define Helm releases in a single YAML file and reference environment variables from `.env` files.
+        
+4. Kustomize:
+    
+    * `kustomize`, combined with `.env` files, enables dynamic customization of Helm chart deployments without modifying the charts directly.
+        
+    * Environment variables can be injected into Helm charts using patches and transformations defined in the customization file.
+        
+
+By incorporating these techniques and tools into your Helm chart deployments, you can streamline your workflows, improve maintainability, and enhance the security of your configurations.
+
+Remember the importance of maintaining a clear separation of concerns, and utilizing automation tools to simplify the process. Whether you choose to leverage `.env` files, `helmfile`, or `kustomize`, each approach offers unique advantages and empowers you to achieve efficient and reliable deployments.
+
+With these insights and tools at your disposal, you are now equipped to master environment variable injection to improve your configuration management in your Helm chart deployments. Embrace the power of automation, simplify your workflows, and unlock the full potential of Helm!
+
+## Conclusion
+
+There may be an open question, **am I not exposing my sensitive data using these environment files?**
+
+In another post, I will share how to encrypt this information and we will explore the realm of Helm Secrets and encrypted secrets, providing a security-enhanced approach to managing sensitive information in your `.env` files for the Helm deployments. Wait for it and get ready to unlock the secrets of secure configuration management!
+
+Deploying Helm charts with environment-specific configurations is made more accessible. We explored the approaches to streamline the process of injecting environment variables and improve the management of deployments in different environments.
+
+Remember to consider security measures when handling sensitive information, and choose the method that aligns best with your project's requirements. With the right approach, you can enhance the efficiency and maintainability of your Helm deployments while ensuring the integrity of your application's configurations.
+
+Thank you for joining us on this journey, and may your Helm chart deployments be seamless, adaptable, and secure!
+
+If you found this post valuable, don't forget to share the love with [colleagues](https://www.linkedin.com/shareArticle?mini=true&url=https%3A//rebelion.la/conquer-apis-with-no-code), [friends](https://www.facebook.com/sharer/sharer.php?u=https%3A//rebelion.la/conquer-apis-with-no-code), and [your community](https://twitter.com/intent/tweet?text=https%3A//rebelion.la/conquer-apis-with-no-code); [subscribe](/subscribe) to our newsletter, and visit [our YouTube Channel](https://www.youtube.com/@LaRebelion).

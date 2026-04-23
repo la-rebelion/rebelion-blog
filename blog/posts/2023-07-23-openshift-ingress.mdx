@@ -1,0 +1,73 @@
+---
+title: 'Unraveling the Ingenious OpenShift Ingress: Understanding FQDNs and IP Resolutions'
+description: In my experience working with a private OpenShift cluster, we often used "Routes" to provide external access to services within the cluster. However, an intriguing question arose w
+date: 2023-07-23T17:55:26.000Z
+slug: openshift-ingress
+authors:
+  - adrianescutia
+tags:
+  - openshift
+  - routing
+  - kubernetes-ingress
+image: https://cdn.hashnode.com/res/hashnode/image/stock/unsplash/Ve36KUwhQWg/upload/d51c484e49a3096c25b71bd32941e57b.jpeg
+keywords:
+  - openshift
+  - routing
+  - kubernetes-ingress
+---
+
+In my experience working with a private OpenShift cluster, we often used "[Routes](https://docs.openshift.com/container-platform/4.11/networking/routes/route-configuration.html)" to provide external access to services within the cluster. However, an intriguing question arose when my colleague asked **why we needed to add records to the** `/etc/hosts/` **file if all FQDNs were resolved to the same IP address**, such as be1:8080, fe1:3000, be2:8080, and fe2:3000 --&gt; 10.10.10.250. To address this, we explored the technical workings behind OpenShift Ingress and its handling of FQDNs and resolved IPs.
+
+## Discovering the Role of Routes
+
+As we delved into the world of OpenShift, we came across the concept of "Routes" - a crucial mechanism that enabled external access to our containerized services. Routes acted as [gateways](https://nordicapis.com/api-gateways-direct-microservices-architecture/), allowing secure communication between external clients and the services within our private cluster.
+
+![](/img/hashnode-migrated/26b27789-6d9b-4090-92c5-58ce58c6d7bd.png)
+
+Similarities with Gateways:
+
+* Both provide a way to route incoming requests to different backend services or APIs.
+    
+* Both support HTTP/HTTPS protocols.
+    
+* Both offer metrics and monitoring capabilities.
+    
+
+Upon further exploration, we recognized that Routes served a multifaceted role beyond mere gateways. Their capabilities extended to shielding our services from intricate network configurations. With a strategic approach, we meticulously crafted Routes to establish a protective layer around each service, enabling visibility beyond the boundaries of our private domain.
+
+By embracing Routes, an isolated cluster became interconnected. This allowed our applications to communicate seamlessly with the outside world while maintaining security. It was like building a bridge between two worlds, enabling smooth data flow in both directions.
+
+## The Enigma of FQDNs and Resolved IPs
+
+My colleague's question led us to examine the relationship between FQDNs and resolved IPs in OpenShift. Despite multiple FQDNs resolving to the same IP address, we realized that the OpenShift Ingress controller efficiently managed requests through its robust routing system.
+
+## Unraveling the Magic of Protocols
+
+To understand how the Ingress controller worked its magic, we studied the role of `HTTP` and `gRPC` protocols. When clients sent requests with FQDNs like \`fe1.example.com\`, we observed that the **Host header** contained the specific FQDN. This Host header was critical for the Ingress controller to extract and process the FQDN. **Here is where the magic lies!**
+
+```http
+GET /path/to/resource HTTP/1.1
+Host: fe1.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+```
+
+## Decoding Routing Rules
+
+The Ingress controller's remarkable ability lies in its well-defined routing rules found within the `Ingress` resource. These rules serve as clear signposts, guiding the Ingress controller to the specific destination service based on the FQDN extracted from the incoming request. With this clever mechanism, the Ingress controller ensures that each request reaches its intended destination seamlessly.
+
+![](/img/hashnode-migrated/5851a3a8-d2b0-4d0c-a640-acdb6671f4d0.png)
+
+## Dispelling the Illusion of Resolved IPs
+
+The mystery of identical IP resolutions for all FQDNs was resolved when we realized the Ingress controller was not deceived by this illusion. Thanks to the **Host header**, it adeptly discerned the intended destination of each request, steering them towards the right services despite the shared IP address.
+
+## Embracing the Harmony of OpenShift Ingress
+
+As we pieced together the puzzle, we were impressed by the harmony of the OpenShift Ingress system. FQDNs, resolved IPs, and routing rules seamlessly coexisted, ensuring smooth communication between external clients and our containerized services.
+
+## Conclusion: Empowered by the Ingress Controller
+
+My experience with OpenShift Ingress revealed a powerful system that efficiently handled FQDNs and resolved IPs. Armed with HTTP and gRPC protocols, the Ingress controller directed requests to their intended services with finesse. As I continue my journey in the realm of DevOps, I carry this knowledge with me, embracing the brilliance of OpenShift's Ingress controller to provide seamless access and reliable communication within our private cluster.
+
+Don't forget to share your love with [colleagues](https://www.linkedin.com/shareArticle?mini=true&url=https%3A//rebelion.la/conquer-apis-with-no-code), [friends](https://www.facebook.com/sharer/sharer.php?u=https%3A//rebelion.la/conquer-apis-with-no-code), and [your community](https://twitter.com/intent/tweet?text=https%3A//rebelion.la/conquer-apis-with-no-code); [subscribe](/subscribe) to our newsletter, and visit [our YouTube Channel](https://www.youtube.com/@LaRebelion).

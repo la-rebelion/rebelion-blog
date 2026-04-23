@@ -1,0 +1,63 @@
+---
+title: How I Automated Deploying My Microservices Stack To Kubernetes Using Helm
+description: What are your thoughts on managing all the different resources required to run a complex application in Kubernetes?
+date: 2022-10-02T17:39:18.000Z
+slug: taming-the-complexity-of-deploying-kubernetes-using-helm
+authors:
+  - adrianescutia
+tags:
+  - continuous-deployment
+  - kubernetes
+  - automation
+  - helm
+image: /img/hashnode-migrated/E15wE9ozc.png
+keywords:
+  - continuous-deployment
+  - kubernetes
+  - automation
+  - helm
+---
+
+What are your thoughts on managing all the different resources required to run a complex application in Kubernetes?
+
+Managing applications and keeping them up to date are two things that we can all agree are hard. As Kubernetes users, we have even more challenges since the solutions we deploy have a lot more components. Deploying the same application to different environments or Kubernetes clusters, in general, is a pain.
+
+## Helm to the Rescue
+
+You can manually install, upgrade, query, and remove Kubernetes resources, but there are many manifest files, or resources to manipulate when there are new versions to be upgraded, fortunately, we have Helm to help us on managing all artifacts in a single package, right? 
+
+Helm helps to deploy complex applications by bundling necessary resources into Charts, which contain all information to run applications on a cluster.
+
+What happens when there are dependencies between applications? Have you asked yourself if: 
+
+Is it better to have a separate chart for each app?
+
+How do you approach managing a large number of microservices?
+
+## Multi-environments Control
+
+How can I replicate a change in one cluster to a separate cluster without affecting specifics on each cluster? (multi-environments)
+
+The independence of charts helps to upgrade and manage each app individually without affecting other apps. This will also give you fine control over each application. And better flexibility in addition and removal of any feature/app in the future. BUT... then it becomes a nightmare to keep all different values in sync depending on the environment where you are deploying the apps. What if you want to deploy a specific version of your app to production? How do you ensure that business users can’t mess with the configuration settings of your application?
+
+**You need a way to keep all values in sync across different environments** (dev, QA, staging, and production).
+
+Are you struggling with these problems?
+
+Do you feel like your applications are still hard to deploy, scale and maintain?
+
+What are the pain points you have for managing your applications?
+
+What are your thoughts on Kubernetes and Helm? I’d love to hear about your experiences in managing your applications. Leave a comment below and let’s discuss.
+
+## Leveraging Helm
+
+Although the Helm package manager seems to be a good option for managing application deployments in most cases, especially when faced with the challenges I have encountered, I have had to read a lot and try out some workarounds to achieve a current configuration that worked for me. **That's why I decided to create a series of articles with the solution I come up with**, and to replicate the problems I, and for sure you may or have faced already, I will start with basics, **creating a package that allows me to replicate deployments of my final solution in different environments with different combinations of components and configurations**, then I'll add some more components to demonstrate how Helm works and how we can configure it to extend it in a multi-environment scenario.
+
++ Bonus – You can download the templates generated during the process for this series of articles and the final solution to use in your projects.
+
+I think it's helpful to have a base structure you can use to manage your apps, so instead of just teaching you how to do helm deployment, I'm also showing you the examples used here and how they work. If you're interested in learning more about the final solution, which I named `helmee`, subscribe to the newsletter. I'll be releasing the e-book generated from the articles series and templates to help you set up your Helm-based deployment system using `helmee`.
+
+With `Helmee` we will automatize several tasks that can also be implemented manually as we will see, you don't have to worry about repeating configurations and introducing configuration drifts, all this hassle is already taken care of with `helmee`.
+
+Subscribe to the newsletter to get the series on taming the complexity of Kubernetes applications with `helmee`.

@@ -1,0 +1,81 @@
+---
+title: Revolutionizing AI Workflows with Agentic Tools and MCP Server
+description: Imagine a world where building AI applications is as streamlined as deploying microservices or containers. With the rise of Agentic AI frameworks and orchestrators, this isn't just
+date: 2025-01-08T13:54:51.000Z
+slug: ai-workflows-agentic-tools-and-mcp-server
+authors:
+  - adrianescutia
+tags:
+  - ai
+  - orchestration
+  - agentic-ai
+image: /img/hashnode-migrated/6b51e61d-499a-4ebb-9d5a-68d09ac12e75.webp
+keywords:
+  - ai
+  - orchestration
+  - agentic-ai
+---
+
+Imagine a world where building AI applications is as streamlined as deploying microservices or containers. With the rise of Agentic AI frameworks and orchestrators, this isn't just a dream, it's happening now. Developers are harnessing these tools to train, test, and deploy AI solutions faster than ever before. And the best part? It's only getting better.
+
+![AI Workflows with MCP Server](https://cdn.statically.io/img/cdn.rebelion.la/img/ai/ai-workflows-with-agentic-tools-and-MCPServer.png)
+
+In this article, we'll explore the power of Agentic tools, the role of MCP Server in simplifying AI workflows, and how you can leverage these tools to build your own AI applications. Let's dive in!
+
+### The Rise of Agentic AI
+
+At the heart of this evolution lies the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP), a framework developed by Anthropic. MCP introduces a **standard protocol** for AI applications to communicate seamlessly with one another, and with the rest of the world. While MCP opens doors to powerful integrations, getting started can feel daunting, especially for those new to Agentic AI.
+
+That's where [**La Rebelion's MCP Server**](https://www.npmjs.com/package/@la-rebelion/mcp-server) comes in. We are in the quest to simplify the process of creating and managing Agentic tools, by building a server [facade](https://en.wikipedia.org/wiki/Facade_pattern) that acts as a bridge between your tools and MCP we are on track to achieve it! Our approach is inspired by the simplicity and effectiveness of microservices and containers: *each tool does one thing and does it exceptionally well*.
+
+### Why Agentic Tools Matter
+
+Agentic tools are to AI what microservices are to cloud architecture—modular, efficient, and purpose-driven. Each tool focuses on a specific task, ensuring precision and reliability. However, building these tools from scratch can be cumbersome. You need to handle communication protocols, input validation, and execution logic. That's a lot of complexity for something that should be simple.
+
+Enter **MCP Server**, our server facade that eliminates the grunt work. You focus on crafting the core logic of your tool, and we handle the heavy lifting—like communication with MCP, input/output validation, and orchestration. It's like giving your tools a backstage crew to ensure the show runs flawlessly.
+
+### From Complex to Seamless: Building with MCP Server
+
+Let's look at how effortless it is to create and deploy an Agentic tool using La Rebelion's MCP Server. Here's an example where we build a simple **Echo Tool**:
+
+```typescript
+// src/index.ts
+// Create a new instance of the MCPServer
+import { EchoTool } from "./EchoTool.js";
+const myServer = new MCPServer('My MCP Server', '1.0.0');
+
+async function main() {
+  // Register tools
+  myServer.registerTool("echo", new EchoTool());
+  await myServer.run();
+}
+```
+
+In this example:  
+1. You define the logic of your tool (e.g., Echo Tool).  
+2. You register it with the server facade (`myServer.registerTool`).  
+3. MCP Server takes care of the rest—communicating with MCP, validating inputs/outputs, and executing the tool seamlessly.  
+
+Here's a visual breakdown of the architecture leveraging Anthropic's Model Context Protocol:
+
+![UML Diagram of the Agent Tool](https://github.com/la-rebelion/mcp-server/raw/refs/heads/main/mcp-server.png)
+
+References: 
+> [MCP Server@GitHub](https://github.com/la-rebelion/mcp-server)  
+> [MCP Server@npm](https://www.npmjs.com/package/@la-rebelion/mcp-server)
+
+### Build Your Own Agentic Tools Today
+
+Whether you're optimizing a workflow, automating a process, or enhancing an existing operation, Agentic AI tools can help you achieve your goals. By leveraging the power of MCP Server, you can build and deploy tools that communicate seamlessly with other AI applications, creating a robust ecosystem of intelligent agents. La Rebelion's **MCP Server** empowers you to focus on what matters most: **building tools that deliver real value**. By simplifying the complexities of MCP integration, we make it easier for developers to dive into the world of Agentic AI.
+
+![Agentic AI](https://cdn.statically.io/img/cdn.rebelion.la/img/ai/rise-of-agentic-ai.png)
+
+Agentic AI is revolutionizing the way we build, deploy, and manage AI applications. With tools like MCP Server, developers can create intelligent agents that communicate effortlessly, streamlining workflows and enhancing productivity.
+
+Ready to start? Explore the **MCP Server** on [GitHub](https://github.com/la-rebelion/mcp-server) or check out the [npm package](https://www.npmjs.com/package/@la-rebelion/mcp-server) to get started.  
+
+At **La Rebelion**, we believe that tools, like microservices, should be small, focused, and powerful. With our MCP Server, you can bring your AI ideas to life without sweating the details. Let's build something incredible, together. 
+
+What will you create with Agentic AI and MCP Server? Let us know in the comments below!
+
+Go Rebels! ✊🏻

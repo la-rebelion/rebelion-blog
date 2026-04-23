@@ -1,0 +1,284 @@
+---
+title: Mastering CICD in Enterprise and Air-Gapped Environments
+description: Imagine a world where your software deployment is seamless, bugs are a rarity, and your team is more productive than ever. Sounds like a dream, right? This is the promise of Contin
+date: 2024-05-21T02:26:19.000Z
+slug: cicd-in-enterprise-and-air-gapped-environments
+authors:
+  - adrianescutia
+tags:
+  - kubernetes
+  - air-gapped
+image: /img/hashnode-migrated/3fa94cd8-f7a4-4513-9210-8cb5c7855a0d.png
+keywords:
+  - kubernetes
+  - air-gapped
+---
+
+Imagine a world where your software deployment is seamless, bugs are a rarity, and your team is more productive than ever. Sounds like a dream, right? This is the promise of Continuous Integration and Continuous Deployment (CICD). Yet, in the labyrinth of enterprise environments, achieving this can feel like chasing a mirage. Let’s uncover the challenges and solutions to mastering CICD in large organizations' projects.
+
+## The Problem: Enterprise-Level CICD Challenges
+
+### The Significance of CICD in Enterprises
+
+CICD is the backbone of modern software development, enabling teams to deliver high-quality code faster and more reliably. However, in enterprise environments, the stakes are higher, and the challenges are more complex. As illustrated in the [CNCF landscape](https://landscape.cncf.io/?view-mode=card&classify=category&sort-by=name&sort-direction=asc#app-definition-and-development--continuous-integration-delivery) there are plenty of tools and technologies available to help with CICD, but choosing the right ones and integrating them seamlessly is a daunting task.
+
+### Key Issues in Enterprise CICD
+
+1. **Security Constraints:** Enterprises, especially in sectors like banking, telecommunications, and healthcare, prioritize security. The "Zero Trust" model — "never trust, always verify" — adds layers of complexity to CICD pipelines.
+    
+2. **Tool Integration:** The plethora of tools available can overwhelm even the most seasoned teams. Ensuring these tools are approved by security teams and comply with stringent policies is no small feat.
+    
+3. **Team Coordination:** Managing multiple teams, often with some being outsourced, complicates synchronization and communication.
+    
+4. **Legacy Systems:** Integrating modern CICD practices with legacy systems can be challenging and often leads to roadblocks.
+    
+
+### The Complexity of Air-Gapped Environments
+
+In air-gapped environments, where systems are isolated from unsecured networks, additional challenges emerge:
+
+* **Limited Network Access:** Tools and updates cannot be accessed or installed directly from the internet.
+    
+* **Security Policies:** Stringent policies make it difficult to introduce new tools without rigorous approval processes.
+    
+* **Data Transfer:** Moving data in and out of air-gapped environments requires secure and often cumbersome methods.
+    
+
+### Why Are These Issues Critical?
+
+* **Security Risks:** Without proper integration, security breaches can occur.
+    
+* **Compliance:** Failing to meet compliance standards can result in legal and financial repercussions.
+    
+* **Efficiency:** Poorly integrated tools and mismanaged teams lead to slower deployments and higher error rates.
+    
+
+## The Success Formula for CICD in Enterprises
+
+In any project, the formula for success can be distilled into two key components: the team (T) and the network (N).
+
+### The Importance of the Team
+
+* **Motivation:** A strong and motivated team can overcome any obstacle, even limited time and budget.
+    
+* **Collaboration:** Teamwork ensures that challenges are addressed collectively, enhancing problem-solving capabilities.
+    
+
+### The Role of the Network
+
+* **Resource Access:** A well-connected network provides access to critical resources, infrastructure, and tools that can accelerate project delivery.
+    
+* **Infrastructure:** Ensures that the technical backbone needed for deployments is robust and reliable.
+    
+
+**Formula for Success:**
+
+```bash
+S = f(T, N) = T / N
+```
+
+* **S:** Success
+    
+* **T:** Team
+    
+* **N:** Network
+    
+
+A motivated team and an accessible network are crucial. In air-gapped environments, the network's constraints increase complexity, underscoring the need for a strong team.
+
+The bigger the network restriction, the smaller (slower) the success, and the smaller the team (strong and motivated), the smaller (slower) the success. Imagine a project with zero network restrictions and a strong and motivated team, success is guaranteed, and the sky is the limit! 🚀
+
+## The Network: A Critical Component of the CICD Pipeline
+
+Let's talk about the network in the context of the CICD pipeline in an enterprise environment:
+
+![Zero Trust architecture](https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/ZeroTrustArchitecture-Infographic_RWQAAU?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=1600&qlt=100&fit=constrain)
+
+> Zero Trust architecture (source: [Microsoft](https://www.microsoft.com/en-us/security/business/zero-trust))
+
+In big enterprise projects, such as banking, telecommunications, healthcare, and government projects, security and stability are a top priority. The premise of "never trust, always verify" or [Zero Trust](https://www.cisa.gov/zero-trust-maturity-model) generates a deadlock in the CICD pipeline. Enterprise architectures are complex, and they have a lot of teams, tools, and technologies, some of the teams are even outsourced, and some of the tools and technologies are even legacy.
+
+### Governance and Compliance: The Backbone of Secure CICD
+
+#### Defining Governance and Compliance
+
+* **Governance:** Establishes policies, procedures, and standards.
+    
+* **Compliance:** Ensures adherence to these policies and standards.
+    
+
+##### Implementing Governance and Compliance
+
+* **Dedicated Teams:** A [System Team](https://scaledagileframework.com/system-team/) or roles like Security Engineer ensure continuous enforcement of governance.
+    
+* **Standardization:** Using frameworks to standardize practices across the organization, the system team can ensure compliance and consistency.
+    
+* **Integration:** The system team can also be responsible for the project [enablers](https://v5.scaledagileframework.com/enablers), integrating tools and technologies in the CICD pipeline in an enterprise environment.
+    
+
+### The Challenge of Tool Integration in Zero Trust Environments
+
+The big challenge coming from the Zero Trust premise is that installing a tool in a Kubernetes cluster, whether is Vanilla, [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift), or [Rancher](https://www.rancher.com), won't be possible if the tool is not approved by the Security Team. Some tools require [operators](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) or [custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CRDS) to be installed, some tools require specific permissions, some tools require specific network policies, and some tools require specific configurations. Why it has to be so hard? Why live in a world where you can't easily install a tool in a Kubernetes cluster, right? Well, that's the reality in big enterprise projects and generally with Kubernetes clusters; with great power comes great responsibility, and with great responsibility comes great complexity. 🤷‍♂️
+
+![Chaotic CICD](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd21yODFkNTcxZTg0ZWV3dnlmczhibTRxMWx5aHdlenhta2syM2F2MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7aCXblGjPBTmWZHO/giphy.gif)
+
+Even if you succeed in installing a tool in an air-gapped environment, which is a big challenge and chaotically complex, you will face another challenge because traffic filtering and segmentation are applied to the evaluation and enforcement of the Zero Trust policy before access is granted to any public or private network, probably you won't be able to access the new service.
+
+Then, how can you integrate with these plenty of tools and technologies in a CICD pipeline in an enterprise environment? How can you ensure that the CICD pipeline is secure, compliant, and efficient? Would those be approved by the Security Team?
+
+Unfortunately, I am not able to provide you with the answer to these questions, or at least, **not an easy answer** if you are looking for a silver bullet. However, I can provide you with some insights and ideas on how you can integrate these tools and technologies in a CICD pipeline in an enterprise environment.
+
+**The answer is simple**: You need to re-invent the wheel, but you can use the wheel as a reference. 🛠️
+
+## The Wheel: GitOps and GitHub Actions-Like Automation
+
+### Embracing GitOps
+
+GitOps treats Git as the single source of truth for declarative infrastructure and applications. This method simplifies managing CICD pipelines by ensuring that all configurations and code changes are tracked and versioned in Git.
+
+#### Benefits of GitOps
+
+* **Consistency:** Ensures all environments are consistent with the defined state in Git.
+    
+* **Audibility:** Every change is tracked, making audits straightforward.
+    
+* **Recovery:** Rollbacks are easier and faster.
+    
+
+### Introducing `galag`: GitHub Actions-Like in Air-Gapped Environments
+
+In scenarios where direct access to GitHub Actions isn't possible, we need to reimagine our approach. And here is where `galag` comes into play, offering a solution tailored for air-gapped environments. In my mind and simplistically speaking, GitHub Actions are no other thing than scripts that run in a container, so we can replicate this behavior in an air-gapped environment.
+
+#### How galag Works
+
+* **Kubernetes-Powered:** Utilizes Kubernetes to run workflows in isolated environments.
+    
+* **Script-Based:** Workflows are defined in scripts, running in containers, much like GitHub Actions.
+    
+* **Incremental Enablers:** Leverages [architectural enablers incrementally](https://v5.scaledagileframework.com/enablers/#:~:text=Implement%20Architectural%20Enablers%20Incrementally) to extend functionality.
+    
+
+I want to introduce this concept as a way to replicate the behavior of GitHub Actions in an air-gapped environment. This is a simplified version of the concept, but it can be expanded to include more features and integrations, in the same way that GitHub Actions can be extended with custom actions.
+
+#### Benefits of `galag`: SAFE and Convenient
+
+* **Security:** Works within stringent security policies like Zero Trust.
+    
+* **Adaptability:** Flexibility to adapt to various enterprise environments, and it can be extended with custom actions.
+    
+* **Feasibility:** Leverages Kubernetes to run workflows in air-gapped environments, using BusyBox containers for execution.
+    
+* **Efficiency:** Saves time and resources by automating workflows in restricted environments.
+    
+* **Convenience:** Provides a familiar interface for developers used to GitHub Actions.
+    
+
+## Real-World Application: `galag` in Action
+
+Let's illustrate how `galag` can be deployed in a real-world scenario. Consider a banking application requiring regular updates, backups, configuration drift detection, and strict compliance checks. Using `galag`, we can:
+
+* **Automate Deployments:** Schedule and manage deployments without internet access.
+    
+* **Run Tests:** Ensure all code changes are tested thoroughly in a secure environment.
+    
+* **Monitor Compliance:** Track every change to ensure it meets regulatory standards.
+    
+* **Detect Drifts:** Identify configuration drifts and rectify them promptly.
+    
+* **Business Continuity:** Ensure the application data is backed up regularly.
+    
+
+### Code Snippet: Simplifying a Deployment Workflow with `galag`
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deployment-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: deployment-container
+        image: busybox
+        command: ["sh", "-c", "echo Deploying application && sleep 30"]
+      restartPolicy: Never
+```
+
+In this example, we define a Kubernetes Job that deploys an application using a simple `busybox` image. This script can be extended to include more complex deployment workflows, tests, and compliance checks.
+
+For now, I am bringing you a simple example, but it can be expanded to include more complex workflows, integrations, and actions. The goal is to provide a starting point for implementing `galag` in your enterprise environment.
+
+### Next Steps: Implementing `galag` in Your Enterprise
+
+In a follow-up post, I will show you how to extend `galag` with custom actions and integrations; I will show you how to run a GitHub Action-like workflow into a Kubernetes environment, using Jobs and CronJobs for orchestration. We'll use BusyBox containers for executing steps and handling actions through a simple web service. As usual, **I will provide you with a step-by-step guide, code snippets, and examples** to help you implement `galag` in your enterprise environment. Stay tuned!
+
+Any other ideas or insights on how to improve **CICD in enterprise environments**? Share them in the comments below. Let's elevate our CICD strategies together!
+
+## Conclusion: Achieving CICD Success in Enterprises
+
+CICD in enterprise environments isn't a distant dream. With the right strategies—embracing GitOps, implementing `galag`, and enforcing robust governance—you can streamline your deployment processes, enhance security, and ensure compliance.
+
+### Call to Action: Elevate Your CICD Strategy Today
+
+1. **Assess Your Current CICD Pipeline:** Identify gaps and security concerns.
+    
+2. **Explore GitOps:** Start integrating Git as your single source of truth.
+    
+3. **Implement** `galag`: Adapt GitHub Actions-like workflows for your air-gapped environments.
+    
+4. **Strengthen Governance:** Ensure continuous enforcement of policies and standards.
+    
+
+By taking these steps, you're not just adopting CICD; you're future-proofing your enterprise against the complexities of modern software deployment.
+
+Please, let me know your thoughts and questions in the comments section below. I'd love to hear your feedback and ideas on how to improve `galag` and make it more useful for enterprise CICD pipelines.
+
+If you enjoyed and found this article helpful, please re-share it with your colleagues and friends, let's explore and solve CICD challenges **together**.
+
+![Team Work](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGY4ZnJxcmxzYWFmNmx0eHZqcnZseDQ1cTd6ZmY3bGVtdGNvZjBpMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wLDXxrBcH4FPO/giphy.gif)
+
+---
+
+## About the Author
+
+[Adrian Escutia](https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=adrianescutia) is a Cloud Architect and Kubernetes Specialist with a passion for cloud-native technologies, system architecture, software development, and automation. As the founder of [La Rebelion](https://rebelion.la), he loves to share his expertise and ideas on cloud computing and CICD practices. Adrian's extensive experience includes pioneering initiatives like [K1S-S](https://k1s.me/) and [K1S-T](https://k1s.sh/), which aim to streamline Kubernetes operations, [APICove](https://apicove.com) for API management, and [What-If](https://what-if.in) to explore alternative scenarios to real-world problems.
+
+---
+
+## Q&A: Addressing Common Queries
+
+**Q:** Why is `galag` necessary when there are so many CICD tools available? **A:** Security constraints and the need for control in air-gapped environments make traditional tools impractical, necessitating a customized solution like `galag`.
+
+**Q:** How does `galag` differ from GitHub Actions? **A:** While GitHub Actions is a powerful online tool, `galag` replicates its functionality in restricted, offline environments using Kubernetes.
+
+**Q:** What skills are required to implement `galag`? **A:** Basic knowledge of Kubernetes and scripting is essential to define and run workflows securely and efficiently.
+
+---
+
+## Engage with Us
+
+Have questions or insights? Share them in the comments section below. Let's explore and solve CICD challenges together.
+
+## References
+
+* [GitHub Actions Documentation](https://docs.github.com/en/actions)
+    
+* [Scaled Agile Framework](https://scaledagileframework.com)
+    
+* [GitOps Principles](https://opengitops.dev/#principles) - OpenGitOps
+    
+* [Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+    
+* [GitHub Actions JSON Schema](https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-action.json)
+    
+* [GitHub Actions Workflow JSON Schema](https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json)
+    
+
+## About "La Rebelion"
+
+[La Rebelion](https://rebelion.la) is a community for cloud-native enthusiasts, developers, and architects to explore the latest trends, tools, and technologies in cloud computing. Our mission is to empower the cloud community through insightful articles, tutorials, and resources that simplify complex concepts and foster innovation. Join us on this cloud-native journey and revolutionize the way you build, deploy, and scale applications in the cloud.
+
+Subscribe to our newsletter for regular updates on cloud computing, Kubernetes, DevOps, and more. Stay ahead of the curve with La Rebelion!
+
+![Subscribe](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2tldjNqejNmdm1wajJvZGM1a2F3b3oyM2s4N2dkdTVwMWt4MWV4YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/teAzL0gzNA9ZV3po3m/giphy.gif)

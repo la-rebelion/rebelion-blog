@@ -1,0 +1,284 @@
+---
+title: 'You Don''t Need to Implement MCP Servers: A Contract-First Approach to AI Tool Integration'
+description: The Model Context Protocol (MCP) has been introduced as an "open standard for connecting AI assistants to the systems where data lives". In other words, MCP is a contract or interf
+date: 2025-07-27T13:06:32.000Z
+slug: you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration
+authors:
+  - adrianescutia
+tags:
+  - openapi
+  - ai-automation
+  - agentic-ai
+  - mcp
+  - mcp-server
+image: /img/hashnode-migrated/7b87faf6-5b6d-4614-83d9-c235c5e8c96f.png
+keywords:
+  - openapi
+  - ai-automation
+  - agentic-ai
+  - mcp
+  - mcp-server
+---
+
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) has been introduced as an *"*[*open standard for connecting AI assistants to the systems where data lives*](https://www.anthropic.com/news/model-context-protocol#:~:text=Today%2C%20we%27re%20open,produce%20better%2C%20more%20relevant%20responses)*"*. In other words, MCP is a contract or interface specification – much like OpenAPI – that informs large language models (LLMs) about the *available tools and data sources and how to utilize them*. This aligns with the analogy that [**OpenAPI describes how machines communicate with machines**](https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=OpenAPI%20describes%20how%20machines%20talk,to%20machines), whereas **MCP describes how AI models interact with applications**. By standardizing the interface, MCP replaces many one-off integrations with a single protocol, allowing AI agents to "plug and play" with databases, APIs, or local files regardless of their location.
+
+Many developers initially assume that "MCP server" means writing new adapter code, but that's a misconception. Just as in OpenAPI a `servers` section is *metadata* (not code), in MCP the "server" entry in the spec merely points to the implementation. You **don't need to hand-code a new server to satisfy the MCP spec** – you only need to *expose the contract*, use Swagger specs to auto-generate your MCP tools. Existing RESTful APIs (with their OpenAPI/Swagger definitions) can *become* MCP servers on the fly by generating the MCP contract from the API spec. In practice, each REST endpoint or [operation object](https://swagger.io/specification/#operation-object) turns into an [MCP *tool*](https://modelcontextprotocol.io/docs/concepts/tools) whose name matches the API's `operationId` (or path and method).
+
+Consider a simple example. An OpenAPI (OAS) snippet might define a `/users` endpoint like this:
+
+```yaml
+openapi: "3.0.0"
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      description: Retrieve a list of users.
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+```
+
+In MCP terms, this becomes a *tool* named `getUsers` with a JSON schema for its input. For instance, the equivalent MCP contract might include:
+
+```json
+{
+  "tools": [
+    {
+      "name": "getUsers",
+      "description": "Retrieve a list of users",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "integer", "default": 10 }
+        }
+      }
+    }
+  ]
+}
+```
+
+Here, `getUsers` (the REST operationId) is exposed as a tool name, and its query parameter `limit` is captured in the `inputSchema` (see [MCP's tool definition structure](https://modelcontextprotocol.io/docs/learn/server-concepts#tools-ai-actions)). This mirrors how **mcp-openapi-proxy** or similar tools work: in "low-level mode" they *automatically register every API endpoint as an MCP tool* (e.g. mapping `/chat/completions` to a `chat_completions()` tool).
+
+## Key Misconceptions in the MCP Ecosystem
+
+There are a few common myths about MCP that our approach clarifies:
+
+* **"You must implement an MCP server from scratch."***Reality:* Any existing API can act as an MCP server *contractually*. You can [auto-generate the MCP spec from the API's OpenAPI definition](https://youtu.be/rOTdkSSHBBc), then let [the client or model call the REST endpoints directly](https://modelcontextprotocol.io/quickstart/client#how-it-works) (typically via an API gateway). In other words, you're just publishing the **contract**. As one expert noted, "[you don't need to code MCP servers](https://www.linkedin.com/posts/adrianescutia_gorebels-activity-7349233480465080321-Yr2w#:~:text=You%20don%27t%20need%20MCP%20servers%3B,to%20interact%20with%20each%20other) at all – any RESTful API can function as an MCP server". This is akin to Swagger: you don't write code for the "server" entry, you implement the API and reference it in the spec. Go one step further: if you have an OpenAPI spec, **your existing API becomes an MCP server on the fly**. Keep reading, below we show how to do this with some magic tools.
+    
+* **"MCP tools are different from API operations."***Reality:* In our view, the MCP "tools" **are the API operations**. In fact, the REST `operationId` can become the tool name. Each [tool has a unique name and JSON schema](https://modelcontextprotocol.io/docs/learn/server-concepts#example%3A-taking-action) for its inputs. For example, an OpenAPI path with `operationId: getUsers` simply yields an MCP tool named `getUsers`. This naming correspondence means your LLM sees familiar operations: calling a tool is just like calling the original API, but through the standardized protocol.
+    
+* **"MCP adds overhead or new dependencies."***Reality:* By deriving the MCP spec from existing API docs, you avoid rewriting code. Many teams in the industry are already doing this. For example, tools like [**HAPI server**](https://youtu.be/RGgFJcZ_PA4) dynamically turn all endpoints in an OpenAPI spec into MCP tools. This ensures that as long as your API is documented, your MCP interface is up-to-date. You're reusing your API's security, logic, and data – not replicating it (complementing maintenance). The MCP protocol itself is a thin JSON-RPC layer, so implementation can be as lightweight as a small gateway process.
+    
+
+## OpenAPI vs MCP: Two Faces of Integration
+
+OpenAPI and MCP serve **complementary roles**. OpenAPI (OAS) has long been the de facto contract for RESTful services: it tells machines *which endpoints exist and how to call them*. MCP is the analogous layer for AI agents: it tells models *which tools they can invoke and what arguments to pass*. One observer nicely summarized this: "[OpenAPI describes how machines talk to machines. MCP defines how models talk to applications](https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=OpenAPI%20describes%20how%20machines%20talk,to%20machines)".
+
+In practice, you use both: a conventional client (or agent) can call an API with REST as usual, and an LLM-based agent can call an MCP "tool" – but under the hood it's the same endpoint. An MCP-enabled architecture might look like this: your host application (e.g. a chat UI) connects to one or more MCP servers (each backed by APIs), as shown by [Edwin Lisowski's diagram](https://medium.com/@elisowski/mcp-explained-the-new-standard-connecting-ai-to-everything-79c5a1c98288). The host sends the user's query along with the *list of available tools* to the LLM. [The model then decides which tool to use](https://medium.com/@tahirbalarabe2/what-is-model-context-protocol-mcp-architecture-overview-c75f20ba4498#:~:text=Here%E2%80%99s%20how%20it%20works%20in,final%20answer%20for%20the%20user), and the host invokes that tool (via the standard REST call or via an MCP gateway). The result returns through MCP and then to the user.
+
+This two-way flow ("host ⇄ server via MCP") is flexible: some servers might access local data, others remote services. Crucially, any API (local or cloud) can be plugged in. [The protocol standardizes discovery and invocation](https://modelcontextprotocol.io/docs/learn/server-concepts#:~:text=Discover%20available%20tools,Tool%20execution%20result): clients send `tools/list` to discover tools, then `tools/call` with a name and arguments to execute it. As Anthropic explains, the architecture is straightforward: developers *"*[*expose their data through MCP servers or build AI applications (MCP clients) that connect to these servers.*](https://www.anthropic.com/news/model-context-protocol#:~:text=The%20Model%20Context%20Protocol%20is,that%20connect%20to%20these%20servers)*"*.
+
+## Tools-First, Not Server-First
+
+Our approach is "tools-first": we focus on providing LLMs with *contractual access* to backend tools, rather than building a brand-new server implementation for each. Concretely, this means:
+
+* **Generate the MCP spec from your existing API (OpenAPI).** Tools like our HAPI server (Headless API) can read the OpenAPI file and emit the MCP tools schema. No new business logic is written; we simply wrap the contract. This lets the agent know, for example, that "getUsers" exists and takes an integer limit.
+    
+* **Use an MCP gateway (runMCP) to manage connections.** This component handles the JSON-RPC transport (stdio or HTTP) and routes calls to the real API endpoints. It also aggregates multiple tools into one logical "server" if needed.
+    
+* **Invoke tools from the MCP client (chatMCP).** The LLM sees a unified list of tools. When it decides to call one, the MCP client issues a `tools/call` request, which the gateway translates into the actual API call. The response is sent back to the LLM in structured JSON format. In practice, this is exactly what many products do: for instance, Claude Desktop, Cursor, or Cobie all connect via stdio to MCP servers that wrap REST APIs.
+    
+
+By contrast, the "MCP hype" often suggests building a separate software server for each data source. We challenge that: you already have servers! For example, if you have an OData or REST API for your database, that *can be* the MCP server. You only need to publish its OpenAPI spec so agents know how to talk to it. In short:
+
+* If you can call the API now, you can call it via MCP.
+    
+* Each API operation is simply a tool in the MCP world.
+    
+* No new code (beyond the gateway glue) is needed to implement the business logic.
+    
+
+This cuts development effort dramatically. As one architect put it, [MCP gives AI models a *shared language* for your stack](https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=MCP%20gives%20AI%20models%20a,It). The MCP spec is generated "on the fly" from what the server already exposes – so maintaining your APIs automatically maintains your AI contract.
+
+## Example Conversion: OpenAPI → MCP
+
+To make this concrete, imagine a typical **user service** with an OpenAPI spec (a small excerpt is shown above). In the OAS we have:
+
+* `GET /users?limit=10` with `operationId: getUsers`
+    
+* `POST /users` with `operationId: createUser`
+    
+* `GET /users/{id}` with `operationId: getUserById`
+    
+* etc.
+    
+
+When we run HAPI (or another OAS-to-MCP tool), it might produce an MCP contract listing tools like:
+
+```json
+{
+  "tools": [
+    {
+      "name": "getUsers",
+      "description": "Returns a list of users",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "integer", "default": 10 }
+        }
+      }
+    },
+    {
+      "name": "createUser",
+      "description": "Create a new user",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "body": { 
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "email": { "type": "string", "format": "email" }
+            },
+            "required": ["name", "email"]
+          }
+        }
+      }
+    },
+    {
+      "name": "getUserById",
+      "description": "Returns a user by ID",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" }
+        }
+      }
+    }
+    // ... additional tools from other endpoints ...
+  ]
+}
+```
+
+This closely follows the [official MCP tool definition structure](https://modelcontextprotocol.io/docs/learn/server-concepts#tools-ai-actions). The `name` field is the unique tool name (we use the OpenAPI operationId), and `inputSchema` is a JSON Schema object for the tool's parameters. The `description` helps the LLM understand its purpose. The MCP server (gateway) would advertise these tools via `tools/list`, and the LLM can pick one by name. Then the gateway performs the underlying REST call, sends the response back as MCP `content`, and the model incorporates it.
+
+By keeping the tool definitions in sync with the OpenAPI, teams ensure that every change to the API automatically updates the MCP interface. In our experience, architects are often pleasantly surprised at how minimal the extra work is: it's essentially just *publishing* the API spec over a standard channel. Many open-source proxies (like [mcp-openapi-proxy](https://github.com/matthewhand/mcp-openapi-proxy#:~:text=%2A%20Low,based%20on%20static%20configurations)) operate this way out of the box.
+
+### 📊 OAS vs. MCP – Contract-Level Feature Comparison
+
+Here's a **side-by-side comparison table** showing the similarities between **OpenAPI Specification (OAS)** and **Model Context Protocol (MCP)**. This focuses on their **structural parallels**, especially in how **OAS defines contracts** vs. how **MCP defines intents, tools, and context**, helping technical product managers and architects bridge the conceptual gap:
+
+| Feature / Concept | OpenAPI Specification (OAS) | Model Context Protocol (MCP) |
+| --- | --- | --- |
+| **Primary Purpose** | Define RESTful API contract (endpoints, methods, payloads) | Define Intent-Tool interactions for agentic or AI-enhanced systems |
+| **Spec Format** | JSON/YAML using OpenAPI v3+ | JSON-based (MCP.json or embedded) |
+| **Operations** | `operationId` used to uniquely identify operations | `tool.name` used to uniquely identify tools (similar to functions) |
+| **Endpoints** | Defined under `paths`, each with HTTP verbs (`get`, `post`, etc.) | Defined implicitly via `tool.name` + `input` schema |
+| **Inputs** | `parameters`, `requestBody`, and schema references | `input_schema` (JSON Schema) |
+| **Outputs / Responses** | `responses` with schema (200, 400, etc.) | `output_schema` defines expected response format |
+| **Server Implementation** | API server or framework auto-generates routes (e.g. FastAPI) | MCP agent or `HAPI Server` interprets tools and connects via context |
+| **Docs / UI Tooling** | Swagger UI, Redoc | `chatMCP` client as UI for triggering tool use via intent |
+| **Security** | `securitySchemes` (API key, OAuth2, JWT, etc.) | Context-aware, authorization not yet standardized |
+| **Extensibility** | Via `x-` custom properties, plugins, generators | Native support for extended metadata like `description`, `examples`, etc. |
+| **Versioning** | `openapi: 3.x.x`, plus custom versioning strategies | `version` field in MCP spec |
+| **Primary Use Case** | Human-to-API, API-first design and testing | Agent-to-Tool communication, AI workflows, function chaining |
+| **Tools** | Swagger Codegen, OpenAPI Generator, Postman | `HAPI Server`, `runMCP`, `chatMCP`, and MCP-compatible tools |
+| **Contract Source of Truth** | `.yaml` or `.json` file | `mcp.json` or embedded in AI agent memory / local registry |
+
+---
+
+### 🔍 Interpretation
+
+* **OAS is to APIs what MCP is to Agents** — both define contracts, but for different execution contexts.
+    
+* **operationId ≈ tool.name** – this is the most precise analog between the two: both uniquely identify callable logic units.
+    
+* **Request/response schemas** are equally critical in both — they define the expected structure, enabling validation and introspection.
+    
+* **Security and extensibility** are evolving in MCP, much like OAS has matured over time.
+    
+* **UI tooling**, such as Swagger UI, is analogous to `chatMCP` that in MCP, providing a user-friendly interface for interacting with the defined contracts.
+    
+* **Versioning and extensibility** are handled similarly, allowing both OAS and MCP to evolve without breaking existing contracts.
+    
+* **Primary use cases differ**: OAS focuses on API design and documentation, while MCP enables AI agents to interact with tools and data sources.
+    
+* **Tools ecosystem** is growing for MCP, similar to how OAS has a rich set of generators and clients.
+    
+* **Source of truth** for both is the contract file itself, whether it's an OpenAPI spec or an MCP JSON file.
+    
+* **Both OAS and MCP are about contracts, not implementations** – they define how to interact with services, not how those services are built.
+    
+
+## Benefits and Metrics of a Contract-First MCP Approach
+
+This tools-first strategy yields measurable benefits for technical teams. Here are some key metrics (KPIs) that improve under this approach:
+
+* **Integration Speed:** Onboarding a new data source is much faster. Instead of weeks of adapter coding, you generate the MCP contract from the existing API in minutes.
+    
+* **Developer Productivity:** Engineers spend less time writing boilerplate. The MCP gateway handles the JSON-RPC plumbing. Developers can focus on adding real value to the API itself.
+    
+* **Reuse and Consistency:** By leveraging the OpenAPI spec, you ensure *one source of truth*. There's no risk of the MCP interface drifting from the actual API. Consistency can be measured by *coverage*: e.g., what percentage of endpoints are exposed as tools.
+    
+* **Scalability:** As your API surface grows, the tooling scales automatically. More endpoints automatically become available tools without additional coding. A possible KPI is the *number of integrated tools per quarter*, which should climb rapidly.
+    
+* **Maintainability:** Fewer moving parts (no custom MCP servers) means easier upkeep. An MCP contract auto-generated from OAS reduces maintenance cost. One could track *time spent on MCP-related bugs* dropping.
+    
+* **Security and Governance:** Standard contracts enable uniform policies. For example, you can apply the same authentication rules across all tools. Metrics here include *compliance checks passed* or *auditable traceability* of tool calls.
+    
+* **User Adoption:** Finally, from the product perspective, a consistent protocol can drive usage. One could survey developers or product managers for satisfaction – an important KPI in itself – or measure *number of agent use-cases enabled*.
+    
+
+All these KPIs are *founded on sound principles*. For instance, using the well-known OpenAPI spec leverages existing developer skills, reducing training time. Relying on a standardized JSON-RPC protocol means better compatibility between different LLM platforms. In aggregate, we expect metrics like "time to market" and "number of connected services" to improve when the team adopts this contract-first MCP approach.
+
+## Introducing the *Happy MCP Stack*
+
+To put these ideas into practice, we've built a small MCP "stack":
+
+![Happy MCP Stack](https://cdn.rebelion.la/img/mcp/hapi-mcp-diagram.svg)
+
+* [**HAPI Server**](https://hapi.mcp.com.ai) **(Headless API and MCP Gateway):** A CLI tool that reads an OpenAPI spec and instantly serves an MCP contract. Think of it as "Swagger + MCP" without writing code. Under the hood HAPI generates the `tools` definitions from your paths/operationIds and launches a JSON-RPC endpoint. This way you can make any REST service MCP-ready on the fly.
+    
+* [**runMCP**](https://run.mcp.com.ai) **(MCP Control Plane):** This component manages multiple MCP server instances. It acts like your control plane: you configure which HAPI instances (i.e. which specs) to run, and runMCP ensures they're reachable by the agent. It handles routing calls from the LLM to the right MCP server and can also aggregate tools across servers. It's our answer to "How do I host and scale MCP servers?" without heavy infrastructure changes.
+    
+* [**chatMCP**](https://chat.mcp.com.ai) **(MCP Client Agent):** This is a user-friendly client for interacting with the MCP tools from a conversation or automation. Imagine a WhatsApp-like interface between you and an AI agent: chatMCP lets a human ask the AI for something, the AI uses the MCP tools behind the scenes, and the result flows back in chat. It leverages the standard MCP client libraries to manage the request/response loop. In demos we show how an agent can "chat" with these MCP tools as if they were part of its own language.
+    
+
+Together, this stack embodies our "contract-first" philosophy. **You don't code custom servers**; you just plug existing APIs into MCP via [HAPI Servers](https://github.com/la-rebelion/hapimcp), orchestrate with [runMCP](https://github.com/la-rebelion/runmcp), and interact with [chatMCP](https://github.com/la-rebelion/chatmcp).
+
+## The Path Forward
+
+MCP is indeed poised to be a new standard in AI integration, but we emphasize simplicity over hype. The core insight is this: **if your API is RESTful and documented, it can be an MCP service.** You only need to publish the contract. In other words, *we are not creating a new backend; we are exposing the existing one*. This shifts the focus from "building servers" to "publishing tools".
+
+For architects and product managers, that means reusing what you have: existing microservices, databases, and SaaS APIs become immediately LLM-ready. The only code you write is for joining pieces (the gateway), not for implementing domain logic twice. This reduces cost and risk while opening up your tools to powerful AI agents.
+
+As MCP matures, we'll see even more marketplaces and integrations (Anthropic's ecosystem, Community repos, etc.). Our hope is that by clarifying these misconceptions – and measuring impact with solid KPIs – teams will adopt the simplest successful strategy: **tools already exist; just give models the contract**.
+
+In summary, MCP **is a contract standard, not another platform framework**. Think of it as a *language for agents*, built on familiar foundations (OpenAPI, JSON, HTTP). By focusing on the contract, we demystify MCP, avoid reinventing servers, and speed up AI integration. As one developer put it: MCP simply *"*[*replaces one-off hacks with a unified, real-time protocol*](https://medium.com/@elisowski/mcp-explained-the-new-standard-connecting-ai-to-everything-79c5a1c98288#:~:text=MCP%20replaces%20one-off%20hacks,for%20autonomous%20agents)*"*. That's a future where AI agents can do work with the tools we already have – and we believe that's exactly what technical architects and product managers need.
+
+Curious about how to get started? Check out our [Happy MCP Stack documentation](https://docs.mcp.com.ai/) for a quick guide on turning your OpenAPI specs into MCP tools. Or, if you want to see it in action, try our [chatMCP](https://chat.mcp.com.ai) and [runMCP](https://run.mcp.com.ai) or watch our [demo videos](https://go.rebelion.la/chatmcp-demos) to see how easy it is to integrate AI agents with existing APIs using MCP. You can also join our community on [Discord](https://discord.gg/EpHzbPee) to experience the power of AI agents using MCP tools directly.
+
+[Drop us a line](https://go.rebelion.la/contact-us) if you have questions or want to collaborate on MCP projects. We're excited to see how the community will leverage this protocol to build innovative AI applications.
+
+Let's build the future of AI integration together! Go Rebels! ✊🏽
+
+## Additional Resources
+
+* [Model Context Protocol (MCP) Official Site](https://modelcontextprotocol.io/)
+    
+* [HAPI Server GitHub Repository](https://github.com/la-rebelion/hapimcp)
+    
+* [runMCP GitHub Repository](https://github.com/la-rebelion/runmcp)
+    
+* [chatMCP GitHub Repository](https://github.com/la-rebelion/chatmcp)
+    
+* [Happy MCP Stack Documentation](https://docs.mcp.com.ai/)
+    
+* [MCP Quickstart Guide](https://modelcontextprotocol.io/quickstart/client)
+    
+* [HAPI Server Demo Video](https://youtu.be/RGgFJcZ_PA4)
+    
+* [MCP Community Forum](https://community.mcp.com.ai/)

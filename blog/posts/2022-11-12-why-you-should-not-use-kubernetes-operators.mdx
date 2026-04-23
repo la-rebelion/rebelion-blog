@@ -1,0 +1,83 @@
+---
+title: Why you should not use Kubernetes Operators
+description: I've been working with Kubernetes for quite some time and have tried several Operators. The standard ones like kube-proxy, kube-DNS, etc work fine but the ones that require privile
+date: 2022-11-12T16:19:17.000Z
+slug: why-you-should-not-use-kubernetes-operators
+authors:
+  - adrianescutia
+tags:
+  - sysadmin
+  - kubernetes
+  - devops
+  - operators
+image: /img/hashnode-migrated/MkNicHk90.png
+keywords:
+  - sysadmin
+  - kubernetes
+  - devops
+  - operators
+---
+
+## Introduction
+
+I've been working with Kubernetes for quite some time and have tried several Operators. The standard ones like kube-proxy, kube-DNS, etc work fine but the ones that require privileged access to the API server are problematic. This is because they make assumptions about how the cluster is configured and which RBAC rules apply (or don't apply) to function properly. In this blog post, I expose what problems arise when deploying a custom operator into an enterprise environment where RBAC/network rules may change frequently due to ongoing security audits or new policies being implemented by compliance officers
+
+## Kubernetes is easy to use
+
+Kubernetes is easy to use because it has a simple YAML file format that allows you to specify the desired state of your application. There are a lot of tools, books, and articles that can help you get started quickly. You can get started quickly, but what happens when things go wrong?
+
+Kubernetes Operators are supposed to make your life easier by automating common tasks in Kubernetes, but they also come with their own set of problems. In this article, I will share my thoughts on why I think you should not use Kubernetes Operators for your applications (at least for now).
+
+## Kubernetes Operators are also easy to use
+
+Installing and using one operator is as simple as `kubectl apply -f operator.yaml`.
+
+You can also use Kubernetes Operators to create new resources in your cluster. For example, the NGINX Ingress Controller is a popular application that allows you to expose services running on your Kubernetes cluster through a public endpoint. To do this, you need to install the NGINX Ingress Controller and then use `kubectl apply -f example-ingress.yaml` to create the resource.
+
+With just one command (kubectl apply) you can install an operator and create a new resource based on it for your Kubernetes cluster!
+
+## Unfortunately, some major problems make them unsuitable for enterprise environments
+
+Unfortunately, this is where the good news about Kubernetes Operators ends for enterprises. Some major problems make them unsuitable for enterprise environments.
+
+Specifically, Operators require privileged accounts with unrestricted access to the cluster and kubelet API server, which can be difficult to justify in today's security-focused world. Additionally, in complex network topologies with multiple private and public networks, operators may not work well or at all because they assume a single namespace per pod.
+
+### Enterprise environments have RBAC, network, and security restrictions that break most operators
+
+In an enterprise environment, RBAC (Role-based access control) and network rules have to be set up before operators can be used. This is because most operators rely on privileged accounts with unrestricted access to the cluster and they need to perform tasks like attaching pods or changing configurations.
+
+However, in a secure environment, RBAC should not be disabled by default - if someone has admin rights, they will abuse them at some point. Instead, you can set up Roles or Groups that expose only specific parts of your cluster's configuration or resources so that operators can only act within those scopes.
+
+### RBAC introduces limitations
+
+I won't go into detail about how RBAC works but suffice it to say that it puts limitations on what an account can do in a cluster and which resources it can access.
+
+RBAC is a security feature that restricts what users can do in the cluster and which resources they can access. There are many different ways to implement RBAC, but Kubernetes implements role-based access control (RBAC). Role-Based Access Control (RBAC) allows you to assign roles to users or groups of users, then grant them specific permissions on objects in your cluster by attaching those roles to those objects. For example, if you have an application called MyApp, which requires access to all Persistent Volumes (PVs) created for it in every namespace, instead of granting all PV owner privileges directly on each PV object itself (which would allow anyone with access permissions over any PV), we could instead create a role called “MyApp” that has these PV owner privileges without directly exposing them:
+
+### Similarly, network rules introduce more limitations
+
+It's worth noting that network rules allow traffic from one pod/service to another pod/service only if a label selector matches or if there is an "allow" rule explicitly defining how traffic flows in the cluster. Operators must be able to create and modify network rules and labels.
+
+### Operators require unrestricted access to the Kubernetes API server
+
+In addition, almost all operators require unrestricted access to the Kubernetes API server to be able to manage resources such as Deployments, ConfigMaps, etc. This means that they can create and delete resources, modify existing ones and read the state of any resource in the cluster. In other words: they have full control over your cluster!
+
+To use an operator effectively, you need to grant it these privileges — otherwise, it will not work properly. The solution for this is another layer of complexity as you now have multiple entities that are responsible for different parts of your Kubernetes infrastructure (i.e., Operator -> Deployment).
+
+### Enterprises often have complex network topologies
+
+Enterprises often have complex network topologies with multiple private and public networks with cross-network communication requiring special configs (VPNs or NAT gateways). Kubernetes doesn't provide a way to handle these situations. It's recommended that you use a strong networking tool like Weave as a virtual network fabric for your clusters instead of trying to manage it yourself in Kubernetes.
+
+## Conclusion
+
+Kubernetes Operators are a great way for developers to manage their applications, but they have significant limitations in enterprise environments. They rely on privileged accounts with unrestricted access to the cluster and often require unrestricted access to the Kubernetes API server. They also break RBAC rules by making changes without requiring approval from higher-level administrators. Enterprise solution vendors and ISVs should avoid using these tools unless they are willing to make major modifications to their RBAC policies and network topology.
+
+Security is one of the most important assets in Enterprises, enforcing Zero Trust policies, hence, is the main reason to avoid operators as a rule of thumb unless you know what you're doing. If you are in a situation where operators are the only way to manage your clusters, please be aware that you will have to take extra care of security. 
+
+---
+
+Rebels are disrupters — they want to change things, and bring new insights and possibilities. ✊🏼
+
+Join to "La Rebelion" community [here](/subscribe) to receive updates and insights about the cause, [Kubernetes interactive lessons](https://rebelion.la/interactive-kubernetes-training) available, or register to `helmee` [beta](https://rebelion.la/helmee-early-adopters).
+
+[Share your thoughts](https://share.hsforms.com/17VFn1iGSTYqS173v6kh45gcpdfr) and improvements with us!

@@ -1,0 +1,219 @@
+---
+title: Elevating Log Monitoring Efficiency
+description: 'Restricting both ingress and egress traffic in big organizations serves several key purposes:'
+date: 2023-12-14T22:01:05.000Z
+slug: elevating-log-monitoring-efficiency
+authors:
+  - adrianescutia
+tags:
+  - monitoring
+  - devops
+  - sre
+  - scripting
+image: /img/hashnode-migrated/b41bf3be-7a66-48b5-a374-816b018b38d3.png
+keywords:
+  - monitoring
+  - devops
+  - sre
+  - scripting
+---
+
+Restricting both ingress and egress traffic in big organizations serves several key purposes:
+
+* It prevents the spread of malware and viruses.
+    
+* It prevents data exfiltration.
+    
+* It prevents unauthorized access to sensitive data and sensitive systems.
+    
+
+And, regarding restricted access, we may face a lack of access to tools like Grafana, ELK, and similar monitoring and troubleshooting tools, this often involves a balance between security concerns and the need for operational efficiency. In many cases, the security concerns are not well understood by users, and the companies do not understand the operational efficiency. In other words, the security concerns are often overblown, and the operational efficiency is often underestimated.
+
+**I will help you with the operational efficiency concerns**. Picture this, an environment with multiple server replicas, and you need to troubleshoot a problem, you need to access the logs of a specific group of servers, and you need to access the logs of a specific application. How do you do that? Using multiple SSH sessions on multiple terminals simultaneously? That is not efficient.
+
+Using a single SSH session and grep to filter the logs, using tail to follow the logs, using awk or sed to filter the logs, using less to paginate the logs, and using `tmux` to split the terminal? That is not efficient either. In another post, I will show you how to create a local stack to index and search the logs, but for now, I will show you how to use a single SSH session to access the logs of multiple servers and multiple applications simultaneously.
+
+## Log Monitoring in DevOps and SRE: A Complex Challenge
+
+Navigating the complexities of log monitoring within the realms of DevOps and Site Reliability Engineering (SRE) demands innovative solutions, efficiently monitoring logs across multiple Virtual Machines (VMs) is a common challenge. This blog post delves into a streamlined approach utilizing a Bash script, addressing the unique needs and challenges faced by professionals in the DevOps and SRE spheres.
+
+## The Role of Log Monitoring in DevOps and SRE
+
+Log monitoring is a critical component of DevOps and SRE practices. It enables practitioners to gain insights into system performance, identify errors, and optimize system reliability. In the context of DevOps and SRE, log monitoring is a key component of the following:
+
+### The Challenge in DevOps and SRE:
+
+DevOps and SRE practitioners are often tasked with the intricate responsibility of overseeing log data across diverse virtual environments. Manual log monitoring across multiple Virtual Machines (VMs) can hinder the speed and precision required in these dynamic fields. This challenge necessitates an automated solution to align with the principles of efficiency and reliability central to DevOps and SRE methodologies.
+
+## Why Automation is Pivotal in DevOps and SRE
+
+Automation is a key tenet of DevOps and SRE. It enables practitioners to streamline processes, enhance efficiency, and optimize system reliability. In the context of log monitoring, automation is pivotal in DevOps and SRE for the following reasons:
+
+1. **Agile Responsiveness:** Manually connecting to each VM and tailing logs is a tedious process. Automation in log monitoring ensures agile responsiveness to evolving system demands, a key tenet in both DevOps and SRE practices.
+    
+2. **Error Mitigation:** In the fast-paced world of DevOps, errors in log monitoring can lead to significant downtimes. Automated solutions reduce the risk of human errors, enhancing system reliability.
+    
+3. **Continuous Improvement:** A scripted solution provides a structured and organized workflow. DevOps and SRE emphasize continuous improvement automating log monitoring across multiple VMs that provides a foundation for consistently refining and optimizing system performance.
+    
+
+## Demo
+
+<MediaEmbed url="https://youtu.be/WfmgUoI5dcg" />
+
+## The Solution: Streamlining Log Monitoring with Bash Scripting
+
+Our proposed solution involves leveraging the power of Bash scripting to seamlessly address the complexities of log monitoring in DevOps and SRE contexts. Let's delve into the specifics:
+
+**1\. Parameterized Credentials for Enhanced Security:**
+
+* The script ensures security by either prompting for credentials interactively or accepting them as parameters, aligning with the security-first approach of DevOps and SRE.
+    
+
+**2\. Agile Configuration Management:**
+
+* VM addresses and log file paths are easily configurable using arrays, offering DevOps and SRE professionals the flexibility to adapt the script to the unique characteristics of their environments.
+    
+
+**3\. SSH and sshpass for Secure Automation:** (optional)
+
+* Secure automation is paramount in DevOps and SRE. The script utilizes SSH for connection and `sshpass` to facilitate password input securely, adhering to the robust security standards of these practices.
+    
+
+**4\. Precision in Log Monitoring:**
+
+* The script employs the `tail` command to provide precision in log monitoring. DevOps and SRE professionals can effortlessly tailor the script to their specific monitoring requirements.
+    
+
+## Conclusion
+
+In the ever-evolving landscape of DevOps and Site Reliability Engineering, the challenge of efficient log monitoring calls for innovative solutions. Our Bash script, tailored to the needs of DevOps and SRE professionals, offers a robust, secure, and agile approach. By embracing automation, practitioners can align with the core principles of these methodologies, fostering a culture of efficiency, reliability, and continuous improvement in log monitoring practices. Elevate your log monitoring game and empower your DevOps and SRE teams with this adaptable solution.
+
+*Optimize your log monitoring for the dynamic demands of DevOps and SRE. Implement the Bash script and embrace a future where log monitoring aligns seamlessly with the ethos of agile, responsive, and reliable system management.*
+
+In future posts, I will experiment with an option to enable you to filter the logs in your local machine, so you don't need to connect to the VMs every time you need to troubleshoot an issue, you will be able to filter the logs, you can do it from your local machine, and I will also share a video of how to do it. You won't want to miss it, for that reason don't forget to subscribe to my [newsletter](https://sendfox.com/LaRebelion), and follow me on [Twitter](https://twitter.com/LaRebelionLabs), [LinkedIn](https://www.linkedin.com/in/adrianescutia/), and [YouTube](https://www.youtube.com/@LaRebelion).
+
+## Hands-on! The Script to Streamline Log Monitoring Across Multiple VMs
+
+```bash
+#!/bin/bash
+# log-monitoring-bash-script.sh
+
+# Prompt for username and password if not provided
+read -p "Enter username: " username
+#read -s -p "Enter password: " password
+echo
+
+# Define VM addresses and corresponding log file paths
+vms=("vm1.example.com" "vm2.example.com" "vm3.example.com" "vm4.example.com")
+log_paths=("/path/to/log1.log" "/path/to/log2.log" "/path/to/log3.log" "/path/to/log4.log")
+
+# Create an array to store background process IDs
+pids=()
+
+# Iterate through VMs and tail log files simultaneously
+for ((i=0; i<${#vms[@]}; i++)); do
+    echo "Logs from ${vms[i]} - ${log_paths[i]}:"
+    #sshpass -p "$password" ssh -n -f ${username}@${vms[i]} "tail -f ${log_paths[i]}" &
+    ssh -n -f ${username}@${vms[i]} "tail -f ${log_paths[i]}" &
+
+    # Store the background process ID
+    pids+=($!)
+done
+
+# Wait for all background processes to finish (manually interrupt to stop)
+wait "${pids[@]}"
+```
+
+### An enhanced version of the script
+
+**Download an improved one** from [here](https://go.rebelion.la/log-monitoring-bash-script), this one has a few more features like:
+
+* **Parameterized Credentials for Enhanced Security:** The script ensures security by either prompting for credentials interactively or accepting them as parameters, aligning with the security-first approach of DevOps and SRE.
+    
+* **Properties File for Agile Configuration Management:** VM addresses and log file paths are easily configurable using a properties file, offering DevOps and SRE professionals the flexibility to adapt the script to the unique characteristics of their environments.
+    
+* `sshpass`: Secure automation is paramount in DevOps and SRE. The script utilizes `sshpass` to facilitate password input securely, adhering to the robust security standards of these practices. This combination, SSH and `sshpass` ensures secure and automated access.
+    
+
+#### The environment file
+
+```bash
+# .env file for log monitoring script
+
+# Define your username
+USERNAME=your_username
+
+# Define your password
+PASSWORD=your_password
+
+# Define VM addresses and corresponding log file paths
+VMS=("vm1.example.com" "vm2.example.com" "vm3.example.com" "vm4.example.com")
+LOG_PATHS=("/path/to/log1.log" "/path/to/log2.log" "/path/to/log3.log" "/path/to/log4.log")
+```
+
+Save this content into a file named `.env` in the same directory as your script. The script will then automatically load these configurations if the -f option is not provided.
+
+#### Usage of Enhanced Version
+
+This script now accepts optional command-line arguments (`-u, -p, -v, -l, -f`) to set the username, password, VMs, log paths, and environment file. If not provided, it prompts the user for the username and password. The environment file (default: .env) can be used to define these properties, and the script will load it for validation.
+
+The script includes an optional `-s` flag to use `sshpass`. If the user specifies this flag and `sshpass` is not installed, it will display an error message. If the flag is not used, the script will use regular ssh for the connections.
+
+## `sshpass` - A utility for non-interactive SSH password authentication
+
+`sshpass` is a utility that allows you to provide a password to the `ssh` command through non-interactive means. It's particularly useful in scripts or automated processes where you need to log in to remote machines via SSH without user interaction. You can install it on Ubuntu/Debian with the following command:
+
+```bash
+sudo apt install sshpass
+```
+
+When you connect to a remote machine using `ssh`, it typically prompts you for a password. This interactive nature can be a hindrance in automated scripts. `sshpass` comes into play by allowing you to supply the password directly as part of the command or from a file.
+
+Here's a basic example of using `sshpass` to connect to a remote machine via `ssh`:
+
+```bash
+sshpass -p 'your_password' ssh user@hostname
+```
+
+In this example, `sshpass` is used to provide the password ('your\_password') to the `ssh` command, enabling a non-interactive SSH login.
+
+It's important to note that using password-based authentication in scripts is generally considered less secure compared to using **SSH keys**.
+
+While **SSH keys** are generally the preferred method for authentication due to their security advantages, there are scenarios where using keys might be less practical:
+
+**Automated Tasks with Limited Access:**
+
+In situations where a script needs to automate tasks on a remote server but has limited access to modify or manage SSH key configurations, using a password may be a more straightforward option.
+
+**Temporary Access Provisioning:**
+
+When providing temporary access to a script or automated process, managing keys might be less practical than providing a temporary password. This can be relevant in certain dynamic environments or scenarios with frequent access changes.
+
+**Legacy Systems:**
+
+On older systems or platforms that do not support modern SSH key authentication methods, using passwords might be the only feasible option.
+
+**Emergency Recovery Scenarios:**
+
+In emergency scenarios where immediate access is required and the usual SSH key infrastructure is unavailable or compromised, using a password might be a quicker way to gain access for recovery purposes. It's crucial to note that while there might be situations where passwords are more practical, using SSH keys remains a more secure and recommended practice. Keys provide stronger authentication, better resistance against brute-force attacks, and improved automation capabilities without compromising security. Always assess the specific security requirements and constraints of your environment when choosing the authentication method.
+
+## Bonus: Launch Multipass, just in case you need it
+
+```bash
+# bash shell (Linux, macOS, WSL)
+for i in {1..4}; do multipass launch --name vm${i} -c 1 -m 128M -d 5G; done
+# PowerShell (Windows)
+1..4 | ForEach-Object { multipass launch --name vm$_ -c 1 -m 128M -d 5G }
+# command prompt (Windows)
+for /L %i in (1,1,4) do multipass launch --name vm%i -c 1 -m 1G -d 5G
+
+# You can also create a VM with a specific cloud-init file, here the "hard" way:
+sudo adduser rebel
+sudo usermod -aG sudo rebel
+sudo vi /etc/ssh/sshd_config
+PasswordAuthentication yes
+sudo systemctl restart sshd
+#sudo su - rebel
+```
+
+🐧 Enjoy coding, enjoy life! ☁️ 🚀
