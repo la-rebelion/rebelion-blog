@@ -1,6 +1,6 @@
 {
-  "name": "new-website",
-  "version": "0.0.0",
+  "name": "la-rebelion-blog",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",

@@ -262,8 +262,8 @@ img {
 
 .lr-home-hero__copy h1,
 .lr-subscribe-hero h1 {
-  font-size: clamp(3.4rem, 8vw, 6.8rem);
-  max-width: 10.2ch;
+  font-size: clamp(2.4rem, 5vw, 4.4rem);
+  max-width: 20ch;
   margin-top: 0.65rem;
 }
 
@@ -354,7 +354,7 @@ img {
   left: 50%;
   max-width: 180px;
   position: absolute;
-  top: 19%;
+  top: 9%;
   transform: translateX(-50%);
 }
 
@@ -364,7 +364,7 @@ img {
   border-radius: 24px;
   bottom: 1.4rem;
   left: 1.4rem;
-  max-width: min(92%, 380px);
+  max-width: min(92%, 400px);
   padding: 1.1rem 1.2rem;
   position: absolute;
 }
@@ -673,8 +673,9 @@ img {
 
 .lr-newsletter-note {
   color: var(--lr-muted);
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   margin: 0;
+  margin-top: 0.5rem;
 }
 
 .lr-media-embed {

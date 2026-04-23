@@ -23,8 +23,12 @@ export default function NewsletterPanel({
         .join(' ')}>
       <div className="lr-newsletter__copy">
         <span className="lr-eyebrow">Newsletter</span>
-        <h2>{newsletter.title}</h2>
-        <p>{newsletter.description}</p>
+        {!compact ? (
+          <>
+            <h2>{newsletter.title}</h2>
+            <p>{newsletter.description}</p>
+          </>
+        ) : null}
       </div>
       <div className="lr-newsletter__form">
         <NewsletterForm compact={compact} />

@@ -95,7 +95,7 @@ function BlogListPageContent(props: Props): ReactNode {
           <Reveal className="lr-home-hero__stage" delay={120}>
             <div className="lr-signal-card">
               <div className="lr-signal-card__grid" />
-              <img className="lr-signal-card__mark" src="/img/brand/logo-mark.svg" alt="" />
+              <img className="lr-signal-card__mark" src="/img/brand/la-rebelion-dynamic.png" alt="La Rebelion Logo Dynamic" />
               {latestPost ? (
                 <div className="lr-signal-card__preview">
                   <span className="lr-eyebrow">Latest dispatch</span>
