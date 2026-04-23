@@ -1,6 +1,8 @@
+// @note: This form is structured as static HTML for HubSpot compliance
+// We use inline preventDefault in the form element to avoid navigation while allowing HubSpot to track
+// See: https://knowledge.hubspot.com/forms/use-non-hubspot-forms
 import React, {startTransition, useState} from 'react';
 import {ArrowTipIcon} from '@site/src/components/icons';
-import {useSiteData} from '@site/src/components/site';
 
 type NewsletterFormProps = {
   compact?: boolean;
@@ -11,18 +13,17 @@ export default function NewsletterForm({
   compact = false,
   onSuccess,
 }: NewsletterFormProps) {
-  const {newsletter} = useSiteData();
   const [email, setEmail] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
 
-  function handleSubmit() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     setShowThankYou(true);
     setTimeout(() => {
       setShowThankYou(false);
       onSuccess?.();
-      // clear the email field after submission
       startTransition(() => setEmail(''));
-    }, 5000);
+    }, 3000);
   }
 
   return (
@@ -33,17 +34,12 @@ export default function NewsletterForm({
           <p>We'll keep you updated on the latest news and insights.</p>
         </div>
       ) : (
-        <form
-          method="GET"
-          action={newsletter.subscribeUrl}
-          target="_blank"
-          className="lr-newsletter-form"
-          onSubmit={handleSubmit}>
+        <form method="POST" action="#" className="lr-newsletter-form" onSubmit={handleSubmit}>
           <label className="lr-newsletter-field">
             <span className="sr-only">Email address</span>
             <input
               type="email"
-              name={newsletter.emailParam}
+              name="email"
               value={email}
               required
               placeholder="you@workshop.dev"
