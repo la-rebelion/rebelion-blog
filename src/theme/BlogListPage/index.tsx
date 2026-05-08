@@ -64,7 +64,7 @@ function BlogListPageContent(props: Props): ReactNode {
         <section className="lr-home-hero">
           <Reveal className="lr-home-hero__copy">
             <span className="lr-eyebrow">La Rebelion Labs</span>
-            <h1>Sharp writing for builders who refuse default paths.</h1>
+            <h1>Builders who refuse default paths.</h1>
             <p>{brand.summary}</p>
             <div className="lr-hero-actions">
               {latestPost ? (
@@ -77,7 +77,7 @@ function BlogListPageContent(props: Props): ReactNode {
                 Browse archive
               </Link>
             </div>
-            {/* <div className="lr-stat-row">
+            <div className="lr-stat-row">
               <div className="lr-stat-card">
                 <strong>{metadata.totalCount}</strong>
                 <span>Articles published</span>
@@ -90,7 +90,7 @@ function BlogListPageContent(props: Props): ReactNode {
                 <strong>{topTags.length}</strong>
                 <span>Core topic lanes</span>
               </div>
-            </div> */}
+            </div>
           </Reveal>
           <Reveal className="lr-home-hero__stage" delay={120}>
             <div className="lr-signal-card">

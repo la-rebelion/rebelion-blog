@@ -4,7 +4,7 @@ description: "As AI agents become integral to enterprise workflows, the need for
 authors: [adrianescutia]
 tags: [AI, Agents, Infrastructure, My Clawster, Clawne Me, Enterprise AI, Kubernetes, DevOps, Security, Governance]
 keywords: [AI agents, managed agent infrastructure, My Clawster, Clawne Me, enterprise AI, Kubernetes, DevOps, security, governance]
-image: /img/blog/my-clawster-banner.png
+image: /img/blog/managed-agent-infrastructure.png
 date: 2026-05-03T12:00:00.000Z
 ---
 

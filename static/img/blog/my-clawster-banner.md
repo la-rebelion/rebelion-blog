@@ -39,7 +39,7 @@ Left section: A hexagonal network diagram on a very dark green-black background 
 
 Right section: Bold typographic layout. Large neon yellow-green text reading "MANAGED AGENT" and below it in large white text "INFRASTRUCTURE". Under that: "MY CLAWSTER · CLAWNE ME" in medium green, a neon-bordered rectangle with "CONTROLLED INTELLIGENCE" inside, and tiny tag keywords at the bottom.
 
-Style: Underground tech collective aesthetic, dark industrial, high contrast, neon accents on dark background.
+Style: Underground tech collective aesthetic, dark industrial, high contrast, neon #C9FF00 accents on dark background.
 ```
 
 ---
