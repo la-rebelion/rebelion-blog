@@ -1,4 +1,6 @@
-# Website
+# La Rebelion Labs Website
+
+Migrated from the old website Hashnode-based to a new one built with Docusaurus. This template is designed to be easily customizable for any project under La Rebelion Labs.
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
@@ -39,3 +41,19 @@ GIT_USER=<Your GitHub username> yarn deploy
 ```
 
 If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+
+La Rebelion Labs - https://rebelion.la
+
+Color System
+- Primary: Deep black / charcoal
+- Accent: Electric green (#d0de0b)
+
+Gradient:
+#d0de0b
+#69cb52
+#00ae79
+#008d89
+#006a7c
+#2f4858
+#1b1b1b
+#000000

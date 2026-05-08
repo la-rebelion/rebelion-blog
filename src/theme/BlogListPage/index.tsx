@@ -77,7 +77,7 @@ function BlogListPageContent(props: Props): ReactNode {
                 Browse archive
               </Link>
             </div>
-            <div className="lr-stat-row">
+            {/* <div className="lr-stat-row">
               <div className="lr-stat-card">
                 <strong>{metadata.totalCount}</strong>
                 <span>Articles published</span>
@@ -90,7 +90,7 @@ function BlogListPageContent(props: Props): ReactNode {
                 <strong>{topTags.length}</strong>
                 <span>Core topic lanes</span>
               </div>
-            </div>
+            </div> */}
           </Reveal>
           <Reveal className="lr-home-hero__stage" delay={120}>
             <div className="lr-signal-card">

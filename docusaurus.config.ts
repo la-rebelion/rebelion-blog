@@ -91,6 +91,25 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  // to ignore webpack warnings from dependencies that we don't control and that are not ESM‑compliant (e.g. vscode-languageserver-types)
+  plugins: [
+    function suppressThirdPartyWebpackWarnings() {
+      return {
+        name: 'suppress-third-party-webpack-warnings',
+        configureWebpack() {
+          return {
+            ignoreWarnings: [
+              {
+                module: /vscode-languageserver-types[\\/]lib[\\/]umd[\\/]main\.js$/,
+                message:
+                  /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
+              },
+            ],
+          };
+        },
+      };
+    },
+  ],
 
   themeConfig: {
     image: 'img/brand/og-cover.png',
@@ -117,6 +136,7 @@ const config: Config = {
         {to: '/', label: 'Latest', position: 'left'},
         {to: '/tags', label: 'Topics', position: 'left'},
         {to: '/archive', label: 'Archive', position: 'left'},
+        {to: '/sponsor', label: 'Sponsor', position: 'right'},
         {to: '/subscribe', label: 'Newsletter', position: 'right'},
         {
           href: 'https://github.com/la-rebelion',
@@ -133,6 +153,26 @@ const config: Config = {
       {name: 'theme-color', content: '#000000'},
       {name: 'twitter:card', content: 'summary_large_image'},
     ],
+    algolia: {
+      // The application ID provided by Algolia
+      appId: 'IWEZFBB82X',
+      // Public API key: it is safe to commit it
+      apiKey: '19cbd092be35d848a2645241f4538018',
+      indexName: 'La Rebelon Labs',
+      // Optional: see doc section below
+      contextualSearch: true,
+      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+      externalUrlRegex: 'clawster\\.my|mcp\\.com\\.ai',
+      // Optional: Algolia search parameters
+      searchParameters: {},
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+      // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+      insights: false,
+      // Optional: whether you want to use the new Ask AI feature (undefined by default)
+      askAi: 'YOUR_ALGOLIA_ASK_AI_ASSISTANT_ID',
+      //... other Algolia params
+    },
   } satisfies Preset.ThemeConfig,
   scripts: [
     {
