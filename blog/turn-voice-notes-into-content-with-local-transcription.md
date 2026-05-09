@@ -4,7 +4,7 @@ description: "Learn how to use a local AI transcription tool, to transform voice
 slug: "/ai/local-ai-transcription-vibe"
 authors: [adrianescutia]
 tags: [AI, Transcription, Local AI, Developer Tools, Productivity, Content Creation, Whisper, Voice Notes, MCP, DevOps]
-image: /img/blog/vibe-local-transcription-banner.png
+image: /img/blog/voice-notes-transcription.png
 date: 2026-05-02T22:49:45.607Z
 ---
 

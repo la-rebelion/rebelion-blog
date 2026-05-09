@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated_at": "2026-05-07T00:00:00Z",
-    "version": "1.0.0"
+    "updated_at": "2026-05-09T00:00:00Z",
+    "version": "1.1.0"
   },
   "projects": [
     {
@@ -11,6 +11,7 @@
       "status": "beta",
       "type": "SaaS",
       "version": "0.9.0",
+      "license": "SaaS ToS",
       "tags": ["ai", "assistant", "cloud", "mcp"],
       "featured": true,
       "githubUrl": "https://github.com/my-clawster/my-clawster",
@@ -26,6 +27,7 @@
       "status": "beta",
       "type": "CLI + SaaS",
       "version": "0.7.1",
+      "license": "LR Community",
       "tags": ["api", "mcp", "gateway", "openapi"],
       "featured": true,
       "githubUrl": "https://github.com/la-rebelion/hapimcp",
@@ -35,18 +37,20 @@
       "icon": "🚀"
     },
     {
-      "id": "k1s",
-      "name": "K1s",
-      "description": "Serverless Kubernetes cluster simulator with zero installation and instant startup. Perfect for learning, testing, and CI environments.",
+      "id": "mcp-ai",
+      "name": "MCP AI",
+      "description": "Model Context Protocol for AI agents. Standardized interface to create and manage MCPs that serve as context providers for AI agents across various applications.",
       "status": "beta",
-      "type": "SaaS",
-      "version": "0.1.0",
-      "tags": ["kubernetes", "TUI", "devops"],
+      "type": "SaaS + CLI",
+      "version": "0.7.1",
+      "license": "LR Community",
+      "tags": ["mcp", "cloud", "ai", "provisioning"],
       "featured": false,
-      "githubUrl": "https://github.com/la-rebelion/k1ssh",
-      "docsUrl": "https://k1s.sh/docs",
-      "saasUrl": "https://k1s.sh",
-      "icon": "☸"
+      "githubUrl": "https://github.com/mcp-com-ai",
+      "docsUrl": "https://docs.mcp.com.ai",
+      "saasUrl": "https://mcp.com.ai",
+      "installCommand": null,
+      "icon": "☁️"
     },
     {
       "id": "apicove",
@@ -55,11 +59,30 @@
       "status": "beta",
       "type": "SaaS + CLI",
       "version": "0.1.0",
+      "license": "SaaS ToS",
       "tags": ["api", "openapi", "testing", "documentation"],
+      "featured": false,
       "githubUrl": "https://github.com/la-rebelion/apicove",
       "docsUrl": null,
       "saasUrl": "https://apicove.com",
+      "installCommand": null,
       "icon": "🔌"
+    },
+    {
+      "id": "clawne-me",
+      "name": "Clawne Me",
+      "description": "Personal AI agent that learns from your interactions and automates tasks across your digital life. A true digital assistant that evolves with you.",
+      "status": "alpha",
+      "type": "SaaS",
+      "version": "0.1.0",
+      "license": "SaaS ToS",
+      "tags": ["ai", "personal assistant", "automation", "agents"],
+      "featured": true,
+      "githubUrl": null,
+      "docsUrl": null,
+      "saasUrl": "https://clawne.me",
+      "installCommand": null,
+      "icon": "♾️"
     },
     {
       "id": "agentico",
@@ -68,6 +91,7 @@
       "status": "alpha",
       "type": "SaaS",
       "version": "0.1.0",
+      "license": "SaaS ToS",
       "tags": ["ai", "devops", "automation", "agents"],
       "featured": false,
       "githubUrl": null,
@@ -83,6 +107,7 @@
       "status": "alpha",
       "type": "SaaS",
       "version": "0.2.0",
+      "license": "SaaS ToS",
       "tags": ["api", "codegen", "openapi", "sdk"],
       "featured": false,
       "githubUrl": "https://github.com/la-rebelion/apicove-studio",
@@ -98,6 +123,7 @@
       "status": "alpha",
       "type": "SaaS",
       "version": "0.1.0",
+      "license": "SaaS ToS",
       "tags": ["ai", "infrastructure", "nlp", "automation"],
       "featured": false,
       "githubUrl": null,
@@ -107,34 +133,36 @@
       "icon": "💬"
     },
     {
-      "id": "mcp-ai",
-      "name": "MCP AI",
-      "description": "Model Context Protocol for AI agents. Standardized interface to create, and manage MCPs that serve as context providers for AI agents across various applications.",
-      "status": "beta",
-      "type": "SaaS + CLI",
-      "version": "0.7.1",
-      "tags": ["mcp", "cloud", "ai", "provisioning"],
-      "featured": true,
-      "githubUrl": "https://github.com/mcp-com-ai",
-      "docsUrl": "https://docs.mcp.com.ai",
-      "saasUrl": "https://mcp.com.ai",
-      "installCommand": null,
-      "icon": "☁️"
-    },
-    {
       "id": "sqlite2er",
       "name": "sqlite2er",
       "description": "Convert SQLite database schemas into Entity-Relationship diagrams. Reads .db or .sql files and outputs a visual ERD for database design and documentation.",
       "status": "labs",
       "type": "SaaS",
       "version": "0.1.0",
+      "license": "Open Source",
       "tags": ["sqlite", "database", "erd", "diagrams", "cli"],
-      "featured": true,
+      "featured": false,
       "githubUrl": "https://github.com/la-rebelion/sqlite2er",
       "docsUrl": null,
-      "saasUrl": null,
+      "saasUrl": "https://sqlite2er.rebelion.la",
       "installCommand": "bun install -g sqlite2er",
       "icon": "🗄️"
+    },
+    {
+      "id": "gyat",
+      "name": "GYAT",
+      "description": "Go-Through-Your-API-Tool. CLI for interactively exploring and testing APIs defined by OpenAPI specs. cURL for humans, HAPI MCP precursor.",
+      "status": "labs",
+      "type": "CLI",
+      "version": "0.1.0",
+      "license": "LR Community",
+      "tags": ["api", "cli", "openapi", "devex"],
+      "featured": false,
+      "githubUrl": "https://github.com/la-rebelion/gyat",
+      "docsUrl": "https://apicove.com/docs",
+      "saasUrl": "https://apicove.com/gyat",
+      "installCommand": "curl -sSL https://get.rebelion.la/install/gyat | sh",
+      "icon": "🔧"
     },
     {
       "id": "k1sb-qbot",
@@ -143,6 +171,7 @@
       "status": "alpha",
       "type": "CLI",
       "version": "0.1.0",
+      "license": "LR Community",
       "tags": ["kubernetes", "bot", "automation", "cli"],
       "featured": false,
       "githubUrl": "https://github.com/la-rebelion/qbot",
@@ -152,19 +181,20 @@
       "icon": "🤖"
     },
     {
-      "id": "gyat",
-      "name": "GYAT",
-      "description": "Go-Through-Your-API-Tool. CLI for interactively exploring and testing APIs defined by OpenAPI specs. cURL for humans, HAPI MCP precursor.",
-      "status": "labs",
-      "type": "CLI",
+      "id": "k1s",
+      "name": "K1s",
+      "description": "Serverless Kubernetes cluster simulator with zero installation and instant startup. Superseded by newer tooling.",
+      "status": "deprecated",
+      "type": "SaaS",
       "version": "0.1.0",
-      "tags": ["git", "cli", "automation", "devex"],
+      "license": "SaaS ToS",
+      "tags": ["kubernetes", "TUI", "devops"],
       "featured": false,
-      "githubUrl": "https://github.com/la-rebelion/gyat",
-      "docsUrl": "https://apicove.com/docs",
-      "saasUrl": "https://apicove.com/gyat",
-      "installCommand": "curl -sSL https://get.rebelion.la/install/gyat | sh",
-      "icon": "🔧"
+      "githubUrl": "https://github.com/la-rebelion/k1ssh",
+      "docsUrl": "https://k1s.sh/docs",
+      "saasUrl": "https://k1s.sh",
+      "installCommand": null,
+      "icon": "☸"
     }
   ]
 }

@@ -74,7 +74,7 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
         gtag: {
-          trackingID: 'G-JJJXXEZWK9',
+          trackingID: 'G-5QXB4Y9B0R',
         },
         sitemap: {
           lastmod: 'date',

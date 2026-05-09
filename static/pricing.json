@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "updated_at": "2026-05-09T00:00:00Z",
+    "version": "1.0.0"
+  },
+  "tiers": [
+    {
+      "id": "lurker",
+      "alias": "Lurker",
+      "alias_color": "#69cb52",
+      "name": "Free",
+      "price": {
+        "display": "$0",
+        "period": null,
+        "note": "forever",
+        "yearly": null,
+        "yearly_save": null
+      },
+      "everything_in": null,
+      "features": [
+        { "text": "Blog & tutorials", "included": true },
+        { "text": "OSS repos (MIT/Apache)", "included": true },
+        { "text": "SaaS (usage limits)", "included": true },
+        { "text": "Newsletter", "included": true },
+        { "text": "Repo code (LRL-CL)", "included": false },
+        { "text": "AI Skills", "included": false },
+        { "text": "Agents", "included": false },
+        { "text": "DevOps scripts", "included": false }
+      ],
+      "cta": {
+        "label": "Get Started Free",
+        "href": "https://rebelion.la",
+        "variant": "default"
+      },
+      "badge": null,
+      "secondary_badge": null,
+      "highlighted": false
+    },
+    {
+      "id": "rebel",
+      "alias": "Rebel",
+      "alias_color": "#9da29f",
+      "name": "Community",
+      "price": {
+        "display": "$9",
+        "period": "mo",
+        "note": null,
+        "yearly": "$79/yr",
+        "yearly_save": "save 26%"
+      },
+      "everything_in": "Free",
+      "features": [
+        { "text": "LRL-CL source access", "included": true },
+        { "text": "DevOps scripts & tools", "included": true },
+        { "text": "Rebel-U basics", "included": true },
+        { "text": "Community Discord", "included": true },
+        { "text": "AI Skills library", "included": false },
+        { "text": "Agents", "included": false },
+        { "text": "Early access", "included": false }
+      ],
+      "cta": {
+        "label": "Join the Rebellion",
+        "href": "https://github.com/sponsors/la-rebelion",
+        "variant": "default"
+      },
+      "badge": null,
+      "secondary_badge": null,
+      "highlighted": false
+    },
+    {
+      "id": "insurgent",
+      "alias": "Insurgent",
+      "alias_color": "#008d89",
+      "name": "Pro",
+      "price": {
+        "display": "$29",
+        "period": "mo",
+        "note": null,
+        "yearly": "$249/yr",
+        "yearly_save": "save 28%"
+      },
+      "everything_in": "Rebel",
+      "features": [
+        { "text": "Full AI Skills library", "included": true },
+        { "text": "Agents (limited quota)", "included": "partial" },
+        { "text": "Full Rebel-U library", "included": true },
+        { "text": "Early access / beta", "included": true },
+        { "text": "Async priority support", "included": true },
+        { "text": "MCP hosting quota", "included": true },
+        { "text": "Multi-seat", "included": false }
+      ],
+      "cta": {
+        "label": "Go Pro",
+        "href": "https://github.com/sponsors/la-rebelion",
+        "variant": "primary"
+      },
+      "badge": "Most popular",
+      "secondary_badge": "Insurgent",
+      "highlighted": true
+    },
+    {
+      "id": "clawster",
+      "alias": "Clawster",
+      "alias_color": "#8b5cf6",
+      "name": "Team",
+      "price": {
+        "display": "$99",
+        "period": "mo",
+        "note": "up to 5 seats",
+        "yearly": null,
+        "yearly_save": null
+      },
+      "everything_in": "Pro",
+      "features": [
+        { "text": "5 seats included", "included": true },
+        { "text": "Full agent quota", "included": true },
+        { "text": "My Clawster instances", "included": true },
+        { "text": "API access", "included": true },
+        { "text": "Monthly office hours", "included": true },
+        { "text": "SaaS ToS (auto)", "included": true },
+        { "text": "Air-gapped / on-prem", "included": false }
+      ],
+      "cta": {
+        "label": "Get Team Access",
+        "href": "https://clawster.my",
+        "variant": "default"
+      },
+      "badge": null,
+      "secondary_badge": null,
+      "highlighted": false
+    },
+    {
+      "id": "enterprise",
+      "alias": "Enterprise",
+      "alias_color": "#da7756",
+      "name": "Commercial",
+      "price": {
+        "display": "Custom",
+        "period": null,
+        "note": "contact for pricing",
+        "yearly": null,
+        "yearly_save": null
+      },
+      "everything_in": "Clawster",
+      "features": [
+        { "text": "Commercial license", "included": true },
+        { "text": "Air-gapped / on-prem", "included": true },
+        { "text": "Custom SLA", "included": true },
+        { "text": "Dedicated support", "included": true },
+        { "text": "Whitelabel option", "included": true },
+        { "text": "Unlimited seats", "included": true },
+        { "text": "Private roadmap input", "included": true }
+      ],
+      "cta": {
+        "label": "Contact Sales",
+        "href": "https://rebelion.la",
+        "variant": "default"
+      },
+      "badge": null,
+      "secondary_badge": null,
+      "highlighted": false
+    }
+  ],
+  "feature_table": {
+    "tiers": ["Lurker", "Rebel", "Insurgent", "Clawster", "Enterprise"],
+    "features": [
+      { "name": "Repo code (LRL-CL)",         "access": ["-", "✓", "✓", "✓", "✓"] },
+      { "name": "DevOps scripts & CLIs",       "access": ["-", "✓", "✓", "✓", "✓"] },
+      { "name": "Rebel-U courses",             "access": ["~", "~", "✓", "✓", "✓"] },
+      { "name": "AI Skills library",           "access": ["-", "-", "✓", "✓", "✓"] },
+      { "name": "Agent access (Clawne Me)",    "access": ["-", "-", "limited", "✓", "✓"] },
+      { "name": "runMCP / chatMCP quota",      "access": ["tiny", "~", "✓", "✓", "✓"] },
+      { "name": "My Clawster instances",       "access": ["-", "-", "-", "✓", "✓"] },
+      { "name": "API / CLI access",            "access": ["-", "-", "-", "✓", "✓"] },
+      { "name": "Office hours / 1:1",          "access": ["-", "-", "-", "monthly", "✓"] },
+      { "name": "Air-gapped / on-prem",        "access": ["-", "-", "-", "-", "✓"] }
+    ]
+  },
+  "saas_tos": {
+    "title": "SaaS ToS — free cloud tier auto-qualifies if ALL conditions met",
+    "conditions": [
+      { "label": "Max employees",           "value": "≤ 25" },
+      { "label": "Active agents / runtimes","value": "≤ 10" },
+      { "label": "Monthly requests",        "value": "≤ 100K" },
+      { "label": "Annual revenue",          "value": "≤ $1M" }
+    ]
+  }
+}
