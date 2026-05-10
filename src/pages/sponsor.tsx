@@ -1,7 +1,10 @@
+import {useState, useEffect} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import Reveal from '@site/src/components/Reveal';
 import {useSiteData} from '@site/src/components/site';
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 type SponsorMethod = {
   name: string;
@@ -10,12 +13,10 @@ type SponsorMethod = {
   note: string;
 };
 
-type TierKind = 'recurring' | 'one-time';
-
 type SponsorTier = {
   name: string;
   price: string;
-  kind: TierKind;
+  kind: 'recurring' | 'one-time';
   tagline: string;
   featured?: boolean;
   href: string;
@@ -27,136 +28,31 @@ type DebtQuadrant = {
   move: string;
 };
 
-const sponsorMethods: SponsorMethod[] = [
-  {
-    name: 'Stripe',
-    href: 'https://donate.stripe.com/8x200i6id7WfgGq4EJ7Vm01',
-    cta: 'Support via Stripe',
-    note: 'One-time or recurring — Stripe handles cards, Apple Pay, and bank transfers globally.',
-  },
-  {
-    name: 'PayPal',
-    href: 'https://www.paypal.com/donate?hosted_button_id=7CV28AHGL9ZZY',
-    cta: 'Support via PayPal',
-    note: 'Quick donation path if PayPal is already your default payment flow.',
-  },
-  {
-    name: 'GitHub Sponsors',
-    href: 'https://github.com/sponsors/la-rebelion',
-    cta: 'Sponsor on GitHub',
-    note: 'Recurring support directly inside GitHub, where most of our work lives.',
-  },
-  {
-    name: 'Buy Me a Coffee',
-    href: 'https://www.buymeacoffee.com/larebelion',
-    cta: 'Buy Me a Coffee',
-    note: 'One-time or recurring support with a platform built for creators.',
-  }
-];
+type SponsorData = {
+  meta: {updated_at: string; version: string};
+  methods: SponsorMethod[];
+  recurring_tiers: SponsorTier[];
+  one_time_tiers: SponsorTier[];
+  debt_quadrants: DebtQuadrant[];
+};
 
-const recurringTiers: SponsorTier[] = [
-  {
-    name: 'Infiltrator',
-    price: '$5 / mo',
-    kind: 'recurring',
-    tagline: 'Stay close to the experiments, no noise. The undercover reader who shows up every week.',
-    href: 'https://github.com/sponsors/la-rebelion',
-  },
-  {
-    name: 'Dissident',
-    price: '$10 / mo',
-    kind: 'recurring',
-    tagline: 'Read early, influence what gets written next. You question defaults by nature.',
-    href: 'https://github.com/sponsors/la-rebelion',
-  },
-  {
-    name: 'Rebel',
-    price: '$25 / mo',
-    kind: 'recurring',
-    tagline: 'Aligned with the vision. You believe engineering clarity beats engineering fear.',
-    featured: true,
-    href: 'https://github.com/sponsors/la-rebelion',
-  },
-  {
-    name: 'Field Commander',
-    price: '$50 / mo',
-    kind: 'recurring',
-    tagline: 'Priority Q&A, direct feedback loop. You lead from the trenches, not the slides.',
-    href: 'https://github.com/sponsors/la-rebelion',
-  },
-  {
-    name: 'Manifesto',
-    price: '$100 / mo',
-    kind: 'recurring',
-    tagline: 'Patron of the rebellion. Fund work that organizations are too scared to commission.',
-    href: 'https://github.com/sponsors/la-rebelion',
-  },
-];
-
-const oneTimeTiers: SponsorTier[] = [
-  {
-    name: 'Ammo Drop',
-    price: '$9',
-    kind: 'one-time',
-    tagline: 'Quick fuel for the next lab experiment. Covers one late night of research.',
-    href: 'https://donate.stripe.com/6oU4gybCxgsLduec7b7Vm00',
-  },
-  {
-    name: 'Field Ration',
-    price: '$20',
-    kind: 'one-time',
-    tagline: 'Keep the labs running between deployments. The post that saved you an afternoon was worth this.',
-    featured: true,
-    href: 'https://donate.stripe.com/8x200i6id7WfgGq4EJ7Vm01',
-  },
-  {
-    name: 'Break Glass',
-    price: '$50',
-    kind: 'one-time',
-    tagline: 'The one you reach for when something we wrote saved a production incident.',
-    href: 'https://donate.stripe.com/28E00icGB5O72PA7QV7Vm02',
-  },
-  {
-    name: 'Force Push',
-    price: '$100',
-    kind: 'one-time',
-    tagline: 'The rebel move. All-in support for independent, no-compromise engineering writing.',
-    href: 'https://donate.stripe.com/eVq6oGcGBfoH1Lw7QV7Vm03',
-  },
-  {
-    name: 'The Override',
-    price: '$250+',
-    kind: 'one-time',
-    tagline: 'Sponsor a specific essay, guide, or experiment. Your name in the acknowledgements.',
-    href: 'https://buy.stripe.com/dRm00icGB6Sb9dYgnr7Vm04',
-  },
-];
-
-const debtQuadrants: DebtQuadrant[] = [
-  {
-    title: 'Known Knowns',
-    focus: 'Intentional debt',
-    move: 'We expose shortcuts early, document tradeoffs, and turn pressure into conscious decisions.',
-  },
-  {
-    title: 'Unknown Knowns',
-    focus: 'Inevitable debt',
-    move: 'We track shifts in AI, platform tooling, and architecture so teams can prepare before the bill arrives.',
-  },
-  {
-    title: 'Known Unknowns',
-    focus: 'Unintentional debt',
-    move: 'We publish playbooks that reduce avoidable mistakes before they become production gravity.',
-  },
-  {
-    title: 'Unknown Unknowns',
-    focus: 'Strategic debt',
-    move: "We test bold ideas safely so innovation does not silently become tomorrow's incident queue.",
-  },
-];
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function SponsorPage() {
   const {brand} = useSiteData();
+  const [data, setData] = useState<SponsorData | null>(null);
+
+  useEffect(() => {
+    fetch('/sponsor-tiers.json')
+      .then((r) => r.json())
+      .then(setData)
+      .catch(() => {});
+  }, []);
+
+  const methods = data?.methods ?? [];
+  const recurringTiers = data?.recurring_tiers ?? [];
+  const oneTimeTiers = data?.one_time_tiers ?? [];
+  const debtQuadrants = data?.debt_quadrants ?? [];
 
   return (
     <Layout
@@ -179,28 +75,13 @@ export default function SponsorPage() {
                   "If this helped you to save time, improve, or learn something new,
                   your recognition and support will be appreciated"
                 </p>
-                {/* <div className="lr-stat-row">
-                  <div className="lr-stat-card">
-                    <strong>20h</strong>
-                    <span>Saved per platform team, per month</span>
-                  </div>
-                  <div className="lr-stat-card">
-                    <strong>4</strong>
-                    <span>Debt quadrants translated into practical delivery moves</span>
-                  </div>
-                  <div className="lr-stat-card">
-                    <strong>0</strong>
-                    <span>VC money. No paywalls. No algorithmic capture.</span>
-                  </div>
-                </div> */}
               </div>
             </Reveal>
 
             {/* ── Payment platforms ────────────────────────────────── */}
             <Reveal className="lr-sponsor-methods lr-sponsor-tier-grid" delay={80}>
-              {sponsorMethods.map((method) => (
+              {methods.map((method) => (
                 <article className="lr-sponsor-method lr-surface-card" key={method.name}>
-                  {/* <span className="lr-eyebrow lr-sponsor-tier__price">{method.name}</span> */}
                   <h2>{method.name}</h2>
                   <p>{method.note}</p>
                   <Link

@@ -22,15 +22,13 @@
         { "text": "OSS repos (MIT/Apache)", "included": true },
         { "text": "SaaS (usage limits)", "included": true },
         { "text": "Newsletter", "included": true },
-        { "text": "Repo code (LRL-CL)", "included": false },
         { "text": "AI Skills", "included": false },
-        { "text": "Agents", "included": false },
         { "text": "DevOps scripts", "included": false }
       ],
       "cta": {
         "label": "Get Started Free",
         "href": "https://rebelion.la",
-        "variant": "default"
+        "variant": "newsletter-modal"
       },
       "badge": null,
       "secondary_badge": null,
@@ -50,13 +48,12 @@
       },
       "everything_in": "Free",
       "features": [
-        { "text": "LRL-CL source access", "included": true },
+        { "text": "Full AI Skills library", "included": true },
         { "text": "DevOps scripts & tools", "included": true },
         { "text": "Rebel-U basics", "included": true },
         { "text": "Community Discord", "included": true },
-        { "text": "AI Skills library", "included": false },
-        { "text": "Agents", "included": false },
-        { "text": "Early access", "included": false }
+        { "text": "MCP hosting quota", "included": "partial" },
+        { "text": "Repo code (LRL-CL)", "included": false }
       ],
       "cta": {
         "label": "Join the Rebellion",
@@ -81,13 +78,11 @@
       },
       "everything_in": "Rebel",
       "features": [
-        { "text": "Full AI Skills library", "included": true },
-        { "text": "Agents (limited quota)", "included": "partial" },
+        { "text": "LRL-CL source access", "included": true },
         { "text": "Full Rebel-U library", "included": true },
-        { "text": "Early access / beta", "included": true },
         { "text": "Async priority support", "included": true },
-        { "text": "MCP hosting quota", "included": true },
-        { "text": "Multi-seat", "included": false }
+        { "text": "API access", "included": false },
+        { "text": "Early access / beta", "included": false }
       ],
       "cta": {
         "label": "Go Pro",
@@ -99,30 +94,27 @@
       "highlighted": true
     },
     {
-      "id": "clawster",
-      "alias": "Clawster",
+      "id": "team",
+      "alias": "Field Commander",
       "alias_color": "#8b5cf6",
       "name": "Team",
       "price": {
-        "display": "$99",
+        "display": "$49",
         "period": "mo",
-        "note": "up to 5 seats",
-        "yearly": null,
-        "yearly_save": null
+        "note": "Dev access included",
+        "yearly": "$394/yr",
+        "yearly_save": "save 33%"
       },
       "everything_in": "Pro",
       "features": [
-        { "text": "5 seats included", "included": true },
-        { "text": "Full agent quota", "included": true },
-        { "text": "My Clawster instances", "included": true },
         { "text": "API access", "included": true },
+        { "text": "Early access / beta", "included": true },
         { "text": "Monthly office hours", "included": true },
-        { "text": "SaaS ToS (auto)", "included": true },
-        { "text": "Air-gapped / on-prem", "included": false }
+        { "text": "Whitelabel option", "included": false }        
       ],
       "cta": {
         "label": "Get Team Access",
-        "href": "https://clawster.my",
+        "href": "https://github.com/sponsors/la-rebelion",
         "variant": "default"
       },
       "badge": null,
@@ -141,7 +133,7 @@
         "yearly": null,
         "yearly_save": null
       },
-      "everything_in": "Clawster",
+      "everything_in": "Team",
       "features": [
         { "text": "Commercial license", "included": true },
         { "text": "Air-gapped / on-prem", "included": true },
@@ -153,7 +145,7 @@
       ],
       "cta": {
         "label": "Contact Sales",
-        "href": "https://rebelion.la",
+        "href": "https://rebelion.la/contact",
         "variant": "default"
       },
       "badge": null,

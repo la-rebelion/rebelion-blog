@@ -6,10 +6,26 @@ import {useSiteData} from '@site/src/components/site';
 
 const STORAGE_KEY = 'lr-exit-intent-dismissed-at';
 
-export default function ExitIntentModal() {
+type ExitIntentModalProps = {
+  // Overrides the "Before you go" eyebrow when the modal is opened explicitly
+  headline?: string;
+  // Controlled mode: caller manages visibility; exit-intent logic is skipped
+  open?: boolean;
+  onClose?: () => void;
+};
+
+export default function ExitIntentModal({
+  headline,
+  open: controlledOpen,
+  onClose,
+}: ExitIntentModalProps = {}) {
   const {newsletter} = useSiteData();
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const isControlled = controlledOpen !== undefined;
+  const isOpen = isControlled ? controlledOpen : internalOpen;
+
   const cooldownMs = useMemo(
     () => newsletter.cooldownDays * 24 * 60 * 60 * 1000,
     [newsletter.cooldownDays],
@@ -20,7 +36,8 @@ export default function ExitIntentModal() {
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || window.innerWidth < 960) {
+    // Exit-intent trigger only runs in uncontrolled mode
+    if (isControlled || typeof window === 'undefined' || window.innerWidth < 960) {
       return undefined;
     }
 
@@ -40,36 +57,40 @@ export default function ExitIntentModal() {
       }
 
       hasTriggered = true;
-      setOpen(true);
+      setInternalOpen(true);
     };
 
     document.addEventListener('mouseout', handler);
     return () => document.removeEventListener('mouseout', handler);
-  }, [cooldownMs]);
+  }, [cooldownMs, isControlled]);
 
   useEffect(() => {
-    if (!open) {
+    if (!isOpen) {
       return undefined;
     }
 
     const onEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setOpen(false);
+        dismiss();
       }
     };
 
     document.addEventListener('keydown', onEscape);
     return () => document.removeEventListener('keydown', onEscape);
-  }, [open]);
+  }, [isOpen]);
 
   function dismiss() {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+    if (isControlled) {
+      onClose?.();
+    } else {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      }
+      setInternalOpen(false);
     }
-    setOpen(false);
   }
 
-  if (!mounted || !open) {
+  if (!mounted || !isOpen) {
     return null;
   }
 
@@ -88,7 +109,7 @@ export default function ExitIntentModal() {
           onClick={dismiss}>
           <CloseIcon width={18} height={18} />
         </button>
-        <span className="lr-eyebrow">Before you go</span>
+        <span className="lr-eyebrow">{headline ?? 'Before you go'}</span>
         <h2 id="lr-exit-title">{newsletter.title}</h2>
         <p>{newsletter.description}</p>
         <NewsletterForm onSuccess={dismiss} />

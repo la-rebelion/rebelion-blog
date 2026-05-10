@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import Reveal from '@site/src/components/Reveal';
+import ExitIntentModal from '@site/src/components/ExitIntentModal';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -366,7 +367,13 @@ function FeatureIcon({included}: {included: boolean | 'partial'}) {
   return <span className="lr-tier-feat-no" aria-hidden>−</span>;
 }
 
-function PricingSection({pricing}: {pricing: PricingData}) {
+function PricingSection({
+  pricing,
+  onNewsletterOpen,
+}: {
+  pricing: PricingData;
+  onNewsletterOpen: () => void;
+}) {
   return (
     <Reveal className="lr-labs-pricing-wrap" delay={40}>
       <div className="lr-labs-section__heading lr-labs-pricing__heading">
@@ -445,15 +452,26 @@ function PricingSection({pricing}: {pricing: PricingData}) {
               ))}
             </ul>
 
-            <Link
-              href={tier.cta.href}
-              className={`lr-button${
-                tier.highlighted ? ' lr-button--primary' : ''
-              } lr-labs-tier__cta`}
-              target="_blank"
-              rel="noreferrer noopener">
-              {tier.cta.label}
-            </Link>
+            {tier.cta.variant === 'newsletter-modal' ? (
+              <button
+                type="button"
+                className={`lr-button${
+                  tier.highlighted ? ' lr-button--primary' : ''
+                } lr-labs-tier__cta`}
+                onClick={onNewsletterOpen}>
+                {tier.cta.label}
+              </button>
+            ) : (
+              <Link
+                href={tier.cta.href}
+                className={`lr-button${
+                  tier.highlighted ? ' lr-button--primary' : ''
+                } lr-labs-tier__cta`}
+                target="_blank"
+                rel="noreferrer noopener">
+                {tier.cta.label}
+              </Link>
+            )}
           </article>
         ))}
       </div>
@@ -512,6 +530,7 @@ export default function LabsPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [allProjectsOpen, setAllProjectsOpen] = useState(true);
   const [archiveOpen, setArchiveOpen] = useState(false);
+  const [newsletterModalOpen, setNewsletterModalOpen] = useState(false);
   const archiveSectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -721,7 +740,10 @@ export default function LabsPage() {
             {/* ── Pricing ─────────────────────────────────────────── */}
             {pricing && (
               <section className="lr-labs-section">
-                <PricingSection pricing={pricing} />
+                <PricingSection
+                  pricing={pricing}
+                  onNewsletterOpen={() => setNewsletterModalOpen(true)}
+                />
               </section>
             )}
 
@@ -748,6 +770,12 @@ export default function LabsPage() {
           </div>
         </div>
       </main>
+
+      <ExitIntentModal
+        headline="Join the Newsletter"
+        open={newsletterModalOpen}
+        onClose={() => setNewsletterModalOpen(false)}
+      />
     </Layout>
   );
 }
