@@ -4,10 +4,122 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Fri, 08 May 2026 12:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 09 May 2026 12:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Not Just Code: Codex Can Generate Images Too]]></title>
+            <link>https://rebelion.la/ai/codex-can-generate-images</link>
+            <guid>https://rebelion.la/ai/codex-can-generate-images</guid>
+            <pubDate>Sat, 09 May 2026 12:00:00 GMT</pubDate>
+            <description><![CDATA[Discover how Codex's new image generation capabilities can transform your content creation workflow, allowing you to generate production-ready visuals directly from your editor with natural language prompts.]]></description>
+            <content:encoded><![CDATA[<p>Most developers know Codex for one thing: generating code.</p>
+<p>What surprised me recently is that <a href="https://developers.openai.com/codex/ide/features#image-generation" target="_blank" rel="noopener noreferrer" class="">Codex can generate images</a> too, directly from your editor.</p>
+<p>This feature is still flying under the radar, but it completely changed part of my content workflow.</p>
+<p>I started using Codex to create banner images for my blog posts, and honestly, it removed an entire layer of friction from my process.</p>
+<p>Before this, I had built a custom Skill that generated blog banners using SVG templates and a <code>puppeteer</code> rendering pipeline. Technically, it worked. But the workflow felt fragile:</p>
+<ul>
+<li class="">Generate the SVG</li>
+<li class="">Run the rendering script</li>
+<li class="">Tweak styles manually</li>
+<li class="">Re-render until it looked acceptable</li>
+</ul>
+<p>The biggest problem was quality. The images looked generic and lacked the visual impact I wanted for my blog. I had to spend extra time tweaking the SVG templates and styles to get something that felt right.</p>
+<p>Now I can stay inside my editor, describe what I want in natural language, and let Codex generate production-ready visuals in seconds.</p>
+<p>No switching tools.
+No rendering scripts.
+No fighting with SVG layouts.</p>
+<p>Just prompt → image.</p>
+<p>That alone makes the feature worth exploring.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-codex-image-generation-can-do">What Codex Image Generation Can Do<a href="https://rebelion.la/ai/codex-can-generate-images#what-codex-image-generation-can-do" class="hash-link" aria-label="Direct link to What Codex Image Generation Can Do" title="Direct link to What Codex Image Generation Can Do" translate="no">​</a></h2>
+<p>Codex is not limited to code generation anymore.</p>
+<p>You can now ask it to create or edit images directly from your development environment. That makes it surprisingly useful for:</p>
+<ul>
+<li class="">Blog post banners</li>
+<li class="">UI mockups</li>
+<li class="">Hero sections</li>
+<li class="">App illustrations</li>
+<li class="">Placeholder assets</li>
+<li class="">Sprite sheets</li>
+<li class="">Layout concepts</li>
+<li class="">Social media graphics</li>
+<li class="">Documentation visuals</li>
+</ul>
+<p>You can also provide a reference image and ask Codex to transform, extend, or restyle it.</p>
+<p>For developers working on frontend systems, design systems, internal tools, or content platforms, this becomes a massive productivity boost because the feedback loop becomes almost instant.</p>
+<p>Instead of opening multiple tools just to create a quick visual asset, you stay focused inside the same workflow.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="natural-language-prompts-work-surprisingly-well">Natural Language Prompts Work Surprisingly Well<a href="https://rebelion.la/ai/codex-can-generate-images#natural-language-prompts-work-surprisingly-well" class="hash-link" aria-label="Direct link to Natural Language Prompts Work Surprisingly Well" title="Direct link to Natural Language Prompts Work Surprisingly Well" translate="no">​</a></h2>
+<p>The best part is that you do not need to learn a complex syntax.</p>
+<p>You can simply describe what you want:</p>
+<blockquote>
+<p>"Create a modern cyberpunk banner for a cloud engineering article with neon purple lighting and minimal typography."</p>
+</blockquote>
+<p>Or explicitly invoke the image generation skill using:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$imagegen</span><br></div></code></pre></div></div>
+<p>That tells Codex to switch into image-generation mode directly.</p>
+<p>The results are much better than I expected for something integrated into a coding workflow.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-enable-image-generation-in-codex">How to Enable Image Generation in Codex<a href="https://rebelion.la/ai/codex-can-generate-images#how-to-enable-image-generation-in-codex" class="hash-link" aria-label="Direct link to How to Enable Image Generation in Codex" title="Direct link to How to Enable Image Generation in Codex" translate="no">​</a></h2>
+<p>Depending on your setup, image generation may still be behind an experimental feature flag.</p>
+<p>To enable it manually, update your configuration file:</p>
+<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">[features]</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">image_generation = true</span><br></div></code></pre></div></div>
+<p>File location:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">~/.codex/config.toml</span><br></div></code></pre></div></div>
+<p>You can also enable it directly from the CLI:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">codex features enable image_generation</span><br></div></code></pre></div></div>
+<p>Once enabled, you can start generating images immediately by:</p>
+<ul>
+<li class="">Using <code>$imagegen</code></li>
+<li class="">Asking naturally in prompts</li>
+<li class="">Providing reference images for edits or transformations</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters-more-than-it-seems">Why This Matters More Than It Seems<a href="https://rebelion.la/ai/codex-can-generate-images#why-this-matters-more-than-it-seems" class="hash-link" aria-label="Direct link to Why This Matters More Than It Seems" title="Direct link to Why This Matters More Than It Seems" translate="no">​</a></h2>
+<p>At first glance, image generation inside Codex feels like a "nice extra feature."</p>
+<p>It is not.</p>
+<p>This is another example of development environments becoming multimodal.</p>
+<p>The editor is evolving from:</p>
+<ul>
+<li class="">"a place where you write code"</li>
+</ul>
+<p>into:</p>
+<ul>
+<li class="">"a workspace where you build entire products."</li>
+</ul>
+<p>Code, visuals, documentation, UI ideas, and content generation are starting to happen in the same interface.</p>
+<p>That changes workflows significantly.</p>
+<p>For solo builders, startup founders, DevRel engineers, technical writers, and indie hackers, this removes operational overhead that usually breaks momentum.</p>
+<p>The biggest productivity gains in AI are not always about replacing difficult work.</p>
+<p>Sometimes they come from removing tiny interruptions repeated hundreds of times.</p>
+<p>This is one of those cases.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thoughts">Final Thoughts<a href="https://rebelion.la/ai/codex-can-generate-images#final-thoughts" class="hash-link" aria-label="Direct link to Final Thoughts" title="Direct link to Final Thoughts" translate="no">​</a></h2>
+<p>I originally discovered this feature while trying to improve my blog banner workflow.</p>
+<p>I expected a small convenience feature.</p>
+<p>What I found instead was a surprisingly practical capability that eliminated an entire mini-pipeline from my content system.</p>
+<p>If you already use Codex daily, image generation is worth testing immediately.</p>
+<p>Especially if your workflow sits at the intersection of:</p>
+<ul>
+<li class="">engineering</li>
+<li class="">content creation</li>
+<li class="">UI work</li>
+<li class="">documentation</li>
+<li class="">startup building</li>
+</ul>
+<p>The less context switching you do, the faster ideas become real artifacts.</p>
+<p>And that is where these tools start becoming genuinely transformative.</p>
+<p>Go Rebeles! ✊🏽</p>]]></content:encoded>
+            <category>AI</category>
+            <category>Codex</category>
+            <category>Developer Tools</category>
+            <category>Content Creation</category>
+            <category>Productivity</category>
+            <category>Design</category>
+            <category>Multimodal AI</category>
+        </item>
         <item>
             <title><![CDATA[La Rebelion Labs Community License (LRL-CL)]]></title>
             <link>https://rebelion.la/community-license-LRL-CL</link>
@@ -3329,49 +3441,6 @@ AI is transforming DevOps, Create your own AI tools and integrate them into your
             <category>ztna</category>
             <category>airgap</category>
             <category>model-context-protocol</category>
-        </item>
-        <item>
-            <title><![CDATA[Revolutionizing AI Workflows with Agentic Tools and MCP Server]]></title>
-            <link>https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server</link>
-            <guid>https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server</guid>
-            <pubDate>Wed, 08 Jan 2025 13:54:51 GMT</pubDate>
-            <description><![CDATA[Imagine a world where building AI applications is as streamlined as deploying microservices or containers. With the rise of Agentic AI frameworks and orchestrators, this isn't just]]></description>
-            <content:encoded><![CDATA[<p>Imagine a world where building AI applications is as streamlined as deploying microservices or containers. With the rise of Agentic AI frameworks and orchestrators, this isn't just a dream, it's happening now. Developers are harnessing these tools to train, test, and deploy AI solutions faster than ever before. And the best part? It's only getting better.</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/ai-workflows-with-agentic-tools-and-MCPServer.png" alt="AI Workflows with MCP Server" class="img_ev3q"></p>
-<p>In this article, we'll explore the power of Agentic tools, the role of MCP Server in simplifying AI workflows, and how you can leverage these tools to build your own AI applications. Let's dive in!</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-rise-of-agentic-ai">The Rise of Agentic AI<a href="https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server#the-rise-of-agentic-ai" class="hash-link" aria-label="Direct link to The Rise of Agentic AI" title="Direct link to The Rise of Agentic AI" translate="no">​</a></h3>
-<p>At the heart of this evolution lies the <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a> (MCP), a framework developed by Anthropic. MCP introduces a <strong>standard protocol</strong> for AI applications to communicate seamlessly with one another, and with the rest of the world. While MCP opens doors to powerful integrations, getting started can feel daunting, especially for those new to Agentic AI.</p>
-<p>That's where <a href="https://www.npmjs.com/package/@la-rebelion/mcp-server" target="_blank" rel="noopener noreferrer" class=""><strong>La Rebelion's MCP Server</strong></a> comes in. We are in the quest to simplify the process of creating and managing Agentic tools, by building a server <a href="https://en.wikipedia.org/wiki/Facade_pattern" target="_blank" rel="noopener noreferrer" class="">facade</a> that acts as a bridge between your tools and MCP we are on track to achieve it! Our approach is inspired by the simplicity and effectiveness of microservices and containers: <em>each tool does one thing and does it exceptionally well</em>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-agentic-tools-matter">Why Agentic Tools Matter<a href="https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server#why-agentic-tools-matter" class="hash-link" aria-label="Direct link to Why Agentic Tools Matter" title="Direct link to Why Agentic Tools Matter" translate="no">​</a></h3>
-<p>Agentic tools are to AI what microservices are to cloud architecture—modular, efficient, and purpose-driven. Each tool focuses on a specific task, ensuring precision and reliability. However, building these tools from scratch can be cumbersome. You need to handle communication protocols, input validation, and execution logic. That's a lot of complexity for something that should be simple.</p>
-<p>Enter <strong>MCP Server</strong>, our server facade that eliminates the grunt work. You focus on crafting the core logic of your tool, and we handle the heavy lifting—like communication with MCP, input/output validation, and orchestration. It's like giving your tools a backstage crew to ensure the show runs flawlessly.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="from-complex-to-seamless-building-with-mcp-server">From Complex to Seamless: Building with MCP Server<a href="https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server#from-complex-to-seamless-building-with-mcp-server" class="hash-link" aria-label="Direct link to From Complex to Seamless: Building with MCP Server" title="Direct link to From Complex to Seamless: Building with MCP Server" translate="no">​</a></h3>
-<p>Let's look at how effortless it is to create and deploy an Agentic tool using La Rebelion's MCP Server. Here's an example where we build a simple <strong>Echo Tool</strong>:</p>
-<div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// src/index.ts</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token comment" style="color:rgb(98, 114, 164)">// Create a new instance of the MCPServer</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> EchoTool </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"./EchoTool.js"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> myServer </span><span class="token operator">=</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">new</span><span class="token plain"> </span><span class="token class-name">MCPServer</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">'My MCP Server'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'1.0.0'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">async</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">function</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">main</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// Register tools</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  myServer</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token function" style="color:rgb(80, 250, 123)">registerTool</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">"echo"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">new</span><span class="token plain"> </span><span class="token class-name">EchoTool</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">await</span><span class="token plain"> myServer</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token function" style="color:rgb(80, 250, 123)">run</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>In this example:</p>
-<ol>
-<li class="">You define the logic of your tool (e.g., Echo Tool).</li>
-<li class="">You register it with the server facade (<code>myServer.registerTool</code>).</li>
-<li class="">MCP Server takes care of the rest—communicating with MCP, validating inputs/outputs, and executing the tool seamlessly.</li>
-</ol>
-<p>Here's a visual breakdown of the architecture leveraging Anthropic's Model Context Protocol:</p>
-<p><img decoding="async" loading="lazy" src="https://github.com/la-rebelion/mcp-server/raw/refs/heads/main/mcp-server.png" alt="UML Diagram of the Agent Tool" class="img_ev3q"></p>
-<p>References:</p>
-<blockquote>
-<p><a href="https://github.com/la-rebelion/mcp-server" target="_blank" rel="noopener noreferrer" class="">MCP Server@GitHub</a><br>
-<a href="https://www.npmjs.com/package/@la-rebelion/mcp-server" target="_blank" rel="noopener noreferrer" class="">MCP Server@npm</a></p>
-</blockquote>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="build-your-own-agentic-tools-today">Build Your Own Agentic Tools Today<a href="https://rebelion.la/ai-workflows-agentic-tools-and-mcp-server#build-your-own-agentic-tools-today" class="hash-link" aria-label="Direct link to Build Your Own Agentic Tools Today" title="Direct link to Build Your Own Agentic Tools Today" translate="no">​</a></h3>
-<p>Whether you're optimizing a workflow, automating a process, or enhancing an existing operation, Agentic AI tools can help you achieve your goals. By leveraging the power of MCP Server, you can build and deploy tools that communicate seamlessly with other AI applications, creating a robust ecosystem of intelligent agents. La Rebelion's <strong>MCP Server</strong> empowers you to focus on what matters most: <strong>building tools that deliver real value</strong>. By simplifying the complexities of MCP integration, we make it easier for developers to dive into the world of Agentic AI.</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/rise-of-agentic-ai.png" alt="Agentic AI" class="img_ev3q"></p>
-<p>Agentic AI is revolutionizing the way we build, deploy, and manage AI applications. With tools like MCP Server, developers can create intelligent agents that communicate effortlessly, streamlining workflows and enhancing productivity.</p>
-<p>Ready to start? Explore the <strong>MCP Server</strong> on <a href="https://github.com/la-rebelion/mcp-server" target="_blank" rel="noopener noreferrer" class="">GitHub</a> or check out the <a href="https://www.npmjs.com/package/@la-rebelion/mcp-server" target="_blank" rel="noopener noreferrer" class="">npm package</a> to get started.</p>
-<p>At <strong>La Rebelion</strong>, we believe that tools, like microservices, should be small, focused, and powerful. With our MCP Server, you can bring your AI ideas to life without sweating the details. Let's build something incredible, together.</p>
-<p>What will you create with Agentic AI and MCP Server? Let us know in the comments below!</p>
-<p>Go Rebels! ✊🏻</p>]]></content:encoded>
-            <category>ai</category>
-            <category>orchestration</category>
-            <category>agentic-ai</category>
         </item>
     </channel>
 </rss>
