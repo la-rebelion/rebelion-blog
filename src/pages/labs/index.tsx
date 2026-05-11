@@ -94,9 +94,9 @@ const ARCHIVE_STATUSES: ProjectStatus[] = ['deprecated', 'on-hold'];
 
 const FILTER_TABS = [
   {value: 'all',          label: 'All'},
-  {value: 'beta',         label: 'Beta'},
   {value: 'alpha',        label: 'Alpha'},
   {value: 'labs',         label: 'Labs'},
+  {value: 'beta',         label: 'Beta'},
   {value: 'stable',       label: 'Stable'},
   {value: 'coming-soon',  label: 'Coming Soon'},
 ];

@@ -18,6 +18,8 @@ export default function Footer() {
             <Link to="/archive">Archive</Link>
             <Link to="/tags">Topics</Link>
             <Link to="/subscribe">Newsletter</Link>
+            <Link to="/sponsor">Sponsor</Link>
+            <Link to="/contact">Contact</Link>
           </div>
           <div>
             <span className="lr-eyebrow">Follow</span>

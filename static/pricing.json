@@ -145,7 +145,7 @@
       ],
       "cta": {
         "label": "Contact Sales",
-        "href": "https://rebelion.la/contact",
+        "href": "/contact",
         "variant": "default"
       },
       "badge": null,
@@ -154,18 +154,23 @@
     }
   ],
   "feature_table": {
-    "tiers": ["Lurker", "Rebel", "Insurgent", "Clawster", "Enterprise"],
+    "tiers": ["Lurker", "Rebel", "Insurgent", "Field Commander", "Enterprise"],
     "features": [
-      { "name": "Repo code (LRL-CL)",         "access": ["-", "✓", "✓", "✓", "✓"] },
+      { "name": "Blog & tutorials",            "access": ["✓", "✓", "✓", "✓", "✓"] },
+      { "name": "OSS repos (MIT/Apache)",      "access": ["✓", "✓", "✓", "✓", "✓"] },
+      { "name": "Newsletter",                  "access": ["✓", "✓", "✓", "✓", "✓"] },
+      { "name": "AI Skills library",           "access": ["-", "✓", "✓", "✓", "✓"] },
       { "name": "DevOps scripts & CLIs",       "access": ["-", "✓", "✓", "✓", "✓"] },
-      { "name": "Rebel-U courses",             "access": ["~", "~", "✓", "✓", "✓"] },
-      { "name": "AI Skills library",           "access": ["-", "-", "✓", "✓", "✓"] },
-      { "name": "Agent access (Clawne Me)",    "access": ["-", "-", "limited", "✓", "✓"] },
-      { "name": "runMCP / chatMCP quota",      "access": ["tiny", "~", "✓", "✓", "✓"] },
-      { "name": "My Clawster instances",       "access": ["-", "-", "-", "✓", "✓"] },
-      { "name": "API / CLI access",            "access": ["-", "-", "-", "✓", "✓"] },
+      { "name": "Community Discord",           "access": ["-", "✓", "✓", "✓", "✓"] },
+      { "name": "Rebel-U courses",             "access": ["-", "~", "✓", "✓", "✓"] },
+      { "name": "Repo code (LRL-CL)",          "access": ["-", "-", "✓", "✓", "✓"] },
+      { "name": "Priority support",            "access": ["-", "-", "async", "✓", "✓"] },
+      { "name": "Early access / beta",         "access": ["-", "-", "-", "✓", "✓"] },
       { "name": "Office hours / 1:1",          "access": ["-", "-", "-", "monthly", "✓"] },
-      { "name": "Air-gapped / on-prem",        "access": ["-", "-", "-", "-", "✓"] }
+      { "name": "Commercial license",          "access": ["-", "-", "-", "-", "✓"] },
+      { "name": "Air-gapped / on-prem",        "access": ["-", "-", "-", "-", "✓"] },
+      { "name": "Whitelabel option",           "access": ["-", "-", "-", "-", "✓"] },
+      { "name": "Private roadmap input",       "access": ["-", "-", "-", "-", "✓"] }
     ]
   },
   "saas_tos": {
