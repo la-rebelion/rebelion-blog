@@ -133,8 +133,8 @@
       "icon": "💬"
     },
     {
-      "id": "sqlite2er",
-      "name": "sqlite2er",
+      "id": "sqler",
+      "name": "sqler",
       "description": "Convert SQLite database schemas into Entity-Relationship diagrams. Reads .db or .sql files and outputs a visual ERD for database design and documentation.",
       "status": "labs",
       "type": "SaaS",
@@ -142,10 +142,10 @@
       "license": "Open Source",
       "tags": ["sqlite", "database", "erd", "diagrams", "cli"],
       "featured": false,
-      "githubUrl": "https://github.com/la-rebelion/sqlite2er",
+      "githubUrl": "https://github.com/la-rebelion/sqler",
       "docsUrl": null,
-      "saasUrl": "https://sqlite2er.rebelion.la",
-      "installCommand": "bun install -g sqlite2er",
+      "saasUrl": "https://sqler.rebelion.la",
+      "installCommand": "bun install -g @la-rebelion/sqler",
       "icon": "🗄️"
     },
     {

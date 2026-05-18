@@ -4,10 +4,374 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Sat, 09 May 2026 12:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 18 May 2026 09:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[From Chatbots to Agent Clusters: AI Infrastructure Is the Next DevOps]]></title>
+            <link>https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops</link>
+            <guid>https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops</guid>
+            <pubDate>Mon, 18 May 2026 09:00:00 GMT</pubDate>
+            <description><![CDATA[Enterprises will deploy agent fleets, creating new challenges in governance and orchestration. Winners will build efficient, secure, scalable AI infrastructure.]]></description>
+            <content:encoded><![CDATA[<p><a href="https://x.com/steipete/status/2055346265869721905?s=46&amp;t=Tm2ZzMxpPyJj5Zevp4aYbg" target="_blank" rel="noopener noreferrer" class="">Peter Steinberger’s recent revelation</a> about his $1.3 million monthly OpenAI API bill has sent shockwaves through the AI community. But while many are fixating on the staggering cost, the real story is much more profound: we are witnessing the dawn of AI agent infrastructure.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-13-million-ai-bill-is-not-the-story-agent-infrastructure-is">The $1.3 Million AI Bill Is Not the Story. Agent Infrastructure Is.<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#the-13-million-ai-bill-is-not-the-story-agent-infrastructure-is" class="hash-link" aria-label="Direct link to The $1.3 Million AI Bill Is Not the Story. Agent Infrastructure Is." title="Direct link to The $1.3 Million AI Bill Is Not the Story. Agent Infrastructure Is." translate="no">​</a></h2>
+<p><em>603 billion tokens. 7.6 million requests. Around $1.3 million in OpenAI API spend in 30 days.</em></p>
+<p>That headline is making rounds across the AI community after <a href="https://steipete.me/" target="_blank" rel="noopener noreferrer" class="">Peter Steinberger</a> shared the operational cost of running around 100 Codex instances in the cloud. According to Peter, simply disabling “fast mode” could reduce costs by roughly 70%.</p>
+<p>Most people looked at the number and thought:</p>
+<blockquote>
+<p>“That’s insane.”</p>
+</blockquote>
+<p>I looked at it and thought:</p>
+<blockquote>
+<p>“This is what the future of software infrastructure looks like.”</p>
+</blockquote>
+<p>Because the real story is not the bill.</p>
+<p>The real story is this:</p>
+<p><strong>We are entering the era of AI agent infrastructure.</strong></p>
+<p>And most companies are still thinking about AI as if it were just a chatbot.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="enterprises-are-not-going-to-run-one-agent">Enterprises Are Not Going to Run One Agent<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#enterprises-are-not-going-to-run-one-agent" class="hash-link" aria-label="Direct link to Enterprises Are Not Going to Run One Agent" title="Direct link to Enterprises Are Not Going to Run One Agent" translate="no">​</a></h2>
+<p>For the last two years, most conversations around AI focused on:</p>
+<ul>
+<li class="">chat interfaces</li>
+<li class="">copilots</li>
+<li class="">prompt engineering</li>
+<li class="">model benchmarks</li>
+<li class="">LLM providers</li>
+</ul>
+<p>But something bigger is quietly happening underneath.</p>
+<p>Organizations are starting to move from:</p>
+<ul>
+<li class="">single AI assistants
+→ toward</li>
+<li class="">fleets of specialized agents</li>
+</ul>
+<p>That changes everything.</p>
+<p>The moment you move from:</p>
+<ul>
+<li class="">“one assistant”
+to</li>
+<li class="">“hundreds of autonomous or semi-autonomous execution units”</li>
+</ul>
+<p>...you suddenly inherit the same operational challenges we already experienced in:</p>
+<ul>
+<li class="">cloud computing</li>
+<li class="">Kubernetes</li>
+<li class="">microservices</li>
+<li class="">DevOps</li>
+<li class="">platform engineering</li>
+</ul>
+<p>Except now:</p>
+<ul>
+<li class="">the workloads are probabilistic</li>
+<li class="">the execution paths are dynamic</li>
+<li class="">the context windows are expensive</li>
+<li class="">and every token has a cost</li>
+</ul>
+<p>AI is no longer just a UX problem.</p>
+<p>It is becoming an infrastructure discipline.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="my-reality-check-spending-20-felt-expensive">My Reality Check: Spending $20 Felt Expensive<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#my-reality-check-spending-20-felt-expensive" class="hash-link" aria-label="Direct link to My Reality Check: Spending $20 Felt Expensive" title="Direct link to My Reality Check: Spending $20 Felt Expensive" translate="no">​</a></h2>
+<p>Sometimes I look at my own side-project AI spending — around $20 Pro Plan plus APIs — and think:</p>
+<blockquote>
+<p>“This is getting expensive.”</p>
+</blockquote>
+<p>Then I see someone operating 100 coding agents consuming enterprise-scale token budgets and realize:</p>
+<p>We are still early.</p>
+<p>Very early.</p>
+<p>The economics of AI agents will force companies to rethink:</p>
+<ul>
+<li class="">architecture</li>
+<li class="">governance</li>
+<li class="">orchestration</li>
+<li class="">observability</li>
+<li class="">execution efficiency</li>
+<li class="">runtime isolation</li>
+<li class="">and trust boundaries</li>
+</ul>
+<p>Because the problem is not:</p>
+<blockquote>
+<p>“Can AI work?”</p>
+</blockquote>
+<p>The problem is:</p>
+<blockquote>
+<p>“Can AI scale operationally and economically?”</p>
+</blockquote>
+<p>That is a very different conversation.</p>
+<hr>
+<p><img decoding="async" loading="lazy" alt="From APIS to Agents, e2e workflow" src="https://rebelion.la/assets/images/ai-agentic-workflow-complexity-a739dbc5f3ee1eef084605cc80e733c6.png" width="1536" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-hidden-problem-nobody-talks-about">The Hidden Problem Nobody Talks About<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#the-hidden-problem-nobody-talks-about" class="hash-link" aria-label="Direct link to The Hidden Problem Nobody Talks About" title="Direct link to The Hidden Problem Nobody Talks About" translate="no">​</a></h2>
+<p>Most AI demos today show:</p>
+<ul>
+<li class="">one prompt</li>
+<li class="">one agent</li>
+<li class="">one response</li>
+</ul>
+<p>Reality will look more like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">User Request</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Planner Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Security Validation Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">API Discovery Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Execution Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Code Review Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Compliance Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Monitoring Agent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">   ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Human Approval</span><br></div></code></pre></div></div>
+<p>Now multiply that by:</p>
+<ul>
+<li class="">departments</li>
+<li class="">regions</li>
+<li class="">customers</li>
+<li class="">workflows</li>
+<li class="">environments</li>
+<li class="">tenants</li>
+<li class="">business units</li>
+</ul>
+<p>Suddenly:</p>
+<ul>
+<li class="">10 agents becomes normal</li>
+<li class="">100 agents becomes expected</li>
+<li class="">1000+ agents becomes realistic</li>
+</ul>
+<p>At that scale, enterprises will need answers for questions like:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="governance">Governance<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#governance" class="hash-link" aria-label="Direct link to Governance" title="Direct link to Governance" translate="no">​</a></h3>
+<p>Who approved this execution?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="traceability">Traceability<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#traceability" class="hash-link" aria-label="Direct link to Traceability" title="Direct link to Traceability" translate="no">​</a></h3>
+<p>Which agent triggered the API call?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="security">Security<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#security" class="hash-link" aria-label="Direct link to Security" title="Direct link to Security" translate="no">​</a></h3>
+<p>What permissions did the agent have?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="cost-visibility">Cost Visibility<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#cost-visibility" class="hash-link" aria-label="Direct link to Cost Visibility" title="Direct link to Cost Visibility" translate="no">​</a></h3>
+<p>Which workflow consumed the most tokens?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="context-efficiency">Context Efficiency<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#context-efficiency" class="hash-link" aria-label="Direct link to Context Efficiency" title="Direct link to Context Efficiency" translate="no">​</a></h3>
+<p>Why are we injecting 500 tools into every context window?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="runtime-isolation">Runtime Isolation<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#runtime-isolation" class="hash-link" aria-label="Direct link to Runtime Isolation" title="Direct link to Runtime Isolation" translate="no">​</a></h3>
+<p>Can this agent access production systems?</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="compliance">Compliance<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#compliance" class="hash-link" aria-label="Direct link to Compliance" title="Direct link to Compliance" translate="no">​</a></h3>
+<p>Can we audit the entire execution chain?</p>
+<p>These are not chatbot questions anymore.</p>
+<p>These are infrastructure questions.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="kubernetes-solved-compute-orchestration-what-solves-agent-orchestration">Kubernetes Solved Compute Orchestration. What Solves Agent Orchestration?<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#kubernetes-solved-compute-orchestration-what-solves-agent-orchestration" class="hash-link" aria-label="Direct link to Kubernetes Solved Compute Orchestration. What Solves Agent Orchestration?" title="Direct link to Kubernetes Solved Compute Orchestration. What Solves Agent Orchestration?" translate="no">​</a></h2>
+<p>This is where I believe the industry is heading next.</p>
+<p>Kubernetes helped us orchestrate:</p>
+<ul>
+<li class="">containers</li>
+<li class="">workloads</li>
+<li class="">networking</li>
+<li class="">policies</li>
+<li class="">scaling</li>
+</ul>
+<p>But AI agents introduce an entirely new operational layer.</p>
+<p>Agents need:</p>
+<ul>
+<li class="">identity</li>
+<li class="">memory boundaries</li>
+<li class="">execution policies</li>
+<li class="">tool governance</li>
+<li class="">workflow orchestration</li>
+<li class="">observability</li>
+<li class="">lifecycle management</li>
+<li class="">context optimization</li>
+<li class="">trust frameworks</li>
+</ul>
+<p>In other words:</p>
+<blockquote>
+<p>AI Agents need platform engineering.</p>
+</blockquote>
+<p>And I believe this will become one of the biggest categories in enterprise infrastructure over the next few years.</p>
+<hr>
+<p><img decoding="async" loading="lazy" alt="My Clawster - managed agents for enterprise" src="https://rebelion.la/assets/images/6-agents-cluster-338e13dceceaab247a1fae90f8413d12.png" width="1259" height="703" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-i-started-building-my-clawster">Why I Started Building “My Clawster”<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#why-i-started-building-my-clawster" class="hash-link" aria-label="Direct link to Why I Started Building “My Clawster”" title="Direct link to Why I Started Building “My Clawster”" translate="no">​</a></h2>
+<p>This realization is exactly what pushed me to start building <strong><a href="https://clawster.my/" target="_blank" rel="noopener noreferrer" class="">My Clawster</a></strong>.</p>
+<p>At first, it was a simple idea:</p>
+<blockquote>
+<p>“What if AI agents were treated more like governed infrastructure workloads?”</p>
+</blockquote>
+<p>But the deeper I explored the problem, the more obvious it became:
+the industry needs more than “another chatbot UI.”</p>
+<p>It needs:</p>
+<ul>
+<li class="">orchestration</li>
+<li class="">governance</li>
+<li class="">execution reliability</li>
+<li class="">agent lifecycle management</li>
+<li class="">policy enforcement</li>
+<li class="">runtime isolation</li>
+<li class="">observability</li>
+<li class="">discoverability</li>
+</ul>
+<p>That’s where concepts like:</p>
+<ul>
+<li class="">clusters of agents</li>
+<li class="">managed execution</li>
+<li class="">governed APIs</li>
+<li class="">specialized personas</li>
+<li class="">isolated runtimes</li>
+<li class="">Skills</li>
+<li class="">MCP servers</li>
+<li class="">execution traces
+start becoming critical.</li>
+</ul>
+<hr>
+<p><img decoding="async" loading="lazy" alt="Clawne Me - Your Partner for Every Persona" src="https://rebelion.la/assets/images/clawne-me-bf27796e75cfec4ba68ddab861ebef52.png" width="1536" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="clawne-me-dogfooding-the-future">“Clawne Me”: Dogfooding the Future<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#clawne-me-dogfooding-the-future" class="hash-link" aria-label="Direct link to “Clawne Me”: Dogfooding the Future" title="Direct link to “Clawne Me”: Dogfooding the Future" translate="no">​</a></h2>
+<p>One of the most interesting experiments I’ve been running internally is called <strong><a href="https://clawne.me/" target="_blank" rel="noopener noreferrer" class="">Clawne Me</a></strong>.</p>
+<p>The idea is simple:</p>
+<p>Create specialized instances of yourself.</p>
+<p>Not literally.</p>
+<p>But operationally.</p>
+<p>Different personas.
+Different contexts.
+Different responsibilities.
+Different execution boundaries.</p>
+<p>For example:</p>
+<ul>
+<li class="">architecture persona</li>
+<li class="">DevOps persona</li>
+<li class="">product strategy persona</li>
+<li class="">research persona</li>
+<li class="">content persona</li>
+</ul>
+<p>Each one optimized for:</p>
+<ul>
+<li class="">different tools</li>
+<li class="">different context windows</li>
+<li class="">different permissions</li>
+<li class="">different execution flows</li>
+</ul>
+<p>This is where the conversation gets fascinating.</p>
+<p>Because enterprises are not going to deploy:</p>
+<blockquote>
+<p>“One AI employee.”</p>
+</blockquote>
+<p>They will deploy:</p>
+<blockquote>
+<p>“Entire organizations of specialized agents.”</p>
+</blockquote>
+<p>And those organizations will require:</p>
+<ul>
+<li class="">governance</li>
+<li class="">structure</li>
+<li class="">security</li>
+<li class="">orchestration</li>
+<li class="">operational controls</li>
+</ul>
+<p>Exactly like cloud-native systems did.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-real-cost-problem-is-not-tokens">The Real Cost Problem Is Not Tokens<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#the-real-cost-problem-is-not-tokens" class="hash-link" aria-label="Direct link to The Real Cost Problem Is Not Tokens" title="Direct link to The Real Cost Problem Is Not Tokens" translate="no">​</a></h2>
+<p>The industry keeps obsessing over:</p>
+<ul>
+<li class="">token pricing</li>
+<li class="">model costs</li>
+<li class="">inference economics</li>
+</ul>
+<p>Those matter.</p>
+<p>But they are not the biggest long-term problem.</p>
+<p>The biggest problem is inefficient orchestration.</p>
+<p>Examples:</p>
+<ul>
+<li class="">duplicated context</li>
+<li class="">oversized prompts</li>
+<li class="">unnecessary tool injection</li>
+<li class="">uncontrolled execution loops</li>
+<li class="">recursive workflows</li>
+<li class="">ungoverned retries</li>
+<li class="">context bloat</li>
+<li class="">poor agent routing</li>
+</ul>
+<p>That is why:</p>
+<ul>
+<li class="">observability</li>
+<li class="">runtime governance</li>
+<li class="">Skills</li>
+<li class="">deterministic orchestration</li>
+<li class="">execution policies</li>
+<li class="">progressive tool disclosure</li>
+</ul>
+<p>...will become foundational patterns.</p>
+<p>The future winners will not necessarily be the companies with the smartest model.</p>
+<p>They may be the companies with the most efficient AI infrastructure.</p>
+<hr>
+<p><img decoding="async" loading="lazy" alt="AI Agent Infrastructure Becoming the New DevOps" src="https://rebelion.la/assets/images/ai-infra-the-new-devops-0e7751e018e10f8a4a761e88f6de560b.png" width="1536" height="1024" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ai-infrastructure-is-becoming-the-new-devops">AI Infrastructure Is Becoming the New DevOps<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#ai-infrastructure-is-becoming-the-new-devops" class="hash-link" aria-label="Direct link to AI Infrastructure Is Becoming the New DevOps" title="Direct link to AI Infrastructure Is Becoming the New DevOps" translate="no">​</a></h2>
+<p>A few years ago, companies realized:</p>
+<ul>
+<li class="">deploying servers manually does not scale</li>
+<li class="">unmanaged cloud infrastructure becomes chaos</li>
+<li class="">governance matters</li>
+<li class="">observability matters</li>
+<li class="">platform engineering matters</li>
+</ul>
+<p>We are about to repeat the same cycle with AI agents.</p>
+<p>Today:</p>
+<ul>
+<li class="">AI feels magical</li>
+<li class="">experimentation is easy</li>
+<li class="">everyone is building demos</li>
+</ul>
+<p>Tomorrow:</p>
+<ul>
+<li class="">AI budgets will explode</li>
+<li class="">governance requirements will hit</li>
+<li class="">security teams will step in</li>
+<li class="">compliance teams will demand auditability</li>
+<li class="">platform teams will need orchestration layers</li>
+</ul>
+<p>And that’s when the industry will realize:</p>
+<blockquote>
+<p>AI Agents are infrastructure workloads.</p>
+</blockquote>
+<p>Not just chat experiences.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thoughts">Final Thoughts<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#final-thoughts" class="hash-link" aria-label="Direct link to Final Thoughts" title="Direct link to Final Thoughts" translate="no">​</a></h2>
+<p>The $1.3 million API bill is shocking.</p>
+<p>But it is also a preview.</p>
+<p>A preview of what happens when AI moves from:</p>
+<ul>
+<li class="">experimentation
+→ to</li>
+<li class="">production infrastructure</li>
+</ul>
+<p>The companies that win the next wave of AI will not only have:</p>
+<ul>
+<li class="">better prompts</li>
+<li class="">bigger models</li>
+<li class="">nicer UIs</li>
+</ul>
+<p>They will have:</p>
+<ul>
+<li class="">governed execution</li>
+<li class="">scalable orchestration</li>
+<li class="">trusted runtimes</li>
+<li class="">efficient context management</li>
+<li class="">operational visibility</li>
+<li class="">secure agent ecosystems</li>
+</ul>
+<p>That future is closer than most people think.</p>
+<p>And honestly?</p>
+<p>That’s exactly why I started building:</p>
+<ul>
+<li class=""><a href="https://clawster.my/" target="_blank" rel="noopener noreferrer" class="">My Clawster</a></li>
+<li class=""><a href="https://clawne.me/" target="_blank" rel="noopener noreferrer" class="">Clawne Me</a></li>
+<li class=""><a href="https://mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI MCP</a></li>
+<li class="">Skills-driven orchestration</li>
+</ul>
+<p>Because I believe the next evolution of AI is not:</p>
+<blockquote>
+<p>“Talking to AI.”</p>
+</blockquote>
+<p>It is:</p>
+<blockquote>
+<p>“Operating AI systems at scale.”</p>
+</blockquote>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="references">References<a href="https://rebelion.la/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops#references" class="hash-link" aria-label="Direct link to References" title="Direct link to References" translate="no">​</a></h3>
+<ul>
+<li class=""><a href="https://x.com/steipete/status/2055346265869721905?s=46&amp;t=Tm2ZzMxpPyJj5Zevp4aYbg" target="_blank" rel="noopener noreferrer" class="">Peter Steinberger’s original post</a></li>
+<li class=""><a href="https://the-decoder.com/for-1-3-million-a-month-openclaw-founder-peter-steinberger-runs-100-ai-agents-that-code-review-prs-and-find-bugs/" target="_blank" rel="noopener noreferrer" class="">The Decoder’s coverage</a></li>
+<li class=""><a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/openclaw-creator-burns-through-1-3-million-in-openai-api-tokens-in-a-single-month" target="_blank" rel="noopener noreferrer" class="">Tom’s Hardware coverage</a></li>
+</ul>
+<hr>
+<p><strong>Be HAPI and Go Rebels! ✊🏽</strong></p>]]></content:encoded>
+            <category>AI</category>
+            <category>Infrastructure</category>
+            <category>DevOps</category>
+            <category>Agent Orchestration</category>
+            <category>Enterprise AI</category>
+        </item>
         <item>
             <title><![CDATA[Not Just Code: Codex Can Generate Images Too]]></title>
             <link>https://rebelion.la/ai/codex-can-generate-images</link>
@@ -3364,83 +3728,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>agentic-ai</category>
             <category>ztna</category>
             <category>airgap</category>
-        </item>
-        <item>
-            <title><![CDATA[A Game-Changer for DevOps: Leveraging AI in Air-Gapped and Zero Trust Environments]]></title>
-            <link>https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments</link>
-            <guid>https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments</guid>
-            <pubDate>Fri, 17 Jan 2025 16:00:25 GMT</pubDate>
-            <description><![CDATA[DevOps practitioners working in Zero Trust Network Access (ZTNA) or air-gapped environments often face unique challenges. These highly secure setups restrict internet access to pro]]></description>
-            <content:encoded><![CDATA[<p>DevOps practitioners working in <a href="https://www.zscaler.com/resources/security-terms-glossary/what-is-zero-trust-network-access" target="_blank" rel="noopener noreferrer" class="">Zero Trust Network Access</a> (ZTNA) or air-gapped environments often face unique challenges. These highly secure setups restrict internet access to protect sensitive data, making it difficult to integrate modern tools and automation. But what if there were a way to bridge the gap between your cloud infrastructure and air-gapped systems while maintaining security? The <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a> (MCP) and Claude for Desktop, are a powerful combination that's set to transform how DevOps engineers operate in these constrained environments.</p>
-<p>With MCP, you can integrate AI-driven automation directly into your air-gapped workflows. Claude for Desktop acts as your user-friendly interface, enabling natural language interaction with AI tools running locally on your PC. Imagine being able to automate scripts, manage deployments, and even perform drift detection; all while staying within the confines of a secure environment.</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/ai-interactions-in-airgap-envs.png" alt="Interactions in Air-Gapped Environments" class="img_ev3q"></p>
-<p>Let's dive into why this approach is a game changer and how you can get started with a simple example.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-mcp-and-claude-for-desktop-are-perfect-for-zero-trust-and-air-gapped-use-cases">Why MCP and Claude for Desktop Are Perfect for <a href="https://www.cisa.gov/zero-trust-maturity-model" target="_blank" rel="noopener noreferrer" class="">Zero Trust</a> and Air-Gapped Use Cases<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#why-mcp-and-claude-for-desktop-are-perfect-for-zero-trust-and-air-gapped-use-cases" class="hash-link" aria-label="Direct link to why-mcp-and-claude-for-desktop-are-perfect-for-zero-trust-and-air-gapped-use-cases" title="Direct link to why-mcp-and-claude-for-desktop-are-perfect-for-zero-trust-and-air-gapped-use-cases" translate="no">​</a></h3>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/a-new-way-to-interact-with-your%20-ai-tools-in-air-gapped-environments.png" alt="AI Tools in Air-Gapped Environments" class="img_ev3q"></p>
-<p><strong>Simplified Automation:</strong> Claude for Desktop allows you to run scripts, including bash scripts, directly from your PC. Whether you're deploying applications or performing repetitive tasks, this setup eliminates the need for constant manual intervention.</p>
-<p><strong>Enhanced Security:</strong> Data flowing to external Large Language Models (LLMs) can be a concern. By using Local LLMs, you can encapsulate sensitive data and still benefit from natural language processing and semantic orchestration. This ensures that no sensitive information leaves your secure environment.</p>
-<p><strong>Bridging Gaps Between Systems:</strong> Claude's ability to communicate with both cloud and air-gapped environments makes it a versatile tool for hybrid setups. This is particularly beneficial in ZTNA environments where strict security policies might otherwise limit operational flexibility.</p>
-<p><strong>Customizability:</strong> With MCP tools, you can build deterministic workflows and gradually enhance them by adding memory and sequential learning capabilities. This enables your system to grow smarter over time, adapting to your specific needs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-simple-example-echoing-messages-with-mcp-and-claude">A Simple Example: Echoing Messages with MCP and Claude<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#a-simple-example-echoing-messages-with-mcp-and-claude" class="hash-link" aria-label="Direct link to A Simple Example: Echoing Messages with MCP and Claude" title="Direct link to A Simple Example: Echoing Messages with MCP and Claude" translate="no">​</a></h2>
-<p>To demonstrate how easy it is to get started, let's set up a simple MCP tool that echoes a message. While basic, this example highlights the potential of MCP and Claude for automating workflows in air-gapped environments.</p>
-<p>:::note 🤖 Insight
-AI is transforming DevOps, Create your own AI tools and integrate them into your pipelines. <strong>I am going to post more articles about how to leverage AI for DevOps, stay tuned and subscribe!</strong>
-:::</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/DIl3gVmvf0o" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1-install-required-tools">Step 1: Install Required Tools<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#step-1-install-required-tools" class="hash-link" aria-label="Direct link to Step 1: Install Required Tools" title="Direct link to Step 1: Install Required Tools" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p>Download Claude for Desktop: <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" class="">Claude for Desktop</a></p>
-</li>
-<li class="">
-<p>Install Node.js: <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="">Node.js Official Website</a>, as MCP tools require Node.js to run. Python is also supported, but <em>not covered in this example</em>.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2-create-an-mcp-tool">Step 2: Create an MCP Tool<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#step-2-create-an-mcp-tool" class="hash-link" aria-label="Direct link to Step 2: Create an MCP Tool" title="Direct link to Step 2: Create an MCP Tool" translate="no">​</a></h3>
-<p>Use the Agentico <a href="https://www.npmjs.com/package/@agentico/mcp-create-tool" target="_blank" rel="noopener noreferrer" class="">MCP Create Tool</a> to generate a new project:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">npx @agentico/mcp-create-tool my-agentico-tool -t Echo -d "Echo a message from MCP server to the client"</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">cd my-agentico-tool</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">npm install &amp;&amp; npm run build</span><br></div></code></pre></div></div>
-<p>This command creates a TypeScript project with all the necessary files, including an example configuration file for Claude. It's designed to simplify the onboarding process for DevOps practitioners who may not be familiar with TypeScript. ⭐ Star the <a href="https://github.com/agentico-dev/mcp-server" target="_blank" rel="noopener noreferrer" class="">MCP Create Tool</a> on GitHub if you find it helpful!</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3-update-claudes-configuration">Step 3: Update Claude’s Configuration<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#step-3-update-claudes-configuration" class="hash-link" aria-label="Direct link to Step 3: Update Claude’s Configuration" title="Direct link to Step 3: Update Claude’s Configuration" translate="no">​</a></h3>
-<p>Ensure Claude's configuration file is updated automatically, the <code>mcp-create-tool</code> adds an entry with the path to your MCP tool.</p>
-<p>macOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></p>
-<p>Windows: <code>%APPDATA%\Claude\claude_desktop_config.json</code></p>
-<p>Here's an example:</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token property">"mcpServers"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"my-agentico-tool"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"command"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"node"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"args"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">"/path/to/project/my-agentico-tool/build/index.js"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>Please refer to the <a href="https://modelcontextprotocol.io/quickstart/user" target="_blank" rel="noopener noreferrer" class="">Claude user guide</a> for detailed instructions if you need anything.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-4-test-the-setup">Step 4: Test the Setup<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#step-4-test-the-setup" class="hash-link" aria-label="Direct link to Step 4: Test the Setup" title="Direct link to Step 4: Test the Setup" translate="no">​</a></h3>
-<p>Open Claude for Desktop and type the following message in the chat:</p>
-<div class="language-txt codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-txt codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">echo hello</span><br></div></code></pre></div></div>
-<p>Claude will respond with:</p>
-<div class="language-txt codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-txt codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">hello</span><br></div></code></pre></div></div>
-<p>This interaction demonstrates how the MCP tool processes a message and returns a response. You can review the code in src/index.ts and customize it to handle more complex tasks.</p>
-<p>You can test with different messages and observe how Claude interacts with your MCP tool to execute the desired actions.</p>
-<p>I know, it's a simple example, but it showcases the power of MCP and Claude for Desktop in automating workflows within air-gapped environments. Your imagination is the only limit to what you can achieve with these tools.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="future-possibilities">Future Possibilities<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#future-possibilities" class="hash-link" aria-label="Direct link to Future Possibilities" title="Direct link to Future Possibilities" translate="no">​</a></h2>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/exploring-the-future-with-mcp-and-claude.png" alt="Exploring the Future with MCP and Claude" class="img_ev3q"></p>
-<p>The potential for MCP and Claude for Desktop extends far beyond simple tasks. Imagine using these tools to:</p>
-<ul>
-<li class="">
-<p><strong>Automate application deployments:</strong> Seamlessly manage builds and rollouts without internet access.</p>
-</li>
-<li class="">
-<p><strong>Perform drift detection:</strong> Compare the desired and actual states of your systems to identify configuration issues.</p>
-</li>
-<li class="">
-<p><strong>Integrate with Local LLMs:</strong> Enhance security while leveraging AI capabilities for smarter workflows.</p>
-</li>
-</ul>
-<p>Stay tuned for an upcoming post where we'll cover how to use Claude for Desktop to automate deployments and detect drift in air-gapped environments. The possibilities are endless, and this is just the beginning.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://rebelion.la/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
-<p>The combination of MCP and Claude for Desktop offers a groundbreaking way to tackle the challenges of ZTNA and air-gapped environments. By enabling natural language interaction with local AI tools, this approach simplifies workflows, enhances security, and empowers DevOps practitioners to achieve more with less effort.</p>
-<p>Ready to revolutionize your DevOps workflows? Start exploring MCP with <a href="https://agentico.dev/" target="_blank" rel="noopener noreferrer" class="">Agentico</a> and Claude for Desktop today. And remember: your imagination is the only limit.</p>
-<p>Go Rebels! ✊️</p>]]></content:encoded>
-            <category>zerotrust</category>
-            <category>ai-tools</category>
-            <category>claudeai</category>
-            <category>agentic-ai</category>
-            <category>ztna</category>
-            <category>airgap</category>
-            <category>model-context-protocol</category>
         </item>
     </channel>
 </rss>
