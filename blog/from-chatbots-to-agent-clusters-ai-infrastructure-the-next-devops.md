@@ -8,6 +8,8 @@ keywords: [AI Agent Infrastructure, Managed Agents, Agent Orchestration, AI Gove
 image: /img/blog/agent-clusters-ai-infrastructure.png
 ---
 
+[Peter Steinberger’s recent revelation](https://x.com/steipete/status/2055346265869721905?s=46&t=Tm2ZzMxpPyJj5Zevp4aYbg) about his $1.3 million monthly OpenAI API bill has sent shockwaves through the AI community. But while many are fixating on the staggering cost, the real story is much more profound: we are witnessing the dawn of AI agent infrastructure.
+
 ## The $1.3 Million AI Bill Is Not the Story. Agent Infrastructure Is.
 
 *603 billion tokens. 7.6 million requests. Around $1.3 million in OpenAI API spend in 30 days.*
@@ -58,7 +60,7 @@ The moment you move from:
   to
 * “hundreds of autonomous or semi-autonomous execution units”
 
-…you suddenly inherit the same operational challenges we already experienced in:
+...you suddenly inherit the same operational challenges we already experienced in:
 
 * cloud computing
 * Kubernetes
@@ -81,9 +83,7 @@ It is becoming an infrastructure discipline.
 
 ## My Reality Check: Spending $20 Felt Expensive
 
-I’ll be honest.
-
-Sometimes I look at my own side-project AI spending — around $20/day plus APIs — and think:
+Sometimes I look at my own side-project AI spending — around $20 Pro Plan plus APIs — and think:
 
 > “This is getting expensive.”
 
@@ -114,6 +114,8 @@ The problem is:
 That is a very different conversation.
 
 ---
+
+![From APIS to Agents, e2e workflow](/img/my-clawster/from-apis-to-agents/ai-agentic-workflow-complexity.png)
 
 ## The Hidden Problem Nobody Talks About
 
@@ -231,6 +233,8 @@ And I believe this will become one of the biggest categories in enterprise infra
 
 ---
 
+![My Clawster - managed agents for enterprise](/img/my-clawster/from-apis-to-agents/6-agents-cluster.png)
+
 ## Why I Started Building “My Clawster”
 
 This realization is exactly what pushed me to start building **[My Clawster](https://clawster.my)**.
@@ -266,6 +270,8 @@ That’s where concepts like:
   start becoming critical.
 
 ---
+
+![Clawne Me - Your Partner for Every Persona](/img/my-clawster/clawne-me.png)
 
 ## “Clawne Me”: Dogfooding the Future
 
@@ -355,13 +361,15 @@ That is why:
 * execution policies
 * progressive tool disclosure
 
-…will become foundational patterns.
+...will become foundational patterns.
 
 The future winners will not necessarily be the companies with the smartest model.
 
 They may be the companies with the most efficient AI infrastructure.
 
 ---
+
+![AI Agent Infrastructure Becoming the New DevOps](/img/my-clawster/ai-infra-the-new-devops.png)
 
 ## AI Infrastructure Is Becoming the New DevOps
 
@@ -447,7 +455,7 @@ It is:
 
 ### References
 
-* [Peter Steinberger’s original post](https://x.com/steipete/status/2055346265869721905?s=46&t=Tm2ZzMxpPyJj5Zevp4aYbg&utm_source=chatgpt.com)
+* [Peter Steinberger’s original post](https://x.com/steipete/status/2055346265869721905?s=46&t=Tm2ZzMxpPyJj5Zevp4aYbg)
 * [The Decoder’s coverage](https://the-decoder.com/for-1-3-million-a-month-openclaw-founder-peter-steinberger-runs-100-ai-agents-that-code-review-prs-and-find-bugs/)
 * [Tom’s Hardware coverage](https://www.tomshardware.com/tech-industry/artificial-intelligence/openclaw-creator-burns-through-1-3-million-in-openai-api-tokens-in-a-single-month)
 
