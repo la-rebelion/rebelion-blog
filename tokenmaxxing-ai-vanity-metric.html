@@ -1,0 +1,377 @@
+<!doctype html><html lang=en dir=ltr class="blog-wrapper blog-post-page plugin-blog plugin-id-default" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.0"><title data-rh=true>Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric | La Rebelion Labs</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true property=og:url content=https://rebelion.la/tokenmaxxing-ai-vanity-metric /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docusaurus_tag content=default /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docsearch:docusaurus_tag content=default /><meta data-rh=true name=theme-color content=#000000 /><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:title content="Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric | La Rebelion Labs"/><meta data-rh=true name=description content="Learn why optimizing for AI token consumption is a vanity metric, how friction drives token waste, and how teams can improve token efficiency with MCP, managed agents, and lower-friction AI infrastructure."/><meta data-rh=true property=og:description content="Learn why optimizing for AI token consumption is a vanity metric, how friction drives token waste, and how teams can improve token efficiency with MCP, managed agents, and lower-friction AI infrastructure."/><meta data-rh=true name=keywords content="AI token consumption,Tokenmaxxing,Vanity Metrics,AI Infrastructure,Engineering Productivity,MCP,Friction Engineering,AI Tax,Agent Orchestration,Technical Debt,Token Efficiency,Cost Per Outcome,Managed Agents"/><meta data-rh=true property=og:image content=https://rebelion.la/img/blog/tokenmaxxing.png /><meta data-rh=true name=twitter:image content=https://rebelion.la/img/blog/tokenmaxxing.png /><meta data-rh=true property=og:type content=article /><meta data-rh=true property=article:published_time content=2026-05-24T00:00:00.000Z /><meta data-rh=true property=article:author content=https://www.linkedin.com/in/adrianescutia/ /><meta data-rh=true property=article:tag content="AI,AI Infrastructure,MCP,AI Tax,Agent Orchestration,Technical Debt,Token Efficiency,Managed Agents"/><link data-rh=true rel=icon href=/img/brand/favicon.svg /><link data-rh=true rel=canonical href=https://rebelion.la/tokenmaxxing-ai-vanity-metric /><link data-rh=true rel=alternate href=https://rebelion.la/tokenmaxxing-ai-vanity-metric hreflang=en /><link data-rh=true rel=alternate href=https://rebelion.la/tokenmaxxing-ai-vanity-metric hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@id":"https://rebelion.la/tokenmaxxing-ai-vanity-metric","@type":"BlogPosting","author":{"@type":"Person","description":"Founder, La Rebelion Labs","image":"/img/brand/logo-mark.png","name":"Adrian Escutia","url":"https://www.linkedin.com/in/adrianescutia/"},"datePublished":"2026-05-24T00:00:00.000Z","description":"Learn why optimizing for AI token consumption is a vanity metric, how friction drives token waste, and how teams can improve token efficiency with MCP, managed agents, and lower-friction AI infrastructure.","headline":"Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric","image":{"@id":"https://rebelion.la/img/blog/tokenmaxxing.png","@type":"ImageObject","caption":"title image for the blog post: Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric","contentUrl":"https://rebelion.la/img/blog/tokenmaxxing.png","url":"https://rebelion.la/img/blog/tokenmaxxing.png"},"isPartOf":{"@id":"https://rebelion.la/","@type":"Blog","name":"La Rebelion Labs"},"keywords":["AI token consumption","Tokenmaxxing","Vanity Metrics","AI Infrastructure","Engineering Productivity","MCP","Friction Engineering","AI Tax","Agent Orchestration","Technical Debt","Token Efficiency","Cost Per Outcome","Managed Agents"],"mainEntityOfPage":"https://rebelion.la/tokenmaxxing-ai-vanity-metric","name":"Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric","url":"https://rebelion.la/tokenmaxxing-ai-vanity-metric"}</script><link rel=alternate type=application/rss+xml href=/rss.xml title="La Rebelion Labs RSS Feed"><link rel=preconnect href=https://www.google-analytics.com><link rel=preconnect href=https://www.googletagmanager.com><script async src="https://www.googletagmanager.com/gtag/js?id=G-5QXB4Y9B0R"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-5QXB4Y9B0R",{})</script><link rel=search type=application/opensearchdescription+xml title="La Rebelion Labs" href=/opensearch.xml><script async defer type=text/javascript id=hs-script-loader src=//js.hs-scripts.com/21339207.js></script><script src=https://js.hsforms.net/forms/embed/v2.js async></script><link rel=stylesheet href=/assets/css/styles.3dd6f2f7.css /><script src=/assets/js/runtime~main.91692d37.js defer></script><script src=/assets/js/main.0bc51e37.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t;document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/img/brand/la-rebelion-neon.png /><link rel=preload as=image href=/img/brand/favicon.svg /><link rel=preload as=image href=/img/blog/tokenmaxxing.png /><link rel=preload as=image href=/img/brand/logo-wordmark.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner lr-navbar__inner"><div class="theme-layout-navbar-left navbar__items lr-navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/><div class=navbar__logo><img src=/img/brand/la-rebelion-neon.png alt="La Rebelion Labs" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/img/brand/favicon.svg alt="La Rebelion Labs" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">La Rebelion Labs</b></a><a class="navbar__item navbar__link" href=/labs>LABS</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/>Latest</a><a class="navbar__item navbar__link" href=/tags>Topics</a><a class="navbar__item navbar__link" href=/archive>Archive</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right lr-navbar__items lr-navbar__items--right"><a class="navbar__item navbar__link" href=/sponsor>Sponsor</a><a class="navbar__item navbar__link" href=/subscribe>Newsletter</a><a href=https://github.com/la-rebelion target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><a class=lr-nav-cta href=/subscribe><span>Get updates</span><svg viewBox="0 0 24 24" fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.7 aria-hidden=true width=16 height=16><path d="M5 12h12"/><path class=lr-arrow-tip d="m13 6 6 6-6 6"/></svg></a></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0 lr-layout"><div class=lr-site-shell><div class="lr-site-grid lr-site-grid--with-sidebar lr-site-grid--with-toc"><aside class=lr-site-rail><div class=lr-sidebar-shell><button type=button class=lr-sidebar-toggle aria-expanded=true aria-controls=lr-sidebar-panel><span class=lr-sidebar-toggle__icon aria-hidden=true>«</span><span class=lr-sidebar-toggle__label>Collapse panel</span></button><div id=lr-sidebar-panel><div class=lr-sidebar-stack><div class=lr-surface-card><span class=lr-eyebrow>Archive</span><div class=lr-archive-group-list><section class=lr-archive-group><h3>2026</h3><ul><li><a href=/tokenmaxxing-ai-vanity-metric>Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric</a><li><a href=/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops>From Chatbots to Agent Clusters: AI Infrastructure Is the Next DevOps</a><li><a href=/ai/codex-can-generate-images>Not Just Code: Codex Can Generate Images Too</a><li><a href=/community-license-LRL-CL>La Rebelion Labs Community License (LRL-CL)</a><li><a href=/managed-agents-need-infrastructure>Managed Agents Need Infrastructure: Introducing My Clawster and Clawne Me</a><li><a href=/ai/local-ai-transcription-vibe>Turn Voice Notes Into Production-Ready Content with Local AI Transcription</a><li><a href=/integrate-one-react-app-into-another>How to Integrate One React App Into Another Without Creating a Maintenance Mess</a></ul></section><section class=lr-archive-group><h3>2025</h3><ul><li><a href=/github-mcp-registry>GitHub’s MCP Registry</a><li><a href=/chatgpt-meets-custom-mcps>ChatGPT Meets Custom MCPs</a><li><a href=/qbot-a-cli-mcp-client-to-support-devops--deleted>QBot: A CLI MCP Client to support DevOps</a><li><a href=/qbot-a-cli-mcp-client-built-for-devops>QBot: A CLI MCP Client Built for DevOps</a><li><a href=/from-swagger-to-mcp>From Swagger to MCP</a><li><a href=/openapi-mcp-arazzo-the-formula-for-ai-automation>OpenAPI + MCP + Arazzo = The Formula for AI Automation</a><li><a href=/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp>OIDC Becomes ISO: Why It Matters for AI Agentification and MCP</a><li><a href=/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai>The Evolution of OAuth, Dynamic Client Registration, and Why It Matters for AI</a><li><a href=/agent-tools-guardrails-why-too-many-tools-can-break-your-ai>Agent Tools Guardrails: Why Too Many Tools Can Break Your AI Agent</a><li><a href=/model-context-protocol-mcp-is-it-a-protocol-or-a-contract>Model Context Protocol (MCP) — Is it a protocol or a contract?</a><li><a href=/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration>You Don't Need to Implement MCP Servers: A Contract-First Approach to AI Tool Integration</a><li><a href=/openapi-and-mcp-the-yin-yang-of-modern-intelligent-applications>OpenAPI & MCP: The Yin-Yang of Modern Intelligent Applications</a><li><a href=/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops>How to Build a CLI That Integrates with RESTful APIs in DevOps</a><li><a href=/bridging-the-ai-and-devops-enterprise-gap>Bridging the AI and DevOps Enterprise Gap</a><li><a href=/devops-leveraging-ai-in-air-gapped-and-zero-trust-environments>A Game-Changer for DevOps: Leveraging AI in Air-Gapped and Zero Trust Environments</a><li><a href=/ai-workflows-agentic-tools-and-mcp-server>Revolutionizing AI Workflows with Agentic Tools and MCP Server</a></ul></section><section class=lr-archive-group><h3>2024</h3><ul><li><a href=/the-future-of-devops-is-agentic-ai>The Future of DevOps is Agentic AI</a><li><a href=/deploying-microservices-in-kubernetes-with-ai-anthtopics-mcp>Deploying Microservices in Kubernetes with AI Anthropic's MCP</a><li><a href=/csar-and-sbom-for-airgap-kubernetes-strategies-for-enterprise-deployments>CSAR and SBOM for Airgap Kubernetes: Strategies for Enterprise Deployments</a><li><a href=/kubernetes-anti-patterns-in-airgap-environments>Kubernetes Anti-Patterns in Airgap Environments</a><li><a href=/solve-the-struggles-of-file-transfer-in-the-world-of-slim-containers-with-curl>File Transfer in the World of Slim Containers Using cURL</a><li><a href=/how-to-install-kubernetes-in-airgapped-environments-without-a-container-runtime>How to Install Kubernetes in Airgapped Environments (Without a Container Runtime!)</a><li><a href=/visualizing-ideas-and-designs-with-diagram-as-code-tools>Visualizing Ideas and Designs with Diagram-as-Code Tools</a><li><a href=/experience-the-power-of-workflow-engines-in-kubernetes>Experience the Power of Workflow Engines in Kubernetes</a><li><a href=/air-gap-containers-a-game-changer-for-zero-trust-environments>Air-Gap Containers: A Game-Changer for Zero Trust Environments</a><li><a href=/unleashing-kubernetes-key-components-for-a-robust-microservice-architecture>Unleashing Kubernetes: Key Components for a Robust Microservice Architecture</a><li><a href=/the-kubernetes-adoption-dilemma-diy-vs-hyperscaler>Navigating the Kubernetes Adoption Dilemma: DIY vs. Hyperscaler Deals</a><li><a href=/leverage-the-kubernetes-power-a-blueprint-for-a-microservices-orchestrator>Leverage the Kubernetes Power: A Blueprint for a Microservices Orchestrator to Maximize Efficiency</a><li><a href=/cicd-in-enterprise-and-air-gapped-environments>Mastering CICD in Enterprise and Air-Gapped Environments</a><li><a href=/test-driven-development-tdd-in-an-api-first-approach>Leveraging Test-Driven Development (TDD) in an API-First Approach</a><li><a href=/difference-between-developers-and-devops>Understanding the Difference Between Developers and DevOps: Key Distinctions Explained</a><li><a href=/kubectl-a-developers-perspective>Rethinking Kubernetes: A Developer's Perspective</a><li><a href=/learn-kubernetes-a-step-by-step-roadmap>Learn Kubernetes - A Step-by-Step Roadmap</a><li><a href=/technical-debt-quadrant-model>Tech Debt Quadrant Model</a><li><a href=/simplifying-remote-access-to-kubernetes-api-server>Simplifying Remote Access to Kubernetes API Server</a><li><a href=/the-easiest-kubernetes-installations-ever>The Easiest Kubernetes Installations Ever: Unveiling Distros Side by Side</a></ul></section><section class=lr-archive-group><h3>2023</h3><ul><li><a href=/elevating-log-monitoring-efficiency>Elevating Log Monitoring Efficiency</a><li><a href=/dive-into-the-world-of-cloud-containers>Dive into the world of Cloud Containers ☁️📦</a><li><a href=/mastering-microservices-troubleshooting-unveiling-command-line-secrets>Mastering Microservices Troubleshooting: Unveiling Command-Line Secrets</a><li><a href=/conquering-challenges-in-large-scale-kubernetes-environments>Kubernetes Odyssey: Conquering Challenges in Large-Scale Environments</a><li><a href=/navigating-kubernetes-complexity>Navigating Kubernetes Complexity</a><li><a href=/k1s-terminal-the-ultimate-tool-for-kubernetes>K1s Terminal: The Ultimate Tool for Streamlining Your Kubernetes Workflow</a><li><a href=/merging-startup-spirit-with-enterprise-stability>Merging Startup Spirit with Enterprise Stability</a><li><a href=/architecture-vs-design-dilemma>Architecture vs. Design Dilemma</a><li><a href=/control-flow-to-if-or-not-to-if>Navigating Control Flow: The ‘To If or Not To If’ Dilemma</a><li><a href=/the-art-of-empathy-in-customer-support>The Art of Empathy in Customer Support: Moving Beyond Judgment</a><li><a href=/embrace-tech-soft-skills-ai-industry-4>Embracing the Shift: The Dance Between Technical and Soft Skills in the Modern Career Landscape</a><li><a href=/crafting-stunning-presentations-chatgpt-markdown>🎤 Unleashing Creativity: Crafting Presentations with Ease</a><li><a href=/introducing-asxcel-agile-sdlc-accelerator>Introducing: ASXcel - Agile SDLC Accelerator</a><li><a href=/openshift-ingress>Unraveling the Ingenious OpenShift Ingress: Understanding FQDNs and IP Resolutions</a><li><a href=/simplifying-multi-environment-in-helm>Simplifying Multi-Environment in Helm Deployments on Kubernetes Clusters (Dev, Stage, Prod)</a><li><a href=/conquer-apis-with-no-code>Unleashing the Swagger Magic: Conquer APIs With No Code!</a><li><a href=/boosting-productivity-or-guarding-ip-ai-the-startup-vs-big-corporation-dilemma>Boosting productivity or guarding IP? AI, the startup vs. big corporation dilemma!</a><li><a href=/demystifying-the-untapped-magic-of-kubernetes-apis>Demystifying the Untapped Magic of Kubernetes APIs</a><li><a href=/json-schema-conversion-tool-for-strapi>Say Goodbye to Data Model Hassles with This Ingenious JSON Schema Conversion Tool for Strapi</a><li><a href=/devspace-vs-github-actions-which-best-deployment-tool>DevSpace vs. GitHub Actions: The Ultimate Battle for the Best Deployment Tool!</a><li><a href=/kubernetes-security-guide-to-penetration-testing>Kubernetes Security: The Ultimate Guide to Penetration Testing and Best Practices for Securing Your Cluster</a><li><a href=/from-outside-to-inside-approach-for-ops-building-their-systems>From Outside to Inside: A New Approach for IT Operations to Build Their System</a><li><a href=/kubernetes-the-essential-concepts-in-two-minutes>Unpacking the Mystery of Kubernetes</a><li><a href=/performance-problem-with-your-application-or-database>Performance problem with your application or database?</a><li><a href=/why-learning-kubernetes-and-devops-is-an-essential-skill>Why learning Kubernetes and DevOps is an essential skill</a></ul></section><section class=lr-archive-group><h3>2022</h3><ul><li><a href=/kubernetes-the-easy-way>Kubernetes the easy way</a><li><a href=/on-top-and-around-kubernetes>On top and around Kubernetes</a><li><a href=/why-you-should-not-use-kubernetes-operators>Why you should not use Kubernetes Operators</a><li><a href=/api-as-a-product>API as a Product</a><li><a href=/configure-and-manage-quorum-and-avoid-brain-split>Configure and manage quorum And avoid brain split</a><li><a href=/no-code-for-coders>no code for coders</a><li><a href=/has-kustomize-killed-helm-for-kubernetes-deployments>Has Kustomize killed Helm for Kubernetes deployments?</a><li><a href=/install-kubernetes-docker-offline>Installing Kubernetes and Docker in offline scenarios</a><li><a href=/king-skeleton-a-simple-three-tier-application-demo-using-helm>King Skeleton: a simple three-tier application demo using Helm</a><li><a href=/taming-the-complexity-of-deploying-kubernetes-using-helm>How I Automated Deploying My Microservices Stack To Kubernetes Using Helm</a><li><a href=/helmee-to-helm-you>Helmee to Helm You</a><li><a href=/let-s-try-ubuntu-22-04>let's try Ubuntu 22.04</a><li><a href=/the-big-lie-on-cloud-native-apps-deployment-with-helm>The Big Lie on Cloud Native Apps deployment with helm</a><li><a href=/the-annoying-thing-i-do-every-day-with-kubernetes-and-helm>The Annoying Thing I Do every day with Kubernetes and Helm</a><li><a href=/how-to-manage-multiple-environments-with-helm>How To Manage Multiple Environments With Helm</a></ul></section></div></div><div class="lr-surface-card lr-sidebar-links"><span class=lr-eyebrow>Feeds</span><ul><li><a href=https://rebelion.la/rss.xml target=_blank rel="noopener noreferrer">RSS feed</a><li><a href=/subscribe>Newsletter</a><li><a href=/tags>Browse topics</a></ul></div><div class="lr-reveal lr-newsletter lr-newsletter--compact" data-visible=false style=--lr-delay:0ms><div class=lr-newsletter__copy><span class=lr-eyebrow>Newsletter</span></div><div class=lr-newsletter__form><form class=lr-newsletter-form action=# method=POST><label class=lr-newsletter-field><span class=sr-only>Email address</span><input type=email required placeholder=you@workshop.dev name=email value="" /></label><button type=submit class="lr-button lr-button--primary"><span>Subscribe</span><svg viewBox="0 0 24 24" fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.7 aria-hidden=true width=16 height=16><path d="M5 12h12"/><path class=lr-arrow-tip d="m13 6 6 6-6 6"/></svg></button></form><p class=lr-newsletter-note>Or skip the inbox and <a href=https://rebelion.la/rss.xml target=_blank rel="noopener noreferrer">follow the RSS feed</a>.</div></div></div></div></div></aside><main class=lr-site-main><article class=lr-post-article><header class=lr-post-hero><a class=lr-back-link href=/>Latest writing</a><div class=lr-post-kicker><a href=/tags/ai>AI</a><span>May 23, 2026</span><span>7<!-- --> min read</span></div><h1 class=lr-post-title>Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric</h1><p class=lr-post-description>Learn why optimizing for AI token consumption is a vanity metric, how friction drives token waste, and how teams can improve token efficiency with MCP, managed agents, and lower-friction AI infrastructure.<div class=lr-post-byline><span>Adrian Escutia</span><span>Founder, La Rebelion Labs</span></div><div class=lr-post-cover><img src=/img/blog/tokenmaxxing.png alt="" /></div></header><div id=__blog-post-container class=markdown><h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=tokenmaxxing-is-the-new-vanity-metric-in-ai>Tokenmaxxing Is the New Vanity Metric in AI<a href=#tokenmaxxing-is-the-new-vanity-metric-in-ai class=hash-link aria-label="Direct link to Tokenmaxxing Is the New Vanity Metric in AI" title="Direct link to Tokenmaxxing Is the New Vanity Metric in AI" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-burning-more-ai-tokens-does-not-mean-your-engineering-team-is-more-productive>Why burning more AI tokens does NOT mean your engineering team is more productive<a href=#why-burning-more-ai-tokens-does-not-mean-your-engineering-team-is-more-productive class=hash-link aria-label="Direct link to Why burning more AI tokens does NOT mean your engineering team is more productive" title="Direct link to Why burning more AI tokens does NOT mean your engineering team is more productive" translate=no>​</a></h3>
+<p>A strange new metric is spreading across the AI industry:</p>
+<p>"How many tokens did your team consume this month?"</p>
+<p>That sentence alone should worry every engineering leader.</p>
+<p>If you are building the infrastructure behind this shift, the same pattern shows up across <a href=https://rebelion.la target=_blank rel="noopener noreferrer" class="">La Rebelion Labs</a>, <a href=https://clawster.my target=_blank rel="noopener noreferrer" class="">My Clawster</a>, <a href=https://clawne.me target=_blank rel="noopener noreferrer" class="">Clawne Me</a>, and <a href=https://mcp.com.ai target=_blank rel="noopener noreferrer" class="">HAPI MCP</a>.</p>
+<p>Some companies are now treating AI token consumption as a proxy for innovation, productivity, or "AI maturity." Engineers are being ranked by usage. Internal dashboards celebrate massive token growth. Teams proudly announce billions of tokens processed as if compute consumption itself created business value.</p>
+<p>The internet gave this trend a name:</p>
+<p><strong>Tokenmaxxing.</strong></p>
+<p>And honestly? The industry is dangerously close to repeating one of the oldest mistakes in software engineering history:</p>
+<p>Rewarding activity instead of outcomes.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-core-problem-with-tokenmaxxing>The core problem with tokenmaxxing<a href=#the-core-problem-with-tokenmaxxing class=hash-link aria-label="Direct link to The core problem with tokenmaxxing" title="Direct link to The core problem with tokenmaxxing" translate=no>​</a></h3>
+<p>The assumption behind tokenmaxxing sounds logical at first:</p>
+<ul>
+<li class="">More prompts → more AI usage</li>
+<li class="">More AI usage → more output</li>
+<li class="">More output → more productivity</li>
+</ul>
+<p>But software engineering has already learned this lesson decades ago.</p>
+<p>We once measured:</p>
+<ul>
+<li class="">lines of code,</li>
+<li class="">hours worked,</li>
+<li class="">ticket velocity,</li>
+<li class="">sprint points,</li>
+<li class="">story completion rates.</li>
+</ul>
+<p>Every one of those metrics failed when teams optimized for the metric instead of the outcome.</p>
+<p>AI tokens are becoming the modern version of "lines of code written."</p>
+<p>And the consequences could be worse.</p>
+<p>Because tokens directly translate into:</p>
+<ul>
+<li class="">infrastructure cost,</li>
+<li class="">inference latency,</li>
+<li class="">operational complexity,</li>
+<li class="">energy consumption,</li>
+<li class="">retry storms,</li>
+<li class="">and hidden architectural inefficiencies.</li>
+</ul>
+<p>A company can burn millions of dollars in tokens and still ship low-quality products.</p>
+<p>Or worse:
+Ship nothing meaningful at all.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-real-bottleneck-is-not-tokens>The real bottleneck is NOT tokens<a href=#the-real-bottleneck-is-not-tokens class=hash-link aria-label="Direct link to The real bottleneck is NOT tokens" title="Direct link to The real bottleneck is NOT tokens" translate=no>​</a></h2>
+<p>Here is the uncomfortable truth many AI companies are avoiding:</p>
+<p><strong>Tokens are not the bottleneck.</strong></p>
+<p>Friction is.</p>
+<p>That distinction changes everything.</p>
+<p>The majority of token waste today is not caused by intelligence problems.</p>
+<p>It is caused by:</p>
+<ul>
+<li class="">broken integrations,</li>
+<li class="">human-designed APIs,</li>
+<li class="">unreliable tools,</li>
+<li class="">authentication failures,</li>
+<li class="">brittle workflows,</li>
+<li class="">context reconstruction,</li>
+<li class="">and systems never designed for autonomous agents.</li>
+</ul>
+<p>In other words:</p>
+<p>AI agents are paying an operational tax just to exist inside human infrastructure.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-hidden-ai-tax-nobody-talks-about>The hidden "AI tax" nobody talks about<a href=#the-hidden-ai-tax-nobody-talks-about class=hash-link aria-label='Direct link to The hidden "AI tax" nobody talks about' title='Direct link to The hidden "AI tax" nobody talks about' translate=no>​</a></h2>
+<p>Most enterprise systems were designed for humans:</p>
+<ul>
+<li class="">humans clicking buttons,</li>
+<li class="">humans reading dashboards,</li>
+<li class="">humans manually correcting failures,</li>
+<li class="">humans navigating ambiguous workflows.</li>
+</ul>
+<p>AI agents inherit none of those advantages.</p>
+<p>So what happens?</p>
+<p>The agent retries.</p>
+<p>Again.
+And again.
+And again.</p>
+<p>Every retry burns:</p>
+<ul>
+<li class="">tokens,</li>
+<li class="">latency,</li>
+<li class="">compute,</li>
+<li class="">API quotas,</li>
+<li class="">and money.</li>
+</ul>
+<p>Not because the AI is "thinking deeply."</p>
+<p>But because the infrastructure itself is hostile to automation.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=example-the-retry-loop-disaster>Example: the retry loop disaster<a href=#example-the-retry-loop-disaster class=hash-link aria-label="Direct link to Example: the retry loop disaster" title="Direct link to Example: the retry loop disaster" translate=no>​</a></h2>
+<p>Imagine an AI agent attempting to provision cloud infrastructure.</p>
+<p>The workflow seems simple:</p>
+<ol>
+<li class="">Read API documentation</li>
+<li class="">Authenticate</li>
+<li class="">Deploy resource</li>
+<li class="">Verify deployment</li>
+</ol>
+<p>But reality looks like this:</p>
+<ul>
+<li class="">API schema mismatch</li>
+<li class="">unclear error message</li>
+<li class="">OAuth token expired</li>
+<li class="">inconsistent documentation</li>
+<li class="">timeout response</li>
+<li class="">rate limiting</li>
+<li class="">partial state failure</li>
+<li class="">undocumented edge case</li>
+</ul>
+<p>Now the agent:</p>
+<ul>
+<li class="">retries requests,</li>
+<li class="">rebuilds context,</li>
+<li class="">re-reads documentation,</li>
+<li class="">regenerates plans,</li>
+<li class="">and consumes thousands of additional tokens.</li>
+</ul>
+<p>The organization sees:</p>
+<blockquote>
+<p>"Wow, our AI usage is skyrocketing!"</p>
+</blockquote>
+<p>But the truth is:
+the system is inefficient.</p>
+<p>The tokens are smoke coming out of architectural friction.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=token-consumption-is-becoming-the-wrong-kpi>Token consumption is becoming the wrong KPI<a href=#token-consumption-is-becoming-the-wrong-kpi class=hash-link aria-label="Direct link to Token consumption is becoming the wrong KPI" title="Direct link to Token consumption is becoming the wrong KPI" translate=no>​</a></h2>
+<p>This is where the industry is heading into dangerous territory.</p>
+<p>If companies reward:</p>
+<ul>
+<li class="">token usage,</li>
+<li class="">AI interaction count,</li>
+<li class="">agent invocation frequency,</li>
+<li class="">or inference consumption,</li>
+</ul>
+<p>then teams will optimize for those metrics.</p>
+<p>That creates predictable dysfunction:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=engineers-start-optimizing-for-visibility>Engineers start optimizing for visibility<a href=#engineers-start-optimizing-for-visibility class=hash-link aria-label="Direct link to Engineers start optimizing for visibility" title="Direct link to Engineers start optimizing for visibility" translate=no>​</a></h3>
+<p>Instead of:</p>
+<ul>
+<li class="">reducing friction,</li>
+<li class="">improving reliability,</li>
+<li class="">minimizing retries,</li>
+<li class="">simplifying workflows,</li>
+</ul>
+<p>teams may unconsciously optimize for:</p>
+<ul>
+<li class="">more prompts,</li>
+<li class="">longer chains,</li>
+<li class="">more agent orchestration,</li>
+<li class="">inflated inference usage.</li>
+</ul>
+<p>The metric becomes theater.</p>
+<p>And theater scales fast in enterprise environments.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-ai-industry-is-measuring-the-wrong-thing>The AI industry is measuring the wrong thing<a href=#the-ai-industry-is-measuring-the-wrong-thing class=hash-link aria-label="Direct link to The AI industry is measuring the wrong thing" title="Direct link to The AI industry is measuring the wrong thing" translate=no>​</a></h2>
+<p>The real question is not:</p>
+<blockquote>
+<p>"How many tokens did your organization consume?"</p>
+</blockquote>
+<p>The real question is:</p>
+<blockquote>
+<p>"How much friction did your architecture eliminate?"</p>
+</blockquote>
+<p>That is the metric nobody is measuring yet.</p>
+<p>Because in the AI-native future:
+the winning systems will not be the ones consuming the most intelligence.</p>
+<p>They will be the ones wasting the least intelligence.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-future-belongs-to-low-friction-architectures>The future belongs to low-friction architectures<a href=#the-future-belongs-to-low-friction-architectures class=hash-link aria-label="Direct link to The future belongs to low-friction architectures" title="Direct link to The future belongs to low-friction architectures" translate=no>​</a></h2>
+<p>This is where the next generation of infrastructure becomes critical.</p>
+<p>The AI ecosystem is still built on human-native assumptions:</p>
+<ul>
+<li class="">visual dashboards,</li>
+<li class="">manual workflows,</li>
+<li class="">click-based authentication,</li>
+<li class="">verbose documentation,</li>
+<li class="">disconnected APIs.</li>
+</ul>
+<p>Agents struggle because they operate in environments optimized for humans.</p>
+<p>This is exactly why protocol-driven ecosystems like <a href=https://modelcontextprotocol.io target=_blank rel="noopener noreferrer" class="">Model Context Protocol</a>, <a href=https://mcp.com.ai target=_blank rel="noopener noreferrer" class="">HAPI MCP</a> and the <a href=https://run.mcp.com.ai target=_blank rel="noopener noreferrer" class="">runMCP marketplace</a> matter.</p>
+<p>Protocols reduce ambiguity.</p>
+<p>And reducing ambiguity reduces token waste.</p>
+<p>If you are implementing that layer, <a href=https://hapi.mcp.com.ai target=_blank rel="noopener noreferrer" class="">HAPI CLI</a> is part of the same workflow for building and shipping MCP-driven systems.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=why-mcp-changes-the-equation>Why MCP changes the equation<a href=#why-mcp-changes-the-equation class=hash-link aria-label="Direct link to Why MCP changes the equation" title="Direct link to Why MCP changes the equation" translate=no>​</a></h2>
+<p>The future is not:
+"bigger models consuming infinite tokens."</p>
+<p>The future is:
+<strong>structured agent interoperability.</strong></p>
+<p>With MCP-style architectures:</p>
+<ul>
+<li class="">tools become discoverable,</li>
+<li class="">interfaces become predictable,</li>
+<li class="">context becomes standardized,</li>
+<li class="">retries decrease,</li>
+<li class="">orchestration simplifies,</li>
+<li class="">and agents stop wasting tokens interpreting chaos.</li>
+</ul>
+<p>This is not merely an optimization improvement.</p>
+<p>It is an economic shift.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-companies-that-win-will-optimize-cost-per-outcome>The companies that win will optimize "cost-per-outcome"<a href=#the-companies-that-win-will-optimize-cost-per-outcome class=hash-link aria-label='Direct link to The companies that win will optimize "cost-per-outcome"' title='Direct link to The companies that win will optimize "cost-per-outcome"' translate=no>​</a></h2>
+<p>Today many organizations measure:</p>
+<ul>
+<li class="">tokens per user,</li>
+<li class="">AI usage growth,</li>
+<li class="">inference scale.</li>
+</ul>
+<p>Tomorrow they will measure:</p>
+<ul>
+<li class="">cost per successful workflow,</li>
+<li class="">latency per completed task,</li>
+<li class="">retries per orchestration,</li>
+<li class="">token efficiency per business outcome.</li>
+</ul>
+<p>That changes incentives dramatically.</p>
+<p>Because suddenly:</p>
+<ul>
+<li class="">clean APIs matter,</li>
+<li class="">deterministic tooling matters,</li>
+<li class="">context engineering matters,</li>
+<li class="">observability matters,</li>
+<li class="">orchestration reliability matters.</li>
+</ul>
+<p>The conversation moves from:</p>
+<blockquote>
+<p>"How much AI are we using?"</p>
+</blockquote>
+<p>to:</p>
+<blockquote>
+<p>"Why is our AI wasting so much effort?"</p>
+</blockquote>
+<p>That shift is also why <a href=https://clawster.my target=_blank rel="noopener noreferrer" class="">My Clawster</a> and <a href=https://clawne.me target=_blank rel="noopener noreferrer" class="">Clawne Me</a> focus on managed agent infrastructure instead of raw usage volume.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=ai-systems-are-exposing-technical-debt-at-massive-scale>AI systems are exposing technical debt at massive scale<a href=#ai-systems-are-exposing-technical-debt-at-massive-scale class=hash-link aria-label="Direct link to AI systems are exposing technical debt at massive scale" title="Direct link to AI systems are exposing technical debt at massive scale" translate=no>​</a></h2>
+<p>This may become one of the most important lessons of the AI era:</p>
+<p>AI agents amplify technical debt faster than humans ever could.</p>
+<p>A human can compensate for:</p>
+<ul>
+<li class="">poor UX,</li>
+<li class="">unclear workflows,</li>
+<li class="">inconsistent naming,</li>
+<li class="">missing documentation.</li>
+</ul>
+<p>Agents cannot.</p>
+<p>They brute-force through confusion using tokens.</p>
+<p>That means:
+every badly designed system becomes an inference cost multiplier.</p>
+<p>The hidden tax compounds across:</p>
+<ul>
+<li class="">APIs,</li>
+<li class="">workflows,</li>
+<li class="">integrations,</li>
+<li class="">cloud tooling,</li>
+<li class="">enterprise software.</li>
+</ul>
+<p>And most organizations are completely unprepared for this reality.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=the-rise-of-friction-engineering>The rise of "friction engineering"<a href=#the-rise-of-friction-engineering class=hash-link aria-label='Direct link to The rise of "friction engineering"' title='Direct link to The rise of "friction engineering"' translate=no>​</a></h2>
+<p>A new discipline is emerging underneath all this:</p>
+<p><strong>Friction engineering.</strong></p>
+<p>Not prompt engineering.</p>
+<p>Not even agent engineering.</p>
+<p>Friction engineering is the practice of:</p>
+<ul>
+<li class="">minimizing ambiguity,</li>
+<li class="">reducing retries,</li>
+<li class="">simplifying orchestration,</li>
+<li class="">optimizing context flow,</li>
+<li class="">and designing systems AI can operate efficiently.</li>
+</ul>
+<p>This becomes a business advantage because lower friction means:</p>
+<ul>
+<li class="">fewer tokens,</li>
+<li class="">lower cloud costs,</li>
+<li class="">faster workflows,</li>
+<li class="">better reliability,</li>
+<li class="">higher agent autonomy.</li>
+</ul>
+<p>The organizations that master this will dominate the next decade of AI infrastructure.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=explore-the-ecosystem>Explore the ecosystem<a href=#explore-the-ecosystem class=hash-link aria-label="Direct link to Explore the ecosystem" title="Direct link to Explore the ecosystem" translate=no>​</a></h2>
+<p>If you are building toward lower-friction AI systems, these related projects expand on the ideas in this post:</p>
+<ul>
+<li class=""><a href=https://rebelion.la target=_blank rel="noopener noreferrer" class="">La Rebelion Labs</a></li>
+<li class=""><a href=https://mcp.com.ai target=_blank rel="noopener noreferrer" class="">HAPI MCP</a></li>
+<li class=""><a href=https://hapi.mcp.com.ai target=_blank rel="noopener noreferrer" class="">HAPI CLI</a></li>
+<li class=""><a href=https://run.mcp.com.ai target=_blank rel="noopener noreferrer" class="">runMCP Marketplace</a></li>
+<li class=""><a href=https://clawster.my target=_blank rel="noopener noreferrer" class="">My Clawster</a></li>
+<li class=""><a href=https://clawne.me target=_blank rel="noopener noreferrer" class="">Clawne Me</a></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=ideas-to-reduce-the-ai-tax-in-modern-architectures>Ideas to reduce the "AI tax" in modern architectures<a href=#ideas-to-reduce-the-ai-tax-in-modern-architectures class=hash-link aria-label='Direct link to Ideas to reduce the "AI tax" in modern architectures' title='Direct link to Ideas to reduce the "AI tax" in modern architectures' translate=no>​</a></h2>
+<p>Here are practical strategies engineering teams should prioritize immediately.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-build-machine-first-apis>1. Build machine-first APIs<a href=#1-build-machine-first-apis class=hash-link aria-label="Direct link to 1. Build machine-first APIs" title="Direct link to 1. Build machine-first APIs" translate=no>​</a></h3>
+<p>Most APIs are still human-first.</p>
+<p>Agents need:</p>
+<ul>
+<li class="">deterministic responses,</li>
+<li class="">structured error handling,</li>
+<li class="">predictable schemas,</li>
+<li class="">semantic consistency.</li>
+</ul>
+<p>A beautiful dashboard means nothing to an autonomous agent.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-reduce-retry-loops-aggressively>2. Reduce retry loops aggressively<a href=#2-reduce-retry-loops-aggressively class=hash-link aria-label="Direct link to 2. Reduce retry loops aggressively" title="Direct link to 2. Reduce retry loops aggressively" translate=no>​</a></h3>
+<p>Track:</p>
+<ul>
+<li class="">retry frequency,</li>
+<li class="">context rebuilds,</li>
+<li class="">failed orchestration chains,</li>
+<li class="">redundant inference calls.</li>
+</ul>
+<p>These are hidden token leaks.</p>
+<p>Retries are the new memory leak.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-create-persistent-agent-memory-layers>3. Create persistent agent memory layers<a href=#3-create-persistent-agent-memory-layers class=hash-link aria-label="Direct link to 3. Create persistent agent memory layers" title="Direct link to 3. Create persistent agent memory layers" translate=no>​</a></h3>
+<p>Agents repeatedly relearn workflows because context windows reset.</p>
+<p>Persistent memory systems reduce:</p>
+<ul>
+<li class="">repeated reasoning,</li>
+<li class="">repeated tool discovery,</li>
+<li class="">repeated planning.</li>
+</ul>
+<p>That directly lowers token consumption.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-optimize-for-orchestration-clarity>4. Optimize for orchestration clarity<a href=#4-optimize-for-orchestration-clarity class=hash-link aria-label="Direct link to 4. Optimize for orchestration clarity" title="Direct link to 4. Optimize for orchestration clarity" translate=no>​</a></h3>
+<p>Many workflows fail because:</p>
+<ul>
+<li class="">tool descriptions are vague,</li>
+<li class="">capabilities overlap,</li>
+<li class="">APIs behave inconsistently.</li>
+</ul>
+<p>Agents need explicit operational contracts.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-build-observability-for-agent-friction>5. Build observability for agent friction<a href=#5-build-observability-for-agent-friction class=hash-link aria-label="Direct link to 5. Build observability for agent friction" title="Direct link to 5. Build observability for agent friction" translate=no>​</a></h3>
+<p>Most observability stacks track:</p>
+<ul>
+<li class="">CPU,</li>
+<li class="">latency,</li>
+<li class="">infrastructure health.</li>
+</ul>
+<p>Very few track:</p>
+<ul>
+<li class="">token waste,</li>
+<li class="">reasoning loops,</li>
+<li class="">failed tool selection,</li>
+<li class="">context churn.</li>
+</ul>
+<p>That visibility will become essential.</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-standardize-protocols>6. Standardize protocols<a href=#6-standardize-protocols class=hash-link aria-label="Direct link to 6. Standardize protocols" title="Direct link to 6. Standardize protocols" translate=no>​</a></h3>
+<p>Every custom integration increases:</p>
+<ul>
+<li class="">ambiguity,</li>
+<li class="">translation layers,</li>
+<li class="">orchestration complexity.</li>
+</ul>
+<p>Protocols like MCP reduce operational entropy.</p>
+<p>That lowers the AI tax.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=final-thought>Final thought<a href=#final-thought class=hash-link aria-label="Direct link to Final thought" title="Direct link to Final thought" translate=no>​</a></h2>
+<p>The AI industry is entering its "vanity metric phase."</p>
+<p>Right now many organizations celebrate:</p>
+<ul>
+<li class="">token growth,</li>
+<li class="">inference scale,</li>
+<li class="">AI usage volume.</li>
+</ul>
+<p>But eventually the market will mature.</p>
+<p>And when it does, the winners will not be the companies consuming the most intelligence.</p>
+<p>They will be the companies building systems where intelligence flows with the least resistance.</p>
+<p>Because the future of AI infrastructure is not about maximizing tokens.</p>
+<p>It is about minimizing friction.</p>
+<p>And that changes the entire game.</div><footer class=lr-post-footer><div class=lr-tag-row><a class=lr-tag-pill href=/tags/ai>AI</a><a class=lr-tag-pill href=/tags/ai-infrastructure>AI Infrastructure</a><a class=lr-tag-pill href=/tags/mcp>MCP</a><a class=lr-tag-pill href=/tags/ai-tax>AI Tax</a><a class=lr-tag-pill href=/tags/agent-orchestration>Agent Orchestration</a><a class=lr-tag-pill href=/tags/technical-debt>Technical Debt</a><a class=lr-tag-pill href=/tags/token-efficiency>Token Efficiency</a><a class=lr-tag-pill href=/tags/managed-agents>Managed Agents</a></div></footer></article><div class="lr-reveal lr-newsletter lr-newsletter--postscript" data-visible=false style=--lr-delay:0ms><div class=lr-newsletter__copy><span class=lr-eyebrow>Newsletter</span><h2>Stay close to the experiments</h2><p>Get new essays, practical guides, and hands-on field notes from La Rebelion Labs.</div><div class=lr-newsletter__form><form class=lr-newsletter-form action=# method=POST><label class=lr-newsletter-field><span class=sr-only>Email address</span><input type=email required placeholder=you@workshop.dev name=email value="" /></label><button type=submit class="lr-button lr-button--primary"><span>Join the newsletter</span><svg viewBox="0 0 24 24" fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=1.7 aria-hidden=true width=16 height=16><path d="M5 12h12"/><path class=lr-arrow-tip d="m13 6 6 6-6 6"/></svg></button></form></div></div><div class=lr-paginator><nav class="pagination-nav docusaurus-mt-lg" aria-label="Blog post page navigation"><a class="pagination-nav__link pagination-nav__link--next" href=/from-chatbots-to-agent-clusters-ai-infrastructure-the-next-devops><div class=pagination-nav__sublabel>Older post</div><div class=pagination-nav__label>From Chatbots to Agent Clusters: AI Infrastructure Is the Next DevOps</div></a></nav></div></main><aside class=lr-site-toc><div class="lr-surface-card lr-surface-card--toc"><span class=lr-eyebrow>On this page</span><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#tokenmaxxing-is-the-new-vanity-metric-in-ai class="table-of-contents__link toc-highlight">Tokenmaxxing Is the New Vanity Metric in AI</a><ul><li><a href=#why-burning-more-ai-tokens-does-not-mean-your-engineering-team-is-more-productive class="table-of-contents__link toc-highlight">Why burning more AI tokens does NOT mean your engineering team is more productive</a><li><a href=#the-core-problem-with-tokenmaxxing class="table-of-contents__link toc-highlight">The core problem with tokenmaxxing</a></ul><li><a href=#the-real-bottleneck-is-not-tokens class="table-of-contents__link toc-highlight">The real bottleneck is NOT tokens</a><li><a href=#the-hidden-ai-tax-nobody-talks-about class="table-of-contents__link toc-highlight">The hidden "AI tax" nobody talks about</a><li><a href=#example-the-retry-loop-disaster class="table-of-contents__link toc-highlight">Example: the retry loop disaster</a><li><a href=#token-consumption-is-becoming-the-wrong-kpi class="table-of-contents__link toc-highlight">Token consumption is becoming the wrong KPI</a><ul><li><a href=#engineers-start-optimizing-for-visibility class="table-of-contents__link toc-highlight">Engineers start optimizing for visibility</a></ul><li><a href=#the-ai-industry-is-measuring-the-wrong-thing class="table-of-contents__link toc-highlight">The AI industry is measuring the wrong thing</a><li><a href=#the-future-belongs-to-low-friction-architectures class="table-of-contents__link toc-highlight">The future belongs to low-friction architectures</a><li><a href=#why-mcp-changes-the-equation class="table-of-contents__link toc-highlight">Why MCP changes the equation</a><li><a href=#the-companies-that-win-will-optimize-cost-per-outcome class="table-of-contents__link toc-highlight">The companies that win will optimize "cost-per-outcome"</a><li><a href=#ai-systems-are-exposing-technical-debt-at-massive-scale class="table-of-contents__link toc-highlight">AI systems are exposing technical debt at massive scale</a><li><a href=#the-rise-of-friction-engineering class="table-of-contents__link toc-highlight">The rise of "friction engineering"</a><li><a href=#explore-the-ecosystem class="table-of-contents__link toc-highlight">Explore the ecosystem</a><li><a href=#ideas-to-reduce-the-ai-tax-in-modern-architectures class="table-of-contents__link toc-highlight">Ideas to reduce the "AI tax" in modern architectures</a><ul><li><a href=#1-build-machine-first-apis class="table-of-contents__link toc-highlight">1. Build machine-first APIs</a><li><a href=#2-reduce-retry-loops-aggressively class="table-of-contents__link toc-highlight">2. Reduce retry loops aggressively</a><li><a href=#3-create-persistent-agent-memory-layers class="table-of-contents__link toc-highlight">3. Create persistent agent memory layers</a><li><a href=#4-optimize-for-orchestration-clarity class="table-of-contents__link toc-highlight">4. Optimize for orchestration clarity</a><li><a href=#5-build-observability-for-agent-friction class="table-of-contents__link toc-highlight">5. Build observability for agent friction</a><li><a href=#6-standardize-protocols class="table-of-contents__link toc-highlight">6. Standardize protocols</a></ul><li><a href=#final-thought class="table-of-contents__link toc-highlight">Final thought</a></ul></div></div></aside></div></div></div><footer class=lr-footer><div class="lr-site-shell lr-footer__inner"><div class=lr-footer__brand><img src=/img/brand/logo-wordmark.svg alt="La Rebelion Labs"/><p>A content-first field guide for AI systems, DevOps, cloud-native architecture, and product-minded engineering.</div><div class=lr-footer__links><div><span class=lr-eyebrow>Browse</span><a href=/>Latest</a><a href=/archive>Archive</a><a href=/tags>Topics</a><a href=/subscribe>Newsletter</a><a href=/sponsor>Sponsor</a><a href=/contact>Contact</a></div><div><span class=lr-eyebrow>Follow</span><a href=https://github.com/la-rebelion target=_blank rel="noopener noreferrer">GitHub</a><a href=https://www.linkedin.com/in/adrianescutia/ target=_blank rel="noopener noreferrer">LinkedIn</a><a href=https://twitter.com/LaRebelionLabs target=_blank rel="noopener noreferrer">X</a><a href=https://www.youtube.com/@LaRebelion target=_blank rel="noopener noreferrer">YouTube</a><a href=https://rebelion.la/rss.xml target=_blank rel="noopener noreferrer">RSS</a></div></div></div></footer></div></body>
