@@ -2,9 +2,9 @@
 title: "Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric"
 description: "Learn why optimizing for AI token consumption is a vanity metric, how friction drives token waste, and how teams can improve token efficiency with MCP, managed agents, and lower-friction AI infrastructure."
 slug: tokenmaxxing-ai-vanity-metric
-date: 2024-05-24T00:00:00.000Z
+date: 2026-05-24T00:00:00.000Z
 authors: [adrianescutia]
-tags: [AI, Tokenmaxxing, Vanity Metrics, AI Infrastructure, Engineering Productivity, MCP, Friction Engineering, AI Tax, Agent Orchestration, Technical Debt, Token Efficiency, Cost Per Outcome]
+tags: [AI, AI Infrastructure, MCP, AI Tax, Agent Orchestration, Technical Debt, Token Efficiency, Managed Agents]
 keywords: [AI token consumption, Tokenmaxxing, Vanity Metrics, AI Infrastructure, Engineering Productivity, MCP, Friction Engineering, AI Tax, Agent Orchestration, Technical Debt, Token Efficiency, Cost Per Outcome, Managed Agents]
 image: /img/blog/tokenmaxxing.png
 ---
