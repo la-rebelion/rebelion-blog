@@ -4,10 +4,272 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Sun, 24 May 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 30 May 2026 12:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Are ORMs Still Relevant in the AI Copilot Era?]]></title>
+            <link>https://rebelion.la/ai/are-orm-still-relevant-and-useful</link>
+            <guid>https://rebelion.la/ai/are-orm-still-relevant-and-useful</guid>
+            <pubDate>Sat, 30 May 2026 12:00:00 GMT</pubDate>
+            <description><![CDATA[With AI copilots generating code faster than ever, do we still need ORMs? Explore the tradeoffs between productivity and semantic clarity, and how to use both effectively in 2026.]]></description>
+            <content:encoded><![CDATA[<p>AI copilots can scaffold full-stack apps in minutes, write migrations, generate APIs, and even propose query optimizations. So the obvious question is: <strong>If AI can write SQL directly, do we still need ORMs?</strong></p>
+<p>After a painful production incident this week, my answer is:</p>
+<p><strong>Yes, ORMs still matter. But blind trust in abstractions does not.</strong></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-incident-anonymized">The Incident (Anonymized)<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#the-incident-anonymized" class="hash-link" aria-label="Direct link to The Incident (Anonymized)" title="Direct link to The Incident (Anonymized)" translate="no">​</a></h2>
+<p>A customer flow in production kept returning a business-rule conflict. The strange part:</p>
+<ul>
+<li class="">The customer looked eligible in an internal troubleshooting tool.</li>
+<li class="">The same customer looked ineligible in the portal transaction flow.</li>
+<li class="">Verification data was valid.</li>
+<li class="">Branch resolution looked valid.</li>
+</ul>
+<p>Everything <em>looked</em> correct, yet the live flow still failed.</p>
+<p>We chased auth freshness, payload format, environment flags, and campaign config. Useful, but not the root cause.</p>
+<p>The real issue was subtler:</p>
+<ul>
+<li class="">The troubleshooting tool used a direct SQL path.</li>
+<li class="">The transaction flow used ORM-composed queries.</li>
+<li class="">Those two paths were logically intended to be equivalent.</li>
+<li class="">In practice, they were not equivalent under real production data.</li>
+</ul>
+<p>This was not “SQL bad, ORM good” or “ORM bad, SQL good.”</p>
+<p>It was <strong>equivalence drift</strong> between two query construction styles.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="was-drizzle-hiding-the-bug">Was Drizzle “Hiding” the Bug?<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#was-drizzle-hiding-the-bug" class="hash-link" aria-label="Direct link to Was Drizzle “Hiding” the Bug?" title="Direct link to Was Drizzle “Hiding” the Bug?" translate="no">​</a></h2>
+<p>Short answer: <strong>partly yes, in the same way any abstraction can hide behavior</strong>.</p>
+<p>Longer answer:</p>
+<ul>
+<li class="">We assumed the ORM-generated query semantics matched the SQL semantics we had in mind.</li>
+<li class="">We did not validate that assumption early enough against production-like conditions.</li>
+<li class="">The troubleshooting endpoint, built with explicit SQL, became the “truth probe” that exposed the mismatch.</li>
+</ul>
+<p>So it wasn’t that the ORM was broken by definition. It was that abstraction reduced visibility right when we needed semantic certainty.</p>
+<p>That can happen with <strong>any</strong> ORM, not just Drizzle.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters-more-in-the-ai-era">Why This Matters More in the AI Era<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#why-this-matters-more-in-the-ai-era" class="hash-link" aria-label="Direct link to Why This Matters More in the AI Era" title="Direct link to Why This Matters More in the AI Era" translate="no">​</a></h2>
+<p>AI accelerates implementation dramatically, but it also amplifies an old engineering risk:</p>
+<p><strong>fast confidence in unverified assumptions</strong>.</p>
+<p>When AI writes ORM-based code quickly, we often get:</p>
+<ul>
+<li class="">Clean types</li>
+<li class="">Passing local tests</li>
+<li class="">Readable service methods</li>
+<li class="">Seemingly correct business logic</li>
+</ul>
+<p>But we still need to ask:</p>
+<ol>
+<li class="">Does this query shape produce the same rows as the intended SQL?</li>
+<li class="">Does it stay equivalent when data cardinality and relationships change?</li>
+<li class="">Are we debugging behavior, or abstractions of behavior?</li>
+</ol>
+<p>AI makes code generation cheap. It does <strong>not</strong> make semantic verification optional.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="are-orms-still-useful">Are ORMs Still Useful?<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#are-orms-still-useful" class="hash-link" aria-label="Direct link to Are ORMs Still Useful?" title="Direct link to Are ORMs Still Useful?" translate="no">​</a></h2>
+<p>Absolutely. ORMs still provide massive value:</p>
+<ul>
+<li class=""><strong>Productivity</strong>: less repetitive CRUD and mapping boilerplate.</li>
+<li class=""><strong>Safety by default</strong>: parameterized queries and fewer injection footguns.</li>
+<li class=""><strong>Schema ergonomics</strong>: typed models and centralized constraints.</li>
+<li class=""><strong>Relationship handling</strong>: cleaner expression of common joins and associations.</li>
+<li class=""><strong>Team readability</strong>: business logic can be easier to follow in service code than in raw SQL blocks.</li>
+</ul>
+<p>These benefits did not disappear because AI got better.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-orms-hurt-and-ai-can-make-it-worse">Where ORMs Hurt (and AI Can Make It Worse)<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#where-orms-hurt-and-ai-can-make-it-worse" class="hash-link" aria-label="Direct link to Where ORMs Hurt (and AI Can Make It Worse)" title="Direct link to Where ORMs Hurt (and AI Can Make It Worse)" translate="no">​</a></h2>
+<p>In critical flows, the pain points become obvious fast:</p>
+<ul>
+<li class="">Implicit query semantics are harder to reason about during incidents.</li>
+<li class="">Composition patterns can diverge from your mental SQL model.</li>
+<li class="">Debugging becomes “inspect builder state” instead of “read exact query intent.”</li>
+<li class="">AI-generated abstractions can look right while still being semantically off.</li>
+</ul>
+<p>So the core tradeoff remains:</p>
+<ul>
+<li class=""><strong>ORMs optimize developer throughput.</strong></li>
+<li class=""><strong>Direct SQL optimizes semantic explicitness.</strong></li>
+</ul>
+<p>The trick is not choosing one forever. The trick is choosing the right abstraction level per path.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-practical-pattern-that-worked-for-us">A Practical Pattern That Worked for Us<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#a-practical-pattern-that-worked-for-us" class="hash-link" aria-label="Direct link to A Practical Pattern That Worked for Us" title="Direct link to A Practical Pattern That Worked for Us" translate="no">​</a></h2>
+<p>What saved us was not a heroic guess. It was architecture and observability:</p>
+<ul>
+<li class="">We had a troubleshooting path using explicit SQL.</li>
+<li class="">It provided deterministic visibility into eligibility decisions.</li>
+<li class="">We compared ORM-driven and SQL-driven outcomes on the same input.</li>
+<li class="">We aligned the production query shape to the proven SQL semantics.</li>
+</ul>
+<p>In other words, we used a <strong>dual-lens strategy</strong>:</p>
+<ul>
+<li class="">ORM for day-to-day velocity.</li>
+<li class="">Explicit SQL for observability and critical decision points.</li>
+</ul>
+<p>That combination reduced ambiguity fast.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-better-rule-for-2026">A Better Rule for 2026<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#a-better-rule-for-2026" class="hash-link" aria-label="Direct link to A Better Rule for 2026" title="Direct link to A Better Rule for 2026" translate="no">​</a></h2>
+<p>Instead of “ORM vs SQL,” use this operating rule:</p>
+<p><strong>Use ORMs by default. Require SQL-level validation for high-impact business decisions.</strong></p>
+<p>Examples of high-impact paths:</p>
+<ul>
+<li class="">Eligibility and pricing decisions.</li>
+<li class="">Financial calculations.</li>
+<li class="">Permission and access checks.</li>
+<li class="">Deduplication and idempotency logic.</li>
+<li class="">Anything that can produce customer-facing conflicts at scale.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="checklist-keep-orms-avoid-blind-spots">Checklist: Keep ORMs, Avoid Blind Spots<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#checklist-keep-orms-avoid-blind-spots" class="hash-link" aria-label="Direct link to Checklist: Keep ORMs, Avoid Blind Spots" title="Direct link to Checklist: Keep ORMs, Avoid Blind Spots" translate="no">​</a></h2>
+<ol>
+<li class=""><strong>Log decision inputs and outputs</strong> (not just errors).</li>
+<li class=""><strong>Mirror one critical query path in explicit SQL</strong> for diagnostics.</li>
+<li class=""><strong>Test semantic equivalence</strong> between ORM and SQL for edge cases.</li>
+<li class=""><strong>Treat generated query shape as part of behavior</strong>, not an implementation detail.</li>
+<li class=""><strong>Use AI to draft queries, then verify with production-like data</strong> before trusting conclusions.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-take">Final Take<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#final-take" class="hash-link" aria-label="Direct link to Final Take" title="Direct link to Final Take" translate="no">​</a></h2>
+<p>AI copilots did not make ORMs obsolete.</p>
+<p>They made one thing more important: <strong>verification discipline</strong>.</p>
+<p>ORMs are still excellent tools for human teams. But with AI accelerating output, we should stop treating ORM-generated behavior as automatically correct in critical paths.</p>
+<p>Keep the abstraction. Add a truth probe.</p>
+<p>That one shift can save days of production back-and-forth.</p>]]></content:encoded>
+            <category>ai</category>
+            <category>engineering</category>
+            <category>debugging</category>
+        </item>
+        <item>
+            <title><![CDATA[How to Design Truth-Probe Troubleshooting Endpoints for AI-Generated Backends]]></title>
+            <link>https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints</link>
+            <guid>https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints</guid>
+            <pubDate>Sat, 30 May 2026 12:00:00 GMT</pubDate>
+            <description><![CDATA[When AI helps generate backend code, implementation speed goes up.]]></description>
+            <content:encoded><![CDATA[<p>When AI helps generate backend code, implementation speed goes up.</p>
+<p>But one risk grows with it:</p>
+<p>You can ship a lot of correct-looking logic that is semantically wrong under edge conditions.</p>
+<p>A practical fix is to add a truth-probe endpoint.</p>
+<p>A truth probe is a diagnostics-only API route that evaluates business decisions with explicit, inspectable logic and returns step-by-step evidence.</p>
+<p>This post shows how to design one safely.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-truth-probes-exist">Why Truth Probes Exist<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#why-truth-probes-exist" class="hash-link" aria-label="Direct link to Why Truth Probes Exist" title="Direct link to Why Truth Probes Exist" translate="no">​</a></h2>
+<p>In production incidents, teams often need answers to questions like:</p>
+<ul>
+<li class="">Which rules were evaluated?</li>
+<li class="">Which filters removed the candidate set?</li>
+<li class="">Which data source won in identity, branch, or scope resolution?</li>
+<li class="">Did this fail because of eligibility, status, or configuration?</li>
+</ul>
+<p>Typical application services return final outcomes only.
+That is not enough during root-cause analysis.</p>
+<p>Truth probes expose the decision path, not only the decision result.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="core-design-principle">Core Design Principle<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#core-design-principle" class="hash-link" aria-label="Direct link to Core Design Principle" title="Direct link to Core Design Principle" translate="no">​</a></h2>
+<p>A truth probe should be:</p>
+<ul>
+<li class="">deterministic</li>
+<li class="">read-only</li>
+<li class="">explicit</li>
+<li class="">low-risk</li>
+<li class="">removable from normal user flows</li>
+</ul>
+<p>Think of it as an X-ray for business logic.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="architecture-pattern">Architecture Pattern<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#architecture-pattern" class="hash-link" aria-label="Direct link to Architecture Pattern" title="Direct link to Architecture Pattern" translate="no">​</a></h2>
+<p>Use two paths:</p>
+<ul>
+<li class="">Primary path: regular application service using your standard stack and abstractions.</li>
+<li class="">Probe path: diagnostics endpoint that executes explicit decision steps and returns per-step results.</li>
+</ul>
+<p>These paths should consume the same inputs and target the same business decision.</p>
+<p>If results diverge, you have a semantic drift signal.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recommended-endpoint-contract">Recommended Endpoint Contract<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#recommended-endpoint-contract" class="hash-link" aria-label="Direct link to Recommended Endpoint Contract" title="Direct link to Recommended Endpoint Contract" translate="no">​</a></h2>
+<p>Input:</p>
+<ul>
+<li class="">actor or customer identifier</li>
+<li class="">context identifiers (branch, market, channel)</li>
+<li class="">transaction-like inputs (amount, document reference, date)</li>
+<li class="">mode (all steps or single step)</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li class="">execution environment</li>
+<li class="">ordered list of step results</li>
+<li class="">each step includes: id, title, query or check summary, status, row count, and lightweight evidence</li>
+</ul>
+<p>Include reason codes for final classification.</p>
+<p>Avoid opaque booleans.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-model-example">Step Model Example<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#step-model-example" class="hash-link" aria-label="Direct link to Step Model Example" title="Direct link to Step Model Example" translate="no">​</a></h2>
+<p>A useful sequence for eligibility-like decisions:</p>
+<ol>
+<li class="">Subject state check</li>
+<li class="">Membership and segmentation check</li>
+<li class="">Context resolution check</li>
+<li class="">Candidate selection check</li>
+<li class="">Scope mapping check</li>
+<li class="">Targeting key snapshot</li>
+<li class="">Eligibility matrix with reason code</li>
+</ol>
+<p>This pattern keeps debugging linear and explainable.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="security-and-safety-requirements">Security and Safety Requirements<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#security-and-safety-requirements" class="hash-link" aria-label="Direct link to Security and Safety Requirements" title="Direct link to Security and Safety Requirements" translate="no">​</a></h2>
+<p>Truth probes are powerful and must be constrained.</p>
+<p>Minimum controls:</p>
+<ul>
+<li class="">admin-only authorization</li>
+<li class="">explicit role and permission checks</li>
+<li class="">strict rate limits</li>
+<li class="">read-only data access</li>
+<li class="">no mutation side effects</li>
+<li class="">bounded response sizes</li>
+<li class="">environment-aware visibility</li>
+</ul>
+<p>Never expose raw secrets, personal data, or full payload dumps.</p>
+<p>Prefer redacted snapshots and stable identifiers.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="sql-vs-orm-inside-the-probe">SQL vs ORM Inside the Probe<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#sql-vs-orm-inside-the-probe" class="hash-link" aria-label="Direct link to SQL vs ORM Inside the Probe" title="Direct link to SQL vs ORM Inside the Probe" translate="no">​</a></h2>
+<p>For high-impact diagnostics, explicit SQL is often the better choice.</p>
+<p>Why:</p>
+<ul>
+<li class="">easy to reason about exact semantics</li>
+<li class="">straightforward to compare with expected query shape</li>
+<li class="">easier incident communication across team roles</li>
+</ul>
+<p>This does not mean abandoning ORMs in the product path.
+It means using explicit logic where observability and semantic certainty matter most.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-keep-probe-and-product-aligned">How to Keep Probe and Product Aligned<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#how-to-keep-probe-and-product-aligned" class="hash-link" aria-label="Direct link to How to Keep Probe and Product Aligned" title="Direct link to How to Keep Probe and Product Aligned" translate="no">​</a></h2>
+<p>Truth probes fail if they drift from product behavior.</p>
+<p>Use these guardrails:</p>
+<ol>
+<li class="">Share input normalization utilities between paths.</li>
+<li class="">Reuse reason-code enums and classification constants.</li>
+<li class="">Add equivalence tests that compare product and probe outcomes on known scenarios.</li>
+<li class="">Add incident replay tests from anonymized production cases.</li>
+<li class="">Version your probe steps when business rules evolve.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="anti-patterns-to-avoid">Anti-Patterns to Avoid<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#anti-patterns-to-avoid" class="hash-link" aria-label="Direct link to Anti-Patterns to Avoid" title="Direct link to Anti-Patterns to Avoid" translate="no">​</a></h2>
+<ul>
+<li class="">Probe endpoint that mutates state.</li>
+<li class="">Probe response that only says pass or fail.</li>
+<li class="">Probe logic copied once and never updated.</li>
+<li class="">Probe hidden behind unstable feature flags in incidents.</li>
+<li class="">Probe that returns too much data to be actionable.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="implementation-checklist">Implementation Checklist<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#implementation-checklist" class="hash-link" aria-label="Direct link to Implementation Checklist" title="Direct link to Implementation Checklist" translate="no">​</a></h2>
+<ul>
+<li class="">Define a stable decision reason taxonomy.</li>
+<li class="">Build a read-only diagnostics route under admin scope.</li>
+<li class="">Implement ordered step execution with isolated error handling.</li>
+<li class="">Return structured outputs per step.</li>
+<li class="">Add strict auth, rate limiting, and redaction.</li>
+<li class="">Add product vs probe equivalence tests.</li>
+<li class="">Document when to use probe mode all vs step.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-take">Final Take<a href="https://rebelion.la/how-to-design-truth-probe-troubleshooting-endpoints#final-take" class="hash-link" aria-label="Direct link to Final Take" title="Direct link to Final Take" translate="no">​</a></h2>
+<p>AI-generated backends are fast to build.
+That makes fast, reliable debugging infrastructure even more important.</p>
+<p>A truth-probe endpoint is one of the highest-leverage tools you can add:</p>
+<ul>
+<li class="">better incident response</li>
+<li class="">faster root cause isolation</li>
+<li class="">lower guesswork</li>
+<li class="">safer production decisions</li>
+</ul>
+<p>Build it before the next incident, not during it.</p>
+<p>If you only implement one thing this quarter, implement this.</p>]]></content:encoded>
+            <category>ai</category>
+            <category>backend</category>
+            <category>debugging</category>
+            <category>observability</category>
+            <category>sql</category>
+            <category>architecture</category>
+        </item>
         <item>
             <title><![CDATA[Tokenmaxxing: Why AI Token Consumption Is a Vanity Metric]]></title>
             <link>https://rebelion.la/tokenmaxxing-ai-vanity-metric</link>
@@ -3730,217 +3992,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>agentic-ai</category>
             <category>mcp</category>
             <category>mcp-server</category>
-        </item>
-        <item>
-            <title><![CDATA[OpenAPI & MCP: The Yin-Yang of Modern Intelligent Applications]]></title>
-            <link>https://rebelion.la/openapi-and-mcp-the-yin-yang-of-modern-intelligent-applications</link>
-            <guid>https://rebelion.la/openapi-and-mcp-the-yin-yang-of-modern-intelligent-applications</guid>
-            <pubDate>Mon, 09 Jun 2025 01:21:37 GMT</pubDate>
-            <description><![CDATA[MCP, or Model Context Protocol, is a hot topic in the developers' community. If you haven't heard of it, you can check out the MCP specification or search for "MCP" on YouTube; you]]></description>
-            <content:encoded><![CDATA[<p>MCP, or Model Context Protocol, is a hot topic in the developers' community. If you haven't heard of it, you can check out the <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">MCP specification</a> or search for "MCP" on YouTube; you'll find many videos about it!</p>
-<p>Many developers, at least at first glance, think that MCP is overrated and just another way to refer to APIs. That’s partially correct, but it is much more than that. It standardizes how LLMs communicate with applications; it is the "Natural Language" of models and makes them more accessible to developers.</p>
-<p>That's precisely why I want to discuss it. MCP is a protocol that allows developers to integrate AI models into their applications in a standardized way, making it easier to build and maintain AI-powered applications. It provides a common language for models to communicate with applications, enabling developers to focus on building features instead of worrying about the underlying model implementation.</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/ai/two-faces-same-coin-headless.png" alt="" class="img_ev3q"></p>
-<p>Swagger, or OpenAPI Specifications, is familiar to most people. The OpenAPI and MCP specifications are two sides of the same coin. Both define how APIs should be designed and documented, but serve different purposes. OpenAPI focuses on RESTful APIs, while MCP centers around LLMs integration.</p>
-<p>I have implemented a holistic solution called <code>hapi</code> (headless API) to facilitate the implementation of both OpenAPI and MCP specifications. Let me show you how to use it with a practical example.</p>
-<p>My VM instances run on <a href="https://www.kqzyfj.com/click-101444381-17083152" target="_blank" rel="noopener noreferrer" class="">Contabo</a> (affiliate link), a VPS provider. Using the <code>hapi</code> CLI tool, I will demonstrate how to integrate MCP without writing a single line of code.</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/RGgFJcZ_PA4" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<p>First, download or save your OpenAPI specification file. In this example, it's <code>contabo.json</code>, which describes the API of the Contabo VPS provider. You can find it in the <a href="https://api.contabo.com/" target="_blank" rel="noopener noreferrer" class="">Contabo API documentation</a>.</p>
-<p>The file must be saved in the <code>$APICOVE_HOME/specs</code>, which by default is the user's home directory: <code>~/.apicove/specs/contabo.json</code>, or in your current working directory (where you run the <code>hapi</code> command). With the <code>list</code> argument, the tool shows the available specifications using the <code>hapi</code> CLI tool:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ hapi list</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">List of APIs</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">- petstore</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">- contabo</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">- oci-registry</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">- agentico</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">- petstore-oasv2</span><br></div></code></pre></div></div>
-<p>In a <strong><mark>Greenfield </mark></strong> project, you can create a new project using the <code>hapi init</code> command:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ hapi init contabo</span><br></div></code></pre></div></div>
-<p>This command will use the Swagger specification file <code>contabo.json</code> (or <code>contabo.yaml</code>) to generate the controller’s scaffolding and save the file in the <code>$APICOVE_HOME/src/contabo</code> directory.</p>
-<p>There are two ways to run the <code>hapi</code> command: using the "headless mode" or the "MCP mode."</p>
-<p>In the "MCP mode", you can run the command as follows:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ hapi run contabo --mcp</span><br></div></code></pre></div></div>
-<p>This command prints some API stats, like the number of endpoints and models. Then, it starts a web server with the entire MCP implementation, including the OpenAPI specification, the MCP specification, and the controllers scaffolding. If you test the endpoints using a tool like Postman or the built-in Swagger UI, you will see that the endpoints are already implemented and ready to use, without any business logic yet. You can then implement the business logic in the controllers located in the <code>$APICOVE_HOME/src/contabo</code> directory.</p>
-<p>The "headless mode" is intended for <strong><mark>brownfield</mark></strong> projects, where you already have an existing backend application and want to integrate the MCP part. The "head" part is the current backend application, and the <code>server</code> defined in the OpenAPI specification consumes its business logic.</p>
-<p>In this mode, you can run the command as follows:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ hapi run contabo --headless</span><br></div></code></pre></div></div>
-<p>This command will start a web server with the MCP implementation but will not use the controller scaffolding. Instead, it will consume the business logic using the existing backend application at <a href="https://api.contabo.com/" target="_blank" rel="noopener noreferrer" class="">https://api.contabo.com/</a>.</p>
-<p>In the demo video, you can see how I use the <code>hapi</code> CLI tool to run the MCP implementation in both modes and test the endpoints using Postman and Swagger UI. I retrieve the list of VPS instances via MCP and finally show the actual Contabo Admin Panel, where I list the same VPS instances, to prove that the MCP implementation is working correctly.</p>
-<p>Would you like to see more examples of how to use <code>hapi</code> MCP? Or do you have any questions about the implementation? Let me know in the comments below!</p>
-<p>Connect with me on <a href="https://x.com/LaRebelionLabs" target="_blank" rel="noopener noreferrer" class="">Twitter</a> or <a href="http://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&amp;followMember=adrianescutia" target="_blank" rel="noopener noreferrer" class="">LinkedIn</a> to stay updated on the latest developments by "La Rebelion".</p>
-<p>Want to download the <code>hapi</code> CLI tool? Comment on LinkedIn or Twitter, and I will send you the link to download it.</p>
-<p>Be “HAPI” and Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>swagger</category>
-            <category>rest-api</category>
-            <category>openapi</category>
-            <category>ai-tools</category>
-            <category>mcp</category>
-        </item>
-        <item>
-            <title><![CDATA[How to Build a CLI That Integrates with RESTful APIs in DevOps]]></title>
-            <link>https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops</link>
-            <guid>https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops</guid>
-            <pubDate>Mon, 24 Feb 2025 23:24:03 GMT</pubDate>
-            <description><![CDATA[Learn how to structure your CLI for seamless API integration, efficiency, and better user experience—whether following Kubernetes’ action-first model, ArgoCD’s resource-first appro]]></description>
-            <content:encoded><![CDATA[<p>Learn how to structure your CLI for seamless API integration, efficiency, and better user experience—whether following Kubernetes’ action-first model, ArgoCD’s resource-first approach, or a hybrid like Docker’s CLI.</p>
-<p><a href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener noreferrer" class="">Command-line interfaces</a> (CLIs) are the backbone of DevOps workflows. However, not all CLIs are built the same. Some group commands by <strong>resource type</strong>, like <a href="https://docs.cloudify.co/" target="_blank" rel="noopener noreferrer" class="">Cloudify</a>'s <a href="https://docs.cloudify.co/latest/cli/" target="_blank" rel="noopener noreferrer" class=""><code>cfy</code></a>, while others, like <a href="https://kubernetes.io/" target="_blank" rel="noopener noreferrer" class="">Kubernetes</a>' <a href="https://kubectl.docs.kubernetes.io/references/kubectl/" target="_blank" rel="noopener noreferrer" class=""><code>kubectl</code></a>, group commands by <strong>action</strong> (or verb: get, delete).</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/cli-design-patterns/cli-design-patterns.svg" alt="CLI Design Patterns" class="img_ev3q"></p>
-<p>If you are a DevOps engineer, and you are building a CLI to automate your workflows or you are a user of a CLI and you are wondering why some commands are grouped by resource type and others by action, you might be wondering:</p>
-<p>Which approach is better? Why do some tools favor one over the other? And how does this impact usability and automation? In this post, we'll break down the differences, explore a hybrid approach, and discuss how I applied these principles in designing my CLIs for the "La Rebelion" community: <a href="https://apicove.com/gyat/" target="_blank" rel="noopener noreferrer" class=""><code>gyat</code></a>, <a href="https://apicove.com/hapi" target="_blank" rel="noopener noreferrer" class=""><code>hapi</code></a>, and <a href="https://agentico.dev/docs/intro" target="_blank" rel="noopener noreferrer" class=""><code>agentico</code></a>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="grouping-by-resource-type-cloudify-cli-style">Grouping by Resource Type (Cloudify CLI Style)<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#grouping-by-resource-type-cloudify-cli-style" class="hash-link" aria-label="Direct link to Grouping by Resource Type (Cloudify CLI Style)" title="Direct link to Grouping by Resource Type (Cloudify CLI Style)" translate="no">​</a></h2>
-<p>Cloudify's <code>cfy</code> CLI organizes commands based on what you are working with.</p>
-<p>Example:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">cfy blueprint upload my-blueprint.yaml</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">cfy deployment create my-deployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">cfy execution start -d my-deployment</span><br></div></code></pre></div></div>
-<p>Here, the <strong>blueprints</strong>, <strong>deployments</strong>, and <strong>executions</strong> are first-class citizens, and all related actions are nested under their resource type.</p>
-<p>✅ Pros:</p>
-<ul>
-<li class="">
-<p>Intuitive for users who think in terms of domain objects.</p>
-</li>
-<li class="">
-<p>Reduces ambiguity when working with complex resources.</p>
-</li>
-<li class="">
-<p>It is more straightforward to document and organize.</p>
-</li>
-</ul>
-<p>❌ Cons:</p>
-<ul>
-<li class="">
-<p>It can be verbose, requiring more typing.</p>
-</li>
-<li class="">
-<p>Users must remember different command structures for each resource type.</p>
-</li>
-<li class="">
-<p>It is harder to generalize across different resource types.</p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="grouping-by-action-kubernetes-cli-style">Grouping by Action (Kubernetes CLI Style)<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#grouping-by-action-kubernetes-cli-style" class="hash-link" aria-label="Direct link to Grouping by Action (Kubernetes CLI Style)" title="Direct link to Grouping by Action (Kubernetes CLI Style)" translate="no">​</a></h2>
-<p>Kubernetes' <code>kubectl</code> CLI flips the approach—users start with what they want to do, followed by the resource type.</p>
-<p>Example:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">kubectl get pods</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">kubectl delete service my-service</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">kubectl apply -f deployment.yaml</span><br></div></code></pre></div></div>
-<p>The focus here is on the actions (<code>get</code>, <code>delete</code>, <code>apply</code>), which are reusable across many resource types.</p>
-<p>✅ Pros:</p>
-<ul>
-<li class="">
-<p>More consistent and predictable across different resource types.</p>
-</li>
-<li class="">
-<p>Easier for automation and scripting.</p>
-</li>
-<li class="">
-<p>Reduces cognitive load since users only need to remember actions, not different resource structures.</p>
-</li>
-</ul>
-<p>❌ Cons:</p>
-<ul>
-<li class="">
-<p>It may feel unnatural to those used to object-oriented workflows.</p>
-</li>
-<li class="">
-<p>Resource types must be specified explicitly every time.</p>
-</li>
-<li class="">
-<p>Some commands can become longer and harder to read.</p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="hybrid-approach-terraform-cli-style">Hybrid Approach: Terraform CLI Style<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#hybrid-approach-terraform-cli-style" class="hash-link" aria-label="Direct link to Hybrid Approach: Terraform CLI Style" title="Direct link to Hybrid Approach: Terraform CLI Style" translate="no">​</a></h2>
-<p>Terraform uses a hybrid approach, mixing action-first and resource-first paradigms.</p>
-<p>Example:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">terraform apply</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">terraform state list</span><br></div></code></pre></div></div>
-<p>In the example, <code>terraform apply</code> is action-first, while <code>terraform state list</code> is more resource-focused.</p>
-<p>This approach provides flexibility, allowing users to interact with high-level actions and granular resources. It's ideal for tools that have a mix of static and dynamic resources.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-choose-one-approach-over-the-other">Why Choose One Approach Over the Other?<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#why-choose-one-approach-over-the-other" class="hash-link" aria-label="Direct link to Why Choose One Approach Over the Other?" title="Direct link to Why Choose One Approach Over the Other?" translate="no">​</a></h2>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/cli-design-patterns/cli-design-approaches.svg" alt="CLI Design Approaches" class="img_ev3q"></p>
-<p>The choice between these approaches depends on your tool's use case, target audience, and design goals. Here are some factors to consider:</p>
-<ul>
-<li class="">
-<p><strong>Resource Nature</strong>: A resource-first approach (<code>cfy</code> style) is intuitive if your tool deals with well-defined domain objects. If it works with dynamic or API-driven resources, an action-first approach (<code>kubectl</code> style) keeps things predictable.</p>
-</li>
-<li class="">
-<p><strong>User Experience</strong>: Consider how users will interact with your tool. If they think in terms of objects, a resource-first approach is better. If they think about actions, an action-first approach is more suitable.</p>
-</li>
-<li class="">
-<p><strong>Automation</strong>: If your tool needs to be easily scriptable, an action-first approach (<code>kubectl</code> style) is more flexible.</p>
-</li>
-<li class="">
-<p><strong>Complexity</strong>: A hybrid approach (<code>terraform</code> style) offers the best of both worlds for tools with a mix of static and dynamic resources.</p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="examples-of-cli-design-patterns-in-action">Examples of CLI Design Patterns in Action<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#examples-of-cli-design-patterns-in-action" class="hash-link" aria-label="Direct link to Examples of CLI Design Patterns in Action" title="Direct link to Examples of CLI Design Patterns in Action" translate="no">​</a></h2>
-<p>Based on their command structure, here's a classification of popular CLI tools in the Cloud (CNCF) and DevOps space.</p>
-<table><thead><tr><th><strong>CLI Tool</strong></th><th><strong>Approach</strong></th><th><strong>Example Command</strong></th><th><strong>Notes</strong></th></tr></thead><tbody><tr><td><a href="https://docs.cloudify.co/latest/cli/orch_cli/" target="_blank" rel="noopener noreferrer" class=""><strong>cfy</strong></a></td><td>Resource-Type-First</td><td><code>cfy blueprint upload</code></td><td>Cloudify groups command by resource type (<code>blueprint</code>, <code>deployment</code>, etc.).</td></tr><tr><td><a href="https://docs.openstack.org/newton/user-guide/common/cli-install-openstack-command-line-clients.html" target="_blank" rel="noopener noreferrer" class=""><strong>openstack</strong></a></td><td>Resource-Type-First</td><td><code>openstack server create</code></td><td>Organizes commands by resource type (<code>server</code>, <code>network</code>, etc.).</td></tr><tr><td><a href="https://developer.hashicorp.com/vault/docs/commands" target="_blank" rel="noopener noreferrer" class=""><strong>vault</strong></a></td><td>Resource-Type-First</td><td><code>vault secrets enable</code></td><td>Commands are grouped by resource type (<code>secrets</code>, <code>policy</code>, <code>auth</code>).</td></tr><tr><td><a href="https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/" target="_blank" rel="noopener noreferrer" class=""><strong>argocd</strong></a></td><td>Resource-Type-First</td><td><code>argocd app create</code></td><td>Commands are prefixed with a general resource (<code>app</code>, <code>repo</code>, <code>cluster</code>).</td></tr><tr><td><a href="https://docs.aws.amazon.com/cli/latest/" target="_blank" rel="noopener noreferrer" class=""><strong>aws</strong></a></td><td>Resource-Type-First</td><td><code>aws s3 ls</code></td><td>Commands are grouped by service (<code>s3</code>, <code>ec2</code>, <code>iam</code>) before performing actions.</td></tr><tr><td><a href="https://github.com/tektoncd/cli#useful-commands" target="_blank" rel="noopener noreferrer" class=""><strong>tkn</strong></a></td><td>Resource-Type-First</td><td><code>tkn pipeline start</code></td><td>Tekton emphasizes resource types (<code>pipeline</code>, <code>task</code>, <code>taskrun</code>).</td></tr><tr><td><a href="https://kubectl.docs.kubernetes.io/references/kubectl/" target="_blank" rel="noopener noreferrer" class=""><strong>kubectl</strong></a></td><td>Action-First</td><td><code>kubectl get pods</code></td><td>Kubernetes CLI groups by actions (<code>get</code>, <code>apply</code>, <code>delete</code>, etc.).</td></tr><tr><td><a href="https://helm.sh/docs/helm/" target="_blank" rel="noopener noreferrer" class=""><strong>helm</strong></a></td><td>Action-First</td><td><code>helm install myapp</code></td><td>Helm focuses on actions (<code>install</code>, <code>upgrade</code>, <code>uninstall</code>).</td></tr><tr><td><a href="https://fluxcd.io/flux/cmd/flux/" target="_blank" rel="noopener noreferrer" class=""><strong>flux</strong></a></td><td>Action-First</td><td><code>flux bootstrap github</code></td><td>Primarily action-driven for GitOps workflows.</td></tr><tr><td><a href="https://docs.docker.com/reference/cli/docker/" target="_blank" rel="noopener noreferrer" class=""><strong>docker</strong></a></td><td>Hybrid</td><td><code>docker run nginx</code></td><td>For "common commands" like <code>run</code>, <code>pull</code>, <code>login</code>, it uses an action-first approach, it "hides" the resource type (<code>container</code>, <code>image</code>). For more complex commands, it uses a <strong>resource-first</strong> approach.</td></tr><tr><td><a href="https://www.pulumi.com/docs/iac/cli/commands/" target="_blank" rel="noopener noreferrer" class=""><strong>pulumi</strong></a></td><td>Hybrid</td><td><code>pulumi up</code></td><td>Uses both action-first (<code>up</code>, <code>destroy</code>) and resource-first (<code>stack</code>, <code>config</code>) approaches.</td></tr><tr><td><a href="https://developer.hashicorp.com/terraform/cli/commands" target="_blank" rel="noopener noreferrer" class=""><strong>terraform</strong></a></td><td>Hybrid</td><td><code>terraform apply</code></td><td>Mixes both approaches; core commands like <code>apply</code> and <code>plan</code> are action-based, but subcommands like <code>terraform state</code> are <strong>resource-oriented</strong>.</td></tr></tbody></table>
-<p>This should give a solid overview of how different cloud and DevOps CLIs structure their commands and give you a good idea of which approach to use for your tooling.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="comparing-cli-design-patterns-">Comparing CLI Design Patterns 🔍<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#comparing-cli-design-patterns-" class="hash-link" aria-label="Direct link to Comparing CLI Design Patterns 🔍" title="Direct link to Comparing CLI Design Patterns 🔍" translate="no">​</a></h2>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/cli-design-patterns/cli-design-patterns-usability-impact.svg" alt="CLI Design Patterns Usability Impact" class="img_ev3q"></p>
-<p>Let's compare these approaches side by side:</p>
-<table><thead><tr><th><strong>Criteria</strong></th><th><strong>Action-Resource</strong> (<code>kubectl</code> style)</th><th><strong>Resource-Action</strong> (<code>cfy</code> style)</th><th><strong>Hybrid</strong> (<code>terraform</code> style)</th></tr></thead><tbody><tr><td><strong>Consistency</strong></td><td>High 🟢</td><td>Medium 🟡</td><td>Medium 🟡</td></tr><tr><td><strong>Predictability</strong></td><td>High 🟢</td><td>Medium 🟡</td><td>Medium 🟡</td></tr><tr><td><strong>Ease of Automation</strong></td><td>High 🟢</td><td>Medium 🟡</td><td>High 🟢</td></tr><tr><td><strong>Cognitive Load</strong></td><td>Low 🔴</td><td>Medium 🟡</td><td>Medium 🟡</td></tr><tr><td><strong>Flexibility</strong></td><td>Medium 🟡</td><td>Low 🔴</td><td>High 🟢</td></tr><tr><td><strong>Intuitiveness</strong></td><td>Medium 🟡</td><td>High 🟢</td><td>Medium 🟡</td></tr><tr><td><strong>Documentation</strong></td><td>Medium 🟡</td><td>High 🟢</td><td>Medium 🟡</td></tr><tr><td><strong>Implementation</strong> (<em>Ease</em>)</td><td>Low 🔴</td><td>High 🟢</td><td>Medium 🟡</td></tr><tr><td><strong>Use Cases</strong></td><td>APIs, dynamic resources</td><td>Domain objects, static resources</td><td>Mixed resources</td></tr><tr><td><strong>Examples</strong></td><td><code>kubectl</code>, <code>helm</code></td><td><code>cfy</code>, <code>openstack</code></td><td><code>terraform</code>, <code>docker</code></td></tr></tbody></table>
-<p>The table above provides a quick overview of each approach's pros and cons. The best choice depends on your specific use case and user base, but understanding these trade-offs can help you make an informed decision.</p>
-<p>The action-resource approach (<code>kubectl</code> style) is more complex to implement, document, and organize but more consistent and predictable across different resource types. The resource-action approach (<code>cfy</code> style) is more intuitive for users who think <strong>in terms of domain objects</strong>, but it can be harder to generalize across different resource types. The hybrid approach (<code>terraform</code> style) provides flexibility, allowing users to interact with high-level actions and granular resources.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tree-like-representation-of-the-commands">Tree-like Representation of the Commands<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#tree-like-representation-of-the-commands" class="hash-link" aria-label="Direct link to Tree-like Representation of the Commands" title="Direct link to Tree-like Representation of the Commands" translate="no">​</a></h3>
-<p>Here’s a <strong>tree-like representation</strong> of the command structures for <code>kubectl</code> (action-first), <code>cfy</code> (resource-type-first), and <code>argocd</code> (hybrid) using a <strong>Linux command-style layout</strong>:</p>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-first-command-structure">Action-First command structure<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#action-first-command-structure" class="hash-link" aria-label="Direct link to Action-First command structure" title="Direct link to Action-First command structure" translate="no">​</a></h4>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">kubectl</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── get</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── pods</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── services</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── deployments</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── nodes</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── configmap</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── describe</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── pod mypod</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── service myservice</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── deployment mydeployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── node mynode</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── apply</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── -f myapp.yaml</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── -f service.yaml</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── -f ingress.yaml</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── delete</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── pod mypod</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── service myservice</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── deployment mydeployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── namespace mynamespace</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">└── logs</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── pod/mypod</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    └── deployment/mydeployment</span><br></div></code></pre></div></div>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="resource-type-first-command-structure">Resource-Type-First command structure<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#resource-type-first-command-structure" class="hash-link" aria-label="Direct link to Resource-Type-First command structure" title="Direct link to Resource-Type-First command structure" translate="no">​</a></h4>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">cfy</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── blueprint</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── upload myblueprint.yaml</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── delete myblueprint</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── list</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── deployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── create mydeployment -b myblueprint</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── delete mydeployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── outputs mydeployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── list</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── execution</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── start myworkflow -d mydeployment</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── cancel myexecution</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── list</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── resume myexecution</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">└── tenant</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── create mytenant</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── delete mytenant</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── list</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    └── set-default mytenant</span><br></div></code></pre></div></div>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="hybrid-approach-command-structure">Hybrid Approach command structure<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#hybrid-approach-command-structure" class="hash-link" aria-label="Direct link to Hybrid Approach command structure" title="Direct link to Hybrid Approach command structure" translate="no">​</a></h4>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">docker</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── # Action-First Commands (Hides Resource Type)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── run nginx</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── pull nginx:latest</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── push myrepo/myimage:v1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── login myregistry.com</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── logout myregistry.com</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── search nginx</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── build -t myimage .</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── tag myimage myrepo/myimage:v1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── inspect mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── exec -it mycontainer bash</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">├── # Resource-First Commands (Explicit Resource Type)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── container</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── ls</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── start mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── stop mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── rm mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── inspect mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   └── logs mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── image</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── ls</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── prune</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── rm myimage</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── save -o myimage.tar myimage</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── load -i myimage.tar</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   └── history myimage</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── network</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── ls</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── create mynetwork</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── connect mynetwork mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── disconnect mynetwork mycontainer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   └── rm mynetwork</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── volume</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── ls</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── create myvolume</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── rm myvolume</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   └── inspect myvolume</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── compose</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── up -d</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── down</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── logs</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   ├── ps</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │   └── restart</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">│   │</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">└── # System Commands</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── system prune</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── system df</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ├── version</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    └── info</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-takeaways"><strong>Key Takeaways</strong><a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#key-takeaways" class="hash-link" aria-label="Direct link to key-takeaways" title="Direct link to key-takeaways" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>kubectl (Action-First)</strong>: Commands start with <strong>verbs</strong> (<code>get</code>, <code>apply</code>, <code>delete</code>) and then specify the resource.</p>
-</li>
-<li class="">
-<p><strong>cfy (Resource-Type-First)</strong>: Commands start with the <strong>resource type</strong> (<code>blueprint</code>, <code>deployment</code>, <code>execution</code>), followed by actions.</p>
-</li>
-<li class="">
-<p><strong>docker (Hybrid)</strong>: A mix—some commands are <strong>resource-type-first</strong> (<code>container</code>, <code>image</code>, <code>network</code>, <code>volume</code>), while others follow an <strong>action-first</strong> structure (<code>run</code>, <code>pull</code>, <code>build</code>, <code>tag</code>, <code>login</code>).</p>
-</li>
-</ul>
-<p>This tree representation helps visualize how commands are structured and grouped in each CLI.</p>
-<p>Look at the tree representation of the <a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#action-first-command-structure" class="">Action-First command structure</a> for the <code>kubectl</code> command. Do you see any pattern? Yes! It is a structure with <strong>verbs</strong> as the root nodes and <strong>resources</strong> as the leaf nodes, similar to Swagger API specifications' <strong>verb-object</strong> structure.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="api-first-to-cli-commands-mapping">API-First to CLI Commands Mapping<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#api-first-to-cli-commands-mapping" class="hash-link" aria-label="Direct link to API-First to CLI Commands Mapping" title="Direct link to API-First to CLI Commands Mapping" translate="no">​</a></h2>
-<p>API-first design is widely used for creating CLIs, particularly for tools that interact with APIs. This approach involves directly linking CLI commands to API endpoints, facilitating the automation and scripting of workflows. Both action-first and resource-first CLIs can adapt this strategy to their command structures.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="action-first-mapping">Action-First Mapping<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#action-first-mapping" class="hash-link" aria-label="Direct link to Action-First Mapping" title="Direct link to Action-First Mapping" translate="no">​</a></h3>
-<p>For simplicity (because the Kubernetes and Cloudify APIs are huge), let's take the <a href="https://petstore3.swagger.io/" target="_blank" rel="noopener noreferrer" class="">Petstore API</a> (or <a href="https://petstore.swagger.io/" target="_blank" rel="noopener noreferrer" class="">Petstore v2</a>) as an example and map it to the <code>kubectl</code> CLI style based on the HTTP <strong>verb-object</strong> structure of the API to the <strong>action-resource</strong> structure of the <code>kubectl</code> CLI, we get the following command structure:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /pets</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">POST    /pets</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /pets/{petId}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">PUT     /pets/{petId}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">DELETE  /pets/{petId}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /orders</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">POST    /orders</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /orders/{orderId}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">DELETE  /orders/{orderId}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /users</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">POST    /users</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">GET     /users/{username}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">PUT     /users/{username}</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">DELETE  /users/{username}</span><br></div></code></pre></div></div>
-<p>Just replace pets with <code>kubectl get pets</code> or <code>kubectl get pets 10</code>, orders with <code>kubectl get orders</code>, and users with <code>kubectl get users</code>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="resource-first-mapping">Resource-First Mapping<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#resource-first-mapping" class="hash-link" aria-label="Direct link to Resource-First Mapping" title="Direct link to Resource-First Mapping" translate="no">​</a></h3>
-<p>On the other hand, if we map the <strong>resource-action</strong> structure of the <code>cfy</code> CLI to the <strong>verb-object</strong> structure of Swagger API specifications, we get the following command structure:</p>
-<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token key atrule">openapi</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> 3.0.0</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">paths</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">/pets</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">get</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">post</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  /pets/</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain">petId</span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">get</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">put</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">delete</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">/orders</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">get</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">post</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">/users</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">get</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">post</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token comment" style="color:rgb(98, 114, 164)"># ...</span><br></div></code></pre></div></div>
-<p>Just replace pets with <code>cfy pets list</code>, orders with <code>cfy orders list</code>, and users with <code>cfy users list</code>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="takeaways-from-the-mapping">Takeaways from the Mapping<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#takeaways-from-the-mapping" class="hash-link" aria-label="Direct link to Takeaways from the Mapping" title="Direct link to Takeaways from the Mapping" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>Action-First Mapping</strong>: The HTTP <strong>verb-object</strong> structure of the API maps directly to the <strong>action-resource</strong> structure of the CLI.</p>
-</li>
-<li class="">
-<p><strong>Resource-First Mapping</strong>: The <strong>paths</strong> structure of the API maps directly to the <strong>resource-action</strong> structure of the CLI.</p>
-</li>
-</ul>
-<p>This mapping helps visualize how API-first design can be applied to action- and resource-first CLIs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-how-i-applied-these-cli-design-patterns">👨🏽‍💻 How I Applied These CLI Design Patterns<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#-how-i-applied-these-cli-design-patterns" class="hash-link" aria-label="Direct link to 👨🏽‍💻 How I Applied These CLI Design Patterns" title="Direct link to 👨🏽‍💻 How I Applied These CLI Design Patterns" translate="no">​</a></h2>
-<p>When designing <code>gyat</code> (Go-through-your-API-tool), <code>hapi</code> (Headless-API), and <code>agentico</code>, I had to choose between the action-resource (<code>kubectl</code> style) and resource-action (<code>cfy</code> style) approaches based on the nature of the resources and the target audience. Here's how I made my decisions:</p>
-<table><thead><tr><th>CLI Tool</th><th>Approach</th><th>Why?</th></tr></thead><tbody><tr><td><a href="https://apicove.com/hapi" target="_blank" rel="noopener noreferrer" class=""><code>hapi</code></a></td><td>Action-Resource (kubectl style)</td><td>The resource types are dynamic and change based on the Swagger API spec. Users need consistency across various APIs.</td></tr><tr><td><a href="https://apicove.com/gyat/" target="_blank" rel="noopener noreferrer" class=""><code>gyat</code></a></td><td>Action-Resource (kubectl style)</td><td>The resource types are dynamic and change based on the Swagger API spec. Users need consistency across various APIs.</td></tr><tr><td><a href="https://agentico.dev/docs/intro" target="_blank" rel="noopener noreferrer" class=""><code>agentico</code></a></td><td>Resource-Action (<code>cfy</code> style)</td><td>The resource types are static and well-defined by the <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a> (MCP). Grouping by resource makes navigation easier.</td></tr></tbody></table>
-<p>This decision aligns with how users interact with each tool. In <code>gyat</code>, users frequently deal with unknown <strong>APIs</strong>, so an action-first structure keeps things predictable. In <code>agentico</code>, users work with <strong>well-defined domain objects</strong>, making a resource-first approach more intuitive.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thoughts-choosing-the-right-cli-style">Final Thoughts: Choosing the Right CLI Style<a href="https://rebelion.la/how-to-build-a-cli-that-integrates-with-restful-apis-in-devops#final-thoughts-choosing-the-right-cli-style" class="hash-link" aria-label="Direct link to Final Thoughts: Choosing the Right CLI Style" title="Direct link to Final Thoughts: Choosing the Right CLI Style" translate="no">​</a></h2>
-<p>So, which approach is best?</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/cli-design-patterns/cli-grouping-patterns.svg" alt="CLI Grouping Patterns" class="img_ev3q"></p>
-<p>The answer depends on the nature of the tool:</p>
-<ul>
-<li class="">
-<p>If your CLI works with fixed resources, a resource-type-first approach (like <code>cfy</code>) makes sense.</p>
-</li>
-<li class="">
-<p>an action-first approach (like <code>kubectl</code>) is better if your CLI needs to handle dynamic or API-driven resources.</p>
-</li>
-<li class="">
-<p>a hybrid approach (like <code>terraform</code>) might be ideal if your tool requires high-level operations and granular control.</p>
-</li>
-</ul>
-<p>Understanding these design principles helps create CLIs that are intuitive, scalable, and efficient. What's your take on CLI design? Have you encountered a CLI that does things differently? Let me know in the comments!</p>
-<p>If you want to learn more about what libraries and tools I use to build these CLIs, let me know in the comments, and I will write a follow-up post. 📝</p>
-<p>Until next time, happy coding, and never stop learning and challenging the status quo!</p>
-<p>Go Rebels! ✊🏼</p>]]></content:encoded>
-            <category>kubernetes</category>
-            <category>command-line</category>
-            <category>devops</category>
-            <category>scripting</category>
         </item>
     </channel>
 </rss>
