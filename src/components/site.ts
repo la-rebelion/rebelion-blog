@@ -22,10 +22,17 @@ type SocialConfig = {
   youtube: string;
 };
 
+type LegalConfig = {
+  privacyAtAGlanceUrl: string;
+  privacyUrl: string;
+  termsUrl: string;
+};
+
 export type SiteData = {
   brand: BrandConfig;
   newsletter: NewsletterConfig;
   social: SocialConfig;
+  legal: LegalConfig;
 };
 
 const defaults: SiteData = {
@@ -50,6 +57,11 @@ const defaults: SiteData = {
     x: 'https://twitter.com/LaRebelionLabs',
     youtube: 'https://www.youtube.com/@LaRebelion',
   },
+  legal: {
+    privacyAtAGlanceUrl: '/privacy-at-a-glance',
+    privacyUrl: '/privacy',
+    termsUrl: '/terms',
+    },
 };
 
 export function useSiteData(): SiteData {
@@ -69,5 +81,9 @@ export function useSiteData(): SiteData {
       ...defaults.social,
       ...customFields.social,
     },
+    legal: {
+      ...defaults.legal,
+      ...customFields.legal,
+    }
   };
 }

@@ -2,7 +2,7 @@ import Link from '@docusaurus/Link';
 import {useSiteData} from '@site/src/components/site';
 
 export default function Footer() {
-  const {brand, social} = useSiteData();
+  const {brand, social, legal } = useSiteData();
 
   return (
     <footer className="lr-footer">
@@ -12,6 +12,12 @@ export default function Footer() {
           <p>{brand.summary}</p>
         </div>
         <div className="lr-footer__links">
+          <div>
+            <span className="lr-eyebrow">Legal</span>
+            <Link to={legal.privacyAtAGlanceUrl}>Privacy at a Glance</Link>
+            <Link to={legal.privacyUrl}>Privacy Policy</Link>
+            <Link to={legal.termsUrl}>Terms of Service</Link>
+          </div>
           <div>
             <span className="lr-eyebrow">Browse</span>
             <Link to="/">Latest</Link>

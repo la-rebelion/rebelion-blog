@@ -217,6 +217,11 @@ const config: Config = {
       x: 'https://twitter.com/LaRebelionLabs',
       youtube: 'https://www.youtube.com/@LaRebelion',
     },
+    legal: {
+      privacyAtAGlanceUrl: '/privacy-at-a-glance',
+      privacyUrl: '/privacy',
+      termsUrl: '/terms',
+    },
   },
 };
 
