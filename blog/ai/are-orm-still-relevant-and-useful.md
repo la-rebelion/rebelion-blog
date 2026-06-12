@@ -5,6 +5,7 @@ authors: [adrianescutia]
 tags: [ai, engineering, debugging]
 keywords: [AI, ORMs, Drizzle, SQL, debugging, production incidents, software architecture]
 date: 2026-05-30T12:00:00.000Z
+image: /img/blog/are-orms-still-relevant-and-useful.png
 ---
 
 AI copilots can scaffold full-stack apps in minutes, write migrations, generate APIs, and even propose query optimizations. So the obvious question is: **If AI can write SQL directly, do we still need ORMs?**
@@ -33,11 +34,11 @@ The real issue was subtler:
 - Those two paths were logically intended to be equivalent.
 - In practice, they were not equivalent under real production data.
 
-This was not “SQL bad, ORM good” or “ORM bad, SQL good.”
+This was not "SQL bad, ORM good" or "ORM bad, SQL good."
 
 It was **equivalence drift** between two query construction styles.
 
-## Was Drizzle “Hiding” the Bug?
+## Was Drizzle "Hiding" the Bug?
 
 Short answer: **partly yes, in the same way any abstraction can hide behavior**.
 
@@ -45,7 +46,7 @@ Longer answer:
 
 - We assumed the ORM-generated query semantics matched the SQL semantics we had in mind.
 - We did not validate that assumption early enough against production-like conditions.
-- The troubleshooting endpoint, built with explicit SQL, became the “truth probe” that exposed the mismatch.
+- The troubleshooting endpoint, built with explicit SQL, became the "truth probe" that exposed the mismatch.
 
 So it wasn’t that the ORM was broken by definition. It was that abstraction reduced visibility right when we needed semantic certainty.
 
@@ -90,7 +91,7 @@ In critical flows, the pain points become obvious fast:
 
 - Implicit query semantics are harder to reason about during incidents.
 - Composition patterns can diverge from your mental SQL model.
-- Debugging becomes “inspect builder state” instead of “read exact query intent.”
+- Debugging becomes "inspect builder state" instead of "read exact query intent."
 - AI-generated abstractions can look right while still being semantically off.
 
 So the core tradeoff remains:
@@ -118,7 +119,7 @@ That combination reduced ambiguity fast.
 
 ## A Better Rule for 2026
 
-Instead of “ORM vs SQL,” use this operating rule:
+Instead of "ORM vs SQL," use this operating rule:
 
 **Use ORMs by default. Require SQL-level validation for high-impact business decisions.**
 
