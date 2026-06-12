@@ -34,15 +34,15 @@
 <li class="">Those two paths were logically intended to be equivalent.</li>
 <li class="">In practice, they were not equivalent under real production data.</li>
 </ul>
-<p>This was not “SQL bad, ORM good” or “ORM bad, SQL good.”</p>
+<p>This was not "SQL bad, ORM good" or "ORM bad, SQL good."</p>
 <p>It was <strong>equivalence drift</strong> between two query construction styles.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="was-drizzle-hiding-the-bug">Was Drizzle “Hiding” the Bug?<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#was-drizzle-hiding-the-bug" class="hash-link" aria-label="Direct link to Was Drizzle “Hiding” the Bug?" title="Direct link to Was Drizzle “Hiding” the Bug?" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="was-drizzle-hiding-the-bug">Was Drizzle "Hiding" the Bug?<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#was-drizzle-hiding-the-bug" class="hash-link" aria-label="Direct link to Was Drizzle &quot;Hiding&quot; the Bug?" title="Direct link to Was Drizzle &quot;Hiding&quot; the Bug?" translate="no">​</a></h2>
 <p>Short answer: <strong>partly yes, in the same way any abstraction can hide behavior</strong>.</p>
 <p>Longer answer:</p>
 <ul>
 <li class="">We assumed the ORM-generated query semantics matched the SQL semantics we had in mind.</li>
 <li class="">We did not validate that assumption early enough against production-like conditions.</li>
-<li class="">The troubleshooting endpoint, built with explicit SQL, became the “truth probe” that exposed the mismatch.</li>
+<li class="">The troubleshooting endpoint, built with explicit SQL, became the "truth probe" that exposed the mismatch.</li>
 </ul>
 <p>So it wasn’t that the ORM was broken by definition. It was that abstraction reduced visibility right when we needed semantic certainty.</p>
 <p>That can happen with <strong>any</strong> ORM, not just Drizzle.</p>
@@ -78,7 +78,7 @@
 <ul>
 <li class="">Implicit query semantics are harder to reason about during incidents.</li>
 <li class="">Composition patterns can diverge from your mental SQL model.</li>
-<li class="">Debugging becomes “inspect builder state” instead of “read exact query intent.”</li>
+<li class="">Debugging becomes "inspect builder state" instead of "read exact query intent."</li>
 <li class="">AI-generated abstractions can look right while still being semantically off.</li>
 </ul>
 <p>So the core tradeoff remains:</p>
@@ -102,7 +102,7 @@
 </ul>
 <p>That combination reduced ambiguity fast.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-better-rule-for-2026">A Better Rule for 2026<a href="https://rebelion.la/ai/are-orm-still-relevant-and-useful#a-better-rule-for-2026" class="hash-link" aria-label="Direct link to A Better Rule for 2026" title="Direct link to A Better Rule for 2026" translate="no">​</a></h2>
-<p>Instead of “ORM vs SQL,” use this operating rule:</p>
+<p>Instead of "ORM vs SQL," use this operating rule:</p>
 <p><strong>Use ORMs by default. Require SQL-level validation for high-impact business decisions.</strong></p>
 <p>Examples of high-impact paths:</p>
 <ul>
