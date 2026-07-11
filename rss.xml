@@ -4,10 +4,448 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Sat, 30 May 2026 12:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 11 Jul 2026 10:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Start Building an AI Harness Effectively]]></title>
+            <link>https://rebelion.la/ai/start-building-ai-harness-effectivelly</link>
+            <guid>https://rebelion.la/ai/start-building-ai-harness-effectivelly</guid>
+            <pubDate>Sat, 11 Jul 2026 10:00:00 GMT</pubDate>
+            <description><![CDATA[Learn how to effectively build an AI harness to maximize the value of AI models and create reusable systems.]]></description>
+            <content:encoded><![CDATA[<p><strong>Stop Renting Intelligence. Start Building AI Harnesses.</strong></p>
+<p>Every new frontier AI model creates the same conversation.</p>
+<p><em>"Should I pay for it?"</em></p>
+<p>I think that's the wrong question.</p>
+<p>The better question is:</p>
+<p><strong>"What can I build with it today that will continue creating value long after I stop using it?"</strong></p>
+<p>That shift in mindset is the difference between using AI as a tool and harnessing AI as infrastructure.</p>
+<p><a href="https://x.com/TheAIColony/status/2075489506745106442" target="_blank" rel="noopener noreferrer" class=""><img decoding="async" loading="lazy" src="https://pbs.twimg.com/media/HM1zNO1XoAA_Vtl?format=jpg&amp;name=small" alt="Start Building an AI Harness Effectively" class="img_ev3q"></a></p>
+<p>A recent <a href="https://x.com/TheAIColony/status/2075489506745106442" target="_blank" rel="noopener noreferrer" class="">post on X</a> proposed an interesting experiment: before Claude Fable 5 moves to usage-based pricing, use it to extract its reasoning style into a reusable operating manual. Then use that manual to guide a less expensive model such as Opus 4.8 (or any other capable model) for day-to-day work. The underlying idea is simple: own the workflow instead of depending entirely on the premium model.</p>
+<p>Whether this specific technique delivers the expected results remains to be validated. But the bigger lesson is much more important.</p>
+<p>It introduces a concept I've been thinking about for quite some time:</p>
+<blockquote>
+<p><strong>Harnessing AI instead of merely consuming AI.</strong></p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-model-isnt-the-asset">The model isn't the asset<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#the-model-isnt-the-asset" class="hash-link" aria-label="Direct link to The model isn't the asset" title="Direct link to The model isn't the asset" translate="no">​</a></h2>
+<p>Models will improve.</p>
+<p>Models will become cheaper.</p>
+<p>Models will change pricing.</p>
+<p>Models will disappear.</p>
+<p>We've already watched this happen repeatedly.</p>
+<p>A model that seems revolutionary today may become a commodity six months from now. Anthropic's move toward usage-based pricing for Claude Fable 5 is simply another reminder that access models change over time.</p>
+<p>If your competitive advantage depends entirely on having access to one specific model...</p>
+<p>...your advantage isn't really yours.</p>
+<p>But if you use that model to create something reusable...</p>
+<p>...that asset remains yours.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="think-like-an-engineer">Think like an engineer<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#think-like-an-engineer" class="hash-link" aria-label="Direct link to Think like an engineer" title="Direct link to Think like an engineer" translate="no">​</a></h2>
+<p>Software engineers learned this lesson decades ago.</p>
+<p>Nobody rewrites authentication for every application.</p>
+<p>Nobody writes a database engine every weekend.</p>
+<p>Nobody rebuilds Kubernetes before deploying an application.</p>
+<p>We build reusable components.</p>
+<p>Frameworks.</p>
+<p>Libraries.</p>
+<p>Patterns.</p>
+<p>Infrastructure.</p>
+<p>Those components become leverage.</p>
+<p>AI should be no different.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-an-ai-harness">What is an AI harness?<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#what-is-an-ai-harness" class="hash-link" aria-label="Direct link to What is an AI harness?" title="Direct link to What is an AI harness?" translate="no">​</a></h2>
+<p>I've written before that <strong>AI Harnesses exist to reduce friction, amplify capability, and deliver outcomes.</strong></p>
+<p>This idea fits perfectly here.</p>
+<p>A harness isn't the model.</p>
+<p>A harness is everything surrounding the model that makes it consistently useful.</p>
+<p>That includes:</p>
+<ul>
+<li class="">Prompt libraries</li>
+<li class="">Operating manuals</li>
+<li class="">Decision frameworks</li>
+<li class="">Evaluation rubrics</li>
+<li class="">Checklists</li>
+<li class="">Workflow templates</li>
+<li class="">Knowledge bases</li>
+<li class="">Verification procedures</li>
+<li class="">Memory structures</li>
+<li class="">Context engineering</li>
+<li class="">Automation workflows</li>
+</ul>
+<p>These are reusable assets.</p>
+<p>The model simply powers them.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rent-intelligence-own-systems">Rent intelligence. Own systems.<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#rent-intelligence-own-systems" class="hash-link" aria-label="Direct link to Rent intelligence. Own systems." title="Direct link to Rent intelligence. Own systems." translate="no">​</a></h2>
+<p>Imagine hiring the world's best consultant.</p>
+<p>Would you ask them to answer your emails every day?</p>
+<p>Probably not.</p>
+<p>You would ask them to help design:</p>
+<ul>
+<li class="">your operating procedures</li>
+<li class="">your sales playbook</li>
+<li class="">your hiring framework</li>
+<li class="">your onboarding process</li>
+<li class="">your pricing strategy</li>
+</ul>
+<p>Once those exist, your team can execute them repeatedly.</p>
+<p>The consultant becomes an accelerator.</p>
+<p>Not a permanent dependency.</p>
+<p>Frontier AI models should be treated exactly the same way.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-8020-strategy">The 80/20 strategy<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#the-8020-strategy" class="hash-link" aria-label="Direct link to The 80/20 strategy" title="Direct link to The 80/20 strategy" translate="no">​</a></h2>
+<p>This is in fact the strategy that I am using with <a href="https://clawne.me/" target="_blank" rel="noopener noreferrer" class="">Clawne Me</a> and <a href="https://clawster.my/" target="_blank" rel="noopener noreferrer" class="">My Clawster</a> in my own AI workflows. Cost efficiency is key: I reserve the premium models for tasks that create leverage and use more economical models for routine execution.</p>
+<p>Suppose a premium model costs significantly more than your daily model.</p>
+<p>Instead of running every task through the expensive model:</p>
+<p>Use it for the work that creates leverage.</p>
+<p>Examples:</p>
+<ul>
+<li class="">designing prompt architectures</li>
+<li class="">creating evaluation frameworks</li>
+<li class="">documenting reasoning processes</li>
+<li class="">generating reusable workflows</li>
+<li class="">defining quality standards</li>
+<li class="">building knowledge maps</li>
+<li class="">creating playbooks</li>
+</ul>
+<p>Then use more economical models for:</p>
+<ul>
+<li class="">summarization</li>
+<li class="">customer responses</li>
+<li class="">documentation updates</li>
+<li class="">report generation</li>
+<li class="">email drafting</li>
+<li class="">content adaptation</li>
+<li class="">routine coding</li>
+<li class="">repetitive analysis</li>
+</ul>
+<p>The expensive model becomes your architect.</p>
+<p>The affordable model becomes your operator.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="this-requires-discipline">This requires discipline<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#this-requires-discipline" class="hash-link" aria-label="Direct link to This requires discipline" title="Direct link to This requires discipline" translate="no">​</a></h2>
+<p>Here's the difficult part.</p>
+<p>Most people won't do it.</p>
+<p>Not because it's technically hard.</p>
+<p>Because it requires changing how they think.</p>
+<p>It's much easier to open ChatGPT or Claude every morning and ask:</p>
+<blockquote>
+<p>"Help me with today's work."</p>
+</blockquote>
+<p>Instead, you need to ask:</p>
+<blockquote>
+<p>"How can I make sure I never have to solve this problem again?"</p>
+</blockquote>
+<p>Those are completely different questions.</p>
+<p>One produces output.</p>
+<p>The other produces assets.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="planning-before-prompting">Planning before prompting<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#planning-before-prompting" class="hash-link" aria-label="Direct link to Planning before prompting" title="Direct link to Planning before prompting" translate="no">​</a></h2>
+<p>This is where planning becomes critical.</p>
+<p>Before opening any AI model, classify the task.</p>
+<p>Ask yourself:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="is-this-execution">Is this execution?<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#is-this-execution" class="hash-link" aria-label="Direct link to Is this execution?" title="Direct link to Is this execution?" translate="no">​</a></h3>
+<p>Or...</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="is-this-infrastructure">Is this infrastructure?<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#is-this-infrastructure" class="hash-link" aria-label="Direct link to Is this infrastructure?" title="Direct link to Is this infrastructure?" translate="no">​</a></h3>
+<p>Execution tasks disappear after they're completed.</p>
+<p>Infrastructure tasks continue producing value.</p>
+<p>For example:</p>
+<p><strong>Execution</strong></p>
+<ul>
+<li class="">Write today's email</li>
+<li class="">Summarize today's meeting</li>
+<li class="">Review one document</li>
+</ul>
+<p>Done.</p>
+<p>Finished.</p>
+<p>Value expires quickly.</p>
+<hr>
+<p><strong>Infrastructure</strong></p>
+<ul>
+<li class="">Create an email framework</li>
+<li class="">Design a meeting summary template</li>
+<li class="">Build a document review methodology</li>
+</ul>
+<p>These continue paying dividends every time you reuse them.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="your-library-becomes-your-competitive-advantage">Your library becomes your competitive advantage<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#your-library-becomes-your-competitive-advantage" class="hash-link" aria-label="Direct link to Your library becomes your competitive advantage" title="Direct link to Your library becomes your competitive advantage" translate="no">​</a></h2>
+<p>Imagine doing this consistently for a year.</p>
+<p>Instead of thousands of isolated conversations...</p>
+<p>You build:</p>
+<ul>
+<li class="">40 reusable workflows</li>
+<li class="">60 prompt templates</li>
+<li class="">20 evaluation frameworks</li>
+<li class="">15 decision trees</li>
+<li class="">10 operating manuals</li>
+<li class="">dozens of specialized checklists</li>
+</ul>
+<p>Suddenly your AI system becomes smarter.</p>
+<p>Not because the model improved.</p>
+<p>Because <strong>your harness improved.</strong></p>
+<p>That's leverage.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dont-blindly-trust-the-experiment">Don't blindly trust the experiment<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#dont-blindly-trust-the-experiment" class="hash-link" aria-label="Direct link to Don't blindly trust the experiment" title="Direct link to Don't blindly trust the experiment" translate="no">​</a></h2>
+<p>Now, an important disclaimer.</p>
+<p>The X post suggests extracting Fable's reasoning style into an operating manual and reproducing it with another model.</p>
+<p>Will it work perfectly?</p>
+<p>Probably not.</p>
+<p>Reasoning quality depends on more than prompts alone. It also depends on model architecture, training, inference capabilities, and other characteristics that cannot simply be copied.</p>
+<p>However...</p>
+<p>That's not the point.</p>
+<p>The experiment itself is valuable.</p>
+<p>If it improves your results by 20%, 30%, or even 50%, you've learned something useful.</p>
+<p>Run the experiment.</p>
+<p>Measure it.</p>
+<p>Compare outputs.</p>
+<p>Iterate.</p>
+<p>Treat AI like engineering.</p>
+<p>Not magic.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="harnesses-compound-over-time">Harnesses compound over time<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#harnesses-compound-over-time" class="hash-link" aria-label="Direct link to Harnesses compound over time" title="Direct link to Harnesses compound over time" translate="no">​</a></h2>
+<p>One of the biggest misconceptions about AI is believing productivity comes from better prompts.</p>
+<p>I don't think that's true.</p>
+<p>Productivity comes from better systems.</p>
+<p>Every reusable asset you create becomes another component inside your AI harness.</p>
+<p>Eventually your process looks something like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Problem</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Planning</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Select Framework</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Load Knowledge</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Apply Workflow</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Execute with AI</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Verify Results</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Improve Framework</span><br></div></code></pre></div></div>
+<p>Notice something?</p>
+<p>The model is only one step.</p>
+<p>Everything else belongs to you.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-build-your-own-ai-harness">How to build your own AI harness<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#how-to-build-your-own-ai-harness" class="hash-link" aria-label="Direct link to How to build your own AI harness" title="Direct link to How to build your own AI harness" translate="no">​</a></h2>
+<p>If you want to apply this idea, start with a simple weekly routine.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="monday-identify-recurring-work">Monday: Identify recurring work<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#monday-identify-recurring-work" class="hash-link" aria-label="Direct link to Monday: Identify recurring work" title="Direct link to Monday: Identify recurring work" translate="no">​</a></h3>
+<p>Look for tasks you repeat every week.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tuesday-build-a-reusable-asset">Tuesday: Build a reusable asset<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#tuesday-build-a-reusable-asset" class="hash-link" aria-label="Direct link to Tuesday: Build a reusable asset" title="Direct link to Tuesday: Build a reusable asset" translate="no">​</a></h3>
+<p>Use your strongest AI model to create:</p>
+<ul>
+<li class="">a workflow</li>
+<li class="">a checklist</li>
+<li class="">a prompt library</li>
+<li class="">a decision guide</li>
+<li class="">an evaluation rubric</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="wednesdayfriday-execute">Wednesday–Friday: Execute<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#wednesdayfriday-execute" class="hash-link" aria-label="Direct link to Wednesday–Friday: Execute" title="Direct link to Wednesday–Friday: Execute" translate="no">​</a></h3>
+<p>Run daily work using that reusable asset, even with a more affordable model if it performs well enough.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="friday-review">Friday: Review<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#friday-review" class="hash-link" aria-label="Direct link to Friday: Review" title="Direct link to Friday: Review" translate="no">​</a></h3>
+<p>Ask:</p>
+<ul>
+<li class="">What worked?</li>
+<li class="">What failed?</li>
+<li class="">What should become part of the permanent workflow?</li>
+</ul>
+<p>Each week, your harness becomes stronger.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thoughts">Final thoughts<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#final-thoughts" class="hash-link" aria-label="Direct link to Final thoughts" title="Direct link to Final thoughts" translate="no">​</a></h2>
+<p>Reflect on how your organization can leverage AI effectively using this framework:</p>
+<ul>
+<li class=""><strong>Strengths:</strong> What internal capabilities and resources give you an advantage in building AI harnesses?</li>
+<li class=""><strong>Weaknesses:</strong> Where are the gaps in your current processes, skills, or infrastructure?</li>
+<li class=""><strong>Opportunities:</strong> What emerging AI technologies or trends can you capitalize on?</li>
+<li class=""><strong>Threats:</strong> What external factors could hinder your AI adoption or reduce its effectiveness?</li>
+</ul>
+<p>The landscape of AI will continue evolving. Models will improve. Pricing will change. New leaders will emerge, and others will disappear.</p>
+<p>These are external forces beyond our control.</p>
+<p>What we <strong>can</strong> control is the systems we build around them.</p>
+<p>The organizations that gain the most from AI won't necessarily be those with access to the smartest model, they'll be the ones that consistently convert intelligence into reusable assets.</p>
+<p>That's what harnessing AI really means.</p>
+<p>Not replacing people. Not chasing every new model.</p>
+<p>But building a disciplined system where planning creates reusable assets, those assets guide execution, and every completed task strengthens the next one.</p>
+<p>That's leverage.</p>
+<p>And unlike any single model, leverage compounds.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-takeaways">Key takeaways<a href="https://rebelion.la/ai/start-building-ai-harness-effectivelly#key-takeaways" class="hash-link" aria-label="Direct link to Key takeaways" title="Direct link to Key takeaways" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Separate creation from execution.</strong> Use premium AI models to design reusable frameworks, and use more cost-effective models for routine work.</li>
+<li class=""><strong>Treat AI outputs as assets.</strong> Turn successful prompts, workflows, and decision processes into documented playbooks instead of one-off conversations.</li>
+<li class=""><strong>Build your AI harness intentionally.</strong> Your prompts, memory, checklists, evaluation rubrics, and workflows are the infrastructure that creates long-term value.</li>
+<li class=""><strong>Experiment instead of assuming.</strong> Test ideas like reasoning-style extraction, measure the results, and refine your process based on evidence rather than hype.</li>
+<li class=""><strong>Invest in leverage.</strong> Every reusable asset reduces future effort, improves consistency, and increases the return on every AI interaction that follows.</li>
+<li class=""><strong>Iterate continuously.</strong> Regularly review and refine your workflows, prompts, and evaluation criteria to ensure your AI harness evolves with your needs and the capabilities of AI models.</li>
+<li class=""><strong>Focus on compounding value.</strong> Each improvement to your AI harness should make future work easier and more effective, creating a cycle of increasing returns over time.</li>
+<li class=""><strong>Document your learnings.</strong> Keep a record of what works and what doesn't, so that your team can benefit from past experiences and avoid repeating mistakes.</li>
+<li class=""><strong>Share knowledge across your team.</strong> Ensure that insights, successful strategies, and lessons learned are communicated effectively so that everyone can benefit from the collective experience.</li>
+</ul>
+<p>What matters most is not having the smartest AI model, but having a system that consistently turns intelligence into reusable assets and compounds value over time.</p>
+<p>Go Rebels! ✊🏽</p>]]></content:encoded>
+            <category>ai</category>
+        </item>
+        <item>
+            <title><![CDATA[Models Are Becoming Commodities, Orchestration Is the New Advantage]]></title>
+            <link>https://rebelion.la/ai/ai-models-are-becoming-commodities</link>
+            <guid>https://rebelion.la/ai/ai-models-are-becoming-commodities</guid>
+            <pubDate>Sun, 14 Jun 2026 18:00:00 GMT</pubDate>
+            <description><![CDATA[AI models are rapidly commoditizing. The real advantage now is AI orchestration: memory, verification, safety guardrails, and workflow design. Learn a practical framework to build reliable AI systems.]]></description>
+            <content:encoded><![CDATA[<p>AI models are getting better, faster, and cheaper across the board.</p>
+<p>That is great news, but it also changes where value lives.</p>
+<p>The core advantage is no longer just model access. It is your ability to design, govern, and operate AI systems that produce reliable business outcomes.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tldr">TL;DR<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#tldr" class="hash-link" aria-label="Direct link to TL;DR" title="Direct link to TL;DR" translate="no">​</a></h2>
+<ul>
+<li class="">Frontier models are converging in capability for most business tasks.</li>
+<li class="">The new moat is orchestration: memory, tools, verification, guardrails, and workflow design.</li>
+<li class="">Teams that treat AI like production software, not magic autocomplete, will win.</li>
+<li class="">Start simple, instrument everything, and only add complexity when metrics justify it.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-models-are-becoming-commodities">Why Models Are Becoming Commodities<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#why-models-are-becoming-commodities" class="hash-link" aria-label="Direct link to Why Models Are Becoming Commodities" title="Direct link to Why Models Are Becoming Commodities" translate="no">​</a></h2>
+<p>For the last two years, the market has focused on model comparisons:</p>
+<ul>
+<li class="">GPT vs Claude vs Gemini</li>
+<li class="">Benchmark scores</li>
+<li class="">Context windows</li>
+<li class="">Token pricing</li>
+</ul>
+<p>Those factors still matter, but they are increasingly table stakes.</p>
+<p>Most companies can now access strong general-purpose models through APIs, cloud platforms, open-source weights, or managed hosting. As access normalizes, competitive advantage shifts up the stack.</p>
+<p>The pattern mirrors cloud computing:</p>
+<ul>
+<li class="">Early cloud era: "Provider choice is the strategy."</li>
+<li class="">Mature cloud era: "Architecture and operations are the strategy."</li>
+</ul>
+<p>AI is following the same curve.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-new-moat-orchestration-over-raw-model-access">The New Moat: Orchestration Over Raw Model Access<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#the-new-moat-orchestration-over-raw-model-access" class="hash-link" aria-label="Direct link to The New Moat: Orchestration Over Raw Model Access" title="Direct link to The New Moat: Orchestration Over Raw Model Access" translate="no">​</a></h2>
+<p>When model quality differences narrow, the winners are not the teams with a slightly better prompt. They are the teams with better systems.</p>
+<p>In practice, the differentiator becomes:</p>
+<ul>
+<li class="">Workflow design</li>
+<li class="">Persistent memory</li>
+<li class="">Tool integration</li>
+<li class="">Verification and evaluation</li>
+<li class="">Safety and policy enforcement</li>
+<li class="">Business-specific context</li>
+</ul>
+<p>In other words: the model is a component. The system is the product.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-agent-orchestration-beats-one-giant-agent">1) Agent Orchestration Beats One Giant Agent<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#1-agent-orchestration-beats-one-giant-agent" class="hash-link" aria-label="Direct link to 1) Agent Orchestration Beats One Giant Agent" title="Direct link to 1) Agent Orchestration Beats One Giant Agent" translate="no">​</a></h2>
+<p>Most AI failures happen because a single agent is overloaded with planning, research, execution, and quality control.</p>
+<p>Instead of one all-purpose agent, use role-separated pipelines:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Planner</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  -&gt; Researcher</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  -&gt; Executor</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  -&gt; Verifier</span><br></div></code></pre></div></div>
+<p>This structure improves reliability because each stage has a clear objective, interface, and success criteria.</p>
+<p>Practical takeaway:</p>
+<ol>
+<li class="">Split one complex prompt into at least two stages this week: execution and verification.</li>
+<li class="">Add explicit pass/fail criteria to the verifier stage.</li>
+<li class="">Track failure modes by stage so you know where to improve.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-memory-is-a-first-class-infrastructure-layer">2) Memory Is a First-Class Infrastructure Layer<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#2-memory-is-a-first-class-infrastructure-layer" class="hash-link" aria-label="Direct link to 2) Memory Is a First-Class Infrastructure Layer" title="Direct link to 2) Memory Is a First-Class Infrastructure Layer" translate="no">​</a></h2>
+<p>Stateless prompting works for demos. It breaks for real operations.</p>
+<p>Production-grade AI systems need at least four memory types:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="user-memory">User Memory<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#user-memory" class="hash-link" aria-label="Direct link to User Memory" title="Direct link to User Memory" translate="no">​</a></h3>
+<p>Who this user is, preferences, constraints, and history.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="task-memory">Task Memory<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#task-memory" class="hash-link" aria-label="Direct link to Task Memory" title="Direct link to Task Memory" translate="no">​</a></h3>
+<p>What has already happened in the current workflow.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="organizational-memory">Organizational Memory<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#organizational-memory" class="hash-link" aria-label="Direct link to Organizational Memory" title="Direct link to Organizational Memory" translate="no">​</a></h3>
+<p>Policies, playbooks, decisions, and internal knowledge.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="procedural-memory">Procedural Memory<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#procedural-memory" class="hash-link" aria-label="Direct link to Procedural Memory" title="Direct link to Procedural Memory" translate="no">​</a></h3>
+<p>How work is usually done, including standard operating sequences.</p>
+<p>Practical takeaway:</p>
+<ol>
+<li class="">Define one source of truth per memory type.</li>
+<li class="">Set freshness rules for each source.</li>
+<li class="">Add retrieval tests: can your system fetch the right policy or prior decision on demand?</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-verification-is-the-difference-between-demo-and-production">3) Verification Is the Difference Between Demo and Production<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#3-verification-is-the-difference-between-demo-and-production" class="hash-link" aria-label="Direct link to 3) Verification Is the Difference Between Demo and Production" title="Direct link to 3) Verification Is the Difference Between Demo and Production" translate="no">​</a></h2>
+<p>The industry asked: "Can the model generate output?"</p>
+<p>The production question is: "How do we know the output is correct enough to act on?"</p>
+<p>Use a default loop:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Generate</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">-&gt; Verify</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">-&gt; Correct</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">-&gt; Verify again</span><br></div></code></pre></div></div>
+<p>Verification can include:</p>
+<ul>
+<li class="">Policy checks</li>
+<li class="">Schema validation</li>
+<li class="">Tool-result cross-checks</li>
+<li class="">Unit-style assertions for deterministic steps</li>
+<li class="">Human review for high-risk actions</li>
+</ul>
+<p>Practical takeaway:</p>
+<ol>
+<li class="">Add one verifier before any external side effect.</li>
+<li class="">Block writes, purchases, and deletes unless verification passes.</li>
+<li class="">Log failed checks to build a safety and quality backlog.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-safety-boundaries-are-system-design-not-prompt-design">4) Safety Boundaries Are System Design, Not Prompt Design<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#4-safety-boundaries-are-system-design-not-prompt-design" class="hash-link" aria-label="Direct link to 4) Safety Boundaries Are System Design, Not Prompt Design" title="Direct link to 4) Safety Boundaries Are System Design, Not Prompt Design" translate="no">​</a></h2>
+<p>Most enterprise AI safety controls live outside the model.</p>
+<p>Core controls include:</p>
+<ul>
+<li class="">Tool allowlists: what APIs can be called</li>
+<li class="">Action controls: what operations are allowed</li>
+<li class="">Approval gates: when human sign-off is required</li>
+<li class="">Budget limits: token and spend caps</li>
+<li class="">Audit logs: who did what, when, and why</li>
+</ul>
+<p>Practical takeaway:</p>
+<ol>
+<li class="">Define risk tiers for actions.</li>
+<li class="">Require approval for tier-2 and tier-3 actions.</li>
+<li class="">Enforce hard budget and tool boundaries at the orchestrator layer.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-simplicity-is-a-strategic-advantage">5) Simplicity Is a Strategic Advantage<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#5-simplicity-is-a-strategic-advantage" class="hash-link" aria-label="Direct link to 5) Simplicity Is a Strategic Advantage" title="Direct link to 5) Simplicity Is a Strategic Advantage" translate="no">​</a></h2>
+<p>A common anti-pattern in AI architecture is unnecessary complexity.</p>
+<p>Teams keep adding agents, routers, memories, and evaluators before proving they are needed.</p>
+<p>Sometimes the best design is:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">One prompt</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">One tool call</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">One validated output</span><br></div></code></pre></div></div>
+<p>Practical takeaway:</p>
+<ol>
+<li class="">Start with the smallest architecture that can pass your quality bar.</li>
+<li class="">Add components only when a measurable failure mode requires them.</li>
+<li class="">Review architecture monthly and remove non-contributing layers.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-practical-30-60-90-day-implementation-plan">A Practical 30-60-90 Day Implementation Plan<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#a-practical-30-60-90-day-implementation-plan" class="hash-link" aria-label="Direct link to A Practical 30-60-90 Day Implementation Plan" title="Direct link to A Practical 30-60-90 Day Implementation Plan" translate="no">​</a></h2>
+<p>If you are building an AI platform, use this rollout sequence.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="days-1-30-stabilize-basics">Days 1-30: Stabilize Basics<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#days-1-30-stabilize-basics" class="hash-link" aria-label="Direct link to Days 1-30: Stabilize Basics" title="Direct link to Days 1-30: Stabilize Basics" translate="no">​</a></h3>
+<ul>
+<li class="">Pick one high-value workflow.</li>
+<li class="">Implement clear stage separation (execute + verify).</li>
+<li class="">Add logging, latency, quality, and cost metrics.</li>
+<li class="">Define tool and action boundaries.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="days-31-60-add-durable-context">Days 31-60: Add Durable Context<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#days-31-60-add-durable-context" class="hash-link" aria-label="Direct link to Days 31-60: Add Durable Context" title="Direct link to Days 31-60: Add Durable Context" translate="no">​</a></h3>
+<ul>
+<li class="">Implement user, task, and organizational memory.</li>
+<li class="">Add retrieval quality checks.</li>
+<li class="">Introduce policy validation and automated correction loops.</li>
+<li class="">Add human approvals for high-impact actions.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="days-61-90-optimize-and-scale">Days 61-90: Optimize and Scale<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#days-61-90-optimize-and-scale" class="hash-link" aria-label="Direct link to Days 61-90: Optimize and Scale" title="Direct link to Days 61-90: Optimize and Scale" translate="no">​</a></h3>
+<ul>
+<li class="">Compare model providers by workflow-level outcomes, not only benchmarks.</li>
+<li class="">Prune unnecessary orchestration components.</li>
+<li class="">Expand to additional workflows using reusable templates.</li>
+<li class="">Publish an internal AI operations standard.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-la-rebelion-fits-in-this-stack">Where La Rebelion Fits in This Stack<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#where-la-rebelion-fits-in-this-stack" class="hash-link" aria-label="Direct link to Where La Rebelion Fits in This Stack" title="Direct link to Where La Rebelion Fits in This Stack" translate="no">​</a></h2>
+<p>This is the direction behind the (<a href="https://rebelion.la/labs" target="_blank" rel="noopener noreferrer" class="">https://rebelion.la/labs</a>) ecosystem:</p>
+<ul>
+<li class=""><a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI MCP</a>: tool layer</li>
+<li class="">OrcA: workflow and Arazzo orchestration</li>
+<li class=""><a href="https://clawster.my/" target="_blank" rel="noopener noreferrer" class="">My Clawster</a>: orchestration control plane</li>
+<li class=""><a href="https://clawne.me/" target="_blank" rel="noopener noreferrer" class="">Clawne Me</a>: memory, context, and user layer</li>
+</ul>
+<p>The strategic value is not "we use model X."</p>
+<p>The strategic value is "we can coordinate models, tools, workflows, and memory into a reliable AI operating system."</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-takeaway">Final Takeaway<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#final-takeaway" class="hash-link" aria-label="Direct link to Final Takeaway" title="Direct link to Final Takeaway" translate="no">​</a></h2>
+<p>Over the next 3-5 years, model intelligence will keep improving and becoming easier to access.</p>
+<p>The durable winners will be organizations that build the best AI operating systems around those models: orchestration, memory, verification, guardrails, and disciplined simplicity.</p>
+<p>The model is important.</p>
+<p>The system is decisive.</p>
+<p>What's your strategy to win in the era of AI commoditization?</p>
+<p>Go Rebels! ✊🏼</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="faq">FAQ<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#faq" class="hash-link" aria-label="Direct link to FAQ" title="Direct link to FAQ" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="are-ai-models-becoming-commodities">Are AI models becoming commodities?<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#are-ai-models-becoming-commodities" class="hash-link" aria-label="Direct link to Are AI models becoming commodities?" title="Direct link to Are AI models becoming commodities?" translate="no">​</a></h3>
+<p>Yes, for many business use cases. Capability differences still exist, but access to strong models is broad enough that architecture and operations increasingly drive outcomes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-agent-orchestration-in-ai">What is agent orchestration in AI?<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#what-is-agent-orchestration-in-ai" class="hash-link" aria-label="Direct link to What is agent orchestration in AI?" title="Direct link to What is agent orchestration in AI?" translate="no">​</a></h3>
+<p>Agent orchestration is the design and control of multi-step AI workflows, including task routing, tool usage, memory retrieval, verification, and safety enforcement.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-matters-more-than-model-choice-in-enterprise-ai">What matters more than model choice in enterprise AI?<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#what-matters-more-than-model-choice-in-enterprise-ai" class="hash-link" aria-label="Direct link to What matters more than model choice in enterprise AI?" title="Direct link to What matters more than model choice in enterprise AI?" translate="no">​</a></h3>
+<p>In many cases: memory quality, verification coverage, policy controls, workflow design, and cost governance matter more than marginal model benchmark differences.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-do-ai-systems-fail-in-production">Why do AI systems fail in production?<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#why-do-ai-systems-fail-in-production" class="hash-link" aria-label="Direct link to Why do AI systems fail in production?" title="Direct link to Why do AI systems fail in production?" translate="no">​</a></h3>
+<p>Common causes are missing context, weak verification, unclear tool boundaries, absent approval gates, and over-complex orchestration with poor observability.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-do-you-build-a-reliable-ai-system">How do you build a reliable AI system?<a href="https://rebelion.la/ai/ai-models-are-becoming-commodities#how-do-you-build-a-reliable-ai-system" class="hash-link" aria-label="Direct link to How do you build a reliable AI system?" title="Direct link to How do you build a reliable AI system?" translate="no">​</a></h3>
+<p>Start with one workflow, separate execution from verification, add durable memory, enforce safety boundaries at the orchestration layer, and scale only after metrics confirm reliability.</p>]]></content:encoded>
+            <category>AI</category>
+            <category>Agent Orchestration</category>
+            <category>AI Systems</category>
+            <category>AI Strategy</category>
+            <category>MCP</category>
+        </item>
         <item>
             <title><![CDATA[Are ORMs Still Relevant in the AI Copilot Era?]]></title>
             <link>https://rebelion.la/ai/are-orm-still-relevant-and-useful</link>
@@ -3627,371 +4065,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>agents</category>
             <category>guardrails</category>
             <category>mcp</category>
-        </item>
-        <item>
-            <title><![CDATA[Model Context Protocol (MCP) — Is it a protocol or a contract?]]></title>
-            <link>https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract</link>
-            <guid>https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract</guid>
-            <pubDate>Tue, 05 Aug 2025 17:19:15 GMT</pubDate>
-            <description><![CDATA[Since its introduction, MCP has sparked fascinating discussions across developer communities. If you're new to the concept, you can browse Reddit to see the ongoing debate surround]]></description>
-            <content:encoded><![CDATA[<p>Since its introduction, MCP has sparked fascinating discussions across developer communities. If you're new to the concept, you can browse Reddit to see the ongoing debate surrounding it, with both proponents and opponents.</p>
-<p>When I first discovered MCP in late November 2024, I was immediately intrigued by its potential. It seemed like the missing piece in how we communicate with systems using natural language—a problem I was already trying to tackle with my CLI tools <code>gyat</code> and <code>hapi</code>. I created a <a href="https://apicove.com/blog" target="_blank" rel="noopener noreferrer" class="">blog</a> to help others understand these tools and make API interactions more human-friendly. However, these tools worked algorithmically with deterministic workflows; they couldn't systematically interact with AI models.</p>
-<p>Anthropic's MCP caught my attention because it <strong>appeared to offer a solution</strong>—a way to standardize natural language communication with systems, benefiting both developers and users. Initially, I saw MCP as a protocol that could bridge the gap between human language and machine comprehension.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="my-journey-with-mcp">My Journey with MCP<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#my-journey-with-mcp" class="hash-link" aria-label="Direct link to My Journey with MCP" title="Direct link to My Journey with MCP" translate="no">​</a></h2>
-<p>I immediately began experimenting with MCP, integrating it into my tools and workflows. The simplicity of adding tools to Claude's desktop interface was compelling—it felt like a natural evolution beyond traditional APIs and protocols.</p>
-<p>However, there was a catch. The initial learning curve was steep, and troubleshooting was a challenging task. I wanted to help others facing similar struggles by making MCP more accessible without requiring deep technical understanding.</p>
-<p>Through writing about my experiences and sharing practical tips, my understanding evolved in tandem with the specifications. A pivotal moment came when MCP introduced <strong>Streamable HTTP</strong> (Protocol Revision: 2025-03-26) as a transport method. This shift helped me realize that <strong>MCP isn't purely a protocol—it's fundamentally a contract</strong> that emphasizes interaction semantics rather than just data transfer mechanics.</p>
-<p>This revelation clarified how MCP could function at a higher level. Since my <code>gyat</code> and <code>hapi</code> CLI tools were designed to be API-first, and MCP fits seamlessly into that approach—not just defining how systems communicate, but how they should behave.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-lsp-connection-understanding-mcps-roots">The LSP Connection: Understanding MCP's Roots<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#the-lsp-connection-understanding-mcps-roots" class="hash-link" aria-label="Direct link to The LSP Connection: Understanding MCP's Roots" title="Direct link to The LSP Connection: Understanding MCP's Roots" translate="no">​</a></h2>
-<p>To understand what MCP truly is, let's examine its foundation. Do you recognize this JSON structure?</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Content-Length</span><span class="token operator">:</span><span class="token plain"> ...\r\n</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">\r\n</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token property">"jsonrpc"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"2.0"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token property">"id"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token property">"method"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"textDocument/completion"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token property">"params"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">		...</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p><img decoding="async" loading="lazy" src="https://en.meming.world/images/en/thumb/3/37/Learning_to_be_Spider-Man.jpg/300px-Learning_to_be_Spider-Man.jpg" alt="Learning to be like..." class="img_ev3q"></p>
-<p>What about these TypeScript interfaces?</p>
-<div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">interface</span><span class="token plain"> </span><span class="token class-name">RequestMessage</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">extends</span><span class="token plain"> </span><span class="token class-name">Message</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The request id.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	id</span><span class="token operator">:</span><span class="token plain"> integer </span><span class="token operator">|</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(189, 147, 249)">string</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The method to be invoked.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	method</span><span class="token operator">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(189, 147, 249)">string</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The method's params.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	params</span><span class="token operator">?</span><span class="token operator">:</span><span class="token plain"> array </span><span class="token operator">|</span><span class="token plain"> object</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">interface</span><span class="token plain"> </span><span class="token class-name">ResponseMessage</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">extends</span><span class="token plain"> </span><span class="token class-name">Message</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The request id.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	id</span><span class="token operator">:</span><span class="token plain"> integer </span><span class="token operator">|</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(189, 147, 249)">string</span><span class="token plain"> </span><span class="token operator">|</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">null</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The result of a request. This member is REQUIRED on success.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * This member MUST NOT exist if there was an error invoking the method.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	result</span><span class="token operator">?</span><span class="token operator">:</span><span class="token plain"> LSPAny</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	</span><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">/**</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 * The error object in case a request fails.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token doc-comment comment" style="color:rgb(98, 114, 164)">	 */</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">	error</span><span class="token operator">?</span><span class="token operator">:</span><span class="token plain"> ResponseError</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>No, it is not MCP. This is the <a href="https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#contentPart" target="_blank" rel="noopener noreferrer" class=""><strong>Language Server Protocol (LSP)</strong></a>—a protocol that standardizes how development tools communicate with programming language servers. LSP enables editors and IDEs to provide features such as code completion, linting, and refactoring <strong>across different languages without implementing language-specific logic in each tool</strong>.</p>
-<p>The lifecycle message flows of LSP and MCP are strikingly similar:</p>
-<div class="language-mermaid codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-mermaid codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">sequenceDiagram</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  participant Client</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  participant Server</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Initialize</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Server-&gt;&gt;Client: Initialized</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Register Capability</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Unregister Capability</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Set Trace</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Log Trace</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Shutdown</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Client-&gt;&gt;Server: Exit</span><br></div></code></pre></div></div>
-<p><img decoding="async" loading="lazy" src="https://media.tenor.com/QXVs4QWLlzkAAAAM/spider-man.gif" alt="LSP and MCP are strikingly similar" class="img_ev3q"></p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-lsp-matters-for-understanding-mcp">Why LSP Matters for Understanding MCP?<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#why-lsp-matters-for-understanding-mcp" class="hash-link" aria-label="Direct link to Why LSP Matters for Understanding MCP?" title="Direct link to Why LSP Matters for Understanding MCP?" translate="no">​</a></h3>
-<p>LSP revolutionized software development by solving a critical integration problem. Before LSP, supporting code intelligence across multiple programming languages meant <strong>writing M × N integrations—M tools for N editors</strong>. Each language had its peculiarities, and each editor had its API, resulting in expensive, fragile, and inefficient custom integrations.</p>
-<p>LSP introduced a <strong>universal interface</strong> for language servers. Instead of each editor implementing custom logic for every language, they could all speak the same protocol. <strong>Once a language server was built, any LSP-compliant editor could use it.</strong></p>
-<p><strong>Sound familiar?</strong> This is precisely what MCP aims to achieve for AI model interactions. <em>Once an API implements an MCP Server, any compliant client can interact with it without needing custom logic for each client</em>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-strategic-launch-lucky-or-smart">The Strategic Launch: Lucky or Smart?<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#the-strategic-launch-lucky-or-smart" class="hash-link" aria-label="Direct link to The Strategic Launch: Lucky or Smart?" title="Direct link to The Strategic Launch: Lucky or Smart?" translate="no">​</a></h2>
-<p><strong>Timeline:</strong></p>
-<ul>
-<li class="">
-<p>MCP SDK made <a href="https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/0.1.0" target="_blank" rel="noopener noreferrer" class="">public on GitHub: October 23rd, 2024</a></p>
-</li>
-<li class="">
-<p>Claude desktop <a href="https://docs.anthropic.com/en/release-notes/claude-apps#october-31st%2C-2024" target="_blank" rel="noopener noreferrer" class="">released: October 31st, 2024</a></p>
-</li>
-</ul>
-<p>The buzz around MCP is largely thanks to Claude desktop—the first MCP client. Anthropic made a brilliant move by recognizing LSP's potential and applying similar principles to AI model interactions.</p>
-<p>Despite the controversial choice of using <code>stdio</code> as the initial transport layer, it was strategically sound, providing a lightweight and efficient communication method that made it easier for developers to build AI-powered tools locally.</p>
-<p>Why not use HTTP? <strong>HTTP is a heavyweight protocol</strong> with built-in features that aren't always necessary for simple interactions. <code>stdio</code> is simpler, faster, and more direct—ideal for local applications where both client and server are on the same machine, which was the case for Claude desktop and the initial MCP implementations.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="understanding-stdio">Understanding STDIO<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#understanding-stdio" class="hash-link" aria-label="Direct link to Understanding STDIO" title="Direct link to Understanding STDIO" translate="no">​</a></h3>
-<p><strong>STDIO (Standard Input/Output)</strong> is defined by the C runtime and inherited by UNIX-like systems, consisting of three standard file descriptors:</p>
-<ul>
-<li class="">
-<p><strong>stdin</strong> (0): input stream</p>
-</li>
-<li class="">
-<p><strong>stdout</strong> (1): output stream</p>
-</li>
-<li class="">
-<p><strong>stderr</strong> (2): error stream</p>
-</li>
-</ul>
-<p>These are simply <strong>file streams</strong>, often attached to terminals, pipes, or redirected. STDIO serves as the transport layer for higher-level protocols.</p>
-<p><strong>Analogy:</strong> If <strong>HTTP is like postal mail</strong>, STDIO is like <strong>hand-delivering messages through a tube</strong>—simpler, faster, and ideal when sender and receiver are in close proximity.</p>
-<p><img decoding="async" loading="lazy" src="https://media1.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YTRycWI5cnhlczZsN3Q1cWR6aXZ5MTUwazZ2b2wzdHZvN2lsZXR3ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/hTsAAaYV5nRjq/200.webp" alt="" class="img_ev3q"></p>
-<p>The community's push toward HTTP as a transport layer makes sense—it's familiar, widely supported, and includes built-in features like headers, status codes, and content negotiation. For me, the introduction of <a href="https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http" target="_blank" rel="noopener noreferrer" class="">Streamable HTTP</a> transport in <code>version 2025-03-26</code> was transformative, making MCP more accessible and easier to integrate into existing systems.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="mcp-as-contract-not-protocol">MCP as Contract, Not Protocol<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#mcp-as-contract-not-protocol" class="hash-link" aria-label="Direct link to MCP as Contract, Not Protocol" title="Direct link to MCP as Contract, Not Protocol" translate="no">​</a></h2>
-<p>This brings us to the core insight: <strong>MCP is not just another protocol; it's a semantic layer</strong> that enables <strong>intelligent API interactions</strong>. It allows agents to understand not only the data, but also the <strong>intent and context</strong> behind it.</p>
-<p>Consider this question: <em>Where do tools like Swagger/OpenAPI Specification (OAS) fit into networking architectures such as the OSI model?</em></p>
-<p>They don't fit neatly, and that's perfectly fine. <strong>Swagger/OAS isn't a protocol in the traditional sense—it's a contract</strong> that defines how systems should interact.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-swaggeroas-doesnt-fit-the-osi-model">Why Swagger/OAS Doesn't Fit the OSI Model<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#why-swaggeroas-doesnt-fit-the-osi-model" class="hash-link" aria-label="Direct link to Why Swagger/OAS Doesn't Fit the OSI Model" title="Direct link to Why Swagger/OAS Doesn't Fit the OSI Model" translate="no">​</a></h3>
-<p>The <strong>OSI model</strong> describes <strong>how</strong> data is transmitted across networks—from physical wire (Layer 1) to applications (Layer 7).</p>
-<p>Swagger/OAS, by contrast:</p>
-<ul>
-<li class="">
-<p>Doesn't handle <strong>transport</strong> (Layer 4)</p>
-</li>
-<li class="">
-<p>Doesn't define <strong>sessions</strong> (Layer 5)</p>
-</li>
-<li class="">
-<p>Isn't concerned with <strong>encoding</strong> (Layer 6)</p>
-</li>
-<li class="">
-<p>It isn’t a <strong>runtime application</strong> (Layer 7)</p>
-</li>
-</ul>
-<p>Instead, it:</p>
-<ul>
-<li class="">
-<p><strong>Describes APIs</strong>—endpoints, parameters, responses, and authentication</p>
-</li>
-<li class="">
-<p><strong>Acts as metadata</strong> for client-service interactions over HTTP</p>
-</li>
-</ul>
-<p>This is <strong>meta-communication</strong>—a <strong>contract</strong>, not transmission itself.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-layer-8-concept">The "Layer 8" Concept<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#the-layer-8-concept" class="hash-link" aria-label="Direct link to The &quot;Layer 8&quot; Concept" title="Direct link to The &quot;Layer 8&quot; Concept" translate="no">​</a></h3>
-<p>I would place Swagger in <a href="https://en.wikipedia.org/wiki/Layer_8" target="_blank" rel="noopener noreferrer" class=""><strong>Layer 8</strong></a><strong>: "People, Policies, and Planning"</strong>—where developers, product managers, and architects live. It's about human <strong>agreement</strong>, <strong>specification</strong>, and <strong>negotiation</strong> of service interfaces.</p>
-<p><strong>Analogy:</strong> If the OSI model is a road system:</p>
-<ul>
-<li class="">
-<p>Layers 1–4 are asphalt, traffic rules, intersections, and cars.</p>
-</li>
-<li class="">
-<p>Layers 5–7 are comprised of drivers, GPS, and mobile apps, which send and receive instructions.</p>
-</li>
-<li class="">
-<p><strong>Swagger/OAS</strong> is the <em>roadmap and city planning documentation</em> telling drivers and managers how roads should be used.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="mcp-operates-in-the-intent-layer">MCP Operates in the Intent Layer<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#mcp-operates-in-the-intent-layer" class="hash-link" aria-label="Direct link to MCP Operates in the Intent Layer" title="Direct link to MCP Operates in the Intent Layer" translate="no">​</a></h3>
-<p>In <strong>intent-based systems</strong> (like MCP or autonomous agents), specifications like Swagger or gRPC play crucial roles:</p>
-<ul>
-<li class="">
-<p>Declaring <strong>intent</strong></p>
-</li>
-<li class="">
-<p>Providing <strong>machine-readable contracts</strong></p>
-</li>
-<li class="">
-<p>Powering <strong>automation, code generation, testing, and governance</strong></p>
-</li>
-</ul>
-<p>In modern cloud-native and AI-centric architectures, these tools reside in the intent/control plane—often referred to as <strong>Layer 8+</strong> or <strong>"Layer 9: Governance/Compliance."</strong></p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary-contract-vs-protocol">Summary: Contract vs. Protocol<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#summary-contract-vs-protocol" class="hash-link" aria-label="Direct link to Summary: Contract vs. Protocol" title="Direct link to Summary: Contract vs. Protocol" translate="no">​</a></h2>
-<table><thead><tr><th><strong>Aspect</strong></th><th><strong>OSI Equivalent</strong></th><th><strong>Why It's Different</strong></th></tr></thead><tbody><tr><td>Describes APIs over HTTP</td><td>Above Layer 7</td><td>It's metadata, not data</td></tr><tr><td>Exists at design time</td><td>Layer 8 (People)</td><td>It's a contract, not a protocol</td></tr><tr><td>Used by Devs &amp; Tools</td><td>Layer 8/9</td><td>Focused on agreement &amp; automation</td></tr><tr><td>Does not transmit data</td><td>Not in OSI</td><td>Doesn't live in the data plane</td></tr></tbody></table>
-<p><strong>Key Insight:</strong> Swagger/OAS is what <em>developers</em> and <em>machines</em> use to agree <strong>on how</strong> to communicate, but it doesn't do the communicating itself.</p>
-<p>Similarly, <strong>MCP lives in "Layer 8"—the realm of contracts, conventions, and collaboration.</strong> It's not a limitation; it's evolution from "transporting data" to "understanding and automating intent."</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters-mcps-real-value">Why This Matters: MCP's Real Value<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#why-this-matters-mcps-real-value" class="hash-link" aria-label="Direct link to Why This Matters: MCP's Real Value" title="Direct link to Why This Matters: MCP's Real Value" translate="no">​</a></h2>
-<p>Anthropic's genius was leveraging this intent-layer understanding to create a more intuitive interface for AI model interactions. MCP wasn't just another specification—it was a way to make AI more accessible and practical.</p>
-<p>The introduction of <a href="https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http" target="_blank" rel="noopener noreferrer" class="">Streamable HTTP</a> transport was my AHA moment, making integration with existing systems seamless. When I finally understood <strong>MCP as a contract rather than a protocol</strong>, everything fell into place.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="looking-forward-mcp-in-enterprise">Looking Forward: MCP in Enterprise<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#looking-forward-mcp-in-enterprise" class="hash-link" aria-label="Direct link to Looking Forward: MCP in Enterprise" title="Direct link to Looking Forward: MCP in Enterprise" translate="no">​</a></h2>
-<p>In regulated industries—such as banking, healthcare, and defense—contracts are paramount. MCP's explicit semantic layer maps directly to compliance requirements:</p>
-<ul>
-<li class="">
-<p><strong>Audit Trails:</strong> Each message logged with context keys</p>
-</li>
-<li class="">
-<p><strong>Policy Enforcement:</strong> Only approved message types pass through</p>
-</li>
-<li class="">
-<p><strong>Version Control:</strong> Upgrade contracts without breaking consumers</p>
-</li>
-</ul>
-<p>With modern deployment stacks, you can deploy MCP servers using GitOps, ensuring every revision is tracked, tested, and approved.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
-<p>What began as curiosity about a new protocol evolved into a deeper understanding of how AI systems can better serve human needs. <strong>MCP isn't just about data exchange—it's about creating meaningful, contextual interactions</strong> between humans and AI.</p>
-<p>By recognizing MCP as a contract that operates in the intent layer, we can build more reliable, maintainable, and robust AI integrations. It's not about the transport mechanism; it's about the semantic agreement that enables intelligent automation.</p>
-<p>I have been working with the <a href="https://mpc.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI Stack for MCP</a>, which aims to provide a comprehensive framework for building and deploying API-first MCP-based applications. It simplifies the integration and deployment of MCP-based applications, allowing developers to focus on creating intelligent systems without getting bogged down in low-level details.</p>
-<p><img decoding="async" loading="lazy" src="https://docs.mcp.com.ai/img/diagrams/hapi-mcp-diagram.svg" alt="HAPI Stack for MCP" class="img_ev3q"></p>
-<p>Please review the <a href="https://docs.hapi.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI Stack documentation</a> to learn how it can help you build robust, intent-driven applications using MCP.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="further-reading">Further Reading<a href="https://rebelion.la/model-context-protocol-mcp-is-it-a-protocol-or-a-contract#further-reading" class="hash-link" aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate="no">​</a></h2>
-<ul>
-<li class="">
-<p><a href="https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification" target="_blank" rel="noopener noreferrer" class="">LSP Specification</a></p>
-</li>
-<li class="">
-<p><a href="https://langserver.org/" target="_blank" rel="noopener noreferrer" class="">Language Server Protocol</a></p>
-</li>
-<li class="">
-<p><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol (MCP)</a></p>
-</li>
-<li class="">
-<p><a href="https://docs.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">MCP as Contracts documentation</a></p>
-</li>
-</ul>
-<hr>
-<p><em>This post was brought to you by someone who once thought MCP was just another protocol—and is now convinced it's a contract that unlocks smarter, more reliable AI integrations.</em></p>
-<p>Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>ai</category>
-            <category>apis</category>
-            <category>swagger</category>
-            <category>api-gateway</category>
-            <category>osi-model</category>
-            <category>protocols</category>
-            <category>mcp</category>
-        </item>
-        <item>
-            <title><![CDATA[You Don't Need to Implement MCP Servers: A Contract-First Approach to AI Tool Integration]]></title>
-            <link>https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration</link>
-            <guid>https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration</guid>
-            <pubDate>Sun, 27 Jul 2025 13:06:32 GMT</pubDate>
-            <description><![CDATA[The Model Context Protocol (MCP) has been introduced as an "open standard for connecting AI assistants to the systems where data lives". In other words, MCP is a contract or interf]]></description>
-            <content:encoded><![CDATA[<p>The <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a> (MCP) has been introduced as an <em>"</em><a href="https://www.anthropic.com/news/model-context-protocol#:~:text=Today%2C%20we%27re%20open,produce%20better%2C%20more%20relevant%20responses" target="_blank" rel="noopener noreferrer" class=""><em>open standard for connecting AI assistants to the systems where data lives</em></a><em>"</em>. In other words, MCP is a contract or interface specification – much like OpenAPI – that informs large language models (LLMs) about the <em>available tools and data sources and how to utilize them</em>. This aligns with the analogy that <a href="https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=OpenAPI%20describes%20how%20machines%20talk,to%20machines" target="_blank" rel="noopener noreferrer" class=""><strong>OpenAPI describes how machines communicate with machines</strong></a>, whereas <strong>MCP describes how AI models interact with applications</strong>. By standardizing the interface, MCP replaces many one-off integrations with a single protocol, allowing AI agents to "plug and play" with databases, APIs, or local files regardless of their location.</p>
-<p>Many developers initially assume that "MCP server" means writing new adapter code, but that's a misconception. Just as in OpenAPI a <code>servers</code> section is <em>metadata</em> (not code), in MCP the "server" entry in the spec merely points to the implementation. You <strong>don't need to hand-code a new server to satisfy the MCP spec</strong> – you only need to <em>expose the contract</em>, use Swagger specs to auto-generate your MCP tools. Existing RESTful APIs (with their OpenAPI/Swagger definitions) can <em>become</em> MCP servers on the fly by generating the MCP contract from the API spec. In practice, each REST endpoint or <a href="https://swagger.io/specification/#operation-object" target="_blank" rel="noopener noreferrer" class="">operation object</a> turns into an <a href="https://modelcontextprotocol.io/docs/concepts/tools" target="_blank" rel="noopener noreferrer" class="">MCP <em>tool</em></a> whose name matches the API's <code>operationId</code> (or path and method).</p>
-<p>Consider a simple example. An OpenAPI (OAS) snippet might define a <code>/users</code> endpoint like this:</p>
-<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token key atrule">openapi</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"3.0.0"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">paths</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">/users</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">get</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">operationId</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> getUsers</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> Retrieve a list of users.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">parameters</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">name</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> limit</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token key atrule">in</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> query</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token key atrule">schema</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> integer</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token key atrule">default</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token number">10</span><br></div></code></pre></div></div>
-<p>In MCP terms, this becomes a <em>tool</em> named <code>getUsers</code> with a JSON schema for its input. For instance, the equivalent MCP contract might include:</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token property">"tools"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"getUsers"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"description"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Retrieve a list of users"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"inputSchema"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"object"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"properties"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token property">"limit"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"integer"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token property">"default"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">10</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>Here, <code>getUsers</code> (the REST operationId) is exposed as a tool name, and its query parameter <code>limit</code> is captured in the <code>inputSchema</code> (see <a href="https://modelcontextprotocol.io/docs/learn/server-concepts#tools-ai-actions" target="_blank" rel="noopener noreferrer" class="">MCP's tool definition structure</a>). This mirrors how <strong>mcp-openapi-proxy</strong> or similar tools work: in "low-level mode" they <em>automatically register every API endpoint as an MCP tool</em> (e.g. mapping <code>/chat/completions</code> to a <code>chat_completions()</code> tool).</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-misconceptions-in-the-mcp-ecosystem">Key Misconceptions in the MCP Ecosystem<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#key-misconceptions-in-the-mcp-ecosystem" class="hash-link" aria-label="Direct link to Key Misconceptions in the MCP Ecosystem" title="Direct link to Key Misconceptions in the MCP Ecosystem" translate="no">​</a></h2>
-<p>There are a few common myths about MCP that our approach clarifies:</p>
-<ul>
-<li class="">
-<p>**"You must implement an MCP server from scratch."**<em>Reality:</em> Any existing API can act as an MCP server <em>contractually</em>. You can <a href="https://youtu.be/rOTdkSSHBBc" target="_blank" rel="noopener noreferrer" class="">auto-generate the MCP spec from the API's OpenAPI definition</a>, then let <a href="https://modelcontextprotocol.io/quickstart/client#how-it-works" target="_blank" rel="noopener noreferrer" class="">the client or model call the REST endpoints directly</a> (typically via an API gateway). In other words, you're just publishing the <strong>contract</strong>. As one expert noted, "<a href="https://www.linkedin.com/posts/adrianescutia_gorebels-activity-7349233480465080321-Yr2w#:~:text=You%20don%27t%20need%20MCP%20servers%3B,to%20interact%20with%20each%20other" target="_blank" rel="noopener noreferrer" class="">you don't need to code MCP servers</a> at all – any RESTful API can function as an MCP server". This is akin to Swagger: you don't write code for the "server" entry, you implement the API and reference it in the spec. Go one step further: if you have an OpenAPI spec, <strong>your existing API becomes an MCP server on the fly</strong>. Keep reading, below we show how to do this with some magic tools.</p>
-</li>
-<li class="">
-<p>**"MCP tools are different from API operations."**<em>Reality:</em> In our view, the MCP "tools" <strong>are the API operations</strong>. In fact, the REST <code>operationId</code> can become the tool name. Each <a href="https://modelcontextprotocol.io/docs/learn/server-concepts#example%3A-taking-action" target="_blank" rel="noopener noreferrer" class="">tool has a unique name and JSON schema</a> for its inputs. For example, an OpenAPI path with <code>operationId: getUsers</code> simply yields an MCP tool named <code>getUsers</code>. This naming correspondence means your LLM sees familiar operations: calling a tool is just like calling the original API, but through the standardized protocol.</p>
-</li>
-<li class="">
-<p>**"MCP adds overhead or new dependencies."**<em>Reality:</em> By deriving the MCP spec from existing API docs, you avoid rewriting code. Many teams in the industry are already doing this. For example, tools like <a href="https://youtu.be/RGgFJcZ_PA4" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI server</strong></a> dynamically turn all endpoints in an OpenAPI spec into MCP tools. This ensures that as long as your API is documented, your MCP interface is up-to-date. You're reusing your API's security, logic, and data – not replicating it (complementing maintenance). The MCP protocol itself is a thin JSON-RPC layer, so implementation can be as lightweight as a small gateway process.</p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="openapi-vs-mcp-two-faces-of-integration">OpenAPI vs MCP: Two Faces of Integration<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#openapi-vs-mcp-two-faces-of-integration" class="hash-link" aria-label="Direct link to OpenAPI vs MCP: Two Faces of Integration" title="Direct link to OpenAPI vs MCP: Two Faces of Integration" translate="no">​</a></h2>
-<p>OpenAPI and MCP serve <strong>complementary roles</strong>. OpenAPI (OAS) has long been the de facto contract for RESTful services: it tells machines <em>which endpoints exist and how to call them</em>. MCP is the analogous layer for AI agents: it tells models <em>which tools they can invoke and what arguments to pass</em>. One observer nicely summarized this: "<a href="https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=OpenAPI%20describes%20how%20machines%20talk,to%20machines" target="_blank" rel="noopener noreferrer" class="">OpenAPI describes how machines talk to machines. MCP defines how models talk to applications</a>".</p>
-<p>In practice, you use both: a conventional client (or agent) can call an API with REST as usual, and an LLM-based agent can call an MCP "tool" – but under the hood it's the same endpoint. An MCP-enabled architecture might look like this: your host application (e.g. a chat UI) connects to one or more MCP servers (each backed by APIs), as shown by <a href="https://medium.com/@elisowski/mcp-explained-the-new-standard-connecting-ai-to-everything-79c5a1c98288" target="_blank" rel="noopener noreferrer" class="">Edwin Lisowski's diagram</a>. The host sends the user's query along with the <em>list of available tools</em> to the LLM. <a href="https://medium.com/@tahirbalarabe2/what-is-model-context-protocol-mcp-architecture-overview-c75f20ba4498#:~:text=Here%E2%80%99s%20how%20it%20works%20in,final%20answer%20for%20the%20user" target="_blank" rel="noopener noreferrer" class="">The model then decides which tool to use</a>, and the host invokes that tool (via the standard REST call or via an MCP gateway). The result returns through MCP and then to the user.</p>
-<p>This two-way flow ("host ⇄ server via MCP") is flexible: some servers might access local data, others remote services. Crucially, any API (local or cloud) can be plugged in. <a href="https://modelcontextprotocol.io/docs/learn/server-concepts#:~:text=Discover%20available%20tools,Tool%20execution%20result" target="_blank" rel="noopener noreferrer" class="">The protocol standardizes discovery and invocation</a>: clients send <code>tools/list</code> to discover tools, then <code>tools/call</code> with a name and arguments to execute it. As Anthropic explains, the architecture is straightforward: developers <em>"</em><a href="https://www.anthropic.com/news/model-context-protocol#:~:text=The%20Model%20Context%20Protocol%20is,that%20connect%20to%20these%20servers" target="_blank" rel="noopener noreferrer" class=""><em>expose their data through MCP servers or build AI applications (MCP clients) that connect to these servers.</em></a><em>"</em>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tools-first-not-server-first">Tools-First, Not Server-First<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#tools-first-not-server-first" class="hash-link" aria-label="Direct link to Tools-First, Not Server-First" title="Direct link to Tools-First, Not Server-First" translate="no">​</a></h2>
-<p>Our approach is "tools-first": we focus on providing LLMs with <em>contractual access</em> to backend tools, rather than building a brand-new server implementation for each. Concretely, this means:</p>
-<ul>
-<li class="">
-<p><strong>Generate the MCP spec from your existing API (OpenAPI).</strong> Tools like our HAPI server (Headless API) can read the OpenAPI file and emit the MCP tools schema. No new business logic is written; we simply wrap the contract. This lets the agent know, for example, that "getUsers" exists and takes an integer limit.</p>
-</li>
-<li class="">
-<p><strong>Use an MCP gateway (runMCP) to manage connections.</strong> This component handles the JSON-RPC transport (stdio or HTTP) and routes calls to the real API endpoints. It also aggregates multiple tools into one logical "server" if needed.</p>
-</li>
-<li class="">
-<p><strong>Invoke tools from the MCP client (chatMCP).</strong> The LLM sees a unified list of tools. When it decides to call one, the MCP client issues a <code>tools/call</code> request, which the gateway translates into the actual API call. The response is sent back to the LLM in structured JSON format. In practice, this is exactly what many products do: for instance, Claude Desktop, Cursor, or Cobie all connect via stdio to MCP servers that wrap REST APIs.</p>
-</li>
-</ul>
-<p>By contrast, the "MCP hype" often suggests building a separate software server for each data source. We challenge that: you already have servers! For example, if you have an OData or REST API for your database, that <em>can be</em> the MCP server. You only need to publish its OpenAPI spec so agents know how to talk to it. In short:</p>
-<ul>
-<li class="">
-<p>If you can call the API now, you can call it via MCP.</p>
-</li>
-<li class="">
-<p>Each API operation is simply a tool in the MCP world.</p>
-</li>
-<li class="">
-<p>No new code (beyond the gateway glue) is needed to implement the business logic.</p>
-</li>
-</ul>
-<p>This cuts development effort dramatically. As one architect put it, <a href="https://www.linkedin.com/pulse/extending-apis-mcp-oas-two-faces-same-coin-adrian-escutia-zg68c?trk=public_post#:~:text=MCP%20gives%20AI%20models%20a,It" target="_blank" rel="noopener noreferrer" class="">MCP gives AI models a <em>shared language</em> for your stack</a>. The MCP spec is generated "on the fly" from what the server already exposes – so maintaining your APIs automatically maintains your AI contract.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-conversion-openapi--mcp">Example Conversion: OpenAPI → MCP<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#example-conversion-openapi--mcp" class="hash-link" aria-label="Direct link to Example Conversion: OpenAPI → MCP" title="Direct link to Example Conversion: OpenAPI → MCP" translate="no">​</a></h2>
-<p>To make this concrete, imagine a typical <strong>user service</strong> with an OpenAPI spec (a small excerpt is shown above). In the OAS we have:</p>
-<ul>
-<li class="">
-<p><code>GET /users?limit=10</code> with <code>operationId: getUsers</code></p>
-</li>
-<li class="">
-<p><code>POST /users</code> with <code>operationId: createUser</code></p>
-</li>
-<li class="">
-<p><code>GET /users/{id}</code> with <code>operationId: getUserById</code></p>
-</li>
-<li class="">
-<p>etc.</p>
-</li>
-</ul>
-<p>When we run HAPI (or another OAS-to-MCP tool), it might produce an MCP contract listing tools like:</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token property">"tools"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"getUsers"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"description"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Returns a list of users"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"inputSchema"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"object"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"properties"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token property">"limit"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"integer"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token property">"default"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">10</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"createUser"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"description"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Create a new user"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"inputSchema"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"object"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"properties"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token property">"body"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"object"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token property">"properties"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">              </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"string"</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">              </span><span class="token property">"email"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"string"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token property">"format"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"email"</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token property">"required"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">"name"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"email"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"getUserById"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"description"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Returns a user by ID"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"inputSchema"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"object"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"properties"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">          </span><span class="token property">"id"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token property">"type"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"string"</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// ... additional tools from other endpoints ...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>This closely follows the <a href="https://modelcontextprotocol.io/docs/learn/server-concepts#tools-ai-actions" target="_blank" rel="noopener noreferrer" class="">official MCP tool definition structure</a>. The <code>name</code> field is the unique tool name (we use the OpenAPI operationId), and <code>inputSchema</code> is a JSON Schema object for the tool's parameters. The <code>description</code> helps the LLM understand its purpose. The MCP server (gateway) would advertise these tools via <code>tools/list</code>, and the LLM can pick one by name. Then the gateway performs the underlying REST call, sends the response back as MCP <code>content</code>, and the model incorporates it.</p>
-<p>By keeping the tool definitions in sync with the OpenAPI, teams ensure that every change to the API automatically updates the MCP interface. In our experience, architects are often pleasantly surprised at how minimal the extra work is: it's essentially just <em>publishing</em> the API spec over a standard channel. Many open-source proxies (like <a href="https://github.com/matthewhand/mcp-openapi-proxy#:~:text=%2A%20Low,based%20on%20static%20configurations" target="_blank" rel="noopener noreferrer" class="">mcp-openapi-proxy</a>) operate this way out of the box.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-oas-vs-mcp--contract-level-feature-comparison">📊 OAS vs. MCP – Contract-Level Feature Comparison<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#-oas-vs-mcp--contract-level-feature-comparison" class="hash-link" aria-label="Direct link to 📊 OAS vs. MCP – Contract-Level Feature Comparison" title="Direct link to 📊 OAS vs. MCP – Contract-Level Feature Comparison" translate="no">​</a></h3>
-<p>Here's a <strong>side-by-side comparison table</strong> showing the similarities between <strong>OpenAPI Specification (OAS)</strong> and <strong>Model Context Protocol (MCP)</strong>. This focuses on their <strong>structural parallels</strong>, especially in how <strong>OAS defines contracts</strong> vs. how <strong>MCP defines intents, tools, and context</strong>, helping technical product managers and architects bridge the conceptual gap:</p>
-<table><thead><tr><th>Feature / Concept</th><th>OpenAPI Specification (OAS)</th><th>Model Context Protocol (MCP)</th></tr></thead><tbody><tr><td><strong>Primary Purpose</strong></td><td>Define RESTful API contract (endpoints, methods, payloads)</td><td>Define Intent-Tool interactions for agentic or AI-enhanced systems</td></tr><tr><td><strong>Spec Format</strong></td><td>JSON/YAML using OpenAPI v3+</td><td>JSON-based (MCP.json or embedded)</td></tr><tr><td><strong>Operations</strong></td><td><code>operationId</code> used to uniquely identify operations</td><td><code>tool.name</code> used to uniquely identify tools (similar to functions)</td></tr><tr><td><strong>Endpoints</strong></td><td>Defined under <code>paths</code>, each with HTTP verbs (<code>get</code>, <code>post</code>, etc.)</td><td>Defined implicitly via <code>tool.name</code> + <code>input</code> schema</td></tr><tr><td><strong>Inputs</strong></td><td><code>parameters</code>, <code>requestBody</code>, and schema references</td><td><code>input_schema</code> (JSON Schema)</td></tr><tr><td><strong>Outputs / Responses</strong></td><td><code>responses</code> with schema (200, 400, etc.)</td><td><code>output_schema</code> defines expected response format</td></tr><tr><td><strong>Server Implementation</strong></td><td>API server or framework auto-generates routes (e.g. FastAPI)</td><td>MCP agent or <code>HAPI Server</code> interprets tools and connects via context</td></tr><tr><td><strong>Docs / UI Tooling</strong></td><td>Swagger UI, Redoc</td><td><code>chatMCP</code> client as UI for triggering tool use via intent</td></tr><tr><td><strong>Security</strong></td><td><code>securitySchemes</code> (API key, OAuth2, JWT, etc.)</td><td>Context-aware, authorization not yet standardized</td></tr><tr><td><strong>Extensibility</strong></td><td>Via <code>x-</code> custom properties, plugins, generators</td><td>Native support for extended metadata like <code>description</code>, <code>examples</code>, etc.</td></tr><tr><td><strong>Versioning</strong></td><td><code>openapi: 3.x.x</code>, plus custom versioning strategies</td><td><code>version</code> field in MCP spec</td></tr><tr><td><strong>Primary Use Case</strong></td><td>Human-to-API, API-first design and testing</td><td>Agent-to-Tool communication, AI workflows, function chaining</td></tr><tr><td><strong>Tools</strong></td><td>Swagger Codegen, OpenAPI Generator, Postman</td><td><code>HAPI Server</code>, <code>runMCP</code>, <code>chatMCP</code>, and MCP-compatible tools</td></tr><tr><td><strong>Contract Source of Truth</strong></td><td><code>.yaml</code> or <code>.json</code> file</td><td><code>mcp.json</code> or embedded in AI agent memory / local registry</td></tr></tbody></table>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="-interpretation">🔍 Interpretation<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#-interpretation" class="hash-link" aria-label="Direct link to 🔍 Interpretation" title="Direct link to 🔍 Interpretation" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>OAS is to APIs what MCP is to Agents</strong> — both define contracts, but for different execution contexts.</p>
-</li>
-<li class="">
-<p><strong>operationId ≈ tool.name</strong> – this is the most precise analog between the two: both uniquely identify callable logic units.</p>
-</li>
-<li class="">
-<p><strong>Request/response schemas</strong> are equally critical in both — they define the expected structure, enabling validation and introspection.</p>
-</li>
-<li class="">
-<p><strong>Security and extensibility</strong> are evolving in MCP, much like OAS has matured over time.</p>
-</li>
-<li class="">
-<p><strong>UI tooling</strong>, such as Swagger UI, is analogous to <code>chatMCP</code> that in MCP, providing a user-friendly interface for interacting with the defined contracts.</p>
-</li>
-<li class="">
-<p><strong>Versioning and extensibility</strong> are handled similarly, allowing both OAS and MCP to evolve without breaking existing contracts.</p>
-</li>
-<li class="">
-<p><strong>Primary use cases differ</strong>: OAS focuses on API design and documentation, while MCP enables AI agents to interact with tools and data sources.</p>
-</li>
-<li class="">
-<p><strong>Tools ecosystem</strong> is growing for MCP, similar to how OAS has a rich set of generators and clients.</p>
-</li>
-<li class="">
-<p><strong>Source of truth</strong> for both is the contract file itself, whether it's an OpenAPI spec or an MCP JSON file.</p>
-</li>
-<li class="">
-<p><strong>Both OAS and MCP are about contracts, not implementations</strong> – they define how to interact with services, not how those services are built.</p>
-</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="benefits-and-metrics-of-a-contract-first-mcp-approach">Benefits and Metrics of a Contract-First MCP Approach<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#benefits-and-metrics-of-a-contract-first-mcp-approach" class="hash-link" aria-label="Direct link to Benefits and Metrics of a Contract-First MCP Approach" title="Direct link to Benefits and Metrics of a Contract-First MCP Approach" translate="no">​</a></h2>
-<p>This tools-first strategy yields measurable benefits for technical teams. Here are some key metrics (KPIs) that improve under this approach:</p>
-<ul>
-<li class="">
-<p><strong>Integration Speed:</strong> Onboarding a new data source is much faster. Instead of weeks of adapter coding, you generate the MCP contract from the existing API in minutes.</p>
-</li>
-<li class="">
-<p><strong>Developer Productivity:</strong> Engineers spend less time writing boilerplate. The MCP gateway handles the JSON-RPC plumbing. Developers can focus on adding real value to the API itself.</p>
-</li>
-<li class="">
-<p><strong>Reuse and Consistency:</strong> By leveraging the OpenAPI spec, you ensure <em>one source of truth</em>. There's no risk of the MCP interface drifting from the actual API. Consistency can be measured by <em>coverage</em>: e.g., what percentage of endpoints are exposed as tools.</p>
-</li>
-<li class="">
-<p><strong>Scalability:</strong> As your API surface grows, the tooling scales automatically. More endpoints automatically become available tools without additional coding. A possible KPI is the <em>number of integrated tools per quarter</em>, which should climb rapidly.</p>
-</li>
-<li class="">
-<p><strong>Maintainability:</strong> Fewer moving parts (no custom MCP servers) means easier upkeep. An MCP contract auto-generated from OAS reduces maintenance cost. One could track <em>time spent on MCP-related bugs</em> dropping.</p>
-</li>
-<li class="">
-<p><strong>Security and Governance:</strong> Standard contracts enable uniform policies. For example, you can apply the same authentication rules across all tools. Metrics here include <em>compliance checks passed</em> or <em>auditable traceability</em> of tool calls.</p>
-</li>
-<li class="">
-<p><strong>User Adoption:</strong> Finally, from the product perspective, a consistent protocol can drive usage. One could survey developers or product managers for satisfaction – an important KPI in itself – or measure <em>number of agent use-cases enabled</em>.</p>
-</li>
-</ul>
-<p>All these KPIs are <em>founded on sound principles</em>. For instance, using the well-known OpenAPI spec leverages existing developer skills, reducing training time. Relying on a standardized JSON-RPC protocol means better compatibility between different LLM platforms. In aggregate, we expect metrics like "time to market" and "number of connected services" to improve when the team adopts this contract-first MCP approach.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introducing-the-happy-mcp-stack">Introducing the <em>Happy MCP Stack</em><a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#introducing-the-happy-mcp-stack" class="hash-link" aria-label="Direct link to introducing-the-happy-mcp-stack" title="Direct link to introducing-the-happy-mcp-stack" translate="no">​</a></h2>
-<p>To put these ideas into practice, we've built a small MCP "stack":</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.rebelion.la/img/mcp/hapi-mcp-diagram.svg" alt="Happy MCP Stack" class="img_ev3q"></p>
-<ul>
-<li class="">
-<p><a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI Server</strong></a> <strong>(Headless API and MCP Gateway):</strong> A CLI tool that reads an OpenAPI spec and instantly serves an MCP contract. Think of it as "Swagger + MCP" without writing code. Under the hood HAPI generates the <code>tools</code> definitions from your paths/operationIds and launches a JSON-RPC endpoint. This way you can make any REST service MCP-ready on the fly.</p>
-</li>
-<li class="">
-<p><a href="https://run.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>runMCP</strong></a> <strong>(MCP Control Plane):</strong> This component manages multiple MCP server instances. It acts like your control plane: you configure which HAPI instances (i.e. which specs) to run, and runMCP ensures they're reachable by the agent. It handles routing calls from the LLM to the right MCP server and can also aggregate tools across servers. It's our answer to "How do I host and scale MCP servers?" without heavy infrastructure changes.</p>
-</li>
-<li class="">
-<p><a href="https://chat.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>chatMCP</strong></a> <strong>(MCP Client Agent):</strong> This is a user-friendly client for interacting with the MCP tools from a conversation or automation. Imagine a WhatsApp-like interface between you and an AI agent: chatMCP lets a human ask the AI for something, the AI uses the MCP tools behind the scenes, and the result flows back in chat. It leverages the standard MCP client libraries to manage the request/response loop. In demos we show how an agent can "chat" with these MCP tools as if they were part of its own language.</p>
-</li>
-</ul>
-<p>Together, this stack embodies our "contract-first" philosophy. <strong>You don't code custom servers</strong>; you just plug existing APIs into MCP via <a href="https://github.com/la-rebelion/hapimcp" target="_blank" rel="noopener noreferrer" class="">HAPI Servers</a>, orchestrate with <a href="https://github.com/la-rebelion/runmcp" target="_blank" rel="noopener noreferrer" class="">runMCP</a>, and interact with <a href="https://github.com/la-rebelion/chatmcp" target="_blank" rel="noopener noreferrer" class="">chatMCP</a>.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-path-forward">The Path Forward<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#the-path-forward" class="hash-link" aria-label="Direct link to The Path Forward" title="Direct link to The Path Forward" translate="no">​</a></h2>
-<p>MCP is indeed poised to be a new standard in AI integration, but we emphasize simplicity over hype. The core insight is this: <strong>if your API is RESTful and documented, it can be an MCP service.</strong> You only need to publish the contract. In other words, <em>we are not creating a new backend; we are exposing the existing one</em>. This shifts the focus from "building servers" to "publishing tools".</p>
-<p>For architects and product managers, that means reusing what you have: existing microservices, databases, and SaaS APIs become immediately LLM-ready. The only code you write is for joining pieces (the gateway), not for implementing domain logic twice. This reduces cost and risk while opening up your tools to powerful AI agents.</p>
-<p>As MCP matures, we'll see even more marketplaces and integrations (Anthropic's ecosystem, Community repos, etc.). Our hope is that by clarifying these misconceptions – and measuring impact with solid KPIs – teams will adopt the simplest successful strategy: <strong>tools already exist; just give models the contract</strong>.</p>
-<p>In summary, MCP <strong>is a contract standard, not another platform framework</strong>. Think of it as a <em>language for agents</em>, built on familiar foundations (OpenAPI, JSON, HTTP). By focusing on the contract, we demystify MCP, avoid reinventing servers, and speed up AI integration. As one developer put it: MCP simply <em>"</em><a href="https://medium.com/@elisowski/mcp-explained-the-new-standard-connecting-ai-to-everything-79c5a1c98288#:~:text=MCP%20replaces%20one-off%20hacks,for%20autonomous%20agents" target="_blank" rel="noopener noreferrer" class=""><em>replaces one-off hacks with a unified, real-time protocol</em></a><em>"</em>. That's a future where AI agents can do work with the tools we already have – and we believe that's exactly what technical architects and product managers need.</p>
-<p>Curious about how to get started? Check out our <a href="https://docs.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">Happy MCP Stack documentation</a> for a quick guide on turning your OpenAPI specs into MCP tools. Or, if you want to see it in action, try our <a href="https://chat.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">chatMCP</a> and <a href="https://run.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">runMCP</a> or watch our <a href="https://go.rebelion.la/chatmcp-demos" target="_blank" rel="noopener noreferrer" class="">demo videos</a> to see how easy it is to integrate AI agents with existing APIs using MCP. You can also join our community on <a href="https://discord.gg/EpHzbPee" target="_blank" rel="noopener noreferrer" class="">Discord</a> to experience the power of AI agents using MCP tools directly.</p>
-<p><a href="https://go.rebelion.la/contact-us" target="_blank" rel="noopener noreferrer" class="">Drop us a line</a> if you have questions or want to collaborate on MCP projects. We're excited to see how the community will leverage this protocol to build innovative AI applications.</p>
-<p>Let's build the future of AI integration together! Go Rebels! ✊🏽</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="additional-resources">Additional Resources<a href="https://rebelion.la/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration#additional-resources" class="hash-link" aria-label="Direct link to Additional Resources" title="Direct link to Additional Resources" translate="no">​</a></h2>
-<ul>
-<li class="">
-<p><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol (MCP) Official Site</a></p>
-</li>
-<li class="">
-<p><a href="https://github.com/la-rebelion/hapimcp" target="_blank" rel="noopener noreferrer" class="">HAPI Server GitHub Repository</a></p>
-</li>
-<li class="">
-<p><a href="https://github.com/la-rebelion/runmcp" target="_blank" rel="noopener noreferrer" class="">runMCP GitHub Repository</a></p>
-</li>
-<li class="">
-<p><a href="https://github.com/la-rebelion/chatmcp" target="_blank" rel="noopener noreferrer" class="">chatMCP GitHub Repository</a></p>
-</li>
-<li class="">
-<p><a href="https://docs.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">Happy MCP Stack Documentation</a></p>
-</li>
-<li class="">
-<p><a href="https://modelcontextprotocol.io/quickstart/client" target="_blank" rel="noopener noreferrer" class="">MCP Quickstart Guide</a></p>
-</li>
-<li class="">
-<p><a href="https://youtu.be/RGgFJcZ_PA4" target="_blank" rel="noopener noreferrer" class="">HAPI Server Demo Video</a></p>
-</li>
-<li class="">
-<p><a href="https://community.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">MCP Community Forum</a></p>
-</li>
-</ul>]]></content:encoded>
-            <category>openapi</category>
-            <category>ai-automation</category>
-            <category>agentic-ai</category>
-            <category>mcp</category>
-            <category>mcp-server</category>
         </item>
     </channel>
 </rss>
