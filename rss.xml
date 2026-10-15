@@ -4,10 +4,166 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Sat, 11 Jul 2026 10:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 15 Oct 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[How to Reverse Engineer Any App Feature with REA and Your AI Agent]]></title>
+            <link>https://rebelion.la/reverse-engineer-app-features-with-rea</link>
+            <guid>https://rebelion.la/reverse-engineer-app-features-with-rea</guid>
+            <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Connect REA to your AI coding agent, trace a real app feature from a button to the code that runs it, and check every claim against evidence you can verify yourself.]]></description>
+            <content:encoded><![CDATA[<p>You click a button in someone else's app, and something clever happens. A file lands in exactly the right folder, a sound pans left as the ball moves left, or a paste keeps its formatting across two windows. You want to understand how it works, but you have no source code, no documentation, and no one to ask.</p>
+<p>REA, short for Reverse Engineer Anything, closes that gap. It gives your AI coding agent real reverse-engineering tools and returns every finding with the evidence behind it. At the end of this guide, you have REA connected to your agent, you have traced a real feature from a button to the code that writes a file, and you have verified one of the claims yourself.</p>
+<!-- -->
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="understand-what-rea-does">Understand What REA Does<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#understand-what-rea-does" class="hash-link" aria-label="Direct link to Understand What REA Does" title="Direct link to Understand What REA Does" translate="no">​</a></h2>
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/hS-xf9jhHh8" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<p>This section explains what REA is and why its results are different from a model's guess.</p>
+<p>REA is an open-source Model Context Protocol (MCP) server and Command Line Interface (CLI), published on npm as <code>rea-agents</code>. Your agent stays the assistant you talk to; REA is the set of instruments it reaches for. It inspects native binaries, JavaScript and Electron apps, .NET assemblies, Android packages, websites, saved network captures, and more.</p>
+<p>The difference lies in what comes back. Every REA result carries its evidence:</p>
+<ul>
+<li class="">the exact artifact it read, identified by its digest;</li>
+<li class="">the location of each finding, down to the file and line;</li>
+<li class="">a clear split between what REA <strong>observed</strong>, what it <strong>inferred</strong>, and what remains <strong>unknown</strong>.</li>
+</ul>
+<p>That split matters. When your agent explains a feature, you can trace every claim back to bytes on disk instead of trusting a plausible-sounding answer.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="decide-when-rea-is-the-right-tool">Decide When REA Is the Right Tool<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#decide-when-rea-is-the-right-tool" class="hash-link" aria-label="Direct link to Decide When REA Is the Right Tool" title="Direct link to Decide When REA Is the Right Tool" translate="no">​</a></h2>
+<p>This section helps you recognize the situations where REA pays off and the ones it does not support.</p>
+<p>Reach for REA when you need to understand behavior and the source is not available. Three situations come up again and again:</p>
+<ul>
+<li class=""><strong>Learn from a feature.</strong> You see a feature in an app and want something similar in your own product. REA explains how it works so your agent can write and test your own version.</li>
+<li class=""><strong>Debug or audit software you own or are authorized to examine.</strong> Examples include a legacy binary, a vendor library, or a desktop build with no symbols.</li>
+<li class=""><strong>Compare versions.</strong> You need to know what changed between two shipped versions of an application.</li>
+</ul>
+<p>REA is the wrong tool for circumventing DRM, license checks, or anti-cheat systems, and for copying proprietary code. The project does not support those uses. Possessing a file does not grant permission to do everything with it, so keep your work lawful and authorized.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="prerequisites">Prerequisites<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#prerequisites" class="hash-link" aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate="no">​</a></h2>
+<p>Before you begin, you need:</p>
+<ul>
+<li class="">Node.js 22.19 or newer on the 22 line, 24.11 or newer on the 24 line, or version 26 and up, with npm.</li>
+<li class="">An AI agent that supports local MCP servers, such as Claude Code, Codex, Cursor, or Gemini CLI.</li>
+<li class="">For deep analysis of compiled programs only: Ghidra, Hopper, or IDA. JavaScript, Electron, and .NET inspection need no analysis engine.</li>
+<li class="">On Linux: the standard <code>ps</code> command from your distribution's <code>procps</code> or <code>procps-ng</code> package. REA uses it to check process ownership before launching analysis tools.</li>
+</ul>
+<p>Check your Node.js version:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ node -v</span><br></div></code></pre></div></div>
+<p>If the output shows an older version, upgrade Node.js before you continue.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="connect-rea-to-your-agent">Connect REA to Your Agent<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#connect-rea-to-your-agent" class="hash-link" aria-label="Direct link to Connect REA to Your Agent" title="Direct link to Connect REA to Your Agent" translate="no">​</a></h2>
+<p>This section registers REA with your agent in one guided command.</p>
+<ol>
+<li class="">
+<p>Run setup with the latest package:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ npx rea-agents@latest setup</span><br></div></code></pre></div></div>
+<p>Setup lists the supported agents. Select the ones you use.</p>
+</li>
+<li class="">
+<p>Review the plan. Setup shows every configuration file it intends to change and where it installs the workflow instructions for your agent. Nothing changes until you approve. Setup backs up your existing configuration and preserves unrelated entries, and pressing Ctrl-C makes no changes.</p>
+</li>
+<li class="">
+<p>Restart every agent named in the completion message. Agents load MCP registrations at startup, so skipping the restart is the most common reason REA's tools do not appear.</p>
+</li>
+</ol>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>To preview the plan in a script without writing anything, run <code>npx rea-agents@latest setup --client codex --dry-run</code>.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ask-your-agent-about-a-real-feature">Ask Your Agent About a Real Feature<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#ask-your-agent-about-a-real-feature" class="hash-link" aria-label="Direct link to Ask Your Agent About a Real Feature" title="Direct link to Ask Your Agent About a Real Feature" translate="no">​</a></h2>
+<p>This section runs your first investigation against a small Electron notes app.</p>
+<p>REA's website provides a six-file Electron example with a single <strong>Export notes</strong> button. Clicking it creates a CSV file somewhere on your computer. Before you read further, guess where that file goes and which columns it contains.</p>
+<ol>
+<li class="">
+<p>Download the example from <code>rea.tools/examples/notes-example.zip</code> and unpack it.</p>
+</li>
+<li class="">
+<p>Ask your agent a specific question about the folder:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Use REA to find what happens when the Export notes button is clicked. Show where notes.csv is written, which fields it contains, and the relevant files and lines.</span><br></div></code></pre></div></div>
+<p>The prompt names the feature, asks for a concrete outcome, and demands files and lines. That last requirement keeps the answer grounded in evidence.</p>
+</li>
+</ol>
+<p>Your agent hands the folder to REA's JavaScript application analysis. REA parses the code as inert text. It never installs or launches Electron, and it never runs the app.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-the-evidence-trail">Follow the Evidence Trail<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#follow-the-evidence-trail" class="hash-link" aria-label="Direct link to Follow the Evidence Trail" title="Direct link to Follow the Evidence Trail" translate="no">​</a></h2>
+<p>This section walks through the path REA recovers from the button to the file writer.</p>
+<p>The answer arrives as a path through three files:</p>
+<ul>
+<li class=""><strong><code>renderer.js</code></strong>: the button's click handler calls <code>window.notes.exportCsv()</code>.</li>
+<li class=""><strong><code>preload.js</code></strong>: a context bridge exposes the <code>notes</code> object, and <code>exportCsv</code> sends an Inter-Process Communication (IPC) message on the channel <code>notes:export</code>.</li>
+<li class=""><strong><code>main.js</code>, lines 8–12</strong>: the main process handles that exact channel, builds a path in the user's Downloads folder, formats the notes with <code>toCsv</code>, and writes <code>notes.csv</code>.</li>
+</ul>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">ipcMain</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">handle</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">"notes:export"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token arrow operator">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> destination </span><span class="token operator">=</span><span class="token plain"> path</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">join</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">app</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">getPath</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">"downloads"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"notes.csv"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token function" style="color:rgb(80, 250, 123)">writeFileSync</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">destination</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">toCsv</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">notes</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"utf8"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token keyword control-flow" style="color:rgb(189, 147, 249);font-style:italic">return</span><span class="token plain"> destination</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></div></code></pre></div></div>
+<p>The file lands in Downloads, and its columns are <code>id</code> and <code>title</code>. REA paired the renderer's message with the main-process handler by reading the code. Your agent did not invent that link; it pointed at it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="check-a-prediction-yourself">Check a Prediction Yourself<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#check-a-prediction-yourself" class="hash-link" aria-label="Direct link to Check a Prediction Yourself" title="Direct link to Check a Prediction Yourself" translate="no">​</a></h2>
+<p>This section turns one claim into an experiment you run in seconds.</p>
+<p>A comma separates CSV columns, so a note title that contains a comma and quotation marks is a good test of the formatter.</p>
+<ol>
+<li class="">
+<p>Ask your agent to predict the CSV output for a note with ID <code>1</code> and the title <code>Hello, "REA"</code>.</p>
+</li>
+<li class="">
+<p>Open a terminal in the unpacked example folder and run the app's own formatter:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ node -e 'const { toCsv } = require("./csv.js"); process.stdout.write(toCsv([{ id: 1, title: "Hello, \"REA\"" }]))'</span><br></div></code></pre></div></div>
+<p>The output shows the title in one quoted field, with each quotation mark doubled:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">id,title</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">1,"Hello, ""REA"""</span><br></div></code></pre></div></div>
+</li>
+</ol>
+<p>Prediction followed by verification is the habit that turns reverse engineering from guesswork into engineering.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="run-the-same-analysis-from-your-terminal">Run the Same Analysis from Your Terminal<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#run-the-same-analysis-from-your-terminal" class="hash-link" aria-label="Direct link to Run the Same Analysis from Your Terminal" title="Direct link to Run the Same Analysis from Your Terminal" translate="no">​</a></h2>
+<p>This section reproduces the investigation with the CLI, which suits scripts and Continuous Integration (CI) pipelines.</p>
+<p>The CLI uses the same workflows and the same evidence format as the MCP server.</p>
+<ol>
+<li class="">
+<p>Install the <code>rea</code> command globally and list its commands:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ npm install --global rea-agents</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea --help</span><br></div></code></pre></div></div>
+<p>The help output lists every workflow, from Android packages to WebAssembly.</p>
+</li>
+<li class="">
+<p>Analyze the example folder and save the evidence to a file:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea analyze-javascript-application /absolute/path/to/notes-electron --json &gt; notes-evidence.json</span><br></div></code></pre></div></div>
+<p>Evidence for a real application can reach hundreds of megabytes, so save it instead of printing it.</p>
+</li>
+<li class="">
+<p>Project a summary view from the saved evidence:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ jq -c '{source: {kind: "inline", evidence: .}, view: {kind: "summary"}}' notes-evidence.json &gt; notes-view.json</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea inspect-analysis-view notes-view.json</span><br></div></code></pre></div></div>
+<p>For the notes app, the summary reports six relevant files, four parsed JavaScript files, one context bridge, one main-process handler, and one renderer message paired to that handler, with complete application coverage.</p>
+</li>
+</ol>
+<p>For a large application, the summary view turns evidence of hundreds of megabytes into roughly ten kilobytes, small enough for your agent to read in one pass.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="trace-one-feature-through-the-graph">Trace One Feature Through the Graph<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#trace-one-feature-through-the-graph" class="hash-link" aria-label="Direct link to Trace One Feature Through the Graph" title="Direct link to Trace One Feature Through the Graph" translate="no">​</a></h2>
+<p>This section follows a single feature through every connection REA recovered.</p>
+<p>A summary tells you what exists; a feature trace tells you how it connects.</p>
+<ol>
+<li class="">
+<p>Build a trace input from the saved evidence and a literal seed, here the channel name <code>notes:export</code>:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ node --input-type=module -e 'import { readFileSync, writeFileSync } from "node:fs"; const application = JSON.parse(readFileSync("notes-evidence.json", "utf8")); writeFileSync("trace-input.json", JSON.stringify({ application, seed: { kind: "string", value: "notes:export" }, direction: "both" }));'</span><br></div></code></pre></div></div>
+</li>
+<li class="">
+<p>Run the trace:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea trace-application-feature ./trace-input.json --json</span><br></div></code></pre></div></div>
+<p>On the notes app, the trace matches five seeds and returns 32 nodes connected by 45 edges, including the IPC handler, the context bridge, and the file system module. It reports 31 observed facts and 48 inferred facts separately.</p>
+</li>
+</ol>
+<p>REA never blends what it saw with what it concluded. That separation lets you trust the answer on an application far larger than this example.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="go-deeper-into-native-binaries">Go Deeper into Native Binaries<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#go-deeper-into-native-binaries" class="hash-link" aria-label="Direct link to Go Deeper into Native Binaries" title="Direct link to Go Deeper into Native Binaries" translate="no">​</a></h2>
+<p>This section extends the same approach to compiled machine code.</p>
+<p>Configure Ghidra, Hopper, or IDA, and REA drives the engine for you. Commands such as <code>rea search</code>, <code>rea function</code>, <code>rea decompile</code>, and <code>rea trace</code> return pseudocode, assembly, strings, symbols, calls, and references.</p>
+<ol>
+<li class="">
+<p>List the available engines:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea providers --json</span><br></div></code></pre></div></div>
+</li>
+<li class="">
+<p>Trace a literal through a native program, selecting the engine explicitly when more than one supports the target:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ rea trace /absolute/path/to/program "search" --provider ghidra --json</span><br></div></code></pre></div></div>
+</li>
+</ol>
+<p>One of the project's published case studies shows the full arc. It starts from the classic Windows game DX-Ball, follows a sound call into the helper that converts a brick's screen position into stereo pan, reads the original instructions, and rebuilds the calculation in C. The reconstruction passes 3,205 test cases against the original x86 code and reproduces all 63 bytes of the compiled function.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="match-the-target-to-the-workflow">Match the Target to the Workflow<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#match-the-target-to-the-workflow" class="hash-link" aria-label="Direct link to Match the Target to the Workflow" title="Direct link to Match the Target to the Workflow" translate="no">​</a></h2>
+<p>This section maps common targets to the workflow and tooling each one needs.</p>
+<table><thead><tr><th>Target</th><th>Workflow</th><th>Extra tooling</th></tr></thead><tbody><tr><td>Electron or JavaScript app</td><td><code>analyze-javascript-application</code></td><td>None</td></tr><tr><td>.NET assembly</td><td><code>inspect-managed-members</code></td><td>None</td></tr><tr><td>Go or Rust binary</td><td><code>inspect-go-binary</code>, <code>inspect-rust-binary</code></td><td>None</td></tr><tr><td>Native binary</td><td><code>analyze</code>, <code>function</code>, <code>decompile</code>, <code>trace</code></td><td>Ghidra, Hopper, or IDA</td></tr><tr><td>Android APK</td><td>APK inspection commands</td><td>JADX and a full Java Development Kit (JDK)</td></tr><tr><td>Website</td><td>Browser observation</td><td>A Chrome-family browser</td></tr></tbody></table>
+<p>Static inspection reads files without running them. Runtime capture, such as driving a browser scenario or recording a process, runs the target with your user permissions. Treat those workflows with the same care you give any untrusted program, and use an isolated environment when the target is unfamiliar.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="troubleshoot-common-problems">Troubleshoot Common Problems<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#troubleshoot-common-problems" class="hash-link" aria-label="Direct link to Troubleshoot Common Problems" title="Direct link to Troubleshoot Common Problems" translate="no">​</a></h2>
+<p>This section maps the most frequent symptoms to their fixes.</p>
+<table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td>Your agent does not see REA's tools</td><td>The agent loaded its configuration before setup</td><td>Restart the agent</td></tr><tr><td><code>rea doctor</code> reports <code>healthy: false</code></td><td>The default audit covers every agent and optional engine</td><td>Scope the check, for example <code>rea doctor --provider ghidra --json</code> or <code>rea doctor --client codex --json</code></td></tr><tr><td>On Linux, Ghidra, JADX, or JavaScript analysis refuses to start</td><td>No procps-compatible <code>ps</code> on the <code>PATH</code></td><td>Install <code>procps</code> or <code>procps-ng</code></td></tr><tr><td>An unexplained bug</td><td>An outdated release</td><td>Run <code>rea update</code> for a global install, or <code>npx rea-agents@latest setup</code> for <code>npx</code>, then retry</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://rebelion.la/reverse-engineer-app-features-with-rea#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
+<p>You connected REA to your agent with one command, asked a precise question about a real app, and received a path from a button to a file writer with line numbers. You tested a prediction against the app's own formatter, reproduced the analysis from the terminal, projected a compact summary, and traced a feature through its graph.</p>
+<p>Take the next step with an app you are authorized to examine. Pick one button or one behavior, ask your agent how it works, demand the files and the lines, and check one claim yourself. Start with <code>npx rea-agents@latest setup</code>, and find guides and case studies on the <a href="https://rea.tools/" target="_blank" rel="noopener noreferrer" class="">REA website</a> and in the <a href="https://github.com/morluto/rea" target="_blank" rel="noopener noreferrer" class="">REA repository</a>.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Start Building an AI Harness Effectively]]></title>
             <link>https://rebelion.la/ai/start-building-ai-harness-effectivelly</link>
@@ -3982,89 +4138,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>pkce</category>
             <category>mcp</category>
             <category>dynamic-client-registration</category>
-        </item>
-        <item>
-            <title><![CDATA[Agent Tools Guardrails: Why Too Many Tools Can Break Your AI Agent]]></title>
-            <link>https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai</link>
-            <guid>https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai</guid>
-            <pubDate>Thu, 28 Aug 2025 00:28:04 GMT</pubDate>
-            <description><![CDATA[When you're building AI agents, there's a question we don't talk about enough:]]></description>
-            <content:encoded><![CDATA[<p>When you're building AI agents, there's a question we don't talk about enough:</p>
-<p>👉 <strong>How many tools should an agent actually have access to?</strong></p>
-<p>It sounds simple: connect your agent to a bunch of MCP servers, aggregate the tools, and let the model decide. But in practice, that "let's give it everything" approach is a recipe for confusion, higher latency, and even session corruption.</p>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/mcp/agent-tools-vs-code.png" alt="Agent Tools in VS Code example" class="img_ev3q"></p>
-<p>Let's break it down.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-hidden-risk-tool-overload">The Hidden Risk: Tool Overload<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#the-hidden-risk-tool-overload" class="hash-link" aria-label="Direct link to The Hidden Risk: Tool Overload" title="Direct link to The Hidden Risk: Tool Overload" translate="no">​</a></h2>
-<p>Think about it like this:</p>
-<ul>
-<li class="">
-<p>If you give a chef one pot, they'll probably make a meal just fine.</p>
-</li>
-<li class="">
-<p>If you give them a hundred different pots, each slightly different, the kitchen slows down. They spend more time choosing than cooking.</p>
-</li>
-</ul>
-<p>The same thing happens with agents. Presenting too many tools to the model increases "decision friction" and makes it more likely that the wrong one gets called.</p>
-<p><strong>The result?</strong></p>
-<ul>
-<li class="">
-<p>Wasted tokens on irrelevant tool calls.</p>
-</li>
-<li class="">
-<p>Incorrect responses that break user trust.</p>
-</li>
-<li class="">
-<p>Sessions that derail because of "tool confusion."</p>
-</li>
-</ul>
-<p>I have been in situations where my local Ollama either times out or gets confused by the number of tools available. This has led to suboptimal performance and frustrating user experiences.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="guardrails-for-agent-tools">Guardrails for Agent Tools<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#guardrails-for-agent-tools" class="hash-link" aria-label="Direct link to Guardrails for Agent Tools" title="Direct link to Guardrails for Agent Tools" translate="no">​</a></h2>
-<p>Managing an agent's toolset is as important as managing its memory or context window. Without the right guardrails, even the most powerful model can collapse under its own options.</p>
-<p>There are <strong>three main approaches</strong> teams are trying today:</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-manual-coding-static-guardrails">1. <strong>Manual Coding</strong> (Static Guardrails)<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#1-manual-coding-static-guardrails" class="hash-link" aria-label="Direct link to 1-manual-coding-static-guardrails" title="Direct link to 1-manual-coding-static-guardrails" translate="no">​</a></h3>
-<p>You hardcode the tool list in the agent logic. Simple, predictable, but rigid. If you need to add or swap tools, you will be shipping code changes.</p>
-<p>Good for: <strong>Proof-of-concept agents.</strong> Bad for: <strong>Anything you want to scale.</strong></p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-specialized-agents-semi-automatic">2. <strong>Specialized Agents</strong> (Semi-Automatic)<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#2-specialized-agents-semi-automatic" class="hash-link" aria-label="Direct link to 2-specialized-agents-semi-automatic" title="Direct link to 2-specialized-agents-semi-automatic" translate="no">​</a></h3>
-<p>Instead of one agent with 50 tools, you spin up multiple agents with smaller, curated toolsets. Each agent is specialized in a specific domain—think "Customer Support Agent" VS "Analytics Agent."</p>
-<p>This gives you flexibility, but you now have <strong>agent sprawl</strong>—managing dozens of specialized agents becomes its own problem.</p>
-<p>A variation on this is to use <strong>tool categories</strong>—grouping similar tools together and allowing the agent to choose from a category rather than a long list. This can reduce decision fatigue while still providing flexibility. You get an agent with a more focused toolset, tailored to specific tasks.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-dynamic-tool-selection-runtime-guardrails">3. <strong>Dynamic Tool Selection</strong> (Runtime Guardrails)<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#3-dynamic-tool-selection-runtime-guardrails" class="hash-link" aria-label="Direct link to 3-dynamic-tool-selection-runtime-guardrails" title="Direct link to 3-dynamic-tool-selection-runtime-guardrails" translate="no">​</a></h3>
-<p>Here's where things get interesting. Instead of hardcoding or duplicating, you let the agent <strong>query for the tools it needs at runtime</strong>.</p>
-<p>For example, with <a href="https://chat.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>ChatMCP</strong></a>, the agents are defined by their context with filtered tools. Based on the conversation, the model is dynamically fed with only the relevant tools that meet the conversation's semantic needs. This keeps the toolset lean, relevant, and avoids overwhelming the LLM.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="beyond-guardrails-multi-headed-specialization">Beyond Guardrails: Multi-Headed Specialization<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#beyond-guardrails-multi-headed-specialization" class="hash-link" aria-label="Direct link to Beyond Guardrails: Multi-Headed Specialization" title="Direct link to Beyond Guardrails: Multi-Headed Specialization" translate="no">​</a></h2>
-<p>What if one server could serve multiple toolsets, on demand?</p>
-<p>That's where solutions like a <strong>HAPI Server in "hydra mode"</strong> come in—letting you define an MCP Server with multiple "heads" (each head being an API server). Instead of juggling dozens of servers, you present a single entry point that flexibly exposes the right tools at the right time.</p>
-<p>This keeps your architecture clean while still giving your agents flexibility.</p>
-<p>Dynamic tool selection or specialized agents is the best approach for most use cases. Whatever strategy you choose, the key is to keep the toolset relevant and manageable.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters">Why This Matters<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#why-this-matters" class="hash-link" aria-label="Direct link to Why This Matters" title="Direct link to Why This Matters" translate="no">​</a></h2>
-<p>The number of tools you give your agent directly impacts:</p>
-<ul>
-<li class="">
-<p><strong>Performance</strong> (more tools = slower calls).</p>
-</li>
-<li class="">
-<p><strong>Reliability</strong> (fewer mistakes if tool choice is clear).</p>
-</li>
-<li class="">
-<p><strong>Cost</strong> (fewer wasted tokens on irrelevant tool calls).</p>
-</li>
-</ul>
-<p>Getting this wrong isn't just a technical detail—it's a <strong>business problem</strong>. If your agent burns through context windows or calls the wrong APIs, you're losing both <strong>time and money.</strong></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="closing-thought">Closing Thought<a href="https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai#closing-thought" class="hash-link" aria-label="Direct link to Closing Thought" title="Direct link to Closing Thought" translate="no">​</a></h2>
-<p>Building more intelligent agents isn't about giving them <em>all the tools</em>; it's about giving them <strong>the right tools at the right time.</strong></p>
-<p>The future of agent design lies in dynamic guardrails—systems that adapt toolsets to context, not static lists that overwhelm the model.</p>
-<p>If you're exploring MCP-based architectures and want to see what runtime guardrails look like in practice, check out the <a href="https://docs.mcp.com.ai/overview" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI Stack</strong></a>. With features like <strong>hydra-mode</strong>, it makes managing agent tools simpler, faster, and more scalable.</p>
-<p>👉 <strong>Question for you:</strong> How are you managing the tool list for your agents today—manual, specialized, or dynamic?</p>
-<p>Please let me know in the comments or reach out to me directly. Always happy to chat about building better AI systems!</p>
-<p>Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>ai-tools</category>
-            <category>agents</category>
-            <category>guardrails</category>
-            <category>mcp</category>
         </item>
     </channel>
 </rss>
