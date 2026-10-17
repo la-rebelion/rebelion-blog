@@ -4,10 +4,297 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Thu, 15 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 16 Oct 2026 22:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[REA on a Token Diet]]></title>
+            <link>https://rebelion.la/reverse-engineering-anything-rea-token-diet</link>
+            <guid>https://rebelion.la/reverse-engineering-anything-rea-token-diet</guid>
+            <pubDate>Fri, 16 Oct 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[Measure and cut the tokens Reverse Engineering Anything puts in your AI agent's context, keep agents working while big binaries decompile, and see which optimizations are still open proposals.]]></description>
+            <content:encoded><![CDATA[
+<p>REA lets your AI agent reverse engineer anything, and it can produce far more evidence than any context window holds. We ran one full analysis of a 4 MB JavaScript folder and got 189 MB of evidence, about 45 million tokens by REA's own counter. This guide shows how to cut that by orders of magnitude with features REA already ships, how to handle big native binaries without leaving your agent stuck waiting, and which ideas are still proposals.</p>
+<!-- -->
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/egVWmJln7jg" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="three-different-costs">Three different costs<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#three-different-costs" class="hash-link" aria-label="Direct link to Three different costs" title="Direct link to Three different costs" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Tokens</strong>: everything the model reads, including big tool results, repeated calls, errors, and retries.</li>
+<li class=""><strong>Latency</strong>: the time an engine such as Ghidra needs to import and analyze a binary.</li>
+<li class=""><strong>Reasoning</strong>: the model deciding small steps that ordinary software could handle.</li>
+</ul>
+<p>Waiting for Ghidra doesn't burn tokens by itself. Polling, giant replies, and repeated analyses do.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measure-first">Measure first<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#measure-first" class="hash-link" aria-label="Direct link to Measure first" title="Direct link to Measure first" translate="no">​</a></h2>
+<p>Every REA command accepts <code>--token-count</code>, which prints the size of the output instead of the output itself. The token count is REA's CLI counter, not your provider's bill. Your real cost also depends on the client, caching, and the number of turns.</p>
+<p>All measurements below use REA 6.5.0 on the open-source LibreChat <code>api/</code> folder (470 JavaScript files). The repo's <code>token-diet-bench.sh</code> reproduces them on any project.</p>
+<table><thead><tr><th>What</th><th>Result</th></tr></thead><tbody><tr><td>Full <code>analyze-javascript-application</code></td><td>74 s · 189 MB · ≈ 44,909,971 tokens</td></tr><tr><td>Summary view of the same evidence</td><td>10,485 bytes · 2,344 tokens</td></tr><tr><td>One page (32 modules)</td><td>2,793 tokens</td></tr><tr><td>Trace <code>/refresh</code>, <code>both</code> directions</td><td>4,524 nodes · ≈ 4.7 M tokens · 29 s</td></tr><tr><td>Trace, <code>incoming</code> only</td><td>11 nodes · 10,465 tokens</td></tr><tr><td>Trace, <code>outgoing</code> only</td><td>1 node · 1,351 tokens</td></tr><tr><td>Trace summary with <code>--filter-output</code></td><td>60 tokens</td></tr><tr><td><code>--source-path server/routes/auth.js</code></td><td>5.7 s · 8.1 MB · ≈ 1.94 M tokens</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="levers-you-can-use-today">Levers you can use today<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#levers-you-can-use-today" class="hash-link" aria-label="Direct link to Levers you can use today" title="Direct link to Levers you can use today" translate="no">​</a></h2>
+<p><strong>Summary first.</strong> Save the evidence once, then project a view:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">rea analyze-javascript-application /path/to/app --json &gt; evidence.json</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">jq -c '{source: {kind: "inline", evidence: .}, view: {kind: "summary"}}' evidence.json &gt; view.json</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">rea inspect-analysis-view view.json</span><br></div></code></pre></div></div>
+<p>To page through modules, use <code>{"kind": "page", "collection": "modules", "offset": 0, "limit": 32}</code>.</p>
+<p><strong>Filter and cap.</strong> <code>--filter-output</code> selects key paths, <code>--token-limit</code> caps the output, and <code>--token-offset</code> reads the next slice. TOON, the default CLI format, is already compact.</p>
+<p><strong>Choose the trace direction.</strong> <code>trace-application-feature</code> accepts <code>outgoing</code>, <code>incoming</code>, or <code>both</code>. A broad bidirectional trace can pull in unrelated relationships.</p>
+<p><strong>Scope, then still use views.</strong> <code>--source-path</code> cuts analysis time, but the result can still be large. Combine it with views and filters.</p>
+<p><strong>The MCP safety net.</strong> When a result doesn't fit one MCP message, REA returns <code>resource_constraint</code> with a reference to the evidence it retained. Open that reference with <code>inspect_analysis_view</code> (summary, section, or page), or export it with <code>export_evidence_bundle</code>. For native function evidence, the error includes a ready-to-call request for the first pseudocode page. <code>get_evidence_bundle</code> with <code>detail: "summary"</code> and filters lists stored records without their payloads. Never re-run an analysis only because the reply was too big.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="big-native-binaries">Big native binaries<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#big-native-binaries" class="hash-link" aria-label="Direct link to Big native binaries" title="Direct link to Big native binaries" translate="no">​</a></h2>
+<p><strong>Cold start.</strong> The first Ghidra-backed query imports and auto-analyzes the target. REA allows 330 s by default (<code>REA_GHIDRA_STARTUP_TIMEOUT_MS</code>). Your client may still give up sooner; the pinned SDK defaults to 60 s per call. Send a progress token, since REA reports a waiting notification every 10 s, and either set <code>resetTimeoutOnProgress</code> or use a longer deadline. REA's setup writes 450 s for Codex and Kimi.</p>
+<p><strong>Snapshots.</strong> Add <code>--snapshot /path/program.json</code> to the CLI, or <code>snapshot_path</code> to <code>open_binary</code> / <code>close_binary</code> over MCP. An exact repeat of a query is usually answered before any engine starts. The match must be exact (bytes, operation, parameters, provider, settings), and snapshots store results, not Ghidra's database.</p>
+<p><strong>Keep working while it decompiles (Kuna).</strong> With <code>REA_KUNA_COMMAND</code>, REA starts a whole-program export in the background, answers individual functions right away from single-function runs, and caches the export by target hash, Kuna hash, version, and job count. Agents can search the exported <code>.c</code> and <code>.asm</code> files directly. Kuna supports ELF and thin Mach-O, not Windows. Single-function answers can differ from the later export.</p>
+<p><strong>Tune Ghidra.</strong> Use <code>REA_GHIDRA_DISABLED_ANALYZERS</code> when one analyzer stalls, <code>REA_GHIDRA_SEED_FILE</code> for code that analysis can't reach, and <code>GHIDRA_HEADLESS_MAXMEM</code> for heap size. The analysis profile records each override.</p>
+<p><strong>Ask small native questions.</strong> Work your way up from search, to one function, to one decompiled body, to xrefs. Read long pseudocode page by page through <code>inspect_analysis_view</code>. The combined <code>analyze_function</code> dossier can be large.</p>
+<p><strong>The tool catalog.</strong> Your agent reads tool schemas before doing anything. <code>REA_MCP_INPUT_SCHEMA_PROFILE=compact</code> and <code>REA_MCP_OUTPUT_SCHEMA_PROFILE=off</code> shrink what the catalog advertises, while server-side validation stays in place.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-reas-own-lab-found">What REA's own lab found<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#what-reas-own-lab-found" class="hash-link" aria-label="Direct link to What REA's own lab found" title="Direct link to What REA's own lab found" translate="no">​</a></h2>
+<p>REA's <code>experiments/analysis-efficiency</code> (issue #2016) treats agent tokens and end-to-end time as the main goals. Some findings are humbling:</p>
+<ul>
+<li class="">On one small Windows binary, four selected views were bigger than the complete dossier (68 KB vs 51 KB).</li>
+<li class="">In several real-agent trials, replies shrank but the model's input tokens did not reliably go down, and latency was mixed.</li>
+</ul>
+<p>Measure the whole task (tokens per answered question, and time to an evidence-backed answer), not the size of one reply.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-playbook">The playbook<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#the-playbook" class="hash-link" aria-label="Direct link to The playbook" title="Direct link to The playbook" translate="no">​</a></h2>
+<ol>
+<li class="">Turn the request into a checklist of questions first.</li>
+<li class="">Reuse snapshots, retained evidence, and earlier findings. Don't repeat an identical analysis.</li>
+<li class="">Start with the smallest useful overview.</li>
+<li class="">Use views, pages, and filters before asking for full bodies.</li>
+<li class="">Choose the trace direction on purpose.</li>
+<li class="">Batch related calls around one hypothesis.</li>
+<li class="">Give independent questions to parallel workers that return sources and gaps.</li>
+<li class="">Keep a findings ledger with evidence IDs.</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="not-implemented-yet-proposals">Not implemented yet: proposals<a href="https://rebelion.la/reverse-engineering-anything-rea-token-diet#not-implemented-yet-proposals" class="hash-link" aria-label="Direct link to Not implemented yet: proposals" title="Direct link to Not implemented yet: proposals" translate="no">​</a></h2>
+<p>These ideas are <strong>not</strong> in REA today:</p>
+<ul>
+<li class="">A general async job API (start → status → results). REA has progress notifications and Kuna's background export, but no general job interface.</li>
+<li class="">An engine database cache across sessions (REA's notes list it as deferred).</li>
+<li class="">Relevance-ranked retrieval within a token budget. <code>--token-limit</code> truncates; it doesn't rank.</li>
+<li class="">Lazy tool groups.</li>
+<li class="">A capability graph for reverse-engineered software.</li>
+</ul>
+<p>Projects to study (references, not REA plugins):</p>
+<ul>
+<li class=""><a href="https://github.com/jaenster/ghidra-mcp" target="_blank" rel="noopener noreferrer" class="">jaenster/ghidra-mcp</a>: a headless daemon whose background import jobs return job IDs you poll; it can run Kubernetes workers.</li>
+<li class=""><a href="https://github.com/bethington/ghidra-mcp" target="_blank" rel="noopener noreferrer" class="">bethington/ghidra-mcp</a>: lazy tool loading by default, field selection, and batch operations. It claims 93% fewer API calls; that is its own claim.</li>
+<li class=""><a href="https://github.com/nrf24l01/ghidra-mcp" target="_blank" rel="noopener noreferrer" class="">nrf24l01/ghidra-mcp</a>: a fork of LaurieWired/GhidraMCP with a function hash index for carrying documentation across binaries.</li>
+</ul>
+<p>The principle underneath: let deterministic software decompile, index, traverse, filter, and cache, and let the model form hypotheses, choose paths, and explain.</p>
+<p>Which lever saved you the most? Visit <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">rebelion.la</a> to see what La Rebelion Labs is building.</p>
+<p>Go Rebels!</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Build an MVP with Spec-Driven Development and OpenSpec]]></title>
+            <link>https://rebelion.la/mvp-with-spec-driven-development</link>
+            <guid>https://rebelion.la/mvp-with-spec-driven-development</guid>
+            <pubDate>Fri, 16 Oct 2026 20:00:00 GMT</pubDate>
+            <description><![CDATA[A hands-on course on Spec-Driven Development with AI coding agents. Learn the theory, set up OpenSpec, and build a tested MVP in three small changes.]]></description>
+            <content:encoded><![CDATA[
+<p>You asked an AI agent for a feature, and it built something <em>almost</em> right. The decisions behind it are buried in a chat window, the next prompt breaks something else, and nobody on the team can tell what "done" was supposed to mean. Spec-Driven Development (SDD) fixes that by giving you and your agent a contract to work from.</p>
+<p>This guide follows our full video course. You learn the theory, set up OpenSpec, and build a real minimum viable product, a donor dashboard for a non-profit, in three small, reviewed, tested changes. Everything is in the course repository: <a href="https://github.com/la-rebelion/mvp-with-sdd" target="_blank" rel="noopener noreferrer" class="">github.com/la-rebelion/mvp-with-sdd</a>.</p>
+<!-- -->
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/tJZXqNURrbw" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-we-work-spec-first">Why we work spec-first<a href="https://rebelion.la/mvp-with-spec-driven-development#why-we-work-spec-first" class="hash-link" aria-label="Direct link to Why we work spec-first" title="Direct link to Why we work spec-first" translate="no">​</a></h2>
+<p>At La Rebelion Labs, we build MVPs during the pre-sale phase. We capture what the client needs, come back with something they can click, and iterate on their feedback. SDD is what makes that speed safe. Every feature starts as a short spec that the client, the AI agent, and the engineers can all read, so there are fewer misunderstandings and faster cycles.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-theory-in-five-ideas">The theory in five ideas<a href="https://rebelion.la/mvp-with-spec-driven-development#the-theory-in-five-ideas" class="hash-link" aria-label="Direct link to The theory in five ideas" title="Direct link to The theory in five ideas" translate="no">​</a></h2>
+<p><strong>1. The spec is the source of truth.</strong> You write a specification before you write code with AI, and it stays the reference for humans and agents alike. A spec is not a long prompt. A prompt disappears into chat history, while a spec is a reviewed, versioned file next to your code.</p>
+<p><strong>2. Specs used to drift.</strong> In the classic flow (requirements → design → code → test → deploy), requirements documents were written once and abandoned. Each handoff lost context, and the code and the document drifted apart.</p>
+<p><strong>3. Vibe coding breaks at scale.</strong> Prompting until it "feels right" is great for prototypes. For serious work, the decisions live only in chat, nobody reviews a plan, features break other features, and teammates can't onboard.</p>
+<p><strong>4. Aim for spec-anchored.</strong> <a href="https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html" target="_blank" rel="noopener noreferrer" class="">Birgitta Böckeler's article on martinfowler.com</a> describes three levels:</p>
+<table><thead><tr><th>Level</th><th>Meaning</th></tr></thead><tbody><tr><td>Spec-first</td><td>A spec guides the current task and may be discarded</td></tr><tr><td>Spec-anchored</td><td>The spec is kept and evolves with the feature</td></tr><tr><td>Spec-as-source</td><td>Humans edit only the spec, never the generated code</td></tr></tbody></table>
+<p>The article also warns against one-size-fits-all workflows, review overload, and a false sense of control. Our answer is small changes, short specs, and tests for every scenario.</p>
+<p><strong>5. Markdown, requirements, scenarios, deltas.</strong> A requirement states one observable behavior with <code>SHALL</code> or <code>MUST</code>. A scenario proves it with WHEN/THEN, and every good scenario becomes a test. Changes are written as <strong>delta specs</strong> (<code>ADDED</code>, <code>MODIFIED</code>, <code>REMOVED</code>) and merged into the living specs when you archive.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-workflow-and-the-crew">The workflow and the crew<a href="https://rebelion.la/mvp-with-spec-driven-development#the-workflow-and-the-crew" class="hash-link" aria-label="Direct link to The workflow and the crew" title="Direct link to The workflow and the crew" translate="no">​</a></h2>
+<table><thead><tr><th>Step</th><th>Role</th><th>OpenSpec</th></tr></thead><tbody><tr><td>Brief</td><td>Lead</td><td><code>docs/</code></td></tr><tr><td>Explore, propose</td><td>Specs</td><td><code>/opsx:explore</code>, <code>/opsx:propose</code></td></tr><tr><td>Review before code</td><td>Everyone</td><td>proposal, specs, design, tasks</td></tr><tr><td>Apply in chunks</td><td>Code</td><td><code>/opsx:apply</code></td></tr><tr><td>Test every scenario</td><td>Tests</td><td><code>npm test</code></td></tr><tr><td>Archive, release</td><td>Ops</td><td><code>/opsx:archive</code>, tag, push</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-up">Set up<a href="https://rebelion.la/mvp-with-spec-driven-development#set-up" class="hash-link" aria-label="Direct link to Set up" title="Direct link to Set up" translate="no">​</a></h2>
+<p>You need Node.js 20.19 or newer, git, an editor, and an AI coding agent. OpenSpec supports more than 30 tools.</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">npm install -g @fission-ai/openspec@latest</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">cd mvp-with-sdd/starter</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">openspec init --tools claude,codex,github-copilot</span><br></div></code></pre></div></div>
+<p><code>openspec init</code> creates <code>openspec/specs/</code> (the source of truth), <code>openspec/changes/</code> (one folder per change), and <code>openspec/config.yaml</code>, and it installs slash commands and skills for your agents. Restart your editor afterwards.</p>
+<p>Remember the two places where you type commands: <code>openspec …</code> goes in the terminal, and <code>/opsx:…</code> goes in the agent's chat. The spelling varies by tool (<code>/opsx-propose</code> in Copilot, <code>$openspec-propose</code> in Codex), and <code>init</code> prints the right form.</p>
+<p>Give the agent the constraints it can't guess in <code>openspec/config.yaml</code>: a pre-sale MVP, Node.js only, no frameworks or database, a test for every scenario, proposals that state what is out of scope, and tasks small enough to review in minutes.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-hands-on-project">The hands-on project<a href="https://rebelion.la/mvp-with-spec-driven-development#the-hands-on-project" class="hash-link" aria-label="Direct link to The hands-on project" title="Direct link to The hands-on project" translate="no">​</a></h2>
+<p>The client, Rebel-I ONG, tracks donations in a hand-maintained spreadsheet. After the first call, we wrote a plan and a brief. We explore them with <code>/opsx:explore</code> and split the work into three changes, each with one intent.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="change-1-the-donor-dashboard">Change 1: the donor dashboard<a href="https://rebelion.la/mvp-with-spec-driven-development#change-1-the-donor-dashboard" class="hash-link" aria-label="Direct link to Change 1: the donor dashboard" title="Direct link to Change 1: the donor dashboard" translate="no">​</a></h3>
+<p><code>/opsx:propose add-donor-dashboard</code> creates the proposal, a delta spec, the design, and nine tasks. Review it before any code exists. The key scenario is "Donors are counted once": three donations from Ana make one active donor, not three. Then validate:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">openspec validate add-donor-dashboard   # Change 'add-donor-dashboard' is valid</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">openspec list                           # add-donor-dashboard   0/9 tasks</span><br></div></code></pre></div></div>
+<p><strong>Bonus tip: apply in chunks.</strong> Ask for tasks 1.1 to 2.1, then stop, review, and test. Then do 2.2 to 2.4, then the rest. You save tokens, review small diffs, and catch mistakes early.</p>
+<p>Four tests (one per scenario) pass. <code>GET /api/summary</code> returns 6 active donors, 3 inactive donors, and $13,200 donated. <code>openspec archive add-donor-dashboard --yes</code> merges three requirements into <code>openspec/specs/dashboard/spec.md</code> and files the change in the archive.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="change-2-the-import">Change 2: the import<a href="https://rebelion.la/mvp-with-spec-driven-development#change-2-the-import" class="hash-link" aria-label="Direct link to Change 2: the import" title="Direct link to Change 2: the import" translate="no">​</a></h3>
+<p><code>add-donation-import</code> adds <code>POST /api/import</code>. An admin key is required (MUST): a missing or wrong key returns 401 and leaves the data unchanged. Each import replaces all data, and bad rows are skipped and counted. If no key is configured, imports are disabled, so the endpoint is secure by default. An HTTP integration test covers the 401. After this change, 9 tests pass.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="change-3-feedback-becomes-a-modified-requirement">Change 3: feedback becomes a MODIFIED requirement<a href="https://rebelion.la/mvp-with-spec-driven-development#change-3-feedback-becomes-a-modified-requirement" class="hash-link" aria-label="Direct link to Change 3: feedback becomes a MODIFIED requirement" title="Direct link to Change 3: feedback becomes a MODIFIED requirement" translate="no">​</a></h3>
+<p>In the demo, the director asks who to call first, and to see the average gift. The delta for <code>add-reactivation-list</code> has an <code>ADDED</code> reactivation list and a <code>MODIFIED</code> Donor KPIs requirement, written out in full with the new average-gift scenario (100, 250.50, and 49.50 average to 133.33). When archived, it reports <code>~ 1 modified</code> and <code>+ 1 added</code>. 12 tests pass.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="release">Release<a href="https://rebelion.la/mvp-with-spec-driven-development#release" class="hash-link" aria-label="Direct link to Release" title="Direct link to Release" translate="no">​</a></h3>
+<p>The checklist: <code>npm test</code> 12/12, <code>openspec validate --all</code> passing, <code>ADMIN_KEY</code> set in the environment and never committed, then commit, tag, and push.</p>
+<p><img decoding="async" loading="lazy" src="https://raw.githubusercontent.com/la-rebelion/mvp-with-sdd/main/assets/rebel-ong-dashboard.png" alt="Rebel-I ONG donor dashboard" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="practice">Practice<a href="https://rebelion.la/mvp-with-spec-driven-development#practice" class="hash-link" aria-label="Direct link to Practice" title="Direct link to Practice" translate="no">​</a></h2>
+<p>The repository's <code>course/exercises.md</code> covers each exercise from the video: set up the starter, add a "no donations" scenario, break a test on purpose, add the "wrong key" scenario, and build a fourth change, upcoming birthdays, as homework.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="next-level">Next level<a href="https://rebelion.la/mvp-with-spec-driven-development#next-level" class="hash-link" aria-label="Direct link to Next level" title="Direct link to Next level" translate="no">​</a></h2>
+<p>Enable the expanded workflow (<code>openspec config profile</code>, then <code>openspec update</code>) to get <code>/opsx:new</code>, <code>/opsx:continue</code>, <code>/opsx:ff</code>, <code>/opsx:verify</code>, and <code>/opsx:onboard</code>. From there, add <strong>skills</strong> for your team's conventions, <strong>subagents</strong> that review and test against the specs, and <strong>MCP servers</strong> that let your agent check specs against real systems. For planning across repositories, see OpenSpec <strong>stores</strong> (beta).</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="your-turn">Your turn<a href="https://rebelion.la/mvp-with-spec-driven-development#your-turn" class="hash-link" aria-label="Direct link to Your turn" title="Direct link to Your turn" translate="no">​</a></h2>
+<p>Clone the course repository, run the loop on the starter, and build the fourth change. Subscribe for more courses, and visit <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">rebelion.la</a> to see what La Rebelion Labs is building.</p>
+<p>Go Rebels!</p>]]></content:encoded>
+            <category>spec-driven-development</category>
+            <category>openspec</category>
+            <category>ai-agents</category>
+            <category>mvp</category>
+        </item>
+        <item>
+            <title><![CDATA[How to Query 100 Million Rows in Under a Second with ClickHouse]]></title>
+            <link>https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse</link>
+            <guid>https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse</guid>
+            <pubDate>Fri, 16 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn what ClickHouse is, why it is fast, when to use it, and how to load 100 million rows and answer a dashboard question in about a third of a second.]]></description>
+            <content:encoded><![CDATA[
+<p>A product dashboard shows the top pages on your site over the last seven days. Behind that single chart sit one hundred million page views, and every refresh leaves you waiting. ClickHouse answers the same question in about a third of a second on a laptop, with plain SQL.</p>
+<p>ClickHouse is an open-source, column-oriented SQL database built for analytics. This guide explains what ClickHouse is, why it is fast, when it is the right choice, and when a transactional database fits better. You then install it, create a table designed around your questions, load one hundred million rows, and measure two real queries.</p>
+<!-- -->
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/7-eMJCWTyAk" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="understand-what-clickhouse-is">Understand What ClickHouse Is<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#understand-what-clickhouse-is" class="hash-link" aria-label="Direct link to Understand What ClickHouse Is" title="Direct link to Understand What ClickHouse Is" translate="no">​</a></h2>
+<p>This section defines ClickHouse and the kind of work it is designed for.</p>
+<p>ClickHouse is an open-source database management system, licensed under Apache 2.0, for Online Analytical Processing (OLAP). It speaks SQL and stores data column by column.</p>
+<p>Most application databases handle Online Transaction Processing (OLTP): they read or write a few rows at a time, such as one order or one user. Analytical queries are different. They sweep across millions or billions of rows to count, sum, rank, and compare, and they often need to answer in less than a second. ClickHouse is designed for that second job.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="learn-why-columns-make-analytics-fast">Learn Why Columns Make Analytics Fast<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#learn-why-columns-make-analytics-fast" class="hash-link" aria-label="Direct link to Learn Why Columns Make Analytics Fast" title="Direct link to Learn Why Columns Make Analytics Fast" translate="no">​</a></h2>
+<p>This section explains the storage choice behind ClickHouse's performance.</p>
+<p>A row-oriented database stores each row together. That layout works well for fetching one complete record, but an analytical query that needs only two columns still reads every column of every row from disk.</p>
+<p>ClickHouse stores each column separately, so a query reads only the columns it needs. Values of the same type sit next to each other, which helps compression and lets the processor work on them in batches. ClickHouse adds four more ideas on top of columnar storage:</p>
+<ul>
+<li class=""><strong>Parts and background merges.</strong> Each insert creates a small part on disk, and background merges combine parts later. Writes stay lightweight and do not block queries.</li>
+<li class=""><strong>Sorted data and skipping.</strong> Data is sorted by a key you choose, and ClickHouse skips blocks that cannot match a filter.</li>
+<li class=""><strong>Compression.</strong> Similar values stored together compress well, which saves disk space and speeds up scans.</li>
+<li class=""><strong>Vectorized, parallel execution.</strong> ClickHouse processes values in batches and spreads a single query across every CPU core.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="decide-when-clickhouse-is-the-right-choice">Decide When ClickHouse Is the Right Choice<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#decide-when-clickhouse-is-the-right-choice" class="hash-link" aria-label="Direct link to Decide When ClickHouse Is the Right Choice" title="Direct link to Decide When ClickHouse Is the Right Choice" translate="no">​</a></h2>
+<p>This section maps common workloads to ClickHouse and to the alternatives.</p>
+<p>The ClickHouse documentation highlights four main use cases:</p>
+<ul>
+<li class=""><strong>Real-time analytics:</strong> customer-facing dashboards and live leaderboards over a continuous stream of events.</li>
+<li class=""><strong>Observability:</strong> logs, metrics, and traces in one database, so you can correlate them without pre-aggregation.</li>
+<li class=""><strong>Data warehousing:</strong> ClickHouse paired with open table formats, such as Iceberg, on object storage.</li>
+<li class=""><strong>Agentic analytics:</strong> AI agents that need high concurrency and full-fidelity data, querying ClickHouse directly, including over the Model Context Protocol (MCP).</li>
+</ul>
+<p>ClickHouse is not a replacement for every database. If your application needs transactional state, such as a worker claiming a job or several records changing together with constraints enforced, use a transactional database such as Postgres. ClickHouse also favors appending data over constant row-by-row updates. Many teams run both: Postgres for application state and ClickHouse for analytics, with the needed tables replicated across. Row count alone does not decide the choice; your queries and correctness requirements do.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="prerequisites">Prerequisites<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#prerequisites" class="hash-link" aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites" translate="no">​</a></h2>
+<p>Before you begin, you need:</p>
+<ul>
+<li class="">A Linux, macOS, or FreeBSD machine. On Windows, use the Windows Subsystem for Linux (WSL).</li>
+<li class="">A terminal with <code>curl</code>.</li>
+<li class="">About 250 MB of free disk space for the binary, plus roughly 1 GB for the example data.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="install-clickhouse">Install ClickHouse<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#install-clickhouse" class="hash-link" aria-label="Direct link to Install ClickHouse" title="Direct link to Install ClickHouse" translate="no">​</a></h2>
+<p>This section installs the single ClickHouse binary and starts a server.</p>
+<ol>
+<li class="">
+<p>Download the binary for your system:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ curl https://clickhouse.com/ | sh</span><br></div></code></pre></div></div>
+<p>The script selects the right build and saves a single file named <code>clickhouse</code> in the current directory.</p>
+</li>
+<li class="">
+<p>Start the server so your data persists between restarts:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse server</span><br></div></code></pre></div></div>
+<p>The server stores its data in the current directory.</p>
+</li>
+<li class="">
+<p>Open a second terminal in the same directory and check the connection:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --query "SELECT version()"</span><br></div></code></pre></div></div>
+<p>The command prints the server version, for example <code>26.10.1.2511</code>.</p>
+</li>
+</ol>
+<p>The same binary also runs <code>clickhouse-local</code>, a SQL engine for files that needs no server. The <a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#query-a-file-without-a-server" class="">Query a File Without a Server</a> section uses it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="create-a-table-designed-around-your-questions">Create a Table Designed Around Your Questions<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#create-a-table-designed-around-your-questions" class="hash-link" aria-label="Direct link to Create a Table Designed Around Your Questions" title="Direct link to Create a Table Designed Around Your Questions" translate="no">​</a></h2>
+<p>This section creates the running example: page views for a web store.</p>
+<ol>
+<li class="">
+<p>Save the following table definition as <code>example.sql</code>:</p>
+<div class="language-sql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">CREATE</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">TABLE</span><span class="token plain"> page_views</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ts          </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">DateTime</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    user_id     UInt32</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    page        LowCardinality</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">String</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    country     LowCardinality</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">String</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    duration_ms UInt32</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">ENGINE</span><span class="token plain"> </span><span class="token operator">=</span><span class="token plain"> MergeTree</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">ORDER</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">BY</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">page</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> ts</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></div></code></pre></div></div>
+<p><code>MergeTree</code> is the main ClickHouse table engine and manages parts and merges. <code>ORDER BY (page, ts)</code> sorts the data on disk by page, then by time; choose this order based on the filters you use most. <code>LowCardinality</code> stores columns with few distinct values, such as page names, as compact codes.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-one-hundred-million-rows">Load One Hundred Million Rows<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#load-one-hundred-million-rows" class="hash-link" aria-label="Direct link to Load One Hundred Million Rows" title="Direct link to Load One Hundred Million Rows" translate="no">​</a></h2>
+<p>This section generates realistic test data with a single insert statement.</p>
+<ol>
+<li class="">
+<p>Append this insert to <code>example.sql</code>. It uses the <code>numbers</code> table function to create one hundred million page views spread across the last thirty days:</p>
+<div class="language-sql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">INSERT</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">INTO</span><span class="token plain"> page_views</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">SELECT</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token function" style="color:rgb(80, 250, 123)">now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">-</span><span class="token plain"> toIntervalSecond</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">rand</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">%</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">30</span><span class="token plain"> </span><span class="token operator">*</span><span class="token plain"> </span><span class="token number">86400</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">AS</span><span class="token plain"> ts</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    rand</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">2</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">%</span><span class="token plain"> </span><span class="token number">1000000</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">AS</span><span class="token plain"> user_id</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">'/home'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/home'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/home'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/home'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/docs'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/docs'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/docs'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/pricing'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/pricing'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/blog'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/signup'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'/checkout'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">rand</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">3</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">%</span><span class="token plain"> </span><span class="token number">12</span><span class="token plain"> </span><span class="token operator">+</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">AS</span><span class="token plain"> page</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">'US'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'US'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'US'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'MX'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'MX'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'BR'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'ES'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'DE'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'IN'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">'IN'</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">rand</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">4</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">%</span><span class="token plain"> </span><span class="token number">10</span><span class="token plain"> </span><span class="token operator">+</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">AS</span><span class="token plain"> country</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    rand</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">5</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token operator">%</span><span class="token plain"> </span><span class="token number">60000</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">AS</span><span class="token plain"> duration_ms</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">FROM</span><span class="token plain"> numbers</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token number">100000000</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></div></code></pre></div></div>
+<p>Each <code>rand(n)</code> call uses a different argument, so the columns receive independent random values.</p>
+</li>
+<li class="">
+<p>Run the file:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --multiquery &lt; example.sql</span><br></div></code></pre></div></div>
+<p>On a 16-core laptop, the insert finishes in about 20 seconds.</p>
+</li>
+<li class="">
+<p>Confirm the row count:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --query "SELECT count() FROM page_views"</span><br></div></code></pre></div></div>
+<p>The output is <code>100000000</code>.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ask-the-dashboard-question">Ask the Dashboard Question<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#ask-the-dashboard-question" class="hash-link" aria-label="Direct link to Ask the Dashboard Question" title="Direct link to Ask the Dashboard Question" translate="no">​</a></h2>
+<p>This section runs the top-pages query and measures how much data it reads.</p>
+<p>Before you run it, guess how many of the one hundred million rows a seven-day filter needs to read.</p>
+<ol>
+<li class="">
+<p>Run the query with timing and profile events enabled:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --time --print-profile-events --profile-events-delay-ms=-1 --query "SELECT page, count() AS views, uniq(user_id) AS visitors, round(avg(duration_ms) / 1000, 1) AS avg_seconds FROM page_views WHERE ts &gt;= now() - INTERVAL 7 DAY GROUP BY page ORDER BY views DESC"</span><br></div></code></pre></div></div>
+<p>The run in this guide returned the following, in 0.30 to 0.41 seconds:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">/home       7778468   1001503   30</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">/docs       5833597    998999   30</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">/pricing    3889269    980906   30</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">/checkout   1947108    858186   30</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">/blog       1944268    859280   30</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">/signup     1943348    857508   30</span><br></div></code></pre></div></div>
+<p>The profile events report <code>SelectedRows: 24355072</code>. ClickHouse read about 24.4 million rows instead of 100 million, because the data inside each page is sorted by time. <code>uniq</code> returns an approximate distinct count, which is fast and accurate enough for dashboards.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="make-the-sort-key-work-for-you">Make the Sort Key Work for You<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#make-the-sort-key-work-for-you" class="hash-link" aria-label="Direct link to Make the Sort Key Work for You" title="Direct link to Make the Sort Key Work for You" translate="no">​</a></h2>
+<p>This section shows how a query that matches the sort key reads even less data.</p>
+<ol>
+<li class="">
+<p>Count checkouts by country:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --time --print-profile-events --profile-events-delay-ms=-1 --query "SELECT country, count() AS checkouts FROM page_views WHERE page = '/checkout' GROUP BY country ORDER BY checkouts DESC"</span><br></div></code></pre></div></div>
+<p>The query returned US 2,500,870, IN 1,669,050, MX 1,665,220, BR 835,527, ES 834,682, and DE 832,776 in 0.036 seconds, with <code>SelectedRows: 8527872</code>. Because the table is sorted by page first, every checkout row sits in one contiguous range.</p>
+</li>
+<li class="">
+<p>Inspect compression per column:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --query "SELECT name, formatReadableSize(data_compressed_bytes) AS on_disk, formatReadableSize(data_uncompressed_bytes) AS raw FROM system.columns WHERE table = 'page_views'"</span><br></div></code></pre></div></div>
+<p>The sorted <code>page</code> column stores 95.55 MiB of raw values in about 160 KiB. Random columns such as <code>user_id</code> compress far less; production data usually contains more patterns to exploit.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-the-skipping-in-the-query-plan">See the Skipping in the Query Plan<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#see-the-skipping-in-the-query-plan" class="hash-link" aria-label="Direct link to See the Skipping in the Query Plan" title="Direct link to See the Skipping in the Query Plan" translate="no">​</a></h2>
+<p>This section confirms, with the query plan, how the primary key avoids reading data.</p>
+<p>ClickHouse divides each part into granules, blocks of 8,192 rows by default, and keeps a small sparse index with one entry per granule. A filter on the leading sort key column can use that index to find matching granules with a binary search instead of scanning the column.</p>
+<ol>
+<li class="">
+<p>Ask ClickHouse to explain the checkout query with index details:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse client --query "EXPLAIN indexes = 1 SELECT country, count() FROM page_views WHERE page = '/checkout' GROUP BY country"</span><br></div></code></pre></div></div>
+<p>The relevant part of the output reads:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">PrimaryKey</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Keys:</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    page</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Condition: (page in ['/checkout', '/checkout'])</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Parts: 5/5</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Granules: 1022/12210</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  Search Algorithm: binary search</span><br></div></code></pre></div></div>
+<p>The plan selects 1,022 of 12,210 granules, about 8 % of the table. The part count depends on how far background merges have progressed, so your number of parts can differ.</p>
+</li>
+<li class="">
+<p>Compare this with the seven-day query from the previous section. Time is the second sort key column, so ClickHouse can narrow the range only inside each page, which explains why it read about a quarter of the rows. If most of your dashboards filter by time first, a sort key such as <code>ORDER BY (ts, page)</code> or a projection with a different order can serve them better. Test with your own queries before you decide.</p>
+</li>
+</ol>
+<p>Use <code>EXPLAIN indexes = 1</code> whenever a query is slower than you expect. It shows whether the primary key participates and how many granules survive each index.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="query-a-file-without-a-server">Query a File Without a Server<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#query-a-file-without-a-server" class="hash-link" aria-label="Direct link to Query a File Without a Server" title="Direct link to Query a File Without a Server" translate="no">​</a></h2>
+<p>This section analyzes a CSV file directly with <code>clickhouse-local</code>.</p>
+<ol>
+<li class="">
+<p>Create a small <code>orders.csv</code> file:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ printf 'order_id,country,amount\n1,MX,120.50\n2,US,89.99\n3,MX,42.00\n4,ES,15.25\n5,US,240.00\n' &gt; orders.csv</span><br></div></code></pre></div></div>
+</li>
+<li class="">
+<p>Group and sum it with SQL:</p>
+<div class="language-console codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-console codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ ./clickhouse local --query "SELECT country, count() AS orders, sum(amount) AS revenue FROM file('orders.csv') GROUP BY country ORDER BY revenue DESC"</span><br></div></code></pre></div></div>
+<p>The output lists US with 2 orders and 329.99 in revenue, MX with 2 and 162.5, and ES with 1 and 15.25. Tables you create in <code>clickhouse-local</code> are temporary, so use the server when you want to keep data.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="choose-a-deployment-mode">Choose a Deployment Mode<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#choose-a-deployment-mode" class="hash-link" aria-label="Direct link to Choose a Deployment Mode" title="Direct link to Choose a Deployment Mode" translate="no">​</a></h2>
+<p>This section maps the ways to run ClickHouse to the situations they suit.</p>
+<table><thead><tr><th>Mode</th><th>Use it when</th></tr></thead><tbody><tr><td>ClickHouse server</td><td>You operate ClickHouse on your own machines or clusters</td></tr><tr><td>ClickHouse Cloud</td><td>You want a managed service run by the ClickHouse team</td></tr><tr><td><code>clickhouse-local</code></td><td>You analyze files or run scripts without a server</td></tr><tr><td>chDB</td><td>You embed the engine in an application or notebook</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="troubleshoot-common-problems">Troubleshoot Common Problems<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#troubleshoot-common-problems" class="hash-link" aria-label="Direct link to Troubleshoot Common Problems" title="Direct link to Troubleshoot Common Problems" translate="no">​</a></h2>
+<p>This section maps first-hour symptoms to their fixes.</p>
+<table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td>Tables disappear after a restart</td><td>You created them in <code>clickhouse-local</code>, which uses temporary storage</td><td>Run <code>./clickhouse server</code> and connect with <code>./clickhouse client</code></td></tr><tr><td>macOS refuses to open the binary</td><td>The system cannot verify the developer</td><td>Follow the developer-verification steps in the ClickHouse documentation</td></tr><tr><td>Inserts are slow or create many parts</td><td>Each single-row insert creates a separate part</td><td>Batch rows on the client, or enable asynchronous inserts</td></tr><tr><td>Queries read most of the table</td><td>The sort key does not match your common filters</td><td>Redesign <code>ORDER BY</code> around the filters you use most</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://rebelion.la/read-millions-of-records-in-milliseconds-with-clickhouse#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
+<p>You now know that ClickHouse is an open-source columnar database for analytics, why columnar storage, sorting, compression, and vectorized execution make it fast, and when a transactional database such as Postgres fits better. You installed ClickHouse, loaded one hundred million rows in about twenty seconds, answered a dashboard question in about a third of a second, and saw a query that matches the sort key read 8.5 million rows instead of 100 million.</p>
+<p>As a next step, pick one question your team asks every week and design a table around it, starting with the <code>ORDER BY</code> clause. For more guides like this one, visit <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">La Rebelion Labs</a>.</p>]]></content:encoded>
+            <category>clickhouse</category>
+            <category>sql</category>
+            <category>analytics</category>
+            <category>databases</category>
+        </item>
         <item>
             <title><![CDATA[How to Reverse Engineer Any App Feature with REA and Your AI Agent]]></title>
             <link>https://rebelion.la/reverse-engineer-app-features-with-rea</link>
@@ -3500,644 +3787,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>swagger</category>
             <category>openapi</category>
             <category>mcp-server</category>
-        </item>
-        <item>
-            <title><![CDATA[OpenAPI + MCP + Arazzo = The Formula for AI Automation]]></title>
-            <link>https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation</link>
-            <guid>https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation</guid>
-            <pubDate>Sat, 13 Sep 2025 00:30:46 GMT</pubDate>
-            <description><![CDATA[What’s possible when you mix OpenAPI, the Model Context Protocol (MCP), and the Arazzo Specification?]]></description>
-            <content:encoded><![CDATA[<p>What’s possible when you mix <a href="https://swagger.io/specification/v3" target="_blank" rel="noopener noreferrer" class=""><strong>OpenAPI</strong></a>, the <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class=""><strong>Model Context Protocol</strong></a> <strong>(MCP)</strong>, and the <a href="https://spec.openapis.org/arazzo/latest.html" target="_blank" rel="noopener noreferrer" class=""><strong>Arazzo Specification</strong></a>?</p>
-<p>In one word: <strong>everything.</strong></p>
-<p>We’re standing on the edge of a new era in <strong>AI automation</strong>—where workflows that once took weeks to wire up across APIs, SDKs, and custom scripts could soon be described, orchestrated, and executed <strong>seamlessly</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-formula-matters">Why This Formula Matters<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#why-this-formula-matters" class="hash-link" aria-label="Direct link to Why This Formula Matters" title="Direct link to Why This Formula Matters" translate="no">​</a></h2>
-<p>The combination of <strong>OpenAPI</strong>, <strong>MCP</strong>, and <strong>Arazzo</strong> is transformative for AI-powered automation:</p>
-<ul>
-<li class="">
-<p><strong>OpenAPI</strong> provides a universal language to describe APIs—a trusted <strong>blueprint</strong> that ensures clarity and consistency across systems.</p>
-</li>
-<li class="">
-<p><strong>MCP</strong> introduces a <strong>native protocol</strong> for LLMs to interact with APIs directly—eliminating hacks and workarounds. It acts as the <strong>bridge</strong>, enabling seamless communication between AI agents and APIs.</p>
-</li>
-<li class="">
-<p><strong>Arazzo</strong> serves as the <strong>orchestration layer</strong>, defining workflows as portable, spec-driven processes. It’s the <strong>glue</strong> that binds everything together.</p>
-</li>
-</ul>
-<p>This synergy means you’re no longer confined to a single ecosystem and vendor lock-in like n8n, LangFlow, Flowise, or traditional engines like Temporal or Camunda. With <strong>Arazzo as the workflow layer</strong>, you can orchestrate processes across <strong>any system</strong> while maintaining the confidence and reliability of an <a href="https://swagger.io/resources/articles/adopting-an-api-first-approach/" target="_blank" rel="noopener noreferrer" class="">API-first approach</a>.</p>
-<p>By leveraging these standards, you unlock a future where AI workflows are not only powerful but also portable, scalable, and ecosystem-agnostic.</p>
-<p>The result? An LLM can take “<strong>Place an order for SKU123</strong>” and autonomously execute the workflow across services with full visibility.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="mcp--openapi-in-action">MCP + OpenAPI in Action<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#mcp--openapi-in-action" class="hash-link" aria-label="Direct link to MCP + OpenAPI in Action" title="Direct link to MCP + OpenAPI in Action" translate="no">​</a></h3>
-<p>Imagine you’ve got an API for order processing:</p>
-<div class="language-mermaid codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-mermaid codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">sequenceDiagram</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant User</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant LLM as LLM (via MCP)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant OrderAPI as Order Processing API (OpenAPI)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    User-&gt;&gt;LLM: "Place order for SKU123"</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    LLM-&gt;&gt;OrderAPI: MCP call to create order</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    OrderAPI--&gt;&gt;LLM: Order confirmation</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    LLM-&gt;&gt;User: "Order placed successfully!"</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="adding-arazzo-to-the-mix">Adding Arazzo to the mix<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#adding-arazzo-to-the-mix" class="hash-link" aria-label="Direct link to Adding Arazzo to the mix" title="Direct link to Adding Arazzo to the mix" translate="no">​</a></h3>
-<p>Now, let’s say placing an order involves multiple steps: checking inventory, processing payment, and sending a confirmation email. Here’s how Arazzo orchestrates that process in a structured, spec-driven way:</p>
-<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token key atrule">arazzo</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> 1.0.0</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">info</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">title</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> AI Order Workflow</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">version</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> 1.0.0</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">workflow</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">step</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> checkInventory</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Verify if the requested SKU is available in inventory."</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">call</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">operationId</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> getInventory</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">next</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">createOrder</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">step</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> createOrder</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Create an order for the requested SKU after inventory confirmation."</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">call</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">operationId</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> postOrder</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">next</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">sendConfirmation</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">step</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> sendConfirmation</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Send a confirmation email to the user after the order is successfully created."</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token key atrule">call</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">operationId</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> postEmail</span><br></div></code></pre></div></div>
-<p>This YAML specification defines a clear, step-by-step workflow for placing an order. Each step is described with its purpose, the API operation it calls, and the next step(s) in the sequence. This makes the workflow not only executable but also easy to understand and maintain.</p>
-<p>How does this play out in practice? Here’s the sequence of interactions visualized:</p>
-<div class="language-mermaid codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-mermaid codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">sequenceDiagram</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant User</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant LLM as LLM&lt;br&gt;(via MCP Client)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant Arazzo as (Arazzo)&lt;br&gt;Workflow Engine</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant InventoryAPI as Inventory API (HAPI)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant OrderAPI as Order Processing API (HAPI)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant EmailAPI as Email Service API (HAPI)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    User-&gt;&gt;LLM: "Place order for SKU123"</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    LLM-&gt;&gt;+Arazzo: Start order workflow</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    Arazzo-&gt;&gt;InventoryAPI: Check inventory for SKU123</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    InventoryAPI--&gt;&gt;Arazzo: Inventory available</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    Arazzo-&gt;&gt;OrderAPI: Create order for SKU123</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    OrderAPI--&gt;&gt;Arazzo: Order created successfully</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    Arazzo-&gt;&gt;EmailAPI: Send confirmation email</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    EmailAPI--&gt;&gt;Arazzo: Email sent successfully</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    Arazzo--&gt;&gt;-LLM: Order workflow completed</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    LLM-&gt;&gt;User: "Order placed successfully!"</span><br></div></code></pre></div></div>
-<p>In this diagram:</p>
-<ol>
-<li class="">
-<p>The <strong>User</strong> initiates the process by requesting to place an order in natural language.</p>
-</li>
-<li class="">
-<p>The <strong>LLM</strong>, using the MCP protocol, delegates the workflow execution to the <strong>Arazzo Workflow Engine</strong>.</p>
-</li>
-<li class="">
-<p>Arazzo orchestrates the steps:</p>
-<ul>
-<li class="">
-<p>It first checks the inventory via the <strong>Inventory API</strong>.</p>
-</li>
-<li class="">
-<p>If inventory is available, it proceeds to create the order using the <strong>Order Processing API</strong>.</p>
-</li>
-<li class="">
-<p>Finally, it sends a confirmation email through the <strong>Email Service API</strong>.</p>
-</li>
-</ul>
-</li>
-<li class="">
-<p>Once all steps are completed, Arazzo reports back to the LLM, which informs the user of the successful order placement.</p>
-</li>
-</ol>
-<p>Because this workflow is defined in a spec-driven manner, it is portable across platforms like <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" class="">n8n</a>, <a href="https://docs.langflow.org/concepts-flows" target="_blank" rel="noopener noreferrer" class="">LangFlow</a>, <a href="https://temporal.io/solutions/ai" target="_blank" rel="noopener noreferrer" class="">Temporal</a>, or <a href="https://camunda.com/solutions/api-orchestration/" target="_blank" rel="noopener noreferrer" class="">Camunda</a>. Arazzo ensures that the logic remains consistent and reusable, regardless of the underlying execution engine.</p>
-<p>This approach not only simplifies complex workflows but also makes them scalable, maintainable, and transparent—key factors for building robust AI-powered automation systems.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-real-business-impact">The real business impact<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#the-real-business-impact" class="hash-link" aria-label="Direct link to The real business impact" title="Direct link to The real business impact" translate="no">​</a></h2>
-<p>Executives care about <strong>cost, speed, and risk.</strong> Developers care about <strong>standards and reusability.</strong> Operators care about <strong>observability and maintainability.</strong></p>
-<p>This formula speaks to all of them:</p>
-<ul>
-<li class="">
-<p>Faster integration = faster time-to-market</p>
-</li>
-<li class="">
-<p>Standards = reduced tech debt and vendor lock-in</p>
-</li>
-<li class="">
-<p>Clear orchestration = predictable, auditable AI-powered workflows</p>
-</li>
-</ul>
-<p>It’s not just about building cool AI toys—it’s about <strong>building resilient, future-proof business systems.</strong></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-im-excited-about-arazzo">Why I’m excited about Arazzo<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#why-im-excited-about-arazzo" class="hash-link" aria-label="Direct link to Why I’m excited about Arazzo" title="Direct link to Why I’m excited about Arazzo" translate="no">​</a></h2>
-<p>The <strong>Arazzo Spec</strong> feels like the orchestration layer AI has been waiting for. Imagine telling your AI agent not just <em>what</em> API to call (that’s OpenAPI), or <em>how</em> to connect to it (that’s MCP), but also <em>why, when, and in what order</em>.</p>
-<p>That’s Arazzo. That’s <strong>AI workflows as code.</strong></p>
-<p>This opens the door to something bigger: <strong>cross-platform automation without silos.</strong></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-the-hapi-stack-fits">Where the <a href="https://docs.mcp.com.ai/components" target="_blank" rel="noopener noreferrer" class="">HAPI Stack</a> fits<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#where-the-hapi-stack-fits" class="hash-link" aria-label="Direct link to where-the-hapi-stack-fits" title="Direct link to where-the-hapi-stack-fits" translate="no">​</a></h2>
-<p>The <a href="https://mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI Stack for MCP</a> explores how these standards—OpenAPI, MCP, and now Arazzo—can accelerate the <strong>API-First + AI-Orchestration future.</strong> Instead of reinventing the wheel every time, we’re building with <strong>standards-first tooling</strong> that makes it easier to go from idea → workflow → production.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-your-take">What is your take?<a href="https://rebelion.la/openapi-mcp-arazzo-the-formula-for-ai-automation#what-is-your-take" class="hash-link" aria-label="Direct link to What is your take?" title="Direct link to What is your take?" translate="no">​</a></h2>
-<p>I’d love to hear your take</p>
-<ul>
-<li class="">
-<p>Do you see <strong>Arazzo</strong> becoming the universal glue for workflows?</p>
-</li>
-<li class="">
-<p>How do you imagine <strong>AI agents</strong> benefiting from an OpenAPI + MCP + Arazzo formula?</p>
-</li>
-<li class="">
-<p>What opportunities—or challenges—do you see for your teams or projects?</p>
-</li>
-</ul>
-<p>Check out the Arazzo spec here: <a href="https://spec.openapis.org/arazzo/latest.html" target="_blank" rel="noopener noreferrer" class="">Arazzo Latest Draft</a> and the deep dive here: <a href="https://swagger.io/blog/the-arazzo-specification-a-deep-dive/" target="_blank" rel="noopener noreferrer" class="">Swagger Blog</a>.</p>
-<p>Let’s spark a conversation about what’s next—because <strong>this might just be the foundation of AI-native automation.</strong></p>
-<p>Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>ai</category>
-            <category>openapi</category>
-            <category>workflow-automation</category>
-            <category>ai-automation</category>
-            <category>api-first</category>
-            <category>mcp</category>
-            <category>arazzo</category>
-        </item>
-        <item>
-            <title><![CDATA[OIDC Becomes ISO: Why It Matters for AI Agentification and MCP]]></title>
-            <link>https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp</link>
-            <guid>https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp</guid>
-            <pubDate>Thu, 11 Sep 2025 22:40:48 GMT</pubDate>
-            <description><![CDATA[OIDC is now officially published as ISO/IEC standards (nine specs) in October 2024. ISO brand means it’s trusted globally and meets governments’ legal rules. ISO versions have all ]]></description>
-            <content:encoded><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-tldr">✅ TL;DR<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#-tldr" class="hash-link" aria-label="Direct link to ✅ TL;DR" title="Direct link to ✅ TL;DR" translate="no">​</a></h2>
-<ul>
-<li class="">
-<p>OIDC is now officially published as ISO/IEC standards (nine specs) in October 2024.</p>
-</li>
-<li class="">
-<p>ISO brand means it’s trusted globally and meets governments’ legal rules.</p>
-</li>
-<li class="">
-<p>ISO versions have all updates and fixes built in, so they’re cleaner and more stable.</p>
-</li>
-<li class="">
-<p>For companies, this means easier compliance, better interoperability, and stronger product trust worldwide.</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-what-does-the-iso-version-include-technically">🎯 What Does the ISO Version Include Technically?<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#-what-does-the-iso-version-include-technically" class="hash-link" aria-label="Direct link to 🎯 What Does the ISO Version Include Technically?" title="Direct link to 🎯 What Does the ISO Version Include Technically?" translate="no">​</a></h2>
-<p>ISO/IEC 26131–26139 (2024) cover:</p>
-<ul>
-<li class="">
-<p>Core OIDC flows (authentication, claims, ID tokens)</p>
-</li>
-<li class="">
-<p>Discovery, dynamic client registration</p>
-</li>
-<li class="">
-<p>Front-channel and back-channel logout, session management</p>
-</li>
-<li class="">
-<p>Response encoding like OAuth response-mode/form-post, multiple response handling</p>
-</li>
-</ul>
-<p>These make up the full family of essential OIDC functionality—certified as international standards.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-moment-matters">Why This Moment Matters<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#why-this-moment-matters" class="hash-link" aria-label="Direct link to Why This Moment Matters" title="Direct link to Why This Moment Matters" translate="no">​</a></h2>
-<p>OpenID Connect (OIDC) has been the de facto standard for user authentication, but it wasn’t formally an <em>international</em> standard. Every organization interpreted or patched it slightly differently. The result: <strong>identity technical debt</strong> at scale.</p>
-<p>Fast forward to October 2024. OpenID Connect is now published as an <strong>ISO/IEC standard</strong> (<a href="https://www.iso.org/standard/89056.html" target="_blank" rel="noopener noreferrer" class="">ISO/IEC 26131</a>–26139). This isn’t just symbolic. It’s a clean ledger moment: a way to pay down accumulated debt, unify digital identity practices, and prepare for what’s next — the <strong>agentification era</strong> powered by AI and the <strong>Model Context Protocol (MCP)</strong>.</p>
-<p>This post explores:</p>
-<ul>
-<li class="">
-<p>Why OIDC becoming ISO is a business and technical milestone</p>
-</li>
-<li class="">
-<p>How it aligns with the <strong>Technical Debt Model</strong></p>
-</li>
-<li class="">
-<p>What this means for the rise of <strong>AI agents and MCP ecosystems</strong></p>
-</li>
-<li class="">
-<p>How enterprises can act now to leverage this milestone strategically</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-does-oidc-becoming-iso-mean">What Does OIDC Becoming ISO Mean?<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#what-does-oidc-becoming-iso-mean" class="hash-link" aria-label="Direct link to What Does OIDC Becoming ISO Mean?" title="Direct link to What Does OIDC Becoming ISO Mean?" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-quick-refresher">A Quick Refresher<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#a-quick-refresher" class="hash-link" aria-label="Direct link to A Quick Refresher" title="Direct link to A Quick Refresher" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>OpenID Connect (OIDC)</strong>: A simple identity layer on top of OAuth 2.0, enabling apps to verify user identities and fetch profile data securely.</p>
-</li>
-<li class="">
-<p><strong>ISO/IEC 26131–26139</strong>: The family of international standards formally publishing OIDC as a global standard, incorporating all corrections and clarifications accumulated since its original release in 2014.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-it-matters-now">Why It Matters Now<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#why-it-matters-now" class="hash-link" aria-label="Direct link to Why It Matters Now" title="Direct link to Why It Matters Now" translate="no">​</a></h3>
-<ol>
-<li class="">
-<p><strong>Compliance and Trust</strong>: ISO standards are recognized globally by governments and regulators. For industries like banking, healthcare, and telecom, this unlocks new adoption opportunities.</p>
-</li>
-<li class="">
-<p><strong>Consolidation</strong>: Multiple OIDC drafts, errata, and extensions are now unified into a stable, internationally recognized baseline.</p>
-</li>
-<li class="">
-<p><strong>Future Alignment</strong>: Extensions like Financial-grade API (FAPI) and eKYC are already being prepared for ISO. This sets a path for the entire identity ecosystem.</p>
-</li>
-</ol>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oidc-iso-through-the-lens-of-the-technical-debt-model">OIDC ISO Through the Lens of the Technical Debt Model<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#oidc-iso-through-the-lens-of-the-technical-debt-model" class="hash-link" aria-label="Direct link to OIDC ISO Through the Lens of the Technical Debt Model" title="Direct link to OIDC ISO Through the Lens of the Technical Debt Model" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="principal-the-cost-weve-accumulated">Principal: The Cost We’ve Accumulated<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#principal-the-cost-weve-accumulated" class="hash-link" aria-label="Direct link to Principal: The Cost We’ve Accumulated" title="Direct link to Principal: The Cost We’ve Accumulated" translate="no">​</a></h3>
-<p>Organizations have been carrying identity debt for years:</p>
-<ul>
-<li class="">
-<p>Supporting multiple OIDC drafts across vendors</p>
-</li>
-<li class="">
-<p>Maintaining custom flows for session management, logout, or claims</p>
-</li>
-<li class="">
-<p>Rewriting integrations due to inconsistent interpretation</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="interest-the-daily-penalties">Interest: The Daily Penalties<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#interest-the-daily-penalties" class="hash-link" aria-label="Direct link to Interest: The Daily Penalties" title="Direct link to Interest: The Daily Penalties" translate="no">​</a></h3>
-<p>Every day this debt continues:</p>
-<ul>
-<li class="">
-<p><strong>Security risk increases</strong> (misapplied patches, outdated flows)</p>
-</li>
-<li class="">
-<p><strong>Compliance costs rise</strong> (auditors chasing mismatched versions)</p>
-</li>
-<li class="">
-<p><strong>Engineering time is wasted</strong> maintaining divergent code</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="repayment-plan-iso-adoption-as-debt-reduction">Repayment Plan: ISO Adoption as Debt Reduction<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#repayment-plan-iso-adoption-as-debt-reduction" class="hash-link" aria-label="Direct link to Repayment Plan: ISO Adoption as Debt Reduction" title="Direct link to Repayment Plan: ISO Adoption as Debt Reduction" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>Short term</strong>: Audit existing identity flows, mapping them against the ISO/IEC baseline.</p>
-</li>
-<li class="">
-<p><strong>Medium term</strong>: Update configurations and require ISO alignment in vendor contracts.</p>
-</li>
-<li class="">
-<p><strong>Long term</strong>: Use ISO as the <strong>single source of truth</strong>, reducing spec fragmentation permanently.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="future-investment-avoiding-new-debt">Future Investment: Avoiding New Debt<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#future-investment-avoiding-new-debt" class="hash-link" aria-label="Direct link to Future Investment: Avoiding New Debt" title="Direct link to Future Investment: Avoiding New Debt" translate="no">​</a></h3>
-<p>By adopting ISO OIDC now, organizations build on a foundation that:</p>
-<ul>
-<li class="">
-<p>Prepares them for FAPI, eKYC, and AI-integrated identity standards</p>
-</li>
-<li class="">
-<p>Ensures future AI agents can authenticate in globally interoperable ways</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-ai-agentification-era-meets-iso-oidc">The AI Agentification Era Meets ISO OIDC<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#the-ai-agentification-era-meets-iso-oidc" class="hash-link" aria-label="Direct link to The AI Agentification Era Meets ISO OIDC" title="Direct link to The AI Agentification Era Meets ISO OIDC" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-ai-agents-need-strong-identity">Why AI Agents Need Strong Identity<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#why-ai-agents-need-strong-identity" class="hash-link" aria-label="Direct link to Why AI Agents Need Strong Identity" title="Direct link to Why AI Agents Need Strong Identity" translate="no">​</a></h3>
-<p>AI agents — autonomous, API-driven entities — are becoming the new workforce. They:</p>
-<ul>
-<li class="">
-<p>Access enterprise APIs</p>
-</li>
-<li class="">
-<p>Execute workflows across cloud environments</p>
-</li>
-<li class="">
-<p>Act on behalf of humans and organizations</p>
-</li>
-</ul>
-<p>But here’s the catch: without a <strong>trusted, standardized identity</strong>, agents become security risks. Rogue, spoofed, or misconfigured agents could wreak havoc.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-role-of-mcp-model-context-protocol">The Role of MCP (<a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a>)<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#the-role-of-mcp-model-context-protocol" class="hash-link" aria-label="Direct link to the-role-of-mcp-model-context-protocol" title="Direct link to the-role-of-mcp-model-context-protocol" translate="no">​</a></h3>
-<p>MCP is a new REST-like protocol for LLMs to interact with tools and APIs. It provides context-sharing and interoperability across agent ecosystems. But MCP itself relies on <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#security-considerations" target="_blank" rel="noopener noreferrer" class=""><strong>identity assurances</strong></a> to:</p>
-<ul>
-<li class="">
-<p>Authenticate agents</p>
-</li>
-<li class="">
-<p>Authorize actions</p>
-</li>
-<li class="">
-<p>Ensure interoperability across organizations</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-oidc-iso-fits">Where OIDC ISO Fits<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#where-oidc-iso-fits" class="hash-link" aria-label="Direct link to Where OIDC ISO Fits" title="Direct link to Where OIDC ISO Fits" translate="no">​</a></h3>
-<p>With OIDC as ISO:</p>
-<ul>
-<li class="">
-<p><strong>Agents authenticate securely</strong> across ecosystems</p>
-</li>
-<li class="">
-<p><strong>MCP servers trust external agents</strong> without one-off integrations</p>
-</li>
-<li class="">
-<p><strong>Global interoperability becomes possible</strong> — a government AI agent in Europe can authenticate with an enterprise API in the US without legal or technical headaches</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="real-world-case-studies">Real-World Case Studies<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#real-world-case-studies" class="hash-link" aria-label="Direct link to Real-World Case Studies" title="Direct link to Real-World Case Studies" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="banking-and-finance">Banking and Finance<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#banking-and-finance" class="hash-link" aria-label="Direct link to Banking and Finance" title="Direct link to Banking and Finance" translate="no">​</a></h3>
-<p>Banks adopting <a href="https://openid.net/guest-blog-financial-grade-api-fapi-explained-by-an-implementer-updated/" target="_blank" rel="noopener noreferrer" class=""><strong>FAPI</strong></a> (Financial-grade API) need rock-solid authentication. Before ISO, regulators hesitated because OIDC was a community spec. With ISO/IEC recognition:</p>
-<ul>
-<li class="">
-<p>Banks can rely on a globally certified baseline.</p>
-</li>
-<li class="">
-<p>Cross-border financial transactions become smoother.</p>
-</li>
-<li class="">
-<p>AI-powered finance agents (e.g., portfolio optimizers) can operate across institutions securely.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="healthcare">Healthcare<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#healthcare" class="hash-link" aria-label="Direct link to Healthcare" title="Direct link to Healthcare" translate="no">​</a></h3>
-<p>Hospitals and telemedicine providers struggle with identity silos across systems. An ISO-standard OIDC allows:</p>
-<ul>
-<li class="">
-<p>Unified patient login across multiple providers</p>
-</li>
-<li class="">
-<p>Secure AI agents acting as digital health assistants</p>
-</li>
-<li class="">
-<p>Compliance with strict privacy laws (HIPAA, GDPR)</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="government-digital-ids">Government Digital IDs<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#government-digital-ids" class="hash-link" aria-label="Direct link to Government Digital IDs" title="Direct link to Government Digital IDs" translate="no">​</a></h3>
-<p>National ID programs increasingly rely on OIDC (e.g., Gov.UK Sign-In, European eIDAS pilots). ISO formalization means:</p>
-<ul>
-<li class="">
-<p>OIDC can now be used in <strong>legally binding digital identity frameworks</strong>.</p>
-</li>
-<li class="">
-<p>Government AI agents can authenticate into regulated ecosystems without custom bridges.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="telecom">Telecom<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#telecom" class="hash-link" aria-label="Direct link to Telecom" title="Direct link to Telecom" translate="no">​</a></h3>
-<p>Telecom operators adopting <strong>GSMA Open Gateway</strong> need standard APIs for cross-carrier services. ISO OIDC provides:</p>
-<ul>
-<li class="">
-<p>A trusted baseline for API authentication.</p>
-</li>
-<li class="">
-<p>AI agents (e.g., fraud-detection bots) that can move across carrier networks securely.</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-executives-pms-and-engineers-should-care">Why Executives, PMs, and Engineers Should Care<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#why-executives-pms-and-engineers-should-care" class="hash-link" aria-label="Direct link to Why Executives, PMs, and Engineers Should Care" title="Direct link to Why Executives, PMs, and Engineers Should Care" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="executives-reducing-risk-unlocking-growth">Executives: Reducing Risk, Unlocking Growth<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#executives-reducing-risk-unlocking-growth" class="hash-link" aria-label="Direct link to Executives: Reducing Risk, Unlocking Growth" title="Direct link to Executives: Reducing Risk, Unlocking Growth" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>Compliance-ready</strong>: ISO-certified OIDC reduces regulatory headaches</p>
-</li>
-<li class="">
-<p><strong>Market expansion</strong>: Enables secure partnerships in finance, healthcare, telecom</p>
-</li>
-<li class="">
-<p><strong>Future-proofing</strong>: Establishes trust in AI agent ecosystems before regulations catch up</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="product-managers-selling-iso-oidc-as-a-feature">Product Managers: Selling ISO OIDC as a Feature<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#product-managers-selling-iso-oidc-as-a-feature" class="hash-link" aria-label="Direct link to Product Managers: Selling ISO OIDC as a Feature" title="Direct link to Product Managers: Selling ISO OIDC as a Feature" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p>“Audit-ready login” for compliance-focused customers</p>
-</li>
-<li class="">
-<p>“Government-grade authentication” for global enterprises</p>
-</li>
-<li class="">
-<p>Interoperable identity as a <strong>competitive differentiator</strong></p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="engineers-less-maintenance-more-clarity">Engineers: Less Maintenance, More Clarity<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#engineers-less-maintenance-more-clarity" class="hash-link" aria-label="Direct link to Engineers: Less Maintenance, More Clarity" title="Direct link to Engineers: Less Maintenance, More Clarity" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p>A single reference spec (ISO/IEC 26131–26139)</p>
-</li>
-<li class="">
-<p>No more guessing which draft your vendor supports</p>
-</li>
-<li class="">
-<p>Cleaner upgrades to FAPI, eKYC, and MCP integrations</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="steps-to-adopt-iso-oidc">Steps to Adopt ISO OIDC<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#steps-to-adopt-iso-oidc" class="hash-link" aria-label="Direct link to Steps to Adopt ISO OIDC" title="Direct link to Steps to Adopt ISO OIDC" translate="no">​</a></h2>
-<ol>
-<li class="">
-<p><strong>Audit Current Implementations</strong>: Identify all OIDC flows, libraries, and vendors in use.</p>
-</li>
-<li class="">
-<p><strong>Map to ISO/IEC 26131–26139</strong>: Compare existing implementations against the ISO standard to identify gaps.</p>
-</li>
-<li class="">
-<p><strong>Update Configurations</strong>: Work with vendors to ensure they support the ISO version. Update your identity provider settings accordingly.</p>
-</li>
-<li class="">
-<p><strong>Train Teams</strong>: Educate engineering, security, and compliance teams on the changes and benefits of ISO OIDC.</p>
-</li>
-</ol>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="faqs">FAQs<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#faqs" class="hash-link" aria-label="Direct link to FAQs" title="Direct link to FAQs" translate="no">​</a></h2>
-<p><strong>Q1: What does OIDC becoming ISO mean for businesses?</strong> It means organizations can now rely on an internationally recognized, audit-ready identity standard — reducing compliance risk and unlocking new regulated markets.</p>
-<p><strong>Q2: How does OIDC ISO help AI agents?</strong> It ensures AI agents can authenticate securely and interoperably across systems, forming the trust layer for MCP-driven ecosystems.</p>
-<p><strong>Q3: How is ISO OIDC different from earlier OIDC specs?</strong> ISO versions consolidate all errata and clarifications, providing a single, globally trusted reference point.</p>
-<p><strong>Q4: Why should enterprises act now?</strong> Adopting ISO OIDC now reduces identity technical debt, lowers compliance costs, and positions enterprises ahead of future regulations.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion-a-clean-ledger-for-the-future-of-identity">Conclusion: A Clean Ledger for the Future of Identity<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#conclusion-a-clean-ledger-for-the-future-of-identity" class="hash-link" aria-label="Direct link to Conclusion: A Clean Ledger for the Future of Identity" title="Direct link to Conclusion: A Clean Ledger for the Future of Identity" translate="no">​</a></h2>
-<p>OIDC becoming ISO is not just a standards milestone. It’s a <strong>technical debt repayment plan</strong> for digital identity — giving businesses a chance to reset, unify, and secure their ecosystems. And as AI agents and MCP become central to enterprise workflows, ISO OIDC is the <strong>trust anchor</strong> they’ll rely on.</p>
-<p>For executives, PMs, and engineers alike, this is a rare chance to pay off accumulated debt and position identity as a growth enabler. Because in the era of agentification, trust isn’t optional — it’s the foundation.</p>
-<hr>
-<p><em>Pro Tip: If you’re building agent ecosystems or planning MCP integrations, bake ISO OIDC compliance into your roadmap now. Think of it as paying off debt today to avoid bankruptcy tomorrow.</em></p>
-<p><strong>Go Rebels!</strong> ✊🏽</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="learn-more-about-the-new-oidc">Learn more about the <em>new</em> OIDC<a href="https://rebelion.la/oidc-becomes-iso-why-it-matters-for-ai-agentification-and-mcp#learn-more-about-the-new-oidc" class="hash-link" aria-label="Direct link to learn-more-about-the-new-oidc" title="Direct link to learn-more-about-the-new-oidc" translate="no">​</a></h2>
-<ul>
-<li class="">
-<p><a href="https://openid.net/10-years-on-openidconnect-published-as-iso-spec/?utm_source=rebelion.la" target="_blank" rel="noopener noreferrer" class="">10 Years On: OpenID Connect Published as an ISO/IEC Spec</a></p>
-</li>
-<li class="">
-<p><a href="https://self-issued.info/?p=2573&amp;utm_source=rebelion.la" target="_blank" rel="noopener noreferrer" class="">OpenID Connect specifications published as ISO standards</a></p>
-</li>
-<li class="">
-<p><a href="https://openid.net/specs/openid-connect-4-identity-assurance-1_0.html?utm_source=rebelion.la" target="_blank" rel="noopener noreferrer" class="">OpenID Connect for Identity Assurance 1.0</a></p>
-</li>
-</ul>]]></content:encoded>
-            <category>ai</category>
-            <category>oauth</category>
-            <category>oidc</category>
-            <category>openid-connect</category>
-            <category>agentic-ai</category>
-            <category>mcp</category>
-            <category>iso-26131</category>
-        </item>
-        <item>
-            <title><![CDATA[The Evolution of OAuth, Dynamic Client Registration, and Why It Matters for AI]]></title>
-            <link>https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai</link>
-            <guid>https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai</guid>
-            <pubDate>Mon, 01 Sep 2025 16:50:09 GMT</pubDate>
-            <description><![CDATA[Remember when you only had one password for everything? That era is long gone. Today, apps, cloud services, and AI agents all need to talk to each other — securely, automatically, ]]></description>
-            <content:encoded><![CDATA[<p><strong>Remember when you only had one password for everything?</strong> That era is long gone. Today, apps, cloud services, and AI agents all need to talk to each other — securely, automatically, and at scale. The silent hero making this possible: <strong>OAuth</strong>.</p>
-<ul>
-<li class="">
-<p>How many applications can you think of that use OAuth for authentication and authorization?</p>
-</li>
-<li class="">
-<p>How many applications had you actually approved with your social login!?</p>
-</li>
-</ul>
-<p>But OAuth itself has evolved. As the AI ecosystem grows, we're witnessing a new level of demand for <strong>Dynamic Client Registration (DCR)</strong> — the ability for clients to register with an authorization server <em>on the fly</em>.</p>
-<p>This post is your guide:</p>
-<ul>
-<li class="">
-<p>How OAuth has changed (and why it matters).</p>
-</li>
-<li class="">
-<p>Why <strong>Dynamic Client Registration</strong> is a cornerstone for multi-tenant and AI-driven systems.</p>
-</li>
-<li class="">
-<p>How the <strong>Model Context Protocol (MCP)</strong> is adopting these patterns.</p>
-</li>
-<li class="">
-<p>And a practical <strong>step-by-step with Authentik and the HAPI MCP Server</strong> to ground it all.</p>
-</li>
-</ul>
-<hr>
-<p><img decoding="async" loading="lazy" src="https://cdn.statically.io/img/cdn.rebelion.la/img/oauth-evolution-diagram.svg" alt="OAuth's Evolution Diagram" class="img_ev3q"></p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-oauths-evolution-from-delegation-to-identity-to-best-practice">1. OAuth's Evolution: From Delegation to Identity to Best Practice<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#1-oauths-evolution-from-delegation-to-identity-to-best-practice" class="hash-link" aria-label="Direct link to 1. OAuth's Evolution: From Delegation to Identity to Best Practice" title="Direct link to 1. OAuth's Evolution: From Delegation to Identity to Best Practice" translate="no">​</a></h2>
-<p>Let's start simple.</p>
-<ul>
-<li class="">
-<p><strong>OAuth 2.0 (2012):</strong> The original delegation protocol. It let apps request access to resources on your behalf (e.g., a calendar app accessing your Google Calendar). But it was flexible — sometimes too flexible. Some flows turned out to be insecure.</p>
-</li>
-<li class="">
-<p><strong>OpenID Connect (2014):</strong> A layer on top of OAuth 2.0. It added an <strong>ID token</strong> so apps could also <em>know who you are</em> — not just access your data. Think of it as turning OAuth into both an <strong>access key</strong> <em>and</em> a <strong>passport</strong>.</p>
-</li>
-<li class="">
-<p><strong>OAuth 2.1 (draft, 2020+):</strong> A cleanup spec. It didn't reinvent the wheel — it just enforced <strong>best practices</strong> learned over a decade:</p>
-<ul>
-<li class="">
-<p>No more Implicit or Password flows.</p>
-</li>
-<li class="">
-<p><strong>PKCE everywhere.</strong></p>
-</li>
-<li class="">
-<p><strong>Refresh token rotation.</strong></p>
-</li>
-<li class="">
-<p>TLS mandatory.</p>
-</li>
-<li class="">
-<p>Discovery &amp; registration treated as first-class citizens.</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>👉 In short: OAuth matured from a flexible toolkit to a <strong>secure, standardized foundation</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-why-dynamic-client-registration-matters-now">2. Why Dynamic Client Registration Matters Now<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#2-why-dynamic-client-registration-matters-now" class="hash-link" aria-label="Direct link to 2. Why Dynamic Client Registration Matters Now" title="Direct link to 2. Why Dynamic Client Registration Matters Now" translate="no">​</a></h2>
-<p>Static client registration works fine if you're only registering a handful of apps. But what if:</p>
-<ul>
-<li class="">
-<p>You're running a <strong>multi-tenant SaaS platform</strong> with thousands of customers, each needing isolated integrations?</p>
-</li>
-<li class="">
-<p>You're building <strong>AI agent ecosystems</strong>, where agents spawn dynamically and need credentials to access APIs in real time?</p>
-<ul>
-<li class="">With <a href="ttps://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="">MCP</a>, these agents can self-register and obtain the necessary credentials without manual intervention.</li>
-</ul>
-</li>
-</ul>
-<p>That's where <strong>Dynamic Client Registration (RFC 7591)</strong> comes in:</p>
-<ul>
-<li class="">
-<p>Clients can <strong>register programmatically</strong> with an Authorization Server.</p>
-</li>
-<li class="">
-<p>They receive credentials (client ID, secrets, etc.) automatically.</p>
-</li>
-<li class="">
-<p>They can operate without human intervention.</p>
-</li>
-</ul>
-<p>This matters because:</p>
-<ul>
-<li class="">
-<p><strong>Cost savings:</strong> No manual provisioning overhead.</p>
-</li>
-<li class="">
-<p><strong>Scalability:</strong> Hundreds or thousands of clients → no problem.</p>
-</li>
-<li class="">
-<p><strong>Security:</strong> Credentials are issued and rotated via defined policies.</p>
-</li>
-</ul>
-<p>Without DCR, scaling modern environments is like trying to hand out car keys at a concert — messy, error-prone, and slow.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-mcp-and-dynamic-registration-a-perfect-fit">3. MCP and Dynamic Registration: A Perfect Fit<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#3-mcp-and-dynamic-registration-a-perfect-fit" class="hash-link" aria-label="Direct link to 3. MCP and Dynamic Registration: A Perfect Fit" title="Direct link to 3. MCP and Dynamic Registration: A Perfect Fit" translate="no">​</a></h2>
-<p>Fast forward to <strong>today's AI-driven world</strong>. Enter the <strong>Model Context Protocol (MCP)</strong> — an emerging specification defining how AI systems interact securely and consistently with external tools, APIs, and resources.</p>
-<p>From the <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#dynamic-client-registration" target="_blank" rel="noopener noreferrer" class="">MCP specification (June 2025 release)</a>:</p>
-<blockquote>
-<p>"Dynamic Client Registration enables MCP clients to register securely with authorization servers, supporting environments with high client churn such as multi-agent systems."</p>
-</blockquote>
-<p>What this means in plain language:</p>
-<ul>
-<li class="">
-<p>AI agents (think assistants, copilots, bots) can <strong>self-register</strong> with a system.</p>
-</li>
-<li class="">
-<p>No admin has to pre-configure each one.</p>
-</li>
-<li class="">
-<p>The authorization flow is standardized, portable, and safe.</p>
-</li>
-</ul>
-<p>MCP leverages the OAuth ecosystem — <strong>discovery, PKCE, and DCR</strong> — to make this seamless.</p>
-<p>This is big. Imagine AI agents spinning up per request, each one negotiating its credentials securely without any human intervention. That's the kind of automation we're heading toward.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-example-authentik--hapi-mcp-server">4. Example: Authentik + HAPI MCP Server<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#4-example-authentik--hapi-mcp-server" class="hash-link" aria-label="Direct link to 4. Example: Authentik + HAPI MCP Server" title="Direct link to 4. Example: Authentik + HAPI MCP Server" translate="no">​</a></h2>
-<p>Enough theory — let's make it real.</p>
-<p>Imagine you're deploying <a href="https://docs.goauthentik.io/" target="_blank" rel="noopener noreferrer" class=""><strong>Authentik</strong></a> (an open-source Identity Provider) as your authorization server, and you want your AI agents running in the <strong>HAPI MCP Server</strong> (<a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">hapi.mcp.com.ai</a>) to register dynamically.</p>
-<p>Here's the simplified step-by-step flow; for more details, refer to the&nbsp;<a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization#dynamic-client-registration" target="_blank" rel="noopener noreferrer" class="">MCP specification</a>.</p>
-<div class="language-mermaid codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-mermaid codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">sequenceDiagram</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant Client as MCP Client (Agent)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant Auth as Authentik (Auth Server)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    participant Server as HAPI MCP Server</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    rect Purple</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      critical ​Authorization Server Discovery</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        Client--&gt;Server: Tell me where</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    critical ​Dynamic Client Registration</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      rect rgb(17,147,176)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        Client-&gt;&gt;Auth: POST /register -&gt; client_id, secret</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        Auth-&gt;&gt;Client: Client Credentials</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      critical User Authorizes</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        rect rgb(218,119,86)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">              Client--&gt;Auth: Auth Request (PKCE)&lt;br&gt;Token exchange</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    rect green</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      critical Ready&lt;br&gt;(new agent linked/&lt;br&gt;ready to call APIs)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        Client-&gt;&gt;Server: Request with token      </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        Server-&gt;&gt;Client: Response</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      end</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    end</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1-discovery">Step 1. Discovery<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#step-1-discovery" class="hash-link" aria-label="Direct link to Step 1. Discovery" title="Direct link to Step 1. Discovery" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p>The MCP client queries something without a token,</p>
-</li>
-<li class="">
-<p>The MCP Server responds with the <strong>discovery endpoint</strong>:</p>
-</li>
-</ul>
-<div class="language-graphql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-graphql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token attr-name" style="color:rgb(241, 250, 140)">https</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//&lt;</span><span class="token property">authentik</span><span class="token plain">-</span><span class="token property">domain</span><span class="token plain">&gt;/.</span><span class="token property">well</span><span class="token plain">-</span><span class="token property">known</span><span class="token plain">/</span><span class="token property">openid</span><span class="token plain">-</span><span class="token property">configuration</span><br></div></code></pre></div></div>
-<blockquote>
-<p>"I can't grant you access without a token. Check with Auth Server for details."</p>
-</blockquote>
-<ul>
-<li class="">From here, it learns where to send authorization and registration requests.</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2-dynamic-client-registration">Step 2. Dynamic Client Registration<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#step-2-dynamic-client-registration" class="hash-link" aria-label="Direct link to Step 2. Dynamic Client Registration" title="Direct link to Step 2. Dynamic Client Registration" translate="no">​</a></h3>
-<ul>
-<li class="">The MCP client calls Authentik's registration endpoint (from discovery metadata):</li>
-</ul>
-<div class="language-graphql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-graphql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token constant" style="color:rgb(189, 147, 249)">POST</span><span class="token plain"> /</span><span class="token property">application</span><span class="token plain">/</span><span class="token property">o</span><span class="token plain">/</span><span class="token property">token</span><span class="token plain">/</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token property">Content</span><span class="token plain">-</span><span class="token attr-name" style="color:rgb(241, 250, 140)">Type</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token property">application</span><span class="token plain">/</span><span class="token object">json</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"client_name"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"hapi-agent-123"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"redirect_uris"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">"https://hapi.mcp.com.ai/callback"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"grant_types"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">"authorization_code"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"response_types"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">"code"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"token_endpoint_auth_method"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"none"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<ul>
-<li class="">Authentik returns:</li>
-</ul>
-<div class="language-graphql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-graphql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"client_id"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"abc123"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"client_secret"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"xyz789"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">    // &lt;-- </span><span class="token property">optional</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token property">two</span><span class="token plain"> </span><span class="token property">client</span><span class="token plain"> </span><span class="token property">types</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token string" style="color:rgb(255, 121, 198)">"registration_access_token"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"rat_456"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p><a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13#name-client-types" target="_blank" rel="noopener noreferrer" class=""><strong>OAuth 2.1</strong></a> defines <strong>two client types</strong> based on their ability to authenticate securely with the authorization server:</p>
-<ul>
-<li class="">
-<p>"<strong>confidential</strong>": Clients that have credentials with the Authorization Server (AS) are designated as "confidential clients"</p>
-</li>
-<li class="">
-<p>"<strong>public</strong>": Clients without credentials are referred to as "public clients." Public clients are incapable of maintaining confidentiality and should utilize methods like <strong>PKCE</strong>.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3-authorization-code--pkce-flow">Step 3. Authorization Code + PKCE Flow<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#step-3-authorization-code--pkce-flow" class="hash-link" aria-label="Direct link to Step 3. Authorization Code + PKCE Flow" title="Direct link to Step 3. Authorization Code + PKCE Flow" translate="no">​</a></h3>
-<ul>
-<li class="">The MCP client (HAPI agent) initiates an auth request:</li>
-</ul>
-<div class="language-graphql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-graphql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token constant" style="color:rgb(189, 147, 249)">GET</span><span class="token plain"> /</span><span class="token property">application</span><span class="token plain">/</span><span class="token property">o</span><span class="token plain">/</span><span class="token property">authorize</span><span class="token plain">?</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">response_type</span><span class="token operator">=</span><span class="token property">code</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token operator">&amp;</span><span class="token property">client_id</span><span class="token operator">=</span><span class="token property">abc123</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token operator">&amp;</span><span class="token property">redirect_uri</span><span class="token operator">=</span><span class="token attr-name" style="color:rgb(241, 250, 140)">https</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//</span><span class="token property">client</span><span class="token plain">.</span><span class="token property">mcp</span><span class="token plain">.</span><span class="token property">com</span><span class="token plain">.</span><span class="token property">ai</span><span class="token plain">/</span><span class="token property">callback</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token operator">&amp;</span><span class="token property">scope</span><span class="token operator">=</span><span class="token property">openid</span><span class="token plain"> </span><span class="token property">profile</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token operator">&amp;</span><span class="token property">code_challenge</span><span class="token operator">=</span><span class="token operator">...</span><span class="token plain"> </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token operator">&amp;</span><span class="token property">code_challenge_method</span><span class="token operator">=</span><span class="token constant" style="color:rgb(189, 147, 249)">S256</span><br></div></code></pre></div></div>
-<ul>
-<li class="">Authentik handles user consent, then redirects back to HAPI MCP Client with an authorization code.</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-4-token-exchange">Step 4. Token Exchange<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#step-4-token-exchange" class="hash-link" aria-label="Direct link to Step 4. Token Exchange" title="Direct link to Step 4. Token Exchange" translate="no">​</a></h3>
-<ul>
-<li class="">The HAPI MCP Client exchanges the code (with PKCE verifier) at Authentik's token endpoint:</li>
-</ul>
-<div class="language-graphql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-graphql codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token constant" style="color:rgb(189, 147, 249)">POST</span><span class="token plain"> /</span><span class="token property">application</span><span class="token plain">/</span><span class="token property">o</span><span class="token plain">/</span><span class="token property">token</span><span class="token plain">/</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token property">grant_type</span><span class="token operator">=</span><span class="token property">authorization_code</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token property">code</span><span class="token operator">=</span><span class="token operator">...</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token fragment function" style="color:rgb(80, 250, 123)">client_id</span><span class="token operator">=</span><span class="token property">abc123</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token property">code_verifier</span><span class="token operator">=</span><span class="token operator">...</span><br></div></code></pre></div></div>
-<ul>
-<li class="">Authentik issues <strong>access + refresh tokens</strong>.</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-5-agent-ready">Step 5. Agent Ready<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#step-5-agent-ready" class="hash-link" aria-label="Direct link to Step 5. Agent Ready" title="Direct link to Step 5. Agent Ready" translate="no">​</a></h3>
-<ul>
-<li class="">Now the HAPI MCP agent can call APIs securely, and if refresh tokens rotate, it seamlessly handles renewal.</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-why-this-matters">5. Why This Matters<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#5-why-this-matters" class="hash-link" aria-label="Direct link to 5. Why This Matters" title="Direct link to 5. Why This Matters" translate="no">​</a></h2>
-<p>By combining <strong>OAuth 2.1 best practices</strong>, <strong>Dynamic Client Registration</strong>, and the <strong>MCP standard</strong>, you get:</p>
-<ul>
-<li class="">
-<p><strong>Seamless scaling</strong> of clients/agents.</p>
-</li>
-<li class="">
-<p><strong>Zero manual overhead</strong> for new tenants or AI workloads.</p>
-</li>
-<li class="">
-<p><strong>Security baked in</strong> with PKCE, HTTPS, and rotation.</p>
-</li>
-<li class="">
-<p><strong>Interoperability</strong> — the same flows work across Authentik, Keycloak, Azure AD, and beyond.</p>
-</li>
-</ul>
-<p>This isn't just theory. It's the backbone for the <strong>next generation of AI-native infrastructure</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thought">Final Thought<a href="https://rebelion.la/the-evolution-of-oauth-dynamic-client-registration-and-why-it-matters-for-ai#final-thought" class="hash-link" aria-label="Direct link to Final Thought" title="Direct link to Final Thought" translate="no">​</a></h2>
-<p>OAuth originated as a method for logging in with your Google account. Today, it's the glue that lets <strong>AI agents, SaaS platforms, and enterprises</strong> interact safely and automatically. <a href="https://rebelion.la/why-oidc-becoming-iso-matters" target="_blank" rel="noopener noreferrer" class="">OpenID Connect (OIDC) becoming an ISO standard</a> matters now more than ever.</p>
-<p>And if you're ready to experiment:</p>
-<p>👉 Try spinning up an agent with the <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI MCP Server</strong></a> and plug it into Authentik. You'll see just how powerful Dynamic Client Registration is when theory meets practice.</p>
-<p>The magic of HAPI Server is that it simplifies the implementation of OAuth 2.1 flows out of the box, using just the Swagger Specs and zero coding, making it easier for developers to build secure and scalable applications. PMs can spin up new agents in minutes, not weeks.</p>
-<p>Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>ai</category>
-            <category>oauth</category>
-            <category>sso</category>
-            <category>oidc</category>
-            <category>pkce</category>
-            <category>mcp</category>
-            <category>dynamic-client-registration</category>
         </item>
     </channel>
 </rss>
