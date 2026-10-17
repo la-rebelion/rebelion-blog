@@ -1,0 +1,122 @@
+---
+title: Build an MVP with Spec-Driven Development and OpenSpec
+description: A hands-on course on Spec-Driven Development with AI coding agents. Learn the theory, set up OpenSpec, and build a tested MVP in three small changes.
+tags:
+  - spec-driven-development
+  - openspec
+  - ai-agents
+  - mvp
+authors: [adrianescutia]
+image: /img/blog/spec-driven-development-mvp.png
+date: 2026-10-16T00:00:00Z
+---
+import Head from '@docusaurus/Head';
+import harnessPoster from '/img/blog/spec-driven-development-mvp.png';
+
+<Head>
+  <meta property="og:image" content={harnessPoster} />
+</Head>
+
+You asked an AI agent for a feature, and it built something *almost* right. The decisions behind it are buried in a chat window, the next prompt breaks something else, and nobody on the team can tell what "done" was supposed to mean. Spec-Driven Development (SDD) fixes that by giving you and your agent a contract to work from.
+
+This guide follows our full video course. You learn the theory, set up OpenSpec, and build a real minimum viable product, a donor dashboard for a non-profit, in three small, reviewed, tested changes. Everything is in the course repository: [github.com/la-rebelion/mvp-with-sdd](https://github.com/la-rebelion/mvp-with-sdd).
+
+{/* truncate */}
+
+<MediaEmbed url="https://youtu.be/tJZXqNURrbw?autoplay=1" />
+
+## Why we work spec-first
+
+At La Rebelion Labs, we build MVPs during the pre-sale phase. We capture what the client needs, come back with something they can click, and iterate on their feedback. SDD is what makes that speed safe. Every feature starts as a short spec that the client, the AI agent, and the engineers can all read, so there are fewer misunderstandings and faster cycles.
+
+## The theory in five ideas
+
+**1. The spec is the source of truth.** You write a specification before you write code with AI, and it stays the reference for humans and agents alike. A spec is not a long prompt. A prompt disappears into chat history, while a spec is a reviewed, versioned file next to your code.
+
+**2. Specs used to drift.** In the classic flow (requirements → design → code → test → deploy), requirements documents were written once and abandoned. Each handoff lost context, and the code and the document drifted apart.
+
+**3. Vibe coding breaks at scale.** Prompting until it "feels right" is great for prototypes. For serious work, the decisions live only in chat, nobody reviews a plan, features break other features, and teammates can't onboard.
+
+**4. Aim for spec-anchored.** [Birgitta Böckeler's article on martinfowler.com](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) describes three levels:
+
+| Level | Meaning |
+| --- | --- |
+| Spec-first | A spec guides the current task and may be discarded |
+| Spec-anchored | The spec is kept and evolves with the feature |
+| Spec-as-source | Humans edit only the spec, never the generated code |
+
+The article also warns against one-size-fits-all workflows, review overload, and a false sense of control. Our answer is small changes, short specs, and tests for every scenario.
+
+**5. Markdown, requirements, scenarios, deltas.** A requirement states one observable behavior with `SHALL` or `MUST`. A scenario proves it with WHEN/THEN, and every good scenario becomes a test. Changes are written as **delta specs** (`ADDED`, `MODIFIED`, `REMOVED`) and merged into the living specs when you archive.
+
+## The workflow and the crew
+
+| Step | Role | OpenSpec |
+| --- | --- | --- |
+| Brief | Lead | `docs/` |
+| Explore, propose | Specs | `/opsx:explore`, `/opsx:propose` |
+| Review before code | Everyone | proposal, specs, design, tasks |
+| Apply in chunks | Code | `/opsx:apply` |
+| Test every scenario | Tests | `npm test` |
+| Archive, release | Ops | `/opsx:archive`, tag, push |
+
+## Set up
+
+You need Node.js 20.19 or newer, git, an editor, and an AI coding agent. OpenSpec supports more than 30 tools.
+
+```bash
+npm install -g @fission-ai/openspec@latest
+cd mvp-with-sdd/starter
+openspec init --tools claude,codex,github-copilot
+```
+
+`openspec init` creates `openspec/specs/` (the source of truth), `openspec/changes/` (one folder per change), and `openspec/config.yaml`, and it installs slash commands and skills for your agents. Restart your editor afterwards.
+
+Remember the two places where you type commands: `openspec …` goes in the terminal, and `/opsx:…` goes in the agent's chat. The spelling varies by tool (`/opsx-propose` in Copilot, `$openspec-propose` in Codex), and `init` prints the right form.
+
+Give the agent the constraints it can't guess in `openspec/config.yaml`: a pre-sale MVP, Node.js only, no frameworks or database, a test for every scenario, proposals that state what is out of scope, and tasks small enough to review in minutes.
+
+## The hands-on project
+
+The client, Rebel-I ONG, tracks donations in a hand-maintained spreadsheet. After the first call, we wrote a plan and a brief. We explore them with `/opsx:explore` and split the work into three changes, each with one intent.
+
+### Change 1: the donor dashboard
+
+`/opsx:propose add-donor-dashboard` creates the proposal, a delta spec, the design, and nine tasks. Review it before any code exists. The key scenario is "Donors are counted once": three donations from Ana make one active donor, not three. Then validate:
+
+```bash
+openspec validate add-donor-dashboard   # Change 'add-donor-dashboard' is valid
+openspec list                           # add-donor-dashboard   0/9 tasks
+```
+
+**Bonus tip: apply in chunks.** Ask for tasks 1.1 to 2.1, then stop, review, and test. Then do 2.2 to 2.4, then the rest. You save tokens, review small diffs, and catch mistakes early.
+
+Four tests (one per scenario) pass. `GET /api/summary` returns 6 active donors, 3 inactive donors, and $13,200 donated. `openspec archive add-donor-dashboard --yes` merges three requirements into `openspec/specs/dashboard/spec.md` and files the change in the archive.
+
+### Change 2: the import
+
+`add-donation-import` adds `POST /api/import`. An admin key is required (MUST): a missing or wrong key returns 401 and leaves the data unchanged. Each import replaces all data, and bad rows are skipped and counted. If no key is configured, imports are disabled, so the endpoint is secure by default. An HTTP integration test covers the 401. After this change, 9 tests pass.
+
+### Change 3: feedback becomes a MODIFIED requirement
+
+In the demo, the director asks who to call first, and to see the average gift. The delta for `add-reactivation-list` has an `ADDED` reactivation list and a `MODIFIED` Donor KPIs requirement, written out in full with the new average-gift scenario (100, 250.50, and 49.50 average to 133.33). When archived, it reports `~ 1 modified` and `+ 1 added`. 12 tests pass.
+
+### Release
+
+The checklist: `npm test` 12/12, `openspec validate --all` passing, `ADMIN_KEY` set in the environment and never committed, then commit, tag, and push.
+
+![Rebel-I ONG donor dashboard](https://raw.githubusercontent.com/la-rebelion/mvp-with-sdd/main/assets/rebel-ong-dashboard.png)
+
+## Practice
+
+The repository's `course/exercises.md` covers each exercise from the video: set up the starter, add a "no donations" scenario, break a test on purpose, add the "wrong key" scenario, and build a fourth change, upcoming birthdays, as homework.
+
+## Next level
+
+Enable the expanded workflow (`openspec config profile`, then `openspec update`) to get `/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, and `/opsx:onboard`. From there, add **skills** for your team's conventions, **subagents** that review and test against the specs, and **MCP servers** that let your agent check specs against real systems. For planning across repositories, see OpenSpec **stores** (beta).
+
+## Your turn
+
+Clone the course repository, run the loop on the starter, and build the fourth change. Subscribe for more courses, and visit [rebelion.la](https://rebelion.la) to see what La Rebelion Labs is building.
+
+Go Rebels!
