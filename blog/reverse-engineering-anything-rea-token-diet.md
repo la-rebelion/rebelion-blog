@@ -8,7 +8,7 @@ keywords:
   - token-efficiency
 authors: [adrianescutia]
 image: /img/blog/rea-token-diet.png
-date: 2026-10-16T00:00:00Z
+date: 2026-10-16T22:00:00Z
 ---
 import Head from '@docusaurus/Head';
 import harnessPoster from '/img/blog/rea-token-diet.png';
