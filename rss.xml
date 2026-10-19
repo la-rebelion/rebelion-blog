@@ -4,10 +4,320 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Fri, 16 Oct 2026 22:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 17 Oct 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Your Tech Stack Is Not Your Identity: How Engineers Can Stay Valuable in the AI Era]]></title>
+            <link>https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era</link>
+            <guid>https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era</guid>
+            <pubDate>Sat, 17 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[How engineers can maintain their value and professional identity in the age of AI.]]></description>
+            <content:encoded><![CDATA[<p>I listened to this podcast, <a href="https://podcasts.apple.com/us/podcast/narrative-intelligence-and-the-human-advantage/id1406537385?i=1000793833232" target="_blank" rel="noopener noreferrer" class="">Narrative intelligence and the human advantage</a> recently, and resonated with me, because that is a typical concern I hear from colleagues: a recurring deep concern about their relevance in the age of AI.</p>
+<p>You spent 10 or 20 years mastering technologies, frameworks, and engineering practices.</p>
+<p>Then AI arrived, and suddenly some of the things that made you valuable can be done in seconds.</p>
+<p>So, what happens to your career?</p>
+<!-- -->
+<p>Maybe the problem isn't that AI is learning your skills.</p>
+<p>Maybe it's that you've spent too long defining yourself by those skills.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>Your long-term professional value comes not just from what you know how to implement, but from the problems you can understand, the decisions you can defend, and the outcomes you can deliver.</p></div></div>
+<p>Don't compete with AI at doing the same tasks faster. Learn to use AI to solve bigger problems, take greater ownership, and create value you couldn't deliver before.</p>
+<p>Your long-term professional value comes not just from what you know how to implement, but from the problems you can understand, the decisions you can defend, and the outcomes you can deliver.</p>
+<hr>
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/t8ro2E2ETi0" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<p><em>AI is not just changing how we work. It is changing how we see ourselves, our careers, and the value we bring to the world.</em></p>
+<p>Imagine two engineers.</p>
+<p>Both have 15 years of experience. Both are excellent at their jobs. Both have built reliable systems, solved difficult production incidents, and earned the respect of their teams.</p>
+<p>Then AI enters their workplace.</p>
+<p>Six months later, one feels increasingly threatened. The other is taking on greater responsibilities, influencing architectural decisions, and becoming more valuable to the business.</p>
+<p><strong>What changed?</strong></p>
+<p>Not necessarily their technical abilities.</p>
+<p>What changed was the story they told themselves about who they were, what they contributed, and what they could become.</p>
+<p>This is where <em>narrative intelligence</em> becomes an interesting career skill.</p>
+<p>And it might be one of the most overlooked tools engineers have for navigating the AI era.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-meet-daniel-an-engineer-who-was-excellent-at-his-job">1. Meet Daniel: An Engineer Who Was Excellent at His Job<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#1-meet-daniel-an-engineer-who-was-excellent-at-his-job" class="hash-link" aria-label="Direct link to 1. Meet Daniel: An Engineer Who Was Excellent at His Job" title="Direct link to 1. Meet Daniel: An Engineer Who Was Excellent at His Job" translate="no">​</a></h2>
+<p>Daniel is 42 years old. He has spent the last 17 years building enterprise software.</p>
+<p>He knows Java, Kubernetes, Terraform, CI/CD, and distributed systems. He has designed architectures, migrated applications to the cloud, and resolved production incidents that younger engineers had never encountered.</p>
+<p>His professional identity is straightforward:</p>
+<blockquote>
+<p>"I'm a senior software engineer. I design and build reliable systems."</p>
+</blockquote>
+<p>And for years, that identity served him well.</p>
+<p>His company valued his experience. His colleagues respected his technical knowledge. His career progressed because he could solve problems that others couldn't.</p>
+<p>Then his organization introduced AI coding assistants.</p>
+<p>At first, Daniel was excited.</p>
+<p>He used AI to generate boilerplate code, write unit tests, troubleshoot Kubernetes manifests, and draft infrastructure configurations.</p>
+<p>Tasks that previously required hours could sometimes be completed in minutes.</p>
+<p>Productivity improved.</p>
+<p>But something unexpected happened.</p>
+<p>As AI became more capable, Daniel started questioning his professional value.</p>
+<p>One afternoon, a junior engineer demonstrated a working prototype that had taken just two days to build with AI assistance.</p>
+<p>Daniel remembered building something similar years earlier. It had taken his team nearly three weeks.</p>
+<p>The prototype wasn't production-ready, but the difference in implementation speed was impossible to ignore.</p>
+<p>His manager was impressed.</p>
+<p>Daniel was impressed, too.</p>
+<p>But he was also uncomfortable.</p>
+<p><strong>If AI can do much of what took me 17 years to master, what exactly makes me a senior engineer anymore?</strong></p>
+<p>That question stayed with him.</p>
+<p>And it was the beginning of a much bigger change.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-the-real-problem-wasnt-ai-it-was-his-professional-identity">2. The Real Problem Wasn't AI. It Was His Professional Identity.<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#2-the-real-problem-wasnt-ai-it-was-his-professional-identity" class="hash-link" aria-label="Direct link to 2. The Real Problem Wasn't AI. It Was His Professional Identity." title="Direct link to 2. The Real Problem Wasn't AI. It Was His Professional Identity." translate="no">​</a></h2>
+<p>Daniel had spent his career accumulating technical knowledge.</p>
+<p>Every certification, every framework, every difficult project strengthened the same professional story:</p>
+<p><em>I am valuable because I know how to build things that other people struggle to build.</em></p>
+<p>But AI was challenging that assumption.</p>
+<p>It wasn't eliminating the need for engineering. It was changing the economics of implementation.</p>
+<p>Writing code was becoming faster. Generating infrastructure configurations was becoming easier. Producing documentation and tests required less manual effort.</p>
+<p>Of course, AI-generated implementations still needed review, testing, security checks, and operational validation.</p>
+<p>But Daniel could see where things were heading.</p>
+<p>His first reaction was to protect his existing identity.</p>
+<p>He started emphasizing the things AI couldn't reliably do.</p>
+<p>"AI doesn't understand our production environment."</p>
+<p>"AI-generated code introduces technical debt."</p>
+<p>"AI cannot replace architectural experience."</p>
+<p>He wasn't entirely wrong.</p>
+<p>But there was a problem with his reasoning.</p>
+<p><strong>He was defending the value of his existing tasks instead of exploring the value of his experience.</strong></p>
+<p>This is a subtle but important difference.</p>
+<p>A technology can automate parts of your job without making your accumulated experience worthless.</p>
+<p>The question becomes whether you can apply that experience to responsibilities that matter more.</p>
+<p>Daniel needed a different story.</p>
+<p>Not a fictional one. Not a motivational slogan.</p>
+<p>A more accurate interpretation of his capabilities and the opportunities ahead.</p>
+<p>That is where narrative intelligence comes in.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-what-is-narrative-intelligence-and-why-does-it-matter">3. What Is Narrative Intelligence, and Why Does It Matter?<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#3-what-is-narrative-intelligence-and-why-does-it-matter" class="hash-link" aria-label="Direct link to 3. What Is Narrative Intelligence, and Why Does It Matter?" title="Direct link to 3. What Is Narrative Intelligence, and Why Does It Matter?" translate="no">​</a></h2>
+<p>Narrative intelligence, in the career-development sense we're exploring, is the ability to understand, examine, and deliberately reshape the stories we use to explain our experiences, identity, and future.</p>
+<p>It is not about inventing achievements or pretending to be someone else.</p>
+<p>It is about recognizing that the meaning we assign to our experiences influences our decisions.</p>
+<p>Consider these two interpretations of the same situation.</p>
+<p>The limiting narrative</p>
+<p>"AI is becoming better at the tasks I spent years learning. My experience is losing value."</p>
+<hr>
+<p>The growth narrative</p>
+<p>"AI is reducing the effort required to implement solutions. My experience can help me identify better problems, evaluate solutions, and take responsibility for results."</p>
+<p>Both recognize the same technological change.</p>
+<p>But they lead to very different behaviors.</p>
+<p>The first encourages defensive thinking.</p>
+<p>The second encourages exploration.</p>
+<p>Neither guarantees career success. Organizations can still reduce headcount, restructure teams, or change what they reward.</p>
+<p>But the second narrative creates more opportunities to act.</p>
+<p>And action matters.</p>
+<p><strong>Narrative intelligence does not change the market. It changes how you interpret the market and how you respond to it.</strong></p>
+<p>For engineers, this becomes especially useful because our careers are often closely tied to technologies.</p>
+<p>We introduce ourselves as Java developers, Kubernetes engineers, cloud architects, DevOps specialists, or frontend developers.</p>
+<p>Those are useful descriptions of expertise.</p>
+<p>But they are incomplete descriptions of value.</p>
+<p>Your technology stack explains what tools you know.</p>
+<p>It doesn't fully explain which problems you can solve.</p>
+<p>And that distinction becomes more important as AI takes on more implementation work.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-daniels-turning-point-a-conversation-about-outcomes">4. Daniel's Turning Point: A Conversation About Outcomes<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#4-daniels-turning-point-a-conversation-about-outcomes" class="hash-link" aria-label="Direct link to 4. Daniel's Turning Point: A Conversation About Outcomes" title="Direct link to 4. Daniel's Turning Point: A Conversation About Outcomes" translate="no">​</a></h2>
+<p>A few weeks later, Daniel attended a planning meeting.</p>
+<p>His company was experiencing recurring production incidents.</p>
+<p>The engineering team had proposed building an AI-powered incident investigation assistant.</p>
+<p>The idea was simple: connect an AI model to logs, metrics, alerts, and incident records, then let it help engineers investigate failures.</p>
+<p>The team was excited about the technology.</p>
+<p>They discussed models, vector databases, agent frameworks, MCP servers, and observability integrations.</p>
+<p>Daniel knew most of these technologies.</p>
+<p>He could have joined the conversation by recommending tools and architecture patterns.</p>
+<p>But this time, he asked a different question.</p>
+<p>"What business problem are we trying to solve?"</p>
+<p>The room became quiet.</p>
+<p>Someone answered: "We want to use AI to investigate incidents."</p>
+<p>Daniel followed up.</p>
+<p>"That's the solution. What's the problem?"</p>
+<p>After some discussion, they discovered that the real issue wasn't a lack of AI.</p>
+<p>The company was losing too much time during incident investigations. Engineers were switching between multiple tools, searching historical incidents, and manually correlating information.</p>
+<p>The team needed to reduce investigation time without increasing operational risk.</p>
+<p>That changed the conversation.</p>
+<p>Instead of asking:</p>
+<p><em>How do we build an AI incident investigation assistant?</em></p>
+<p>The team started asking:</p>
+<p><em>How can we reduce incident investigation time while maintaining reliability and security?</em></p>
+<p>The difference was enormous.</p>
+<p>The first question focused on implementation.</p>
+<p>The second focused on an outcome.</p>
+<p>And Daniel realized something important.</p>
+<p><strong>His greatest contribution to that meeting wasn't knowing how to build the solution. It was helping the team define what success should look like.</strong></p>
+<p>He wasn't abandoning engineering.</p>
+<p>He was applying engineering judgment at a different level.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-the-framework-own--author--act--measure">5. The Framework: Own → Author → Act → Measure<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#5-the-framework-own--author--act--measure" class="hash-link" aria-label="Direct link to 5. The Framework: Own → Author → Act → Measure" title="Direct link to 5. The Framework: Own → Author → Act → Measure" translate="no">​</a></h2>
+<p>Inspired by the podcast's Own → Author → Act approach, we can extend the framework with a fourth step: Measure.</p>
+<p>This turns narrative intelligence into something engineers can use like an iterative improvement process.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-engineers-career-adaptation-loop">The Engineer's Career Adaptation Loop<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#the-engineers-career-adaptation-loop" class="hash-link" aria-label="Direct link to The Engineer's Career Adaptation Loop" title="Direct link to The Engineer's Career Adaptation Loop" translate="no">​</a></h2>
+<p>A repeatable process for turning career uncertainty into practical growth.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1-own--understand-your-current-reality">Step 1: OWN — Understand Your Current Reality<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#step-1-own--understand-your-current-reality" class="hash-link" aria-label="Direct link to Step 1: OWN — Understand Your Current Reality" title="Direct link to Step 1: OWN — Understand Your Current Reality" translate="no">​</a></h3>
+<p>Daniel began by examining his existing skills.</p>
+<p>Instead of asking which technologies he knew, he asked which problems he was capable of solving.</p>
+<p>He created three categories.</p>
+<table><thead><tr><th>What I do today</th><th>What AI can help with</th><th>Where my experience adds value</th></tr></thead><tbody><tr><td>Write application code</td><td>Generate implementations and tests</td><td>Review correctness and architectural fit</td></tr><tr><td>Configure infrastructure</td><td>Draft Terraform and Kubernetes configurations</td><td>Evaluate security, resilience, and cost</td></tr><tr><td>Investigate incidents</td><td>Correlate logs and suggest causes</td><td>Judge evidence, impact, and recovery risk</td></tr><tr><td>Design architectures</td><td>Generate alternatives</td><td>Evaluate tradeoffs and organizational constraints</td></tr><tr><td>Review code</td><td>Identify potential issues</td><td>Decide what is acceptable for production</td></tr></tbody></table>
+<p>He noticed something surprising.</p>
+<p>Many of his technical tasks could be accelerated by AI.</p>
+<p>But his ability to understand organizational constraints, anticipate failures, and evaluate tradeoffs remained useful.</p>
+<p>Not because AI could never perform those activities.</p>
+<p>But because his company still needed someone accountable for the results.</p>
+<p>Daniel wrote down a new observation:</p>
+<blockquote>
+<p>"My experience isn't just the code I've written. It's the decisions I've made, the failures I've investigated, and the consequences I've learned to anticipate."</p>
+</blockquote>
+<p>That became the foundation of his new professional narrative.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2-author--define-who-you-want-to-become">Step 2: AUTHOR — Define Who You Want to Become<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#step-2-author--define-who-you-want-to-become" class="hash-link" aria-label="Direct link to Step 2: AUTHOR — Define Who You Want to Become" title="Direct link to Step 2: AUTHOR — Define Who You Want to Become" translate="no">​</a></h3>
+<p>Daniel didn't decide to stop being a software engineer.</p>
+<p>He decided to expand what being a software engineer meant.</p>
+<p>His old professional story was:</p>
+<p>"I'm a senior engineer who builds reliable enterprise systems."</p>
+<p>His new story became:</p>
+<p>"I'm an engineer who helps organizations deliver reliable business outcomes by combining architecture, automation, AI, and operational experience."</p>
+<p>Notice what changed.</p>
+<p>The first statement describes a technical role.</p>
+<p>The second describes a contribution.</p>
+<p>But a career narrative should not remain a statement on LinkedIn.</p>
+<p>It needs to guide real decisions.</p>
+<p>Daniel identified three responsibilities he wanted to strengthen: defining problems before selecting technologies, evaluating AI-assisted solutions against business and engineering requirements, and taking ownership of measurable outcomes.</p>
+<p>He didn't need to become an AI researcher.</p>
+<p>He needed to become more effective at using AI within his existing engineering discipline.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3-act--prove-the-new-narrative">Step 3: ACT — Prove the New Narrative<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#step-3-act--prove-the-new-narrative" class="hash-link" aria-label="Direct link to Step 3: ACT — Prove the New Narrative" title="Direct link to Step 3: ACT — Prove the New Narrative" translate="no">​</a></h3>
+<p>Daniel volunteered to lead a small experiment around incident investigation.</p>
+<p>He resisted the temptation to build an entire agent platform.</p>
+<p>Instead, he proposed a four-week pilot.</p>
+<p>The objective was to reduce investigation time for a specific category of recurring incidents.</p>
+<p>The AI system would gather relevant logs, summarize signals, retrieve similar historical incidents, and suggest possible causes.</p>
+<p>Engineers would remain responsible for evaluating recommendations and approving operational actions.</p>
+<p>Daniel used AI to accelerate implementation.</p>
+<p>But he spent more time on questions that had previously received less attention.</p>
+<p>What evidence would make an AI recommendation trustworthy?</p>
+<p>What happens when the model produces an incorrect explanation?</p>
+<p>How do we prevent sensitive operational information from leaking?</p>
+<p>When should the system stop and request human intervention?</p>
+<p>How do we measure whether the solution is actually helping?</p>
+<p>The experiment became an opportunity to practice a different kind of engineering leadership.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-4-measure--let-evidence-rewrite-the-story">Step 4: MEASURE — Let Evidence Rewrite the Story<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#step-4-measure--let-evidence-rewrite-the-story" class="hash-link" aria-label="Direct link to Step 4: MEASURE — Let Evidence Rewrite the Story" title="Direct link to Step 4: MEASURE — Let Evidence Rewrite the Story" translate="no">​</a></h3>
+<p>After four weeks, Daniel reviewed the pilot.</p>
+<p>For our fictional scenario, imagine these results:</p>
+<p>Median investigation time</p>
+<h1>45 → 28 min</h1>
+<p>38% reduction</p>
+<p>Investigations reviewed</p>
+<h1>40</h1>
+<p>Pilot sample</p>
+<p>Incorrect AI suggestions</p>
+<h1>6</h1>
+<p>Flagged during human review</p>
+<p>Unauthorized production changes</p>
+<h1>0</h1>
+<p>Human approval required</p>
+<p>These illustrative numbers don't prove the approach works everywhere. A real pilot would need a baseline, comparable incident categories, quality checks, and a larger sample before claiming reliable improvements.</p>
+<p>But they illustrate the new conversation Daniel could have with leadership.</p>
+<p>He was no longer reporting how many lines of code his team had written or how quickly they had deployed an AI assistant.</p>
+<p>He was explaining what operational problem they had addressed, what improved, what risks remained, and what should happen next.</p>
+<p><strong>He had moved from implementing a solution to owning an outcome.</strong></p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-defining-validating-and-owning-outcomes-the-new-engineering-advantage">6. Defining, Validating, and Owning Outcomes: The New Engineering Advantage<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#6-defining-validating-and-owning-outcomes-the-new-engineering-advantage" class="hash-link" aria-label="Direct link to 6. Defining, Validating, and Owning Outcomes: The New Engineering Advantage" title="Direct link to 6. Defining, Validating, and Owning Outcomes: The New Engineering Advantage" translate="no">​</a></h2>
+<p>Daniel's story reveals three capabilities worth developing.</p>
+<p>These are not replacements for technical expertise. They are ways to apply technical expertise where it has greater impact.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="defining-outcomes-are-we-solving-the-right-problem">Defining outcomes: Are we solving the right problem?<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#defining-outcomes-are-we-solving-the-right-problem" class="hash-link" aria-label="Direct link to Defining outcomes: Are we solving the right problem?" title="Direct link to Defining outcomes: Are we solving the right problem?" translate="no">​</a></h3>
+<p>Engineers often receive requests framed as solutions.</p>
+<p>"We need a chatbot."</p>
+<p>"We need to migrate to microservices."</p>
+<p>"We need AI agents."</p>
+<p>"We need to automate everything."</p>
+<p>A more outcome-oriented engineer asks what problem exists, who experiences it, how much it costs, and what improvement would justify the investment.</p>
+<p>For example, a request to build an AI customer support agent might become an objective to reduce resolution time by 25% without reducing customer satisfaction or exposing sensitive information.</p>
+<p>That objective is technology-neutral.</p>
+<p>It gives the team freedom to discover whether AI agents, deterministic workflows, improved search, or simpler process changes are the best answer.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="validating-outcomes-does-the-solution-actually-work">Validating outcomes: Does the solution actually work?<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#validating-outcomes-does-the-solution-actually-work" class="hash-link" aria-label="Direct link to Validating outcomes: Does the solution actually work?" title="Direct link to Validating outcomes: Does the solution actually work?" translate="no">​</a></h3>
+<p>AI makes prototypes easier to create.</p>
+<p>But an impressive demo is not the same as a reliable production system.</p>
+<p>An engineer who validates outcomes looks beyond whether the software executes successfully.</p>
+<p>They examine correctness, reliability, security, cost, user experience, and operational behavior.</p>
+<p>For an AI-assisted workflow, that might mean evaluating how frequently recommendations are correct, how the system handles missing context, what happens during failures, and whether humans can override decisions.</p>
+<p>The important shift is from:</p>
+<p>"The AI generated working code."</p>
+<p>To:</p>
+<p>"We have evidence that the system meets its intended requirements."</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="owning-outcomes-who-is-accountable-after-deployment">Owning outcomes: Who is accountable after deployment?<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#owning-outcomes-who-is-accountable-after-deployment" class="hash-link" aria-label="Direct link to Owning outcomes: Who is accountable after deployment?" title="Direct link to Owning outcomes: Who is accountable after deployment?" translate="no">​</a></h3>
+<p>Shipping a feature is not the end of engineering responsibility.</p>
+<p>Someone must understand whether the feature delivers value after deployment.</p>
+<p>Someone must decide when to improve it, roll it back, or retire it.</p>
+<p>Owning outcomes means participating in those decisions.</p>
+<p>It does not mean one engineer personally carries every organizational risk. Accountability must be shared through clear roles, governance, and authority.</p>
+<p>But engineers can become much more valuable when they understand the consequences of their work beyond the pull request.</p>
+<p>This is particularly important with AI because the distance between an idea and a working implementation is shrinking.</p>
+<p>The distance between a working implementation and a trustworthy business outcome is not necessarily shrinking at the same rate.</p>
+<p>That gap is an opportunity.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-the-career-story-you-tell-yourself-can-become-a-limitation">7. The Career Story You Tell Yourself Can Become a Limitation<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#7-the-career-story-you-tell-yourself-can-become-a-limitation" class="hash-link" aria-label="Direct link to 7. The Career Story You Tell Yourself Can Become a Limitation" title="Direct link to 7. The Career Story You Tell Yourself Can Become a Limitation" translate="no">​</a></h2>
+<p>Let's return to Daniel.</p>
+<p>Six months earlier, he had worried that AI was making his experience less valuable.</p>
+<p>Now, he was leading discussions about operational efficiency, AI governance, architecture, and business outcomes.</p>
+<p>His technical skills had not disappeared.</p>
+<p>He still needed to understand Kubernetes, distributed systems, application architecture, and software reliability.</p>
+<p>But he was using those skills differently.</p>
+<p>Instead of defending the tasks he had mastered, he was finding new ways to apply what he knew.</p>
+<p>That doesn't mean everyone should become an architect, manager, or product owner.</p>
+<p>Some engineers will remain deeply specialized in implementation. Others will focus on AI infrastructure, security, reliability, research, or performance engineering.</p>
+<p>Those are legitimate and potentially valuable career paths.</p>
+<p>The important point is not that everyone must move away from coding.</p>
+<p><strong>It's that your career identity should be larger than the tasks you perform today.</strong></p>
+<p>Because tasks change.</p>
+<p>Technologies change.</p>
+<p>Organizations change.</p>
+<p>And the skills that make you valuable in one period may need to be combined differently in another.</p>
+<p>Narrative intelligence gives us a way to examine those changes without treating every technological advance as a personal threat.</p>
+<p>It encourages us to ask:</p>
+<p><em>What is changing around me? What does my experience allow me to do? And what new contribution can I make?</em></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-your-turn-a-30-day-career-experiment">8. Your Turn: A 30-Day Career Experiment<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#8-your-turn-a-30-day-career-experiment" class="hash-link" aria-label="Direct link to 8. Your Turn: A 30-Day Career Experiment" title="Direct link to 8. Your Turn: A 30-Day Career Experiment" translate="no">​</a></h2>
+<p>You don't need to wait for your company to create a new position.</p>
+<p>You can start with one experiment.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="build-your-30-day-ai-career-experiment">Build your 30-day AI career experiment<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#build-your-30-day-ai-career-experiment" class="hash-link" aria-label="Direct link to Build your 30-day AI career experiment" title="Direct link to Build your 30-day AI career experiment" translate="no">​</a></h2>
+<p>Use the Own → Author → Act → Measure framework to turn a career concern into a practical plan.</p>
+<p>What's your current role?</p>
+<p>Software engineer</p>
+<p>DevOps / SRE engineer</p>
+<p>Systems architect</p>
+<p>Engineering leader</p>
+<p>What's your biggest concern?</p>
+<p>Too much time spent on implementation</p>
+<p>AI is changing the value of my skills</p>
+<p>Unclear career direction</p>
+<p>Difficulty proving my business impact</p>
+<p>What would you like to achieve?</p>
+<p>Deliver more measurable business value</p>
+<p>Move into technical leadership</p>
+<p>Become an AI-enabled specialist</p>
+<p>Find new career opportunities</p>
+<p>Suggested starting experiment</p>
+<p>[Generate my 30-day growth plan]</p>
+<p>For a self-guided version, dedicate the first week to assessing your responsibilities and the problems you solve. Spend the second week defining a new professional direction and identifying a measurable opportunity. Use the third week to run a small AI-assisted experiment. In the fourth week, evaluate what worked, what failed, and what you learned.</p>
+<p>The objective isn't to become a different professional in 30 days.</p>
+<p>It's to begin collecting evidence that supports a more valuable professional narrative.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="9-the-future-belongs-to-engineers-who-can-adapt-their-story">9. The Future Belongs to Engineers Who Can Adapt Their Story<a href="https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era#9-the-future-belongs-to-engineers-who-can-adapt-their-story" class="hash-link" aria-label="Direct link to 9. The Future Belongs to Engineers Who Can Adapt Their Story" title="Direct link to 9. The Future Belongs to Engineers Who Can Adapt Their Story" translate="no">​</a></h2>
+<p>Daniel's career didn't change because he learned one more framework.</p>
+<p>It changed because he stopped defining his value exclusively through implementation.</p>
+<p>He learned to ask better questions.</p>
+<p>He became more deliberate about validating solutions.</p>
+<p>He connected engineering decisions to business outcomes.</p>
+<p>And he started seeing AI as a capability he could use to expand his impact, rather than only as a technology that threatened his existing responsibilities.</p>
+<p>That is the deeper lesson.</p>
+<p>AI is changing how we work, but its influence goes beyond productivity.</p>
+<p>It is challenging professional identities built over decades.</p>
+<p>For some people, that challenge creates anxiety. For others, it creates an opportunity to reconsider what they can contribute.</p>
+<p>Neither reaction is unusual.</p>
+<p>But the narrative we choose to act upon matters.</p>
+<p>You may have spent 10, 15, or 20 years learning how to build systems.</p>
+<p>Those years weren't wasted because AI can now generate code.</p>
+<p>You learned how systems fail, how teams make decisions, how organizations create complexity, and why seemingly simple solutions become difficult in production.</p>
+<p>That experience can become the foundation for your next chapter.</p>
+<p><strong>Your career is not the sum of the tools you have mastered. It is the evolving story of the problems you can solve and the value you can create.</strong></p>
+<p>And the next chapter doesn't have to be written by AI.</p>
+<p>You can author it yourself.</p>
+<hr>
+<p>If AI could perform 80% of the implementation tasks you do today, <strong>what would you want the remaining 20% of your professional contribution to look like?</strong></p>
+<p>And more importantly, what would you start doing differently tomorrow to make that future possible?</p>
+<p>Editorial note: Daniel and the incident-response pilot are fictional examples. The Own → Author → Act model is inspired by the podcast discussion; the Measure stage and engineering applications are proposed extensions. The 80% question is a thought experiment, not a forecast.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[REA on a Token Diet]]></title>
             <link>https://rebelion.la/reverse-engineering-anything-rea-token-diet</link>
@@ -3596,197 +3906,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>devops</category>
             <category>ai-automation</category>
             <category>mcp-client</category>
-        </item>
-        <item>
-            <title><![CDATA[From Swagger to MCP]]></title>
-            <link>https://rebelion.la/from-swagger-to-mcp</link>
-            <guid>https://rebelion.la/from-swagger-to-mcp</guid>
-            <pubDate>Sat, 13 Sep 2025 11:00:53 GMT</pubDate>
-            <description><![CDATA[Why should you care about MCP (Model Context Protocol)? Because it's quickly becoming the bridge between APIs and AI. If APIs are the nervous system of modern software, MCP is the ]]></description>
-            <content:encoded><![CDATA[<p><strong>Why should you care about MCP (Model Context Protocol)?</strong> Because it's quickly becoming the bridge between APIs and AI. If APIs are the nervous system of modern software, MCP is the translator that makes them accessible to large language models (LLMs) and AI agents.</p>
-<p>In this post, I'll show you how to take a <strong>Swagger (OpenAPI) specification</strong> and, with just one command, spin up an <strong>MCP server</strong> ready to power copilots, agents, and AI-native applications.</p>
-<p>And here's the kicker: <strong>you won't write a single line of code.</strong></p>
-<p>👉 At the end, you'll also find the video walkthrough where I demo this live.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tldr">TL;DR<a href="https://rebelion.la/from-swagger-to-mcp#tldr" class="hash-link" aria-label="Direct link to TL;DR" title="Direct link to TL;DR" translate="no">​</a></h2>
-<p>For those in a hurry, here's the TL;DR:</p>
-<ul>
-<li class="">
-<p><strong>MCP</strong> standardizes how AI agents interact with APIs, eliminating the need for custom integrations.</p>
-</li>
-<li class="">
-<p>You can convert <strong>OpenAPI specs into MCP servers</strong> effortlessly, and you can have an MCP server up and running in minutes, making your APIs AI-ready.</p>
-</li>
-<li class="">
-<p>This approach saves time, reduces costs, and future-proofs your API strategy.</p>
-</li>
-</ul>
-<p>That's not all, from the date this post was written (September, 2025), many things are happening in the MCP ecosystem, AI time is moving fast:</p>
-<p>Here's some great news! You can now explore MCP-related skills on <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer" class="">Skills.sh</a>, making it easier to work with MCP servers and APIs. For specific details, check out <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer" class="">Agent skills</a>.</p>
-<p>If you're interested in building MCP servers using <strong>OpenAPI</strong> specs, be sure to visit <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">hapi.mcp.com.ai</a>. Plus, our community offers fantastic tools: convert OpenAPI to MCP with <a href="https://skills.sh/mcp-com-ai/api-to-mcp-skills/swagger-to-mcp" target="_blank" rel="noopener noreferrer" class="">swagger-to-mcp skill</a> and evaluate MCP servers with <a href="https://skills.sh/mcp-com-ai/mcp-server-evaluations" target="_blank" rel="noopener noreferrer" class="">mcp-server-evaluations skill</a>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="business-impact-first">Business Impact First<a href="https://rebelion.la/from-swagger-to-mcp#business-impact-first" class="hash-link" aria-label="Direct link to Business Impact First" title="Direct link to Business Impact First" translate="no">​</a></h2>
-<p>When considering the adoption of MCP, it's essential to understand the tangible benefits it brings to both technical teams and business stakeholders.</p>
-<p>For businesses, MCP eliminates the need for costly and time-consuming custom integrations. Standardizing how APIs interact with AI agents reduces the reliance on fragile, one-off connectors that often lead to maintenance headaches. This translates directly into <strong>cost savings</strong> and <strong>reduced operational risk</strong>.</p>
-<p>From a time-to-market perspective, MCP accelerates the process of making APIs AI-ready. Instead of spending weeks or months building glue code, teams can leverage MCP to instantly expose their APIs to AI agents. This means businesses can respond faster to market demands and stay ahead of competitors.</p>
-<p>Moreover, MCP positions organizations for the future. As AI agents become a standard part of digital ecosystems, having APIs that are already consumable by these agents ensures <strong>future-proofing</strong>. This strategic alignment not only supports innovation but also minimizes disruption as AI adoption grows.</p>
-<p>For executives, MCP aligns with broader business strategies by enabling agility and reducing technical debt. For engineers, it simplifies workflows, allowing them to focus on delivering value rather than wrestling with integration challenges.</p>
-<p>In short, MCP bridges the gap between technical efficiency and business impact, making it a win-win for all stakeholders.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-what-is-mcp-really">🤔 What is MCP, Really?<a href="https://rebelion.la/from-swagger-to-mcp#-what-is-mcp-really" class="hash-link" aria-label="Direct link to 🤔 What is MCP, Really?" title="Direct link to 🤔 What is MCP, Really?" translate="no">​</a></h2>
-<p>MCP (Model Context Protocol) is like <strong>REST for AI agents</strong>.</p>
-<ul>
-<li class="">
-<p>It defines how agents (Copilot, LangChain, custom LLMs, etc.) can discover, connect to, and use APIs.</p>
-</li>
-<li class="">
-<p>It standardizes interactions so we don't reinvent integration every time.</p>
-</li>
-<li class="">
-<p>It's designed to be <strong>open, language-agnostic, and scalable</strong>.</p>
-</li>
-</ul>
-<p>If you think about it, APIs revolutionized cloud services by making them programmable. Similarly, <strong>MCP is transforming APIs into agent-consumable interfaces.</strong> To achieve this, API providers can leverage their existing OpenAPI specifications to seamlessly expose their APIs in a way that MCP clients can readily understand and utilize; that's why MCP and OpenAPI are a perfect match.</p>
-<p><img decoding="async" loading="lazy" src="https://i.imgur.com/M9Sc64o.jpeg" alt="spider-man-meme-3-dimensions" class="img_ev3q"></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="️-the-technical-challenge">🛠️ The Technical Challenge<a href="https://rebelion.la/from-swagger-to-mcp#%EF%B8%8F-the-technical-challenge" class="hash-link" aria-label="Direct link to 🛠️ The Technical Challenge" title="Direct link to 🛠️ The Technical Challenge" translate="no">​</a></h2>
-<p>Traditionally, if you wanted your AI copilot to talk to your API, you had to:</p>
-<ol>
-<li class="">
-<p>Write custom wrappers.</p>
-</li>
-<li class="">
-<p>Manually map endpoints to AI tools.</p>
-</li>
-<li class="">
-<p>Deal with endless schema alignment issues.</p>
-</li>
-</ol>
-<p>This is fragile, time-consuming, and expensive.</p>
-<p><strong>Enter HAPI: Your Shortcut to MCP Servers</strong></p>
-<p>Imagine a tool that takes your <strong>Swagger/OpenAPI specification</strong> and, with minimal effort, transforms it into a fully functional MCP server. That's exactly what <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI</strong></a> does.</p>
-<p><a href="https://docs.mcp.com.ai/components/hapi-server/" target="_blank" rel="noopener noreferrer" class="">HAPI</a> is a framework designed to simplify the process of creating MCP servers. It eliminates the complexity of manual integration by instantly exposing your API as an MCP server. With HAPI, you can bridge the gap between your APIs and AI agents in just a few steps—no coding required.</p>
-<p>Whether you're working with a simple API or a complex enterprise-grade system, HAPI ensures that your APIs are AI-ready, scalable, and easy to manage. It's the ultimate enabler for teams looking to unlock the potential of AI-driven applications without the usual headaches of custom development.</p>
-<p>Get the latest version of HAPI from <a href="https://github.com/la-rebelion/hapimcp/releases/" target="_blank" rel="noopener noreferrer" class="">GitHub</a>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-the-simplest-way-to-create-an-mcp-server">⚡ The Simplest Way to Create an MCP Server<a href="https://rebelion.la/from-swagger-to-mcp#-the-simplest-way-to-create-an-mcp-server" class="hash-link" aria-label="Direct link to ⚡ The Simplest Way to Create an MCP Server" title="Direct link to ⚡ The Simplest Way to Create an MCP Server" translate="no">​</a></h2>
-<p>Here's how I did it in the demo video (below):</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-start-with-swagger-spec">1. Start with Swagger Spec<a href="https://rebelion.la/from-swagger-to-mcp#1-start-with-swagger-spec" class="hash-link" aria-label="Direct link to 1. Start with Swagger Spec" title="Direct link to 1. Start with Swagger Spec" translate="no">​</a></h3>
-<p>I used the famous <a href="https://petstore3.swagger.io/" target="_blank" rel="noopener noreferrer" class="">PetStore Swagger example</a>. This gives us a simple API with endpoints like:</p>
-<ul>
-<li class="">
-<p><code>GET /pet/{id}</code> → Get pet by ID</p>
-</li>
-<li class="">
-<p><code>GET /pet/findByStatus</code> → Find pets by status</p>
-</li>
-</ul>
-<p>No coding needed. Just the API spec.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-store-the-spec-locally">2. Store the Spec Locally<a href="https://rebelion.la/from-swagger-to-mcp#2-store-the-spec-locally" class="hash-link" aria-label="Direct link to 2. Store the Spec Locally" title="Direct link to 2. Store the Spec Locally" translate="no">​</a></h3>
-<p>Download the spec and save it locally. This gives us a blueprint of endpoints and operations.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-run-hapi">3. Run HAPI<a href="https://rebelion.la/from-swagger-to-mcp#3-run-hapi" class="hash-link" aria-label="Direct link to 3. Run HAPI" title="Direct link to 3. Run HAPI" translate="no">​</a></h3>
-<p>Now the magic:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">hapi serve petstore --headless</span><br></div></code></pre></div></div>
-<p>That's it.</p>
-<ul>
-<li class="">
-<p><code>--headless</code> tells HAPI to consume services from the backend directly (the head).</p>
-</li>
-<li class="">
-<p>The MCP server is now running locally on port <strong>3000</strong>.</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-connect-to-vs-code">4. Connect to VS Code<a href="https://rebelion.la/from-swagger-to-mcp#4-connect-to-vs-code" class="hash-link" aria-label="Direct link to 4. Connect to VS Code" title="Direct link to 4. Connect to VS Code" translate="no">​</a></h3>
-<p>Open VS Code, add an MCP server configuration:</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Petstore MCP"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token property">"url"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"http://localhost:3000/mcp"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></div></code></pre></div></div>
-<p>Start the server, connect, and you'll see <strong>19 tools exposed automatically.</strong></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-putting-it-to-the-test">🔍 Putting It to the Test<a href="https://rebelion.la/from-swagger-to-mcp#-putting-it-to-the-test" class="hash-link" aria-label="Direct link to 🔍 Putting It to the Test" title="Direct link to 🔍 Putting It to the Test" translate="no">​</a></h2>
-<p>Once connected, you can:</p>
-<ul>
-<li class="">
-<p>Ask your AI copilot: <em>"Get pets by status available."</em></p>
-</li>
-<li class="">
-<p>The LLM resolves the correct MCP tool (<code>findPetsByStatus</code>).</p>
-</li>
-<li class="">
-<p>The response comes back instantly, just like hitting the API.</p>
-</li>
-</ul>
-<p>Example:</p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"id"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">10</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"doggie"</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"category"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"id"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"Dogs"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"photoUrls"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token string" style="color:rgb(255, 121, 198)">"string"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"tags"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"id"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">0</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token property">"name"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"string"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token property">"status"</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">"available"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><br></div></code></pre></div></div>
-<p>And it works the same if you hit the API directly.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-why-this-matters-for-ai-agents">🎯 Why This Matters for AI Agents<a href="https://rebelion.la/from-swagger-to-mcp#-why-this-matters-for-ai-agents" class="hash-link" aria-label="Direct link to 🎯 Why This Matters for AI Agents" title="Direct link to 🎯 Why This Matters for AI Agents" translate="no">​</a></h2>
-<p>With MCP:</p>
-<ul>
-<li class="">
-<p>AI copilots <strong>don't need custom wrappers</strong> anymore.</p>
-</li>
-<li class="">
-<p>LLMs can <strong>auto-discover tools</strong> via your API spec.</p>
-</li>
-<li class="">
-<p>You can <strong>control which endpoints</strong> are exposed to the agent (important for governance and security).</p>
-</li>
-</ul>
-<p>This transforms any API into an <strong>AI-first product</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-sneak-peek-adding-oauth2">🔒 Sneak Peek: Adding OAuth2<a href="https://rebelion.la/from-swagger-to-mcp#-sneak-peek-adding-oauth2" class="hash-link" aria-label="Direct link to 🔒 Sneak Peek: Adding OAuth2" title="Direct link to 🔒 Sneak Peek: Adding OAuth2" translate="no">​</a></h2>
-<p>In the next step (and in the upcoming video), I'll show how you can <strong>inject OAuth2 authentication</strong> directly into the Swagger spec.</p>
-<ul>
-<li class="">
-<p>No extra code.</p>
-</li>
-<li class="">
-<p>HAPI auto-detects the auth configuration.</p>
-</li>
-<li class="">
-<p>You can integrate with providers like <a href="https://goauthentik.io/" target="_blank" rel="noopener noreferrer" class=""><strong>Authentik</strong></a> seamlessly.</p>
-</li>
-</ul>
-<p>This makes MCP servers not just easy but also <strong>enterprise-ready</strong>.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-watch-the-walkthrough">📺 Watch the Walkthrough<a href="https://rebelion.la/from-swagger-to-mcp#-watch-the-walkthrough" class="hash-link" aria-label="Direct link to 📺 Watch the Walkthrough" title="Direct link to 📺 Watch the Walkthrough" translate="no">​</a></h2>
-<p>Here's the full demo where I set up the MCP server in real time:</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/tkiJXIcFtOw" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="faq">FAQ<a href="https://rebelion.la/from-swagger-to-mcp#faq" class="hash-link" aria-label="Direct link to FAQ" title="Direct link to FAQ" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-mcp-model-context-protocol">What is MCP (Model Context Protocol)?<a href="https://rebelion.la/from-swagger-to-mcp#what-is-mcp-model-context-protocol" class="hash-link" aria-label="Direct link to What is MCP (Model Context Protocol)?" title="Direct link to What is MCP (Model Context Protocol)?" translate="no">​</a></h3>
-<p>MCP is a standard that lets AI agents discover and use tools exposed by APIs in a consistent, secure, and auditable way.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-the-fastest-way-to-convert-an-openapi-swagger-spec-into-an-mcp-server">What is the fastest way to convert an OpenAPI (Swagger) spec into an MCP server?<a href="https://rebelion.la/from-swagger-to-mcp#what-is-the-fastest-way-to-convert-an-openapi-swagger-spec-into-an-mcp-server" class="hash-link" aria-label="Direct link to What is the fastest way to convert an OpenAPI (Swagger) spec into an MCP server?" title="Direct link to What is the fastest way to convert an OpenAPI (Swagger) spec into an MCP server?" translate="no">​</a></h3>
-<p>Use HAPI. With a single command like <code>hapi serve &lt;project&gt; --headless</code>, you can generate an MCP server without writing custom code.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="do-i-need-to-write-code-to-create-an-mcp-server-from-swaggeropenapi">Do I need to write code to create an MCP server from Swagger/OpenAPI?<a href="https://rebelion.la/from-swagger-to-mcp#do-i-need-to-write-code-to-create-an-mcp-server-from-swaggeropenapi" class="hash-link" aria-label="Direct link to Do I need to write code to create an MCP server from Swagger/OpenAPI?" title="Direct link to Do I need to write code to create an MCP server from Swagger/OpenAPI?" translate="no">​</a></h3>
-<p>No. <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI</a> can turn an OpenAPI v3 spec into an MCP server with zero custom code. Skill available: <a href="https://skills.sh/mcp-com-ai/api-to-mcp-skills/swagger-to-mcp" target="_blank" rel="noopener noreferrer" class="">swagger-to-mcp</a>.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="does-mcp-work-with-openapi-v2-swagger-20">Does MCP work with OpenAPI v2 (Swagger 2.0)?<a href="https://rebelion.la/from-swagger-to-mcp#does-mcp-work-with-openapi-v2-swagger-20" class="hash-link" aria-label="Direct link to Does MCP work with OpenAPI v2 (Swagger 2.0)?" title="Direct link to Does MCP work with OpenAPI v2 (Swagger 2.0)?" translate="no">​</a></h3>
-<p>HAPI requires OpenAPI v3.x. If you have Swagger 2.0, <a href="https://converter.swagger.io/" target="_blank" rel="noopener noreferrer" class="">convert it to OpenAPI v3</a> first.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-is-the-mcp-endpoint-when-using-hapi">Where is the MCP endpoint when using HAPI?<a href="https://rebelion.la/from-swagger-to-mcp#where-is-the-mcp-endpoint-when-using-hapi" class="hash-link" aria-label="Direct link to Where is the MCP endpoint when using HAPI?" title="Direct link to Where is the MCP endpoint when using HAPI?" translate="no">​</a></h3>
-<p>By default, MCP is available at <code>http://localhost:3000/mcp</code> (or the port you configure).</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-do-ai-agents-discover-tools-in-mcp">How do AI agents discover tools in MCP?<a href="https://rebelion.la/from-swagger-to-mcp#how-do-ai-agents-discover-tools-in-mcp" class="hash-link" aria-label="Direct link to How do AI agents discover tools in MCP?" title="Direct link to How do AI agents discover tools in MCP?" translate="no">​</a></h3>
-<p>Agents call <code>tools/list</code> on the MCP server, which returns the tool catalog derived from your OpenAPI operations.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="can-i-control-which-api-endpoints-are-exposed-as-tools">Can I control which API endpoints are exposed as tools?<a href="https://rebelion.la/from-swagger-to-mcp#can-i-control-which-api-endpoints-are-exposed-as-tools" class="hash-link" aria-label="Direct link to Can I control which API endpoints are exposed as tools?" title="Direct link to Can I control which API endpoints are exposed as tools?" translate="no">​</a></h3>
-<p>Yes. You can limit exposure by curating your OpenAPI spec or providing a filtered spec for MCP generation.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="is-mcp-secure-for-enterprise-use">Is MCP secure for enterprise use?<a href="https://rebelion.la/from-swagger-to-mcp#is-mcp-secure-for-enterprise-use" class="hash-link" aria-label="Direct link to Is MCP secure for enterprise use?" title="Direct link to Is MCP secure for enterprise use?" translate="no">​</a></h3>
-<p>Yes, when deployed with proper auth (OAuth2, API keys, etc.) and policy enforcement at the boundary. MCP keeps authority outside the model.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="can-i-deploy-mcp-servers-to-the-cloud">Can I deploy MCP servers to the cloud?<a href="https://rebelion.la/from-swagger-to-mcp#can-i-deploy-mcp-servers-to-the-cloud" class="hash-link" aria-label="Direct link to Can I deploy MCP servers to the cloud?" title="Direct link to Can I deploy MCP servers to the cloud?" translate="no">​</a></h3>
-<p>Yes. HAPI supports deployments to <a href="https://www.cloudflare.com/developer-platform/products/workers/" target="_blank" rel="noopener noreferrer" class="">Cloudflare Workers</a>, <a href="https://hub.docker.com/r/hapimcp/hapi-cli" target="_blank" rel="noopener noreferrer" class="">Docker</a>, <a href="https://fly.io/" target="_blank" rel="noopener noreferrer" class="">Fly.io</a>, and other environments.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-do-i-test-if-my-mcp-server-works">How do I test if my MCP server works?<a href="https://rebelion.la/from-swagger-to-mcp#how-do-i-test-if-my-mcp-server-works" class="hash-link" aria-label="Direct link to How do I test if my MCP server works?" title="Direct link to How do I test if my MCP server works?" translate="no">​</a></h3>
-<p>Check <code>/health</code>, call <code>ping</code>, list tools with <code>tools/list</code>, and run a sample tool call. You can also use the <a href="https://skills.sh/mcp-com-ai/mcp-server-evaluations" target="_blank" rel="noopener noreferrer" class="">mcp-server-evaluations skill</a> for a structured test.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-the-difference-between-mcp-and-rest">What’s the difference between MCP and REST?<a href="https://rebelion.la/from-swagger-to-mcp#whats-the-difference-between-mcp-and-rest" class="hash-link" aria-label="Direct link to What’s the difference between MCP and REST?" title="Direct link to What’s the difference between MCP and REST?" translate="no">​</a></h3>
-<p>REST is an API style. MCP is a protocol for how AI agents discover and invoke tools, often backed by REST APIs.</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-does-mcp-improve-seoaeo-for-apis">How does MCP improve SEO/AEO for APIs?<a href="https://rebelion.la/from-swagger-to-mcp#how-does-mcp-improve-seoaeo-for-apis" class="hash-link" aria-label="Direct link to How does MCP improve SEO/AEO for APIs?" title="Direct link to How does MCP improve SEO/AEO for APIs?" translate="no">​</a></h3>
-<p>It makes APIs machine-discoverable for AI agents, increasing tool discoverability and enabling answer engines to access structured actions.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-go-rebels">✊ Go Rebels<a href="https://rebelion.la/from-swagger-to-mcp#-go-rebels" class="hash-link" aria-label="Direct link to ✊ Go Rebels" title="Direct link to ✊ Go Rebels" translate="no">​</a></h2>
-<p>At <strong>La Rebelion</strong>, we believe in tools that <strong>remove friction</strong> and let engineers (and businesses) focus on what matters: building value.</p>
-<p>MCP is more than just another protocol. It's the bridge between your APIs and the AI-native future.</p>
-<p>So, go ahead. Try it with your own Swagger spec. You'll see just how easy it is.</p>
-<p><strong>The future of API integration is agent-first. And it starts with MCP.</strong></p>
-<hr>
-<p>💡 Pro tip: Share this with your engineering team and product leaders. MCP will impact <strong>both sides</strong> of the business equation — execution and strategy.</p>]]></content:encoded>
-            <category>swagger</category>
-            <category>openapi</category>
-            <category>mcp-server</category>
         </item>
     </channel>
 </rss>
