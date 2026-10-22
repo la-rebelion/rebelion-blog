@@ -1,12 +1,12 @@
 ---
 title: Privacy Policy
-description: Privacy Policy for La Rebelion Labs, including rebelion.la, mcp.com.ai, clawne.me, and clawster.my.
+description: Privacy Policy for La Rebelion Labs and its products, including Qontent Tube.
 slug: /privacy
 ---
 
 # Privacy Policy
 
-**Last updated:** June 4, 2026
+**Last updated:** October 21, 2026
 
 La Rebelion Labs (“**La Rebelion Labs**,” “**we**,” “**us**,” or “**our**”) operates websites, products, software, platforms, communities, documentation, and related services under the La Rebelion Labs umbrella.
 
@@ -16,9 +16,11 @@ This Privacy Policy applies to:
 - [https://mcp.com.ai](https://mcp.com.ai)
 - [https://clawne.me](https://clawne.me)
 - [https://clawster.my](https://clawster.my)
+- [https://qontent.tube](https://qontent.tube)
 - HAPI MCP Stack
 - My Clawster
 - Clawne Me
+- Qontent Tube
 - La Rebelion Labs memberships, labs, content, documentation, templates, examples, and related developer resources
 
 Together, these are referred to as the “**Services**.”

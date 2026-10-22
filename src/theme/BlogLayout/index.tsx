@@ -1,7 +1,7 @@
 import React, {type ReactNode, useState} from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
-import BlogSidebar from '@theme/BlogSidebar';
+import BlogSidebar from '@site/src/theme/BlogSidebar';
 import type {Props} from '@theme/BlogLayout';
 
 export default function BlogLayout(props: Props): ReactNode {

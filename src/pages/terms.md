@@ -1,12 +1,12 @@
 ---
 title: Terms of Service
-description: Terms of Service for La Rebelion Labs, including rebelion.la, mcp.com.ai, clawne.me, and clawster.my.
+description: Terms of Service for La Rebelion Labs and its products, including Qontent Tube.
 slug: /terms
 ---
 
 # Terms of Service
 
-**Last updated:** June 4, 2026
+**Last updated:** October 21, 2026
 
 These Terms of Service (“**Terms**”) govern your access to and use of the websites, products, software, platforms, services, documentation, communities, and related offerings operated by **La Rebelion Labs** (“**La Rebelion Labs**,” “**we**,” “**us**,” or “**our**”).
 
@@ -16,9 +16,11 @@ These Terms apply to La Rebelion Labs and its related projects, including:
 - [https://mcp.com.ai](https://mcp.com.ai)
 - [https://clawne.me](https://clawne.me)
 - [https://clawster.my](https://clawster.my)
+- [https://qontent.tube](https://qontent.tube)
 - HAPI MCP Stack
 - My Clawster
 - Clawne Me
+- Qontent Tube
 - La Rebelion Labs memberships, labs, content, documentation, templates, examples, and related developer resources
 
 Together, these are referred to as the “**Services**.”
@@ -67,6 +69,10 @@ A platform and enterprise portal for managing agent infrastructure, configuratio
 ### Clawne Me
 
 A user-facing AI assistant and automation experience designed to help users interact with agents, workflows, tools, and connected systems through simplified interfaces.
+
+### Qontent Tube
+
+A local-first desktop voice studio for turning Markdown scripts into organized, multi-voice narration. Its current early-adopter license is limited to the private pre-launch program and does not automatically include the public release. Product-specific license terms, purchase details, and privacy disclosures also apply.
 
 ### Related Projects
 

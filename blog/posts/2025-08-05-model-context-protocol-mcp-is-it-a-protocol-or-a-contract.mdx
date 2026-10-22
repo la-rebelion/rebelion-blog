@@ -1,6 +1,6 @@
 ---
 title: Model Context Protocol (MCP) — Is it a protocol or a contract?
-description: Since its introduction, MCP has sparked fascinating discussions across developer communities. If you're new to the concept, you can browse Reddit to see the ongoing debate surround
+description: MCP borrowed its shape from the Language Server Protocol, but its real value is the contract. Updated for 2026, when MCP went stateless and agents got their own contracts with A2A Agent Cards.
 date: 2025-08-05T17:19:15.000Z
 slug: model-context-protocol-mcp-is-it-a-protocol-or-a-contract
 authors:
@@ -24,25 +24,31 @@ keywords:
   - mcp
 ---
 
-Since its introduction, MCP has sparked fascinating discussions across developer communities. If you're new to the concept, you can browse Reddit to see the ongoing debate surrounding it, with both proponents and opponents.
+:::info Updated October 2026
+When I wrote this in August 2025, "MCP is a contract" was a hunch. Since then, the specification itself has moved in that direction: the 2026-07-28 revision removed the `initialize` handshake and protocol-level sessions entirely. I've added what changed, and what it means, at the end of each section.
+:::
 
-When I first discovered MCP in late November 2024, I was immediately intrigued by its potential. It seemed like the missing piece in how we communicate with systems using natural language—a problem I was already trying to tackle with my CLI tools `gyat` and `hapi`. I created a [blog](https://apicove.com/blog) to help others understand these tools and make API interactions more human-friendly. However, these tools worked algorithmically with deterministic workflows; they couldn't systematically interact with AI models.
+Since its introduction, MCP has sparked fascinating discussions across developer communities, with both proponents and opponents.
 
-Anthropic's MCP caught my attention because it **appeared to offer a solution**—a way to standardize natural language communication with systems, benefiting both developers and users. Initially, I saw MCP as a protocol that could bridge the gap between human language and machine comprehension.
+When I first discovered MCP in late November 2024, I was immediately intrigued by its potential. It seemed like the missing piece in how we communicate with systems using natural language, a problem I was already trying to tackle with my CLI tools `gyat` and `hapi`. However, those tools worked algorithmically, with deterministic workflows; they couldn't systematically interact with AI models.
 
-## My Journey with MCP
+{/* truncate */}
 
-I immediately began experimenting with MCP, integrating it into my tools and workflows. The simplicity of adding tools to Claude's desktop interface was compelling—it felt like a natural evolution beyond traditional APIs and protocols.
+Anthropic's MCP caught my attention because it **appeared to offer a solution**: a way to standardize natural-language communication with systems, for developers and users alike. Initially, I saw MCP as a protocol that could bridge the gap between human language and machine comprehension.
 
-However, there was a catch. The initial learning curve was steep, and troubleshooting was a challenging task. I wanted to help others facing similar struggles by making MCP more accessible without requiring deep technical understanding.
+## My journey with MCP
 
-Through writing about my experiences and sharing practical tips, my understanding evolved in tandem with the specifications. A pivotal moment came when MCP introduced **Streamable HTTP** (Protocol Revision: 2025-03-26) as a transport method. This shift helped me realize that **MCP isn't purely a protocol—it's fundamentally a contract** that emphasizes interaction semantics rather than just data transfer mechanics.
+I immediately began experimenting with MCP, integrating it into my tools and workflows. The simplicity of adding tools to Claude's desktop interface was compelling; it felt like a natural evolution beyond traditional APIs and protocols.
 
-This revelation clarified how MCP could function at a higher level. Since my `gyat` and `hapi` CLI tools were designed to be API-first, and MCP fits seamlessly into that approach—not just defining how systems communicate, but how they should behave.
+There was a catch, though. The initial learning curve was steep, and troubleshooting was hard. I wanted to help others facing the same struggles by making MCP more accessible without requiring deep technical understanding.
 
-## The LSP Connection: Understanding MCP's Roots
+Through writing about my experiences, my understanding evolved along with the specification. A pivotal moment came when MCP introduced **Streamable HTTP** (protocol revision 2025-03-26) as a transport. That shift helped me realize that **MCP isn't purely a protocol; it's fundamentally a contract** that emphasizes interaction semantics rather than data-transfer mechanics.
 
-To understand what MCP truly is, let's examine its foundation. Do you recognize this JSON structure?
+Since my `gyat` and `hapi` CLI tools were designed to be API-first, MCP fit right in: it doesn't just define how systems communicate, it defines how they should behave.
+
+## The LSP connection: understanding MCP's roots
+
+To understand what MCP is, let's look at its foundation. Do you recognize this JSON structure?
 
 ```json
 Content-Length: ...\r\n
@@ -98,9 +104,9 @@ interface ResponseMessage extends Message {
 }
 ```
 
-No, it is not MCP. This is the [**Language Server Protocol (LSP)**](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#contentPart)—a protocol that standardizes how development tools communicate with programming language servers. LSP enables editors and IDEs to provide features such as code completion, linting, and refactoring **across different languages without implementing language-specific logic in each tool**.
+No, it isn't MCP. This is the [**Language Server Protocol (LSP)**](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#contentPart), which standardizes how development tools talk to programming-language servers. LSP lets editors and IDEs offer code completion, linting and refactoring **across languages, without language-specific logic in each tool**.
 
-The lifecycle message flows of LSP and MCP are strikingly similar:
+The lifecycle message flows of LSP and the original MCP were strikingly similar:
 
 ```mermaid
 sequenceDiagram
@@ -119,163 +125,151 @@ sequenceDiagram
 
 ![LSP and MCP are strikingly similar](https://media.tenor.com/QXVs4QWLlzkAAAAM/spider-man.gif)
 
-### Why LSP Matters for Understanding MCP?
+### Why LSP matters for understanding MCP
 
-LSP revolutionized software development by solving a critical integration problem. Before LSP, supporting code intelligence across multiple programming languages meant **writing M × N integrations—M tools for N editors**. Each language had its peculiarities, and each editor had its API, resulting in expensive, fragile, and inefficient custom integrations.
+LSP revolutionized software development by solving an integration problem. Before LSP, supporting code intelligence meant **M × N integrations: M languages for N editors**, each one expensive and fragile.
 
-LSP introduced a **universal interface** for language servers. Instead of each editor implementing custom logic for every language, they could all speak the same protocol. **Once a language server was built, any LSP-compliant editor could use it.**
+LSP introduced a **universal interface**. Once a language server was built, any LSP-compliant editor could use it.
 
-**Sound familiar?** This is precisely what MCP aims to achieve for AI model interactions. *Once an API implements an MCP Server, any compliant client can interact with it without needing custom logic for each client*.
+**Sound familiar?** That's exactly what MCP does for AI: *once an API is exposed as an MCP server, any compliant client can use it without custom logic for each client.*
 
-## The Strategic Launch: Lucky or Smart?
+:::note What changed in 2026
+MCP has since parted ways with LSP's lifecycle. In the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28/changelog), the `initialize` / `notifications/initialized` handshake is gone, and so are protocol-level sessions and the `Mcp-Session-Id` header. Every request now carries its own protocol version and client capabilities in `_meta`, and servers advertise what they support through a new `server/discover` request. MCP kept LSP's best idea, one interface for many clients, and dropped the stateful ceremony.
+:::
+
+## The strategic launch: lucky or smart?
 
 **Timeline:**
 
-* MCP SDK made [public on GitHub: October 23rd, 2024](https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/0.1.0)
-    
-* Claude desktop [released: October 31st, 2024](https://docs.anthropic.com/en/release-notes/claude-apps#october-31st%2C-2024)
-    
+- MCP SDK made [public on GitHub: October 23, 2024](https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/0.1.0)
+- Claude desktop [released: October 31, 2024](https://docs.anthropic.com/en/release-notes/claude-apps#october-31st%2C-2024)
 
-The buzz around MCP is largely thanks to Claude desktop—the first MCP client. Anthropic made a brilliant move by recognizing LSP's potential and applying similar principles to AI model interactions.
+Much of the early buzz around MCP came from Claude desktop, the first MCP client. Anthropic made a smart move by recognizing LSP's potential and applying the same principles to AI model interactions.
 
-Despite the controversial choice of using `stdio` as the initial transport layer, it was strategically sound, providing a lightweight and efficient communication method that made it easier for developers to build AI-powered tools locally.
+The choice of `stdio` as the first transport was controversial, but it was strategically sound: lightweight and direct, ideal when client and server run on the same machine, which was the case for Claude desktop and the first MCP servers.
 
-Why not use HTTP? **HTTP is a heavyweight protocol** with built-in features that aren't always necessary for simple interactions. `stdio` is simpler, faster, and more direct—ideal for local applications where both client and server are on the same machine, which was the case for Claude desktop and the initial MCP implementations.
+### Understanding stdio
 
-### Understanding STDIO
+**stdio (standard input/output)** comes from the C runtime and UNIX-like systems, and consists of three standard streams:
 
-**STDIO (Standard Input/Output)** is defined by the C runtime and inherited by UNIX-like systems, consisting of three standard file descriptors:
+- **stdin** (0): input
+- **stdout** (1): output
+- **stderr** (2): errors
 
-* **stdin** (0): input stream
-    
-* **stdout** (1): output stream
-    
-* **stderr** (2): error stream
-    
+They're just **file streams**, attached to terminals, pipes or redirects. stdio is a transport for higher-level protocols.
 
-These are simply **file streams**, often attached to terminals, pipes, or redirected. STDIO serves as the transport layer for higher-level protocols.
-
-**Analogy:** If **HTTP is like postal mail**, STDIO is like **hand-delivering messages through a tube**—simpler, faster, and ideal when sender and receiver are in close proximity.
+**Analogy:** if **HTTP is postal mail**, stdio is **passing notes through a tube**: simpler and faster when sender and receiver sit side by side.
 
 ![](https://media1.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YTRycWI5cnhlczZsN3Q1cWR6aXZ5MTUwazZ2b2wzdHZvN2lsZXR3ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/hTsAAaYV5nRjq/200.webp)
 
-The community's push toward HTTP as a transport layer makes sense—it's familiar, widely supported, and includes built-in features like headers, status codes, and content negotiation. For me, the introduction of [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) transport in `version 2025-03-26` was transformative, making MCP more accessible and easier to integrate into existing systems.
+The community's push toward HTTP made sense: it's familiar, widely supported, and comes with headers, status codes and content negotiation. For me, [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) in revision 2025-03-26 was transformative.
 
-## MCP as Contract, Not Protocol
+:::note What changed in 2026
+Both transports remain standard, and the 2026-07-28 [transports page](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports) states it plainly: "Protocol semantics are identical on every transport." On Streamable HTTP, each message is one HTTP POST to a single MCP endpoint. A transport is now explicitly just a *binding*. The meaning lives above it, in the contract.
+:::
 
-This brings us to the core insight: **MCP is not just another protocol; it's a semantic layer** that enables **intelligent API interactions**. It allows agents to understand not only the data, but also the **intent and context** behind it.
+## MCP as a contract, not a protocol
 
-Consider this question: *Where do tools like Swagger/OpenAPI Specification (OAS) fit into networking architectures such as the OSI model?*
+This brings us to the core insight: **MCP is not just another protocol; it's a semantic layer** that enables **intelligent API interactions**. It lets agents understand not just the data, but the **intent and context** behind it.
 
-They don't fit neatly, and that's perfectly fine. **Swagger/OAS isn't a protocol in the traditional sense—it's a contract** that defines how systems should interact.
+Consider this question: *where do Swagger/OpenAPI (OAS) fit in a networking model such as OSI?*
 
-### Why Swagger/OAS Doesn't Fit the OSI Model
+They don't fit neatly, and that's fine. **Swagger/OAS isn't a protocol in the traditional sense; it's a contract** that defines how systems should interact.
 
-The **OSI model** describes **how** data is transmitted across networks—from physical wire (Layer 1) to applications (Layer 7).
+### Why Swagger/OAS doesn't fit the OSI model
+
+The **OSI model** describes **how** data moves across networks, from the physical wire (layer 1) to applications (layer 7).
 
 Swagger/OAS, by contrast:
 
-* Doesn't handle **transport** (Layer 4)
-    
-* Doesn't define **sessions** (Layer 5)
-    
-* Isn't concerned with **encoding** (Layer 6)
-    
-* It isn’t a **runtime application** (Layer 7)
-    
+- doesn't handle **transport** (layer 4);
+- doesn't define **sessions** (layer 5);
+- isn't concerned with **encoding** (layer 6);
+- isn't a **runtime application** (layer 7).
 
 Instead, it:
 
-* **Describes APIs**—endpoints, parameters, responses, and authentication
-    
-* **Acts as metadata** for client-service interactions over HTTP
-    
+- **describes APIs**: endpoints, parameters, responses and authentication;
+- **acts as metadata** for client-service interactions over HTTP.
 
-This is **meta-communication**—a **contract**, not transmission itself.
+That's **meta-communication**, a **contract**, not transmission.
 
-### The "Layer 8" Concept
+### The "layer 8" concept
 
-I would place Swagger in [**Layer 8**](https://en.wikipedia.org/wiki/Layer_8)**: "People, Policies, and Planning"**—where developers, product managers, and architects live. It's about human **agreement**, **specification**, and **negotiation** of service interfaces.
+I'd place Swagger in [**layer 8**](https://en.wikipedia.org/wiki/Layer_8): "people, policies and planning", where developers, product managers and architects live. It's about human **agreement**, **specification** and **negotiation** of service interfaces.
 
-**Analogy:** If the OSI model is a road system:
+**Analogy:** if the OSI model is a road system:
 
-* Layers 1–4 are asphalt, traffic rules, intersections, and cars.
-    
-* Layers 5–7 are comprised of drivers, GPS, and mobile apps, which send and receive instructions.
-    
-* **Swagger/OAS** is the *roadmap and city planning documentation* telling drivers and managers how roads should be used.
-    
+- Layers 1–4 are the asphalt, traffic rules, intersections and cars.
+- Layers 5–7 are the drivers, GPS and apps that send and receive instructions.
+- **Swagger/OAS** is the *roadmap and city-planning documentation* that tells drivers and planners how the roads should be used.
 
-### MCP Operates in the Intent Layer
+### MCP operates in the intent layer
 
-In **intent-based systems** (like MCP or autonomous agents), specifications like Swagger or gRPC play crucial roles:
+In **intent-based systems**, like MCP or autonomous agents, specifications such as Swagger or gRPC play a central role:
 
-* Declaring **intent**
-    
-* Providing **machine-readable contracts**
-    
-* Powering **automation, code generation, testing, and governance**
-    
+- declaring **intent**;
+- providing **machine-readable contracts**;
+- powering **automation, code generation, testing and governance**.
 
-In modern cloud-native and AI-centric architectures, these tools reside in the intent/control plane—often referred to as **Layer 8+** or **"Layer 9: Governance/Compliance."**
+In modern cloud-native and AI-centric architectures, these specifications live in the intent and control plane, sometimes called **layer 8+** or **"layer 9: governance and compliance"**.
 
-## Summary: Contract vs. Protocol
+## Summary: contract vs protocol
 
-| **Aspect** | **OSI Equivalent** | **Why It's Different** |
+| **Aspect** | **OSI equivalent** | **Why it's different** |
 | --- | --- | --- |
-| Describes APIs over HTTP | Above Layer 7 | It's metadata, not data |
-| Exists at design time | Layer 8 (People) | It's a contract, not a protocol |
-| Used by Devs & Tools | Layer 8/9 | Focused on agreement & automation |
-| Does not transmit data | Not in OSI | Doesn't live in the data plane |
+| Describes APIs over HTTP | Above layer 7 | It's metadata, not data |
+| Exists at design time | Layer 8 (people) | It's a contract, not a protocol |
+| Used by developers and tools | Layer 8/9 | Focused on agreement and automation |
+| Doesn't transmit data | Not in OSI | Doesn't live in the data plane |
 
-**Key Insight:** Swagger/OAS is what *developers* and *machines* use to agree **on how** to communicate, but it doesn't do the communicating itself.
+**Key insight:** Swagger/OAS is what *developers* and *machines* use to agree **on how** to communicate, but it doesn't do the communicating itself.
 
-Similarly, **MCP lives in "Layer 8"—the realm of contracts, conventions, and collaboration.** It's not a limitation; it's evolution from "transporting data" to "understanding and automating intent."
+In the same way, **MCP's value lives in "layer 8"**, the realm of contracts, conventions and collaboration. That's not a limitation; it's the evolution from "transporting data" to "understanding and automating intent".
 
-## Why This Matters: MCP's Real Value
+:::note What changed in 2026
+The evidence got stronger. A stateless MCP request is a self-contained message: which tool, which arguments, which protocol version. That's very close to a REST call described by an OpenAPI operation. In practice, the [HAPI CLI](https://hapi.mcp.com.ai) builds MCP tools directly from an OpenAPI contract: the `operationId` becomes the tool name, the parameters become its input schema, and GET operations are marked read-only. See [You don't need to implement MCP servers](/blog/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration) for the real output.
+:::
 
-Anthropic's genius was leveraging this intent-layer understanding to create a more intuitive interface for AI model interactions. MCP wasn't just another specification—it was a way to make AI more accessible and practical.
+## Contracts all the way up: agents get business cards
 
-The introduction of [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) transport was my AHA moment, making integration with existing systems seamless. When I finally understood **MCP as a contract rather than a protocol**, everything fell into place.
+There's a new layer-8 citizen since I first wrote this. MCP connects an agent to its **tools**. The [Agent2Agent (A2A) protocol](https://a2a-protocol.org), an open-source Linux Foundation project contributed by Google, connects **agents to other agents**, and its documentation describes it as complementary to MCP.
 
-## Looking Forward: MCP in Enterprise
+How do agents find each other? Through an **Agent Card**: a public JSON document that declares the agent's name, what it does, where to reach it, and the skills it offers. That's not transport, it's a contract. The pattern repeats one level up: **OpenAPI for APIs, MCP for tools, Agent Cards for agents.**
 
-In regulated industries—such as banking, healthcare, and defense—contracts are paramount. MCP's explicit semantic layer maps directly to compliance requirements:
+## Why this matters: MCP's real value
 
-* **Audit Trails:** Each message logged with context keys
-    
-* **Policy Enforcement:** Only approved message types pass through
-    
-* **Version Control:** Upgrade contracts without breaking consumers
-    
+Anthropic's insight was building on this intent-layer idea to make AI interactions more intuitive. MCP wasn't just another specification; it was a way to make AI practical.
 
-With modern deployment stacks, you can deploy MCP servers using GitOps, ensuring every revision is tracked, tested, and approved.
+When I finally understood **MCP as a contract rather than a protocol**, everything fell into place. The 2026 revision feels like the specification reaching the same conclusion.
+
+## Looking forward: MCP in the enterprise
+
+In regulated industries such as banking, healthcare and defense, contracts are paramount. An explicit semantic layer maps directly to compliance needs:
+
+- **Audit trails:** every tool call is a named action with typed arguments, so it can be logged with its context.
+- **Policy enforcement:** behavior hints such as `readOnlyHint` and `destructiveHint` let clients and gateways treat reads and writes differently.
+- **Authorization:** MCP now has an [Authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) for HTTP, based on OAuth 2.1.
+- **Version control:** date-based protocol revisions, plus your own contract versions, managed with GitOps like any other code.
 
 ## Conclusion
 
-What began as curiosity about a new protocol evolved into a deeper understanding of how AI systems can better serve human needs. **MCP isn't just about data exchange—it's about creating meaningful, contextual interactions** between humans and AI.
+What began as curiosity about a new protocol became a deeper understanding of how AI systems can better serve people. **MCP isn't just about data exchange; it's about meaningful, contextual interactions** between people, AI and systems.
 
-By recognizing MCP as a contract that operates in the intent layer, we can build more reliable, maintainable, and robust AI integrations. It's not about the transport mechanism; it's about the semantic agreement that enables intelligent automation.
+By treating MCP as a contract that lives in the intent layer, we can build AI integrations that are more reliable, easier to maintain and more robust. It's not about the transport; it's about the semantic agreement that enables intelligent automation.
 
-I have been working with the [HAPI Stack for MCP](https://mpc.com.ai), which aims to provide a comprehensive framework for building and deploying API-first MCP-based applications. It simplifies the integration and deployment of MCP-based applications, allowing developers to focus on creating intelligent systems without getting bogged down in low-level details.
+That's what we build at La Rebelion Labs with the [HAPI MCP stack](https://mcp.com.ai): API-first MCP, from the contracts you already have. Read the [documentation](https://docs.mcp.com.ai) to get started.
 
-![HAPI Stack for MCP](https://docs.mcp.com.ai/img/diagrams/hapi-mcp-diagram.svg)
+## Further reading
 
-Please review the [HAPI Stack documentation](https://docs.hapi.com.ai) to learn how it can help you build robust, intent-driven applications using MCP.
-
-## Further Reading
-
-* [LSP Specification](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification)
-    
-* [Language Server Protocol](https://langserver.org)
-    
-* [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
-    
-* [MCP as Contracts documentation](https://docs.mcp.com.ai)
-    
+- [LSP specification](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification)
+- [Model Context Protocol: changes in 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+- [MCP transports (2026-07-28)](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports)
+- [Agent2Agent (A2A) Protocol](https://a2a-protocol.org)
+- [HAPI MCP documentation](https://docs.mcp.com.ai)
 
 ---
 
-*This post was brought to you by someone who once thought MCP was just another protocol—and is now convinced it's a contract that unlocks smarter, more reliable AI integrations.*
+*This post was brought to you by someone who once thought MCP was just another protocol, and is now convinced it's a contract that unlocks smarter, more reliable AI integrations. The specification seems to agree.*
 
 Go Rebels! ✊🏽

@@ -133,12 +133,11 @@ const config: Config = {
         // srcDark: 'img/brand/logo-wordmark.svg',
       },
       items: [
-        {to: '/labs', label: 'LABS', position: 'left'},
-        {to: '/', label: 'Latest', position: 'left'},
+        {to: '/labs', label: 'Labs', position: 'left'},
+        {to: '/', label: 'Field notes', position: 'left'},
         {to: '/tags', label: 'Topics', position: 'left'},
         {to: '/archive', label: 'Archive', position: 'left'},
         {to: '/sponsor', label: 'Sponsor', position: 'right'},
-        {to: '/subscribe', label: 'Newsletter', position: 'right'},
         {
           href: 'https://github.com/la-rebelion',
           label: 'GitHub',

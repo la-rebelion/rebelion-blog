@@ -1,19 +1,19 @@
 # La Rebelion Labs Website
 
-Migrated from the old website Hashnode-based to a new one built with Docusaurus. This template is designed to be easily customizable for any project under La Rebelion Labs.
+The editorial home and project portfolio for La Rebelion Labs, built with Docusaurus.
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
 ## Installation
 
 ```bash
-yarn
+bun install
 ```
 
 ## Local Development
 
 ```bash
-yarn start
+bun run start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
@@ -21,39 +21,21 @@ This command starts a local development server and opens up a browser window. Mo
 ## Build
 
 ```bash
-yarn build
+bun run typecheck
+bun run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-## Deployment
+## Visual direction
 
-Using SSH:
+- Editorial, dark, and deliberately confrontational rather than conventionally corporate.
+- Electric lime communicates active experiments; teal connects the wider Labs ecosystem; warm
+  orange marks friction and change.
+- Bebas Neue carries manifesto-scale headings, Space Grotesk handles reading, and JetBrains Mono
+  labels live signals and system details.
+- Landing-page composition and motion remain responsive and honor reduced-motion preferences.
 
-```bash
-USE_SSH=true yarn deploy
-```
+The production build is written to `build/` for static hosting.
 
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-La Rebelion Labs - https://rebelion.la
-
-Color System
-- Primary: Deep black / charcoal
-- Accent: Electric green (#d0de0b)
-
-Gradient:
-#d0de0b
-#69cb52
-#00ae79
-#008d89
-#006a7c
-#2f4858
-#1b1b1b
-#000000
+La Rebelion Labs — https://rebelion.la
