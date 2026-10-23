@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "La Rebelion Labs",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "Essays on AI, DevOps, cloud-native systems, developer tooling, and the discipline of building what is next.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "Archive",
+    "description": "The label for the left sidebar"
+  }
+}
