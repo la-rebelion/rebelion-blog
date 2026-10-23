@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /subscribe
+
+Sitemap: https://rebelion.la/sitemap.xml

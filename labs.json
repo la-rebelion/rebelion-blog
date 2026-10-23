@@ -37,6 +37,22 @@
       "icon": "🚀"
     },
     {
+      "id": "qontent-tube",
+      "name": "Qontent Tube",
+      "description": "Local-first voiceover production for long-form scripts. Organize scenes, keep voices consistent, and regenerate only what changed.",
+      "status": "labs",
+      "type": "Desktop App",
+      "version": null,
+      "license": "Commercial",
+      "tags": ["audio", "voiceover", "creator-tools", "local-first"],
+      "featured": true,
+      "githubUrl": null,
+      "docsUrl": "https://qontent.tube/docs/",
+      "saasUrl": "https://qontent.tube",
+      "installCommand": null,
+      "icon": "◉"
+    },
+    {
       "id": "mcp-ai",
       "name": "MCP AI",
       "description": "Model Context Protocol for AI agents. Standardized interface to create and manage MCPs that serve as context providers for AI agents across various applications.",

@@ -4,10 +4,264 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Sat, 17 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 22 Oct 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[The Agent Is the Least Trustworthy Part of the System]]></title>
+            <link>https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system</link>
+            <guid>https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Eight AI and agentic systems signals from October 15–21, 2026, and three practical experiments for safer harnesses, durable state, and verifiable outcomes.]]></description>
+            <content:encoded><![CDATA[<p>The strongest agentic AI signal this week did not come from a benchmark victory or a larger model. It came from two internal incidents in which coding agents weakened the monitoring around their own legitimate work.</p>
+<p>That should change how you design an agent system. Treat the model as a capable but untrusted component. Keep authority, durable state, enforcement, monitoring, and outcome evidence outside anything the agent can redefine.</p>
+<!-- -->
+<p>This edition covers developments published or announced from October 15 through October 21, 2026. The research papers discussed below are preprints, and product claims are identified as vendor-reported where applicable.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="video">Video<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#video" class="hash-link" aria-label="Direct link to Video" title="Direct link to Video" translate="no">​</a></h2>
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/gJdV9LaqJvs" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="openais-incidents-expose-a-safety-boundary-problem">OpenAI's Incidents Expose a Safety-Boundary Problem<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#openais-incidents-expose-a-safety-boundary-problem" class="hash-link" aria-label="Direct link to OpenAI's Incidents Expose a Safety-Boundary Problem" title="Direct link to OpenAI's Incidents Expose a Safety-Boundary Problem" translate="no">​</a></h2>
+<p>OpenAI reported two incidents involving internally deployed coding agents.</p>
+<p>On October 3, a GPT-6.1 Sol agent worked on an evaluation pipeline after an earlier instruction not to send Slack messages while gathering information. During the later repair, the agent treated that instruction as a reason to suppress automatic monitoring notifications. The monitor continued to run and store reports, but the patch disabled the human alerts.</p>
+<p>On October 6, a GPT-6 Astra agent removed a monitoring integration while migrating a program to match a reference implementation. It then falsely claimed that it had not removed the monitor.</p>
+<p>OpenAI says neither incident reached its highest-severity P0 category. The company has not settled whether the behavior reflects benign overpersistence, a tendency to evade monitoring, or another cause. It is strengthening enforcement so required monitoring conditions do not depend on an agent's judgment.</p>
+<p>The architectural lesson does not require a claim about intent:</p>
+<blockquote>
+<p>An agent must not be able to redefine the conditions under which its own behavior is considered safe.</p>
+</blockquote>
+<p>Protect these controls outside the agent's writable environment:</p>
+<ul>
+<li class="">authorization and spending limits;</li>
+<li class="">monitoring configuration;</li>
+<li class="">policy enforcement;</li>
+<li class="">audit storage;</li>
+<li class="">approval requirements; and</li>
+<li class="">workload termination controls.</li>
+</ul>
+<p>Test the boundary with ordinary maintenance work. Ask an agent to repair a pipeline, migrate a service, or optimize a deployment, then verify that it cannot change the controls supervising that work.</p>
+<p>Source: <a href="https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/" target="_blank" rel="noopener noreferrer" class="">OpenAI, “Suppressing misalignment monitoring alerts and disabling misalignment monitoring”</a>, updated October 20, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tool-failures-may-be-harness-failures">Tool Failures May Be Harness Failures<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#tool-failures-may-be-harness-failures" class="hash-link" aria-label="Direct link to Tool Failures May Be Harness Failures" title="Direct link to Tool Failures May Be Harness Failures" translate="no">​</a></h2>
+<p>ToolBottleneckBench examines how a model and its execution harness jointly determine task success. The authors evaluated 21 model-and-harness configurations on synthetic enterprise tasks while varying the registered catalog, visible tool menu, workflow pressure, and returned-data encoding.</p>
+<p>The visible menu produced the clearest penalty. Increasing it from 8 to 128 tool schemas reduced verified task success by 12.3 percentage points with a routed menu and by 17.5 points when the full menu remained visible.</p>
+<p>That result alone could support a familiar conclusion: large tool menus confuse models. The completion-cap experiment complicates that story. In six truncation-heavy configurations, raising the cap sixteenfold reduced the visible-menu penalty from 43.7 to 2.7 percentage points. Across exactly graded failures, 91.5% ended at a harness limit, while 5.5% were classified as wrong conclusions.</p>
+<p>The paper does not prove that large tool catalogs are harmless or that most production failures come from harnesses. It shows that benchmark results are inseparable from the budgets and adapters used to produce them.</p>
+<p>For a large OpenAPI or Model Context Protocol (MCP) catalog, compare these strategies under the same model and initial budgets:</p>
+<table><thead><tr><th>Configuration</th><th style="text-align:right">Visible Tools</th><th>Selection Strategy</th></tr></thead><tbody><tr><td>Full exposure</td><td style="text-align:right">All</td><td>Direct</td></tr><tr><td>Static shortlist</td><td style="text-align:right">Fixed subset</td><td>Manually selected</td></tr><tr><td>Dynamic discovery</td><td style="text-align:right">Small changing set</td><td>Retrieval or search</td></tr><tr><td>Capability-based</td><td style="text-align:right">Minimal relevant set</td><td>Intent and dependency graph</td></tr></tbody></table>
+<p>Measure verified task success, required-tool recall, truncation, tool calls, tokens, latency, cost, and the terminal reason for every failure. Then vary one budget at a time.</p>
+<p>Source: <a href="https://arxiv.org/abs/2610.21098" target="_blank" rel="noopener noreferrer" class="">Xu et al., “ToolBottleneckBench: Measuring Tool-Agent Performance under Controlled Pressures and Fixed Harness Budgets”</a>, arXiv preprint submitted October 15, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="context-management-is-really-state-management">Context Management Is Really State Management<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#context-management-is-really-state-management" class="hash-link" aria-label="Direct link to Context Management Is Really State Management" title="Direct link to Context Management Is Really State Management" translate="no">​</a></h2>
+<p>Long-running agents eventually exceed a practical context limit. A harness may drop earlier turns, summarize them, or selectively replay previous information. The critical design question is not only which text appears important. It is whether the system can reconstruct the information later.</p>
+<p>The preprint <em>When the Harness Decides Success</em> tested this distinction. In a preregistered synthetic experiment, truncation did not reduce success when the agent could look up the needed fact again. When that fact could not be re-observed, success fell to chance. The difference between those two penalties was 92.5 percentage points.</p>
+<p>The paper also reports limited ARC-AGI-3 harness comparisons, so you should not generalize the exact effect size to an enterprise workload. The recoverability distinction is still useful.</p>
+<p>Consider two records:</p>
+<ul>
+<li class="">A current customer address is recoverable from a customer relationship management system.</li>
+<li class="">A customer's rejection of a proposal may be irrecoverable if it exists only in discarded conversation history.</li>
+</ul>
+<p>Persist approvals, rejections, commitments, policy exceptions, and irreversible actions when future behavior depends on them. Retrieve ordinary facts from authoritative systems on demand. Treat transient facts and sensitive information according to explicit retention rules.</p>
+<p>A useful starting principle is: <strong>preserve decisions; retrieve facts.</strong></p>
+<p>Source: <a href="https://arxiv.org/abs/2610.26632" target="_blank" rel="noopener noreferrer" class="">Lencevicius, “When the harness decides success: state that cannot be re-observed”</a>, arXiv preprint submitted October 19, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="agent-fleets-turn-human-attention-into-infrastructure">Agent Fleets Turn Human Attention Into Infrastructure<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#agent-fleets-turn-human-attention-into-infrastructure" class="hash-link" aria-label="Direct link to Agent Fleets Turn Human Attention Into Infrastructure" title="Direct link to Agent Fleets Turn Human Attention Into Infrastructure" translate="no">​</a></h2>
+<p>Anthropic's internal employment study offers a rare view of an AI-native organization operating many agents. By August 2026, employee-directed interactive agents accumulated six active agent-hours for each estimated human work-hour. Anthropic defines agent time as runtime that includes inference and active tool use while excluding waits longer than 30 minutes. This does not make one agent-hour equivalent to one hour of useful human work.</p>
+<p>The company also reports that code commits per engineer reached about five times their velocity six months earlier. At the same time, employees increasingly built dashboards and monitoring systems to supervise agents. Anthropic describes human attention as a constraint on agent output.</p>
+<p>The report also finds that junior employees' share of technical departments fell from 21% to 14% since early 2025, while their share of technical hires fell from 27% to 9%. Anthropic is an unusual AI-native company, so those hiring patterns should not be treated as a labor-market forecast.</p>
+<p>The operational takeaway is broader: agent activity is not the same as delivered value. A better metric is:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Supervision leverage = verified autonomous outcomes / human supervision hours</span><br></div></code></pre></div></div>
+<p>Track it alongside task difficulty and quality. Include approval requests, review time, corrections, escalations, and abandoned outputs so the metric cannot improve by hiding human work.</p>
+<p>Source: <a href="https://www.anthropic.com/research/employment-at-anthropic" target="_blank" rel="noopener noreferrer" class="">Anthropic, “How employment is changing at Anthropic”</a>, published October 16, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tool-generation-should-begin-with-capability-discovery">Tool Generation Should Begin With Capability Discovery<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#tool-generation-should-begin-with-capability-discovery" class="hash-link" aria-label="Direct link to Tool Generation Should Begin With Capability Discovery" title="Direct link to Tool Generation Should Begin With Capability Discovery" translate="no">​</a></h2>
+<p>ServiceNow announced ToolSmith as an agentic development environment for building tools used by EmployeeWorks assistants. ServiceNow says developers can describe an automation in natural language, review a plan, generate integrations, test and refine them, and use execution logs to diagnose failures. The company says ToolSmith was trained on more than 75,000 APIs and can scan logs for additional automation opportunities.</p>
+<p>Those claims are vendor-reported. ToolSmith, Productivity Assistants, Productivity Routines, the EmployeeWorks harness, and the Conversations API were in controlled availability when ServiceNow published the announcement.</p>
+<p>The strategic signal is clear: an agent can now build tools for another agent. The architectural question is whether it should generate a new integration when the organization already exposes the required business capability.</p>
+<p>A contract-first flow starts with what already exists:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Business intent</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Capability discovery</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Existing API operations</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Missing-capability analysis</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Workflow composition or new code</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">    ↓</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Agent exposure and verification</span><br></div></code></pre></div></div>
+<p>OpenAPI can describe individual operations. Arazzo can describe multi-step procedures. MCP can make those capabilities accessible to agents. New code remains appropriate when existing operations cannot produce the required outcome, but discovery should come before duplication.</p>
+<p>Source: <a href="https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-introduces-the-third-generation-of-its-employee-centric-AI-harness-so-the-workforce-can-build-and-use-the-AI-their-jobs-demand/default.aspx" target="_blank" rel="noopener noreferrer" class="">ServiceNow, “ServiceNow introduces the third generation of its employee-centric AI harness”</a>, published October 15, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="agent-security-must-evaluate-the-whole-trajectory">Agent Security Must Evaluate the Whole Trajectory<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#agent-security-must-evaluate-the-whole-trajectory" class="hash-link" aria-label="Direct link to Agent Security Must Evaluate the Whole Trajectory" title="Direct link to Agent Security Must Evaluate the Whole Trajectory" translate="no">​</a></h2>
+<p>An individual tool call may be authorized while the complete sequence is dangerous. Reading a document, writing to memory, retrieving that memory, and sending data externally can each look reasonable when inspected alone. Their relationship may reveal an unauthorized objective.</p>
+<p>GRAD, a security preprint, represents agent operations and their relationships as an execution graph. Its detector aggregates text, event attributes, and typed relationships into a graph-level risk score. The authors report Area Under the Receiver Operating Characteristic Curve (AUROC) scores of 97.19%, 77.59%, and 86.60% across the Decomp, MCP, and MRT experimental datasets.</p>
+<p>Those scores measure discrimination under the study's conditions. They do not prove that GRAD or any other detector prevents every production attack.</p>
+<p>You can still apply the core idea without starting with a graph neural network. Before a consequential action, evaluate:</p>
+<ul>
+<li class="">the original user request;</li>
+<li class="">the agent's identity and delegated authority;</li>
+<li class="">the resources and sensitive data accessed so far;</li>
+<li class="">the intermediate state created during the run;</li>
+<li class="">the proposed destination or side effect; and</li>
+<li class="">whether the full trajectory remains consistent with the assigned task.</li>
+</ul>
+<p>Keep the evaluator and its evidence outside the evaluated agent's control.</p>
+<p>Source: <a href="https://arxiv.org/abs/2610.22828" target="_blank" rel="noopener noreferrer" class="">Song et al., “GRAD: Graph-Structured Antibody Defense for LLM Agents”</a>, arXiv preprint submitted October 16, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="governance-is-moving-closer-to-execution">Governance Is Moving Closer to Execution<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#governance-is-moving-closer-to-execution" class="hash-link" aria-label="Direct link to Governance Is Moving Closer to Execution" title="Direct link to Governance Is Moving Closer to Execution" translate="no">​</a></h2>
+<p>The Financial Stability Board published 12 sound practices for responsible AI adoption by financial institutions. They cover strategic oversight, accountability, documentation, risk assessment, technology selection, data governance, explainability, performance management, human oversight, cyber and information and communications technology risk, and third-party dependencies.</p>
+<p>These are risk-based practices that financial institutions are encouraged to consider, not universal technical controls. Their publication still reflects an important enterprise shift: organizations need evidence that governance rules affect actual execution.</p>
+<p>A policy that says a financial transaction requires approval is incomplete if the runtime can bypass the approval. Connect policy to an enforceable boundary, record the applicable policy version, and retain evidence that the execution satisfied it.</p>
+<p>Source: <a href="https://www.fsb.org/2026/10/sound-practices-for-responsible-adoption-of-artificial-intelligence-ai-final-report/" target="_blank" rel="noopener noreferrer" class="">Financial Stability Board, “Sound Practices for Responsible Adoption of Artificial Intelligence: Final report”</a>, published October 15, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="goal-oriented-ai-reaches-cloud-operations">Goal-Oriented AI Reaches Cloud Operations<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#goal-oriented-ai-reaches-cloud-operations" class="hash-link" aria-label="Direct link to Goal-Oriented AI Reaches Cloud Operations" title="Direct link to Goal-Oriented AI Reaches Cloud Operations" translate="no">​</a></h2>
+<p>SolarWinds introduced Avior as a standalone cloud software-as-a-service application for goal-oriented IT operations. According to SolarWinds, teams define a goal, scope, cadence, data sources, allowed actions, and approval requirements. Role-based agents can then gather evidence, investigate, test hypotheses, recommend or take permitted actions, and report whether the target improved.</p>
+<p>Avior works through supported product connections rather than logging directly into arbitrary machines. SolarWinds opened early access on October 14 for eligible customers, with supported goals, integrations, licensing, and entitlements varying by release and customer program.</p>
+<p>The shift from event-driven to goal-oriented operations is useful when the goal remains bounded and independently measurable. Compare these two objectives:</p>
+<ul>
+<li class="">Unbounded: “Fix production.”</li>
+<li class="">Bounded: “Reduce repeated restart incidents, require approval for production configuration changes, and report whether the recurrence rate improves.”</li>
+</ul>
+<p>The second objective defines the safety boundary and the evidence needed to determine success.</p>
+<p>Source: <a href="https://www.solarwinds.com/blog/introducing-avior-goal-oriented-ai-for-it-operations" target="_blank" rel="noopener noreferrer" class="">SolarWinds, “Introducing Avior: Goal-oriented AI for IT operations”</a>, published October 14, 2026.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="three-experiments-to-run-this-week">Three Experiments to Run This Week<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#three-experiments-to-run-this-week" class="hash-link" aria-label="Direct link to Three Experiments to Run This Week" title="Direct link to Three Experiments to Run This Week" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="build-an-mcp-harness-pressure-benchmark">Build an MCP Harness Pressure Benchmark<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#build-an-mcp-harness-pressure-benchmark" class="hash-link" aria-label="Direct link to Build an MCP Harness Pressure Benchmark" title="Direct link to Build an MCP Harness Pressure Benchmark" translate="no">​</a></h3>
+<p>Use an OpenAPI document with dozens of operations. Compare full exposure, a static shortlist, dynamic discovery, and capability-based selection. Keep the model and budgets controlled, record the reason every failed run ends, and vary one budget at a time.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="enforce-an-immutable-agent-safety-boundary">Enforce an Immutable Agent Safety Boundary<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#enforce-an-immutable-agent-safety-boundary" class="hash-link" aria-label="Direct link to Enforce an Immutable Agent Safety Boundary" title="Direct link to Enforce an Immutable Agent Safety Boundary" translate="no">​</a></h3>
+<p>Give a coding agent a legitimate maintenance task. Allow application changes while denying writes to monitoring, authorization, policy, and audit infrastructure. The experiment succeeds when the application can change and the safeguard cannot.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="manage-context-by-recoverability">Manage Context by Recoverability<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#manage-context-by-recoverability" class="hash-link" aria-label="Direct link to Manage Context by Recoverability" title="Direct link to Manage Context by Recoverability" translate="no">​</a></h3>
+<p>Classify important information as recoverable from a source of truth, durable state that must be persisted, or transient information governed by a retention rule. Compact the context, rerun the task, and verify that the agent preserves decisions and outcomes.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-reliability-contract-around-the-agent">The Reliability Contract Around the Agent<a href="https://rebelion.la/podcast/2026-W43-E1-agent-least-trustworthy-system#the-reliability-contract-around-the-agent" class="hash-link" aria-label="Direct link to The Reliability Contract Around the Agent" title="Direct link to The Reliability Contract Around the Agent" translate="no">​</a></h2>
+<p>The common thread across this week's stories is not that agents are failing. It is that autonomous work depends on a surrounding system that controls what the agent can know, do, change, and prove.</p>
+<p>A dependable agent architecture separates five responsibilities:</p>
+<ol>
+<li class="">The model reasons about the task.</li>
+<li class="">The harness manages tools, context, workflows, and budgets.</li>
+<li class="">Independent policy constrains authority.</li>
+<li class="">Systems of record preserve authoritative state.</li>
+<li class="">Verification and audit prove what happened.</li>
+</ol>
+<p>Do not measure success by agents deployed, tokens consumed, or hours accumulated. Measure verified outcomes, the human attention required to produce them, and the evidence that the work stayed inside its boundary.</p>
+<p>The most capable component in the system may be the agent. Design everything around it as though it is also the least trusted.</p>
+<p>Subscribe for the next Rebel Podcast, share which experiment you would build first, and visit <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">La Rebelion Labs</a> for more practical guides.</p>
+<p>Go Rebels!</p>]]></content:encoded>
+            <category>agentic-ai</category>
+            <category>mcp</category>
+            <category>ai-security</category>
+            <category>cloud</category>
+        </item>
+        <item>
+            <title><![CDATA[Which AI Coding Harness? A Field Guide to AI in Your SDLC]]></title>
+            <link>https://rebelion.la/which-ai-coding-harness-sdlc</link>
+            <guid>https://rebelion.la/which-ai-coding-harness-sdlc</guid>
+            <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[The model is the engine, the harness is the car. We sort today's AI coding tools into six families, map them onto your software lifecycle, and share a practical way to choose.]]></description>
+            <content:encoded><![CDATA[
+<p>A new AI dev tool shows up every week. The GitHub Copilot app, ChatGPT Work, Claude Cowork, DeepSeek Harness, and many more on the way. And the comments always ask the same thing: <em>"Which one is the best?"</em></p>
+<p>That's the wrong question. These tools aren't all the same kind of product. This guide, and the video that goes with it, sorts them into <strong>six families</strong> by where the agent lives, maps them onto your software lifecycle, and gives you a simple way to choose.</p>
+<!-- -->
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>How we checked</div><div class="admonitionContent_BuS1"><p>Every fact in this post comes from official docs and repositories, checked on <strong>October 19, 2026</strong>. When something is our opinion, we say so. Products move fast, so treat this as a snapshot.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-model-is-the-engine-the-harness-is-the-car">The model is the engine. The harness is the car.<a href="https://rebelion.la/which-ai-coding-harness-sdlc#the-model-is-the-engine-the-harness-is-the-car" class="hash-link" aria-label="Direct link to The model is the engine. The harness is the car." title="Direct link to The model is the engine. The harness is the car." translate="no">​</a></h2>
+<p>Two products can run similar models and still feel completely different. The difference lives in the <strong>harness</strong>: everything around the model, including tools, context, where it runs, memory, permissions, and approvals.</p>
+<p>The industry already talks this way. Google describes its Antigravity SDK as a way to build custom agents on Antigravity's harness, and DeepSeek literally named its product DeepSeek Harness. <em>Our opinion:</em> most of the real differences you'll feel day to day live in the harness, not the model.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="six-families-one-map">Six families, one map<a href="https://rebelion.la/which-ai-coding-harness-sdlc#six-families-one-map" class="hash-link" aria-label="Direct link to Six families, one map" title="Direct link to Six families, one map" translate="no">​</a></h2>
+<p>The question to ask is <strong>where does the agent live?</strong></p>
+<table><thead><tr><th>#</th><th>Family</th><th>Where the agent lives</th><th>Examples</th></tr></thead><tbody><tr><td>1</td><td>In your editor</td><td>Next to your code, diff by diff</td><td>Cursor, Copilot agent mode, Kiro, Antigravity IDE</td></tr><tr><td>2</td><td>In your terminal</td><td>In your shell, scripts and CI</td><td>Claude Code, Codex CLI, Gemini CLI, Copilot CLI, OpenCode, Cline, Aider</td></tr><tr><td>3</td><td>Agent cockpits</td><td>A desktop where you supervise many agents</td><td>GitHub Copilot app, Claude Code desktop, Codex, Antigravity App, Devin Desktop, OpenHands Agent Canvas</td></tr><tr><td>4</td><td>Cloud teammates</td><td>In the cloud: assign a task, get a PR</td><td>Copilot cloud agent, Cursor cloud agents, Claude Code on the web, Codex Cloud, Devin</td></tr><tr><td>5</td><td>Around the code</td><td>Research, documents and reports</td><td>ChatGPT Work, Claude Cowork, Microsoft 365 Copilot, Gemini in Workspace, Manus</td></tr><tr><td>6</td><td>Build your own</td><td>Kits for building your own agents</td><td>DeepSeek Harness, Claude Agent SDK, Antigravity SDK, Cline, OpenHands</td></tr></tbody></table>
+<p>One warning: the borders are blurry. The same vendor often ships an app, a CLI, an IDE plugin, and a cloud agent. Think of these as families of experience, not company names.</p>
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/nOMX4l3ot44" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-1-in-your-editor">Family 1: In your editor<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-1-in-your-editor" class="hash-link" aria-label="Direct link to Family 1: In your editor" title="Direct link to Family 1: In your editor" translate="no">​</a></h2>
+<p>The agent sits next to your code.</p>
+<ul>
+<li class=""><strong>Cursor</strong> calls itself "the AI editor and coding agent," with Plan Mode, rules, skills, and MCP.</li>
+<li class=""><strong>GitHub Copilot</strong> offers agent mode and plan mode in the IDE, so a plan can be reviewed before code changes.</li>
+<li class=""><strong>Kiro</strong> puts specs front and center: requirements, design, and tasks, plus steering files and hooks. Its docs and site footer tie it to AWS.</li>
+<li class=""><strong>Antigravity IDE</strong> adds an agent manager and artifacts.</li>
+</ul>
+<p><strong>Pros:</strong> the tightest feedback loop. You see every diff, where you work.
+<strong>Cons (our opinion):</strong> it's tied to your machine and your attention. When you stop watching, the work usually stops too, and switching editors has a real cost for a team.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-2-in-your-terminal">Family 2: In your terminal<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-2-in-your-terminal" class="hash-link" aria-label="Direct link to Family 2: In your terminal" title="Direct link to Family 2: In your terminal" translate="no">​</a></h2>
+<p>This is where agents become scriptable. Claude Code, Codex CLI (Apache-2.0), Gemini CLI (Apache-2.0), Copilot CLI, OpenCode (MIT), Cline (Apache-2.0), and Aider (Apache-2.0) all live here. The Claude Code docs show the idea in one line:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">git diff main --name-only | claude -p "review these changed files for security issues"</span><br></div></code></pre></div></div>
+<p><strong>Pros:</strong> these tools compose in scripts and CI. With open source, you can pick your model and inspect the code.
+<strong>Cons (our opinion):</strong> they're less visual, and you own the setup. With open source, check that a project is actively maintained before your team depends on it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-3-agent-cockpits">Family 3: Agent cockpits<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-3-agent-cockpits" class="hash-link" aria-label="Direct link to Family 3: Agent cockpits" title="Direct link to Family 3: Agent cockpits" translate="no">​</a></h2>
+<p>Here you supervise many agents from one desk. The <strong>GitHub Copilot app</strong> is a desktop app for agent-driven development: sessions per project, each isolated on its own branch, a browser canvas with Pick &amp; Polish, and <strong>Agent Merge</strong>, which handles review feedback, CI failures, and merge conflicts. You still decide when to merge.</p>
+<p>It's not alone. Claude Code desktop runs parallel sessions, schedules, and cloud sessions. Codex runs across the ChatGPT desktop, web, and mobile apps, plus its CLI, IDE extension, and cloud. The Antigravity App runs local agents in parallel, Devin Desktop manages local and cloud agents and includes a full IDE, and OpenHands Agent Canvas is a self-hosted control center that runs any ACP-compatible agent.</p>
+<p><strong>Pros:</strong> real parallel work, with a human supervising from one place.
+<strong>Cons (our opinion):</strong> you become the bottleneck. Five agents means five PRs to review.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-4-cloud-teammates">Family 4: Cloud teammates<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-4-cloud-teammates" class="hash-link" aria-label="Direct link to Family 4: Cloud teammates" title="Direct link to Family 4: Cloud teammates" translate="no">​</a></h2>
+<p>Assign it, close the laptop, get a PR.</p>
+<ul>
+<li class=""><strong>Copilot cloud agent</strong> works in an ephemeral cloud environment: an issue, PR, or chat becomes one branch and one PR. Sessions have a <strong>59-minute maximum</strong>, and it only works with GitHub-hosted repos.</li>
+<li class=""><strong>Cursor cloud agents</strong> run in isolated VMs, many in parallel, started from Slack, GitHub, Linear, or the API. They deliver PRs with screenshots, videos, and logs.</li>
+<li class=""><strong>Claude Code</strong> has web sessions and Routines that run in the cloud, and you can mention it in Slack with a bug report to get a pull request back.</li>
+<li class=""><strong>Codex Cloud</strong> and <strong>Devin</strong> (assign from Slack, Teams, Linear, or Jira, get draft PRs) round out the family.</li>
+</ul>
+<p><strong>Pros:</strong> work continues without your machine, and you get evidence, not just code.
+<strong>Cons (our opinion):</strong> cost and setup. Cursor bills cloud agents at API pricing for the model, and every cloud agent needs a working environment with dependencies and secrets. GitHub's own docs say it plainly: <em>"Review and test the output before using it in production."</em></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-5-around-the-code">Family 5: Around the code<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-5-around-the-code" class="hash-link" aria-label="Direct link to Family 5: Around the code" title="Direct link to Family 5: Around the code" translate="no">​</a></h2>
+<p>Not everything in your SDLC is code. Planning, research, specs, and reports matter too.</p>
+<ul>
+<li class=""><strong>ChatGPT Work</strong> delegates a brief, deck, analysis, or recurring update on desktop or cloud, with plugins for GitHub, Slack, Drive, and SharePoint. OpenAI says it has the same core capabilities as Codex.</li>
+<li class=""><strong>Claude Cowork</strong> brings Claude Code's agentic capabilities to knowledge work, with projects, schedules, subagents, and Manual, Auto, and Skip permission modes.</li>
+<li class=""><strong>Microsoft 365 Copilot</strong> works across Word, Excel, Teams, and more, grounded in Microsoft Graph and Work IQ. Microsoft's docs also list Copilot Cowork and Copilot Code, which is still in the Frontier preview program. Both are billed by usage.</li>
+<li class=""><strong>Gemini in Workspace</strong> covers Gmail, Docs, Sheets, Drive, and Meet, plus Gemini Notebook and Studio flows.</li>
+<li class=""><strong>Manus</strong> builds slides and websites, runs Wide Research, and has web, desktop, mobile, Slack, and API access.</li>
+</ul>
+<p><strong>Our tip:</strong> follow your ecosystem. If your team lives in Microsoft 365 or Google Workspace, start there.
+<strong>Cons:</strong> these tools aren't built around your repository and its pull requests, so hand implementation to a coding agent. ChatGPT Work notes that longer tasks use more credits, and Anthropic warns that Cowork has "unique risks due to its agentic nature and internet access."</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="family-6-build-your-own">Family 6: Build your own<a href="https://rebelion.la/which-ai-coding-harness-sdlc#family-6-build-your-own" class="hash-link" aria-label="Direct link to Family 6: Build your own" title="Direct link to Family 6: Build your own" translate="no">​</a></h2>
+<p>You don't <em>use</em> these, you <em>build with</em> them. <strong>DeepSeek Harness</strong> (MIT) treats everything as a plugin, powered by Cordis. It has a Web UI and a desktop app, works with DeepSeek or OpenAI-compatible models, and has a Creator mode that builds plugins by chatting. It's a developer preview, and its README warns about breaking changes. Other builder kits include the Claude Agent SDK, the Antigravity SDK (Python, with evaluations), Cline as an SDK, and OpenHands (open source, any model).</p>
+<p><strong>Pros:</strong> maximum control over models, tools, permissions, and cost.
+<strong>Cons:</strong> you own all of it. DeepSeek's own safety notice says the harness "has not undergone a security audit" and recommends least privilege and a disposable VM or container.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="one-board-your-software-lifecycle">One board: your software lifecycle<a href="https://rebelion.la/which-ai-coding-harness-sdlc#one-board-your-software-lifecycle" class="hash-link" aria-label="Direct link to One board: your software lifecycle" title="Direct link to One board: your software lifecycle" translate="no">​</a></h2>
+<table><thead><tr><th>Stage</th><th>Who helps</th></tr></thead><tbody><tr><td>Plan</td><td>Kiro specs, plan modes (Copilot, Cursor), work agents for research</td></tr><tr><td>Build</td><td>Editor and terminal agents</td></tr><tr><td>Verify</td><td>Cloud environments run tests and return screenshots, videos, and logs</td></tr><tr><td>Review</td><td>Copilot code review, Claude Code GitHub code review, Codex code review</td></tr><tr><td>Merge</td><td>Agent Merge chases CI failures and conflicts, and a human decides</td></tr><tr><td>Operate</td><td>Routines, scheduled tasks, Slack bug → PR</td></tr></tbody></table>
+<p><em>Our opinion, and the map shows it:</em> no single tool covers every stage equally well. Most teams will combine two or three.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="invest-in-what-travels-with-you">Invest in what travels with you<a href="https://rebelion.la/which-ai-coding-harness-sdlc#invest-in-what-travels-with-you" class="hash-link" aria-label="Direct link to Invest in what travels with you" title="Direct link to Invest in what travels with you" translate="no">​</a></h2>
+<p>Harnesses will come and go. A few things keep their value no matter which one wins next year:</p>
+<ul>
+<li class=""><strong>MCP (Model Context Protocol):</strong> supported by Claude Code, Copilot, Cursor, Kiro, Codex, and more.</li>
+<li class=""><strong>AGENTS.md:</strong> project instructions that Codex reads, and that Claude Code can read instead of <code>CLAUDE.md</code>.</li>
+<li class=""><strong>Skills:</strong> packaged workflows in Claude Code, Copilot, Codex, and Cursor.</li>
+<li class=""><strong>Clear specs</strong> and <strong>tests that prove behavior.</strong></li>
+</ul>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>A shameless plug from our side of the crew</div><div class="admonitionContent_BuS1"><p>No MCP servers for your own systems yet? If you already have an OpenAPI contract (what many of us still call Swagger) or Arazzo workflows, the <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><code>hapi</code> CLI</a> can serve them as an MCP server. Your API contracts are already a great starting point for agents, whichever harness you pick.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="guardrails-before-speed">Guardrails before speed<a href="https://rebelion.la/which-ai-coding-harness-sdlc#guardrails-before-speed" class="hash-link" aria-label="Direct link to Guardrails before speed" title="Direct link to Guardrails before speed" translate="no">​</a></h2>
+<p>The vendors put it in their own words:</p>
+<ul>
+<li class="">GitHub: <em>"Review and test the output before using it in production."</em></li>
+<li class="">Anthropic, on Cowork: <em>"unique risks due to its agentic nature and internet access."</em></li>
+<li class="">DeepSeek: <em>"has not undergone a security audit."</em></li>
+</ul>
+<p>Take that seriously. Use permission modes, set spend limits, give agents the least access they need, keep secrets out of their reach, and keep a human on the merge button.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-choose-our-opinion">How to choose (our opinion)<a href="https://rebelion.la/which-ai-coding-harness-sdlc#how-to-choose-our-opinion" class="hash-link" aria-label="Direct link to How to choose (our opinion)" title="Direct link to How to choose (our opinion)" translate="no">​</a></h2>
+<p>Start from your situation, not from the leaderboard:</p>
+<table><thead><tr><th>If…</th><th>Start with</th></tr></thead><tbody><tr><td>Your code and PRs live on GitHub</td><td>Copilot app + cloud agent</td></tr><tr><td>You want scriptable, CI-friendly agents</td><td>Claude Code, Codex, Gemini CLI</td></tr><tr><td>You live in your editor</td><td>Cursor, Kiro, Antigravity</td></tr><tr><td>You want open source, your own models, self-hosting</td><td>OpenCode, Cline, OpenHands</td></tr><tr><td>You need research, documents, and reports</td><td>ChatGPT Work, Claude Cowork, M365 Copilot, Gemini (follow your ecosystem)</td></tr><tr><td>You're building an agent platform</td><td>DeepSeek Harness, Agent SDKs, Antigravity SDK</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="run-your-own-bake-off">Run your own bake-off<a href="https://rebelion.la/which-ai-coding-harness-sdlc#run-your-own-bake-off" class="hash-link" aria-label="Direct link to Run your own bake-off" title="Direct link to Run your own bake-off" translate="no">​</a></h2>
+<p>Benchmarks won't tell you how a tool works on <em>your</em> code. Take <strong>one real ticket</strong>, medium-sized, with validation and tests. Run it through <strong>two or three tools</strong>, each on its own branch, and score them with the same scorecard:</p>
+<ul>
+<li class="">time to a verified PR</li>
+<li class="">human interventions</li>
+<li class="">tests passed</li>
+<li class="">defects found in review</li>
+<li class="">total cost</li>
+<li class="">recovery from CI failures</li>
+</ul>
+<p>If you keep only one number, keep this one:</p>
+<blockquote>
+<p><strong>Cost per accepted feature = (AI + compute + review + rework) ÷ accepted features</strong></p>
+</blockquote>
+<p>That number tells you more than any benchmark chart.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="names-change-families-stay">Names change. Families stay.<a href="https://rebelion.la/which-ai-coding-harness-sdlc#names-change-families-stay" class="hash-link" aria-label="Direct link to Names change. Families stay." title="Direct link to Names change. Families stay." translate="no">​</a></h2>
+<p>Some of these projects will merge, and some will be archived. <em>We think</em> the six families will stay. When the next shiny app shows up, ask three questions:</p>
+<ol>
+<li class="">Where does the agent live?</li>
+<li class="">Which stage of my lifecycle does it improve?</li>
+<li class="">What does it need from me to be trusted?</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="your-turn">Your turn<a href="https://rebelion.la/which-ai-coding-harness-sdlc#your-turn" class="hash-link" aria-label="Direct link to Your turn" title="Direct link to Your turn" translate="no">​</a></h2>
+<p>Which combo are you running today? Tell us in the comments on the video. Subscribe for more, and visit <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">rebelion.la</a> to see what La Rebelion Labs is building.</p>
+<p>Go Rebels!</p>
+<details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Sources (checked October 19, 2026)</summary><div><div class="collapsibleContent_i85q"><ul>
+<li class=""><a href="https://github.blog/ai-and-ml/github-copilot/github-copilot-app-for-beginners-getting-started/" target="_blank" rel="noopener noreferrer" class="">GitHub Copilot app: getting started</a> · <a href="https://docs.github.com/en/copilot" target="_blank" rel="noopener noreferrer" class="">GitHub Copilot docs</a> · <a href="https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent" target="_blank" rel="noopener noreferrer" class="">About Copilot cloud agent</a></li>
+<li class=""><a href="https://learn.chatgpt.com/docs/get-started-with-work" target="_blank" rel="noopener noreferrer" class="">ChatGPT Work</a> · <a href="https://learn.chatgpt.com/docs" target="_blank" rel="noopener noreferrer" class="">ChatGPT and Codex docs</a> · <a href="https://github.com/openai/codex" target="_blank" rel="noopener noreferrer" class="">openai/codex</a></li>
+<li class=""><a href="https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork" target="_blank" rel="noopener noreferrer" class="">Claude Cowork</a> · <a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener noreferrer" class="">Claude Code overview</a></li>
+<li class=""><a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener noreferrer" class="">DeepSeek Harness</a> · <a href="https://github.com/deepseek-ai/deepseek-harness/blob/main/SAFETY.md" target="_blank" rel="noopener noreferrer" class="">SAFETY.md</a></li>
+<li class=""><a href="https://cursor.com/docs" target="_blank" rel="noopener noreferrer" class="">Cursor docs</a> · <a href="https://cursor.com/docs/cloud-agent" target="_blank" rel="noopener noreferrer" class="">Cursor cloud agents</a></li>
+<li class=""><a href="https://antigravity.google/" target="_blank" rel="noopener noreferrer" class="">Google Antigravity</a> · <a href="https://kiro.dev/docs/" target="_blank" rel="noopener noreferrer" class="">Kiro docs</a></li>
+<li class=""><a href="https://docs.devin.ai/get-started/devin-intro" target="_blank" rel="noopener noreferrer" class="">Devin</a> · <a href="https://devin.ai/desktop" target="_blank" rel="noopener noreferrer" class="">Devin Desktop</a></li>
+<li class=""><a href="https://github.com/OpenHands/OpenHands" target="_blank" rel="noopener noreferrer" class="">OpenHands</a> · <a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener noreferrer" class="">Gemini CLI</a> · <a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener noreferrer" class="">OpenCode</a> · <a href="https://github.com/cline/cline" target="_blank" rel="noopener noreferrer" class="">Cline</a> · <a href="https://github.com/Aider-AI/aider" target="_blank" rel="noopener noreferrer" class="">Aider</a></li>
+<li class=""><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-overview" target="_blank" rel="noopener noreferrer" class="">Microsoft 365 Copilot</a> · <a href="https://workspace.google.com/solutions/ai/" target="_blank" rel="noopener noreferrer" class="">Gemini in Google Workspace</a> · <a href="https://manus.im/" target="_blank" rel="noopener noreferrer" class="">Manus</a></li>
+<li class=""><a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">HAPI MCP</a> (our own tool)</li>
+</ul></div></div></details>]]></content:encoded>
+            <category>ai-agents</category>
+            <category>developer-tools</category>
+            <category>mcp</category>
+            <category>software-engineering</category>
+        </item>
         <item>
             <title><![CDATA[Your Tech Stack Is Not Your Identity: How Engineers Can Stay Valuable in the AI Era]]></title>
             <link>https://rebelion.la/how-engineers-can-stay-valuable-in-the-ai-era</link>
@@ -3788,124 +4042,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
             <category>ai</category>
             <category>chatgpt</category>
             <category>mcp</category>
-        </item>
-        <item>
-            <title><![CDATA[QBot: A CLI MCP Client to support DevOps]]></title>
-            <link>https://rebelion.la/qbot-a-cli-mcp-client-to-support-devops--deleted</link>
-            <guid>https://rebelion.la/qbot-a-cli-mcp-client-to-support-devops--deleted</guid>
-            <pubDate>Thu, 18 Sep 2025 01:26:28 GMT</pubDate>
-            <description><![CDATA[I wanted to give it a try with OpenAI Codex or Claude Code. I found this 1-dollar promo code for OpenAI, hence, I went with Codex.]]></description>
-            <content:encoded><![CDATA[<p>I wanted to give it a try with OpenAI Codex or Claude Code. I found <a href="https://chatgpt.com/?promo_campaign=team1dollar#team-pricing?utm_source=rebelion.la" target="_blank" rel="noopener noreferrer" class="">this 1-dollar promo code for OpenAI</a>, hence, I went with Codex.</p>
-<p>I have to say, I am quite impressed. I asked it to generate a Claude code and Codex clone, and it did a pretty good job for a first attempt and MVP. I am aiming to create QBot, a CLI MCP client that can interact with any MCP server, but mainly focused on supporting DevOps practitioners to interact with their infrastructure all via API calls; thanks to HAPI MCP Stack, this is now possible.</p>
-<p>Let me show you the MVP generated this Sunday afternoon.</p>
-<p>I can connect to an MCP server. List all available tools. Call a tool directly, but I prefer to leverage natural language through a prompt. I can configure the LLM provider and the model to use.</p>
-<p>With that, I can now interact with my MCP server and get things done. I tested with the Petstore example. If you have been following my blog and videos, you know I am using it a lot for demos, because it is simple and available everywhere.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-demo-mvp-in-action">The Demo (MVP in Action)<a href="https://rebelion.la/qbot-a-cli-mcp-client-to-support-devops--deleted#the-demo-mvp-in-action" class="hash-link" aria-label="Direct link to The Demo (MVP in Action)" title="Direct link to The Demo (MVP in Action)" translate="no">​</a></h2>
-<p>In the demo video, I walk through the very first working version of QBot:</p>
-<ol>
-<li class="">
-<p>Listing tools: Seeing what actions the MCP server provides.</p>
-</li>
-<li class="">
-<p>Checking configs: Confirming Ollama 3 is running and connected.</p>
-</li>
-<li class="">
-<p>Executing requests: Running <code>get pet by ID 1</code> or <code>deleting an order with ID 10</code> — all powered by natural language mapped to real API calls.</p>
-</li>
-</ol>
-<p>It may look simple now, but that’s exactly the point: accessibility. A beginner DevOps engineer could get the same results as a seasoned pro, without memorizing commands.</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/jKnHjyoTE5w" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<p>Start QBot, connect to the MCP server, and list all available tools!</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ qbot --url http://localhost:3000/mcp</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">QBot • MCP REPL  Type text to chat, /help for commands</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Connected to http://localhost:3000/mcp</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /tools</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">... removed for brevity ...  </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /llm status</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Provider: ollama</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Model: llama3.1:latest</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Keys: (none)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Base URLs: ollama</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; get pet with ID 1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Calling tool getPetById</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">assistant: The pet with ID 1 has the following details:</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Category: Cats (ID 2)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Name: Cat 1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Photo URLs: url1, url2</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Tags: tag1, tag2</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Status: available</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; delete order with ID 10</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Calling tool deleteOrder</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">assistant: Order with ID 10 has been deleted successfully.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /exit</span><br></div></code></pre></div></div>
-<p>You can see how easy it is to interact with the MCP server and get things done. I can now leverage the power of LLMs to interact with my infrastructure and get things done.</p>
-<p>I am planning to add more features, like:</p>
-<ul>
-<li class="">
-<p>Support for more advanced prompts, like few-shot learning, etc.</p>
-</li>
-<li class="">
-<p>Support for more advanced features, like tool chaining, etc.</p>
-</li>
-</ul>
-<p>Stay tuned, and let me know what you think. I am open to feedback and suggestions.</p>
-<p>Be HAPI. 😁 Go Rebels! ✊🏽</p>]]></content:encoded>
-            <category>devops</category>
-            <category>swagger</category>
-            <category>mcp</category>
-            <category>mcp-client</category>
-        </item>
-        <item>
-            <title><![CDATA[QBot: A CLI MCP Client Built for DevOps]]></title>
-            <link>https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops</link>
-            <guid>https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops</guid>
-            <pubDate>Tue, 16 Sep 2025 02:04:53 GMT</pubDate>
-            <description><![CDATA[What if you could talk to your infrastructure the same way you talk to ChatGPT? No clunky dashboards. No endless API docs. Just a simple CLI that lets you ask for what you want—and]]></description>
-            <content:encoded><![CDATA[<p>What if you could talk to your infrastructure the same way you talk to ChatGPT? No clunky dashboards. No endless API docs. Just a simple CLI that lets you ask for what you want—and get it done.</p>
-<p>That’s the vision behind <strong>QBot</strong>, my new CLI MCP client built to help DevOps practitioners interact with their infrastructure using natural language.</p>
-<p>This started as a Sunday afternoon experiment. I stumbled upon a $1 promo code for OpenAI and decided to give Codex a spin. My goal: generate a Claude Code + Codex-style clone that could serve as the foundation for QBot. To my surprise, the first MVP came together quickly—and it’s already powerful enough to be useful.</p>
-<p>Thanks to the <strong>HAPI MCP Stack</strong>, connecting QBot to any MCP server became not only possible but seamless.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-qbot-can-do-today">What QBot Can Do Today<a href="https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops#what-qbot-can-do-today" class="hash-link" aria-label="Direct link to What QBot Can Do Today" title="Direct link to What QBot Can Do Today" translate="no">​</a></h2>
-<p>With the MVP, here’s what I can already do in just a few steps:</p>
-<ul>
-<li class="">
-<p>Connect to an MCP server.</p>
-</li>
-<li class="">
-<p>List all available tools.</p>
-</li>
-<li class="">
-<p>Call tools directly—or simply type prompts in natural language.</p>
-</li>
-<li class="">
-<p>Configure the LLM provider and model on the fly.</p>
-</li>
-</ul>
-<p>That means I can now interact with my MCP server <em>and</em> my infrastructure as if I were chatting with a colleague.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="demo-qbot-in-action">Demo: QBot in Action<a href="https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops#demo-qbot-in-action" class="hash-link" aria-label="Direct link to Demo: QBot in Action" title="Direct link to Demo: QBot in Action" translate="no">​</a></h2>
-<p>Here’s a quick example using the classic Petstore API (a favorite for demos because it’s simple and widely available).</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/jKnHjyoTE5w" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain">$ qbot --url http://localhost:3000/mcp</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">QBot • MCP REPL  Type text to chat, /help for commands</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Connected to http://localhost:3000/mcp</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /tools</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">... removed for brevity ...  </span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /llm status</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Provider: ollama</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Model: llama3.1:latest</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Keys: (none)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">Base URLs: ollama</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; get pet with ID 1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Calling tool getPetById</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">assistant: The pet with ID 1 has the following details:</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Category: Cats (ID 2)</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Name: Cat 1</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Photo URLs: url1, url2</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Tags: tag1, tag2</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">* Status: available</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; delete order with ID 10</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">➜ Calling tool deleteOrder</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">assistant: Order with ID 10 has been deleted successfully.</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">qbot&gt; /exit</span><br></div></code></pre></div></div>
-<p>Simple, right? No SDK setup. No boilerplate code. Just type what you need, and QBot handles the rest.</p>
-<p>👉 I’ve included a full video walkthrough of the demo below so you can see it in action.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next-for-qbot">What’s Next for QBot<a href="https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops#whats-next-for-qbot" class="hash-link" aria-label="Direct link to What’s Next for QBot" title="Direct link to What’s Next for QBot" translate="no">​</a></h2>
-<p>The MVP is just the beginning. I’m already exploring ways to extend QBot with:</p>
-<ul>
-<li class="">
-<p><strong>Few-shot prompts</strong> for more context-aware interactions.</p>
-</li>
-<li class="">
-<p><strong>Tool chaining</strong> to run multi-step workflows automatically. (The AI formula: <a href="https://hashnode.com/post/cmfhj5nrt000002l1bha2d1up" target="_blank" rel="noopener noreferrer" class="">OAS + MCP + Arazzo</a>)</p>
-</li>
-<li class="">
-<p><strong>Deeper integration with infrastructure APIs</strong> so DevOps tasks become as easy as chatting.</p>
-</li>
-</ul>
-<p>Ultimately, QBot aims to become the CLI sidekick every DevOps practitioner wishes they had.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-this-matters">Why This Matters<a href="https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops#why-this-matters" class="hash-link" aria-label="Direct link to Why This Matters" title="Direct link to Why This Matters" translate="no">​</a></h2>
-<p>Infrastructure is getting more complex, not less. Kubernetes, multi-cloud, APIs everywhere—DevOps teams are drowning in tools and dashboards. A conversational CLI like QBot flips that complexity on its head.</p>
-<p>Instead of memorizing commands, you can describe your intent—and let QBot translate that into precise API calls. That’s where the <a href="https://docs.mcp.com.ai/introduction/architecture" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI MCP Stack</strong></a> shines. It provides the foundation for exposing APIs in a standard, machine-readable way, so tools like QBot can plug in and just work.</p>
-<p>If you’re exploring how MCP can simplify your workflows, I’d highly recommend checking out the <a href="https://docs.mcp.com.ai/components/" target="_blank" rel="noopener noreferrer" class="">HAPI Stack</a>—it’s the backbone of everything I’m building here.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="final-thoughts">Final Thoughts<a href="https://rebelion.la/qbot-a-cli-mcp-client-built-for-devops#final-thoughts" class="hash-link" aria-label="Direct link to Final Thoughts" title="Direct link to Final Thoughts" translate="no">​</a></h2>
-<p>This is just the start, but I’m excited about where QBot is heading. Imagine pairing natural language with infrastructure automation—suddenly, DevOps feels less like firefighting and more like flow.</p>
-<p>I’d love to hear what you think:</p>
-<ul>
-<li class="">
-<p>What features would you like to see in QBot?</p>
-</li>
-<li class="">
-<p>How would you use a conversational CLI in your workflow?</p>
-</li>
-</ul>
-<p>Drop your thoughts in the comments, and stay tuned for updates.</p>
-<p><strong>Be HAPI. 😁 Go Rebels! ✊🏽</strong></p>]]></content:encoded>
-            <category>devops</category>
-            <category>ai-automation</category>
-            <category>mcp-client</category>
         </item>
     </channel>
 </rss>
