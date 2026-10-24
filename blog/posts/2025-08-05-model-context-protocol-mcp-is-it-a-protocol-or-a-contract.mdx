@@ -24,7 +24,7 @@ keywords:
   - mcp
 ---
 
-:::info Updated October 2026
+:::info[Updated October 2026]
 When I wrote this in August 2025, "MCP is a contract" was a hunch. Since then, the specification itself has moved in that direction: the 2026-07-28 revision removed the `initialize` handshake and protocol-level sessions entirely. I've added what changed, and what it means, at the end of each section.
 :::
 
@@ -133,7 +133,7 @@ LSP introduced a **universal interface**. Once a language server was built, any 
 
 **Sound familiar?** That's exactly what MCP does for AI: *once an API is exposed as an MCP server, any compliant client can use it without custom logic for each client.*
 
-:::note What changed in 2026
+:::note[What changed in 2026]
 MCP has since parted ways with LSP's lifecycle. In the [2026-07-28 revision](https://modelcontextprotocol.io/specification/2026-07-28/changelog), the `initialize` / `notifications/initialized` handshake is gone, and so are protocol-level sessions and the `Mcp-Session-Id` header. Every request now carries its own protocol version and client capabilities in `_meta`, and servers advertise what they support through a new `server/discover` request. MCP kept LSP's best idea, one interface for many clients, and dropped the stateful ceremony.
 :::
 
@@ -164,7 +164,7 @@ They're just **file streams**, attached to terminals, pipes or redirects. stdio 
 
 The community's push toward HTTP made sense: it's familiar, widely supported, and comes with headers, status codes and content negotiation. For me, [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) in revision 2025-03-26 was transformative.
 
-:::note What changed in 2026
+:::note[What changed in 2026]
 Both transports remain standard, and the 2026-07-28 [transports page](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports) states it plainly: "Protocol semantics are identical on every transport." On Streamable HTTP, each message is one HTTP POST to a single MCP endpoint. A transport is now explicitly just a *binding*. The meaning lives above it, in the contract.
 :::
 
@@ -227,7 +227,7 @@ In modern cloud-native and AI-centric architectures, these specifications live i
 
 In the same way, **MCP's value lives in "layer 8"**, the realm of contracts, conventions and collaboration. That's not a limitation; it's the evolution from "transporting data" to "understanding and automating intent".
 
-:::note What changed in 2026
+:::note[What changed in 2026]
 The evidence got stronger. A stateless MCP request is a self-contained message: which tool, which arguments, which protocol version. That's very close to a REST call described by an OpenAPI operation. In practice, the [HAPI CLI](https://hapi.mcp.com.ai) builds MCP tools directly from an OpenAPI contract: the `operationId` becomes the tool name, the parameters become its input schema, and GET operations are marked read-only. See [You don't need to implement MCP servers](/you-dont-need-to-implement-mcp-servers-a-contract-first-approach-to-ai-tool-integration) for the real output.
 :::
 
