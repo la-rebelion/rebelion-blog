@@ -1,0 +1,151 @@
+---
+title: "Pullboard: Agentic engineering is mostly management"
+description: Handing real work to AI coding agents reveals a hard truth—the model is rarely the bottleneck, the process is. Here is how I manage agents with OpenSpec, early experiments with Pullboard, and where the two meet.
+date: 2026-11-02T00:00:00Z
+authors: [adrianescutia]
+approved: 2026-11-02
+image: /img/demos/pullboard-agentic-engineering.jpg
+---
+import Head from '@docusaurus/Head';
+import harnessPoster from '/img/demos/pullboard-agentic-engineering.jpg';
+
+<Head>
+  <meta property="og:image" content={harnessPoster} />
+</Head>
+
+
+I have spent the last months handing real engineering work to coding agents. 
+
+The short version: **the model is rarely the bottleneck. The process around it is.**
+
+We tend to obsess over model benchmarks, context window expansion, and which frontier model scores a few percentage points higher on SWE-bench. But when you put autonomous agents on real production codebases, none of that matters if your execution framework is broken. Without strict boundaries, agents don't fail by getting stuck—they fail by enthusiastically building the wrong thing at full speed.
+
+{/* truncate */}
+
+<MediaEmbed url="https://youtu.be/JcEivmsCiaI?autoplay=1" />
+
+---
+
+## What I mean by agentic
+
+An agent, in the sense Anthropic uses in its essay on building effective agents, is a system where a model directs its own process and tool use, rather than following a fixed script of steps ([Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)). Coding tools such as Claude Code work this way: you describe a goal, and the agent reads files, runs commands and edits code in your terminal until it thinks it is done ([Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview)).
+
+That last phrase matters. **"Until it thinks it is done" is where the trouble starts.**
+
+## Agents are confident, not correct
+
+An agent will tell you the work is finished. Sometimes it is. Sometimes the tests it wrote only test the thing it just wrote. I treat every "done" as a claim that needs evidence, the same way I would treat it from a new hire on their first day.
+
+The non-negotiable rule I keep coming back to: **nothing ships until someone other than the author has checked it.** Another agent, another isolated session, or me. The author never grades its own homework.
+
+## Write the bar before the work
+
+The cheapest improvement I found is also the dullest. Before an agent starts, write down what "done" means in a form a program can check. A test that fails today and should pass tomorrow. A build that must stay green. A page that must not exist.
+
+If you cannot write that down, the task is simply not ready. That is not an AI problem; it is the same reason human engineering tasks go wrong. The only difference is that a human might hesitate and ask for clarification; an agent will happily build the wrong architecture in 30 seconds.
+
+## Keep tasks small
+
+Large tasks drift. The agent loses track of constraints you gave it an hour ago, or quietly changes something you did not ask about. Small tasks with a clear check keep the damage local and the review short. If a change is too big to read in one sitting, I split it.
+
+## Give it tools, but fence them in
+
+Standards like the [Model Context Protocol](https://modelcontextprotocol.io) make it easy to connect an agent to your tools and data. That is useful and also a risk. Every tool you hand over is something the agent can misuse.
+
+I prefer least-privilege by default: give an agent narrow permissions, use deterministic scripts and hooks to guard against unapproved changes, and widen access only as the workflow proves itself.
+
+## What stays with the person
+
+Agents do not decide what is worth building. They do not understand business priorities, customer empathy, product taste, or what voice an engineering team should project.
+
+Those calls remain ours.
+
+That is the entire job in the agentic era: **less typing, more management.** Less time writing boilerplate, more time deciding what "done" means and verifying that it holds true.
+
+---
+
+## From theory to practice: My baseline with OpenSpec
+
+Writing the bar before the work is easy to say, but how do you actually enforce it every day?
+
+For a long time, my weapon of choice has been **[OpenSpec](https://openspec.dev)** and the discipline of Spec-Driven Development (SDD). 
+
+Vibe coding breaks at scale because prompt decisions live only in transient chat windows. OpenSpec fixes that by treating the specification as an evolvable, versioned source of truth:
+
+- Features begin with an explicit proposal and a delta specification (`ADDED`, `MODIFIED`, `REMOVED`).
+- Requirements are expressed with unambiguous constraints (`SHALL` and `MUST`).
+- Observable behaviors are captured as testable scenarios (`WHEN ... THEN ...`).
+
+With OpenSpec (`/opsx:explore`, `/opsx:propose`, `/opsx:apply`, `/opsx:verify`), the agent is anchored to a concrete contract. It cannot drift because the specification lives right next to the code in git. I have used OpenSpec across dozens of real-world projects, and the results have been consistently reliable: predictable diffs, zero guesswork, and clean auditability.
+
+The key takeaway is that OpenSpec allows me to codify the "done" criteria upfront and ensures that every agent's work is measured against it. This makes the review process straightforward and reduces the risk of agents drifting from the intended behavior.
+
+I wrote about this in more detail in a quick course on [Spec-Driven Development](/mvp-with-spec-driven-development) with example of an [MVP implementation in GitHub](https://github.com/la-rebelion/mvp-with-sdd), including how to structure specifications and enforce them in practice. Take a look if you want a hands-on guide to applying these principles.
+
+---
+
+## Discovering Pullboard: Autonomous execution meets peer review
+
+While OpenSpec solved the *specification lifecycle*, running multi-agent execution still required a lot of manual session babysitting. 
+
+Recently, I discovered **[Pullboard](https://pullboard.dev)**—an open-source, local-first work board that lives directly in your Git repository—and decided to give it a try.
+
+The initial results are genuinely promising.
+
+What stood out to me immediately is that Pullboard turns the governance rules I care about into automated Git state machine mechanics:
+
+- **Zero external SaaS:** It lives inside your repo. No accounts, no centralized databases.
+- **Isolated lanes:** Each agent works inside its own Git worktree, so agents never step on each other's toes.
+- **Frozen criteria:** The moment an agent claims an item, the bar freezes. Nobody can soften the criteria mid-build.
+- **Enforced peer verification:** When a builder agent submits its work, tests must pass, and the exact commit is pinned in Git. Then, **a completely separate verifier agent must independently inspect and validate the work**. The builder is physically blocked from verifying its own task.
+
+It takes the core lesson of agentic engineering—*never let the author grade its own work*—and turns it into an automated pipeline.
+
+---
+
+## The next frontier: Marrying OpenSpec with Pullboard
+
+Having used OpenSpec for a long time and now seeing Pullboard's execution model in action, the next question became obvious:
+
+> **Can we mix these two approaches?**
+
+Think about what happens when you combine them:
+1. **OpenSpec** governs the *intent, architecture, and specification lifecycle*—capturing requirements, delta changes, and acceptance scenarios.
+2. **Pullboard** governs the *autonomous multi-agent execution engine*—dispatching tasks into isolated worktrees, enforcing doctrine with Git hooks, and mandating independent verification.
+
+I am currently exploring how to extend Pullboard so that it natively integrates with OpenSpec. Imagine proposing an OpenSpec change, having Pullboard automatically translate those scenarios into frozen board items, letting autonomous builder agents implement them in parallel lanes, and having verifier agents run `/opsx:verify` against the exact pinned commits before merging to `main`.
+
+It is the best of both worlds: spec-anchored precision paired with autonomous software factory throughput.
+
+I am actively building and testing this hybrid setup right now. **Stay tuned for updates**—in an upcoming post, I will share the technical details, the integration hooks, and what I learn from running them together.
+
+---
+
+## See it in action
+
+Want to see how this looks under the hood? Here is a walkthrough of Pullboard orchestrating agents and peer verification:
+
+[En ESPAÑOL: Demostración de Pullboard con Agentes Autónomos](https://youtu.be/8zubi3fd2i0).
+
+<div align="center">
+  {/* Video Demo Placeholder */}  
+  <MediaEmbed url="https://youtu.be/JcEivmsCiaI?autoplay=1" />
+  <p><em>▶ Watch: Autonomous Agent Orchestration with Pullboard (Video demo placeholder — full walkthrough coming soon!)</em></p>
+</div>
+
+*This video and walkthrough were produced with **[Qontent Tube](https://qontent.tube)**, our tool for turning engineering sessions and screen captures into high-fidelity technical video content.*
+
+
+---
+
+## What's next
+
+From my trenches with OpenSpec and Pullboard, I have learned that the combination of strict specification management and autonomous agent orchestration can dramatically improve both the reliability and speed of engineering work.
+
+At **[La Rebelion Labs](https://rebelion.la)** community, we are actively experimenting with these tools and sharing our learnings with the broader engineering ecosystem.
+
+- Follow what we are building at [rebelion.la](https://rebelion.la).
+- Are you using OpenSpec, Pullboard, or custom agent harnesses? Let me know what your review loop looks like.
+- Share your experiences, challenges, and any tips for managing autonomous agents effectively.
+
+Go Rebels! ✊🏽
