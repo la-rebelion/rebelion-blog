@@ -4,10 +4,98 @@
         <title>La Rebelion Labs Blog</title>
         <link>https://rebelion.la/es</link>
         <description>La Rebelion Labs Blog</description>
-        <lastBuildDate>Thu, 22 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 02 Nov 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>es</language>
+        <item>
+            <title><![CDATA[Pullboard: Agentic engineering is mostly management]]></title>
+            <link>https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice</link>
+            <guid>https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice</guid>
+            <pubDate>Mon, 02 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Handing real work to AI coding agents reveals a hard truth—the model is rarely the bottleneck, the process is. Here is how I manage agents with OpenSpec, early experiments with Pullboard, and where the two meet.]]></description>
+            <content:encoded><![CDATA[
+<p>I have spent the last months handing real engineering work to coding agents.</p>
+<p>The short version: <strong>the model is rarely the bottleneck. The process around it is.</strong></p>
+<p>We tend to obsess over model benchmarks, context window expansion, and which frontier model scores a few percentage points higher on SWE-bench. But when you put autonomous agents on real production codebases, none of that matters if your execution framework is broken. Without strict boundaries, agents don't fail by getting stuck—they fail by enthusiastically building the wrong thing at full speed.</p>
+<!-- -->
+<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/JcEivmsCiaI" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-i-mean-by-agentic">What I mean by agentic<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#what-i-mean-by-agentic" class="hash-link" aria-label="Enlace directo al What I mean by agentic" title="Enlace directo al What I mean by agentic" translate="no">​</a></h2>
+<p>An agent, in the sense Anthropic uses in its essay on building effective agents, is a system where a model directs its own process and tool use, rather than following a fixed script of steps (<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer" class="">Building effective agents</a>). Coding tools such as Claude Code work this way: you describe a goal, and the agent reads files, runs commands and edits code in your terminal until it thinks it is done (<a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer" class="">Claude Code overview</a>).</p>
+<p>That last phrase matters. <strong>"Until it thinks it is done" is where the trouble starts.</strong></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="agents-are-confident-not-correct">Agents are confident, not correct<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#agents-are-confident-not-correct" class="hash-link" aria-label="Enlace directo al Agents are confident, not correct" title="Enlace directo al Agents are confident, not correct" translate="no">​</a></h2>
+<p>An agent will tell you the work is finished. Sometimes it is. Sometimes the tests it wrote only test the thing it just wrote. I treat every "done" as a claim that needs evidence, the same way I would treat it from a new hire on their first day.</p>
+<p>The non-negotiable rule I keep coming back to: <strong>nothing ships until someone other than the author has checked it.</strong> Another agent, another isolated session, or me. The author never grades its own homework.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="write-the-bar-before-the-work">Write the bar before the work<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#write-the-bar-before-the-work" class="hash-link" aria-label="Enlace directo al Write the bar before the work" title="Enlace directo al Write the bar before the work" translate="no">​</a></h2>
+<p>The cheapest improvement I found is also the dullest. Before an agent starts, write down what "done" means in a form a program can check. A test that fails today and should pass tomorrow. A build that must stay green. A page that must not exist.</p>
+<p>If you cannot write that down, the task is simply not ready. That is not an AI problem; it is the same reason human engineering tasks go wrong. The only difference is that a human might hesitate and ask for clarification; an agent will happily build the wrong architecture in 30 seconds.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="keep-tasks-small">Keep tasks small<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#keep-tasks-small" class="hash-link" aria-label="Enlace directo al Keep tasks small" title="Enlace directo al Keep tasks small" translate="no">​</a></h2>
+<p>Large tasks drift. The agent loses track of constraints you gave it an hour ago, or quietly changes something you did not ask about. Small tasks with a clear check keep the damage local and the review short. If a change is too big to read in one sitting, I split it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="give-it-tools-but-fence-them-in">Give it tools, but fence them in<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#give-it-tools-but-fence-them-in" class="hash-link" aria-label="Enlace directo al Give it tools, but fence them in" title="Enlace directo al Give it tools, but fence them in" translate="no">​</a></h2>
+<p>Standards like the <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer" class="">Model Context Protocol</a> make it easy to connect an agent to your tools and data. That is useful and also a risk. Every tool you hand over is something the agent can misuse.</p>
+<p>I prefer least-privilege by default: give an agent narrow permissions, use deterministic scripts and hooks to guard against unapproved changes, and widen access only as the workflow proves itself.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-stays-with-the-person">What stays with the person<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#what-stays-with-the-person" class="hash-link" aria-label="Enlace directo al What stays with the person" title="Enlace directo al What stays with the person" translate="no">​</a></h2>
+<p>Agents do not decide what is worth building. They do not understand business priorities, customer empathy, product taste, or what voice an engineering team should project.</p>
+<p>Those calls remain ours.</p>
+<p>That is the entire job in the agentic era: <strong>less typing, more management.</strong> Less time writing boilerplate, more time deciding what "done" means and verifying that it holds true.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="from-theory-to-practice-my-baseline-with-openspec">From theory to practice: My baseline with OpenSpec<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#from-theory-to-practice-my-baseline-with-openspec" class="hash-link" aria-label="Enlace directo al From theory to practice: My baseline with OpenSpec" title="Enlace directo al From theory to practice: My baseline with OpenSpec" translate="no">​</a></h2>
+<p>Writing the bar before the work is easy to say, but how do you actually enforce it every day?</p>
+<p>For a long time, my weapon of choice has been <strong><a href="https://openspec.dev/" target="_blank" rel="noopener noreferrer" class="">OpenSpec</a></strong> and the discipline of Spec-Driven Development (SDD).</p>
+<p>Vibe coding breaks at scale because prompt decisions live only in transient chat windows. OpenSpec fixes that by treating the specification as an evolvable, versioned source of truth:</p>
+<ul>
+<li class="">Features begin with an explicit proposal and a delta specification (<code>ADDED</code>, <code>MODIFIED</code>, <code>REMOVED</code>).</li>
+<li class="">Requirements are expressed with unambiguous constraints (<code>SHALL</code> and <code>MUST</code>).</li>
+<li class="">Observable behaviors are captured as testable scenarios (<code>WHEN ... THEN ...</code>).</li>
+</ul>
+<p>With OpenSpec (<code>/opsx:explore</code>, <code>/opsx:propose</code>, <code>/opsx:apply</code>, <code>/opsx:verify</code>), the agent is anchored to a concrete contract. It cannot drift because the specification lives right next to the code in git. I have used OpenSpec across dozens of real-world projects, and the results have been consistently reliable: predictable diffs, zero guesswork, and clean auditability.</p>
+<p>The key takeaway is that OpenSpec allows me to codify the "done" criteria upfront and ensures that every agent's work is measured against it. This makes the review process straightforward and reduces the risk of agents drifting from the intended behavior.</p>
+<p>I wrote about this in more detail in a quick course on <a class="" href="https://rebelion.la/es/mvp-with-spec-driven-development">Spec-Driven Development</a> with example of an <a href="https://github.com/la-rebelion/mvp-with-sdd" target="_blank" rel="noopener noreferrer" class="">MVP implementation in GitHub</a>, including how to structure specifications and enforce them in practice. Take a look if you want a hands-on guide to applying these principles.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="discovering-pullboard-autonomous-execution-meets-peer-review">Discovering Pullboard: Autonomous execution meets peer review<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#discovering-pullboard-autonomous-execution-meets-peer-review" class="hash-link" aria-label="Enlace directo al Discovering Pullboard: Autonomous execution meets peer review" title="Enlace directo al Discovering Pullboard: Autonomous execution meets peer review" translate="no">​</a></h2>
+<p>While OpenSpec solved the <em>specification lifecycle</em>, running multi-agent execution still required a lot of manual session babysitting.</p>
+<p>Recently, I discovered <strong><a href="https://pullboard.dev/" target="_blank" rel="noopener noreferrer" class="">Pullboard</a></strong>—an open-source, local-first work board that lives directly in your Git repository—and decided to give it a try.</p>
+<p>The initial results are genuinely promising.</p>
+<p>What stood out to me immediately is that Pullboard turns the governance rules I care about into automated Git state machine mechanics:</p>
+<ul>
+<li class=""><strong>Zero external SaaS:</strong> It lives inside your repo. No accounts, no centralized databases.</li>
+<li class=""><strong>Isolated lanes:</strong> Each agent works inside its own Git worktree, so agents never step on each other's toes.</li>
+<li class=""><strong>Frozen criteria:</strong> The moment an agent claims an item, the bar freezes. Nobody can soften the criteria mid-build.</li>
+<li class=""><strong>Enforced peer verification:</strong> When a builder agent submits its work, tests must pass, and the exact commit is pinned in Git. Then, <strong>a completely separate verifier agent must independently inspect and validate the work</strong>. The builder is physically blocked from verifying its own task.</li>
+</ul>
+<p>It takes the core lesson of agentic engineering—<em>never let the author grade its own work</em>—and turns it into an automated pipeline.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-next-frontier-marrying-openspec-with-pullboard">The next frontier: Marrying OpenSpec with Pullboard<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#the-next-frontier-marrying-openspec-with-pullboard" class="hash-link" aria-label="Enlace directo al The next frontier: Marrying OpenSpec with Pullboard" title="Enlace directo al The next frontier: Marrying OpenSpec with Pullboard" translate="no">​</a></h2>
+<p>Having used OpenSpec for a long time and now seeing Pullboard's execution model in action, the next question became obvious:</p>
+<blockquote>
+<p><strong>Can we mix these two approaches?</strong></p>
+</blockquote>
+<p>Think about what happens when you combine them:</p>
+<ol>
+<li class=""><strong>OpenSpec</strong> governs the <em>intent, architecture, and specification lifecycle</em>—capturing requirements, delta changes, and acceptance scenarios.</li>
+<li class=""><strong>Pullboard</strong> governs the <em>autonomous multi-agent execution engine</em>—dispatching tasks into isolated worktrees, enforcing doctrine with Git hooks, and mandating independent verification.</li>
+</ol>
+<p>I am currently exploring how to extend Pullboard so that it natively integrates with OpenSpec. Imagine proposing an OpenSpec change, having Pullboard automatically translate those scenarios into frozen board items, letting autonomous builder agents implement them in parallel lanes, and having verifier agents run <code>/opsx:verify</code> against the exact pinned commits before merging to <code>main</code>.</p>
+<p>It is the best of both worlds: spec-anchored precision paired with autonomous software factory throughput.</p>
+<p>I am actively building and testing this hybrid setup right now. <strong>Stay tuned for updates</strong>—in an upcoming post, I will share the technical details, the integration hooks, and what I learn from running them together.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-it-in-action">See it in action<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#see-it-in-action" class="hash-link" aria-label="Enlace directo al See it in action" title="Enlace directo al See it in action" translate="no">​</a></h2>
+<p>Want to see how this looks under the hood? Here is a walkthrough of Pullboard orchestrating agents and peer verification:</p>
+<p><a href="https://youtu.be/8zubi3fd2i0" target="_blank" rel="noopener noreferrer" class="">En ESPAÑOL: Demostración de Pullboard con Agentes Autónomos</a>.</p>
+<div align="center"><div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/JcEivmsCiaI" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div><p><em>▶ Watch: Autonomous Agent Orchestration with Pullboard (Video demo placeholder — full walkthrough coming soon!)</em></p></div>
+<p><em>This video and walkthrough were produced with <strong><a href="https://qontent.tube/" target="_blank" rel="noopener noreferrer" class="">Qontent Tube</a></strong>, our tool for turning engineering sessions and screen captures into high-fidelity technical video content.</em></p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What's next<a href="https://rebelion.la/es/demos/pullboard-agentic-engineering-in-practice#whats-next" class="hash-link" aria-label="Enlace directo al What's next" title="Enlace directo al What's next" translate="no">​</a></h2>
+<p>From my trenches with OpenSpec and Pullboard, I have learned that the combination of strict specification management and autonomous agent orchestration can dramatically improve both the reliability and speed of engineering work.</p>
+<p>At <strong><a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">La Rebelion Labs</a></strong> community, we are actively experimenting with these tools and sharing our learnings with the broader engineering ecosystem.</p>
+<ul>
+<li class="">Follow what we are building at <a href="https://rebelion.la/" target="_blank" rel="noopener noreferrer" class="">rebelion.la</a>.</li>
+<li class="">Are you using OpenSpec, Pullboard, or custom agent harnesses? Let me know what your review loop looks like.</li>
+<li class="">Share your experiences, challenges, and any tips for managing autonomous agents effectively.</li>
+</ul>
+<p>Go Rebels! ✊🏽</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[The Agent Is the Least Trustworthy Part of the System]]></title>
             <link>https://rebelion.la/es/podcast/2026-W43-E1-agent-least-trustworthy-system</link>
@@ -3813,234 +3901,6 @@ In case you are working with AI agents, and MCP servers, here we have more skill
 <p>👉 If you want to survive (and thrive) in the new agentic era, start with MCP servers. The registry is your gateway.</p>
 <p>Go Rebels! ✊🏽</p>]]></content:encoded>
             <category>ai</category>
-            <category>mcp</category>
-        </item>
-        <item>
-            <title><![CDATA[ChatGPT Meets Custom MCPs]]></title>
-            <link>https://rebelion.la/es/chatgpt-meets-custom-mcps</link>
-            <guid>https://rebelion.la/es/chatgpt-meets-custom-mcps</guid>
-            <pubDate>Fri, 19 Sep 2025 10:50:16 GMT</pubDate>
-            <description><![CDATA[Imagine a world where ChatGPT doesn't just answer your questions—it talks directly to your systems. Your API. Your server. Your private data.]]></description>
-            <content:encoded><![CDATA[<p>Imagine a world where ChatGPT doesn't just answer your questions—it talks directly to your systems. Your API. Your server. Your private data.</p>
-<p>That world is here.</p>
-<p>OpenAI's allowing to connect <strong>Model Context Protocol (MCP)</strong> has just crossed a huge milestone: <strong>ChatGPT can now connect with "custom" MCP Servers</strong>. And with <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class=""><strong>HAPI MCP Servers</strong></a>, you can start building and connecting your own today in seconds.</p>
-<p>But there's a caveat: right now, ChatGPT only works if your MCP Server implements <strong>two specific tools:</strong> <code>search</code> and <code>fetch</code>. Don't worry—I'll guide you through setting it up, explain what it means, and show you why this makes a significant difference.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-mcp-and-why-should-you-care">What Is MCP, and Why Should You Care?<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#what-is-mcp-and-why-should-you-care" class="hash-link" aria-label="Enlace directo al What Is MCP, and Why Should You Care?" title="Enlace directo al What Is MCP, and Why Should You Care?" translate="no">​</a></h2>
-<p>Let's break it down.</p>
-<ul>
-<li class="">
-<p><strong>APIs today</strong>: Think of APIs as doors. If you have the right key (credentials, documentation, SDK), you can open them. But every door looks different. Some are REST, some GraphQL, some gRPC. Some are well-documented, others are a nightmare.</p>
-</li>
-<li class="">
-<p><strong>MCP's promise</strong>: MCP standardizes how AI models like ChatGPT talk to APIs. Instead of building one-off integrations, you build a <strong>server</strong> that follows the <a href="https://modelcontextprotocol.io/docs/learn/server-concepts" target="_blank" rel="noopener noreferrer" class="">MCP spec</a>. Once that's done, <strong>ChatGPT automatically knows how to talk to it.</strong> (or any other MCP-compatible client, i.e. <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" class="">Claude Desktop</a>, <a href="https://hapi.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">QBot</a>).</p>
-</li>
-<li class="">
-<p><strong>The business angle</strong>: This isn't just technical elegance—it's <strong>faster integrations, less developer overhead, and reduced cost of maintaining custom connectors.</strong> That means faster time to market and lower risk.</p>
-</li>
-</ul>
-<p>In short: MCP turns APIs into AI-ready services.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-the-big-news-chatgpt-meets-custom-mcps">⚡ The Big News: ChatGPT Meets <em>Custom</em> MCPs<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-the-big-news-chatgpt-meets-custom-mcps" class="hash-link" aria-label="Enlace directo al -the-big-news-chatgpt-meets-custom-mcps" title="Enlace directo al -the-big-news-chatgpt-meets-custom-mcps" translate="no">​</a></h2>
-<p>Until now, ChatGPT has only worked with a fixed set of tools. Think of them as pre-installed apps. Useful, but limiting.</p>
-<p>Now? You can bring <strong>your own MCP Server</strong> into ChatGPT. That's like installing your own app in the App Store of AI.</p>
-<p>With <strong>HAPI MCP Servers</strong>, the door is open:</p>
-<ul>
-<li class="">
-<p>You define your MCP logic (Swagger/OpenAPI, custom code, etc).</p>
-</li>
-<li class="">
-<p>You expose it through the MCP standard (<a href="https://docs.mcp.com.ai/components/hapi-server/#example-bootstrapping-hapi-with-openapi" target="_blank" rel="noopener noreferrer" class="">one command line to start</a>).</p>
-</li>
-<li class="">
-<p>ChatGPT connects and can be immediately used.</p>
-</li>
-</ul>
-<p>But there's a catch…</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="️-the-caveat-search-and-fetch">⚠️ The Caveat: <code>search</code> and <code>fetch</code><a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#%EF%B8%8F-the-caveat-search-and-fetch" class="hash-link" aria-label="Enlace directo al ️-the-caveat-search-and-fetch" title="Enlace directo al ️-the-caveat-search-and-fetch" translate="no">​</a></h2>
-<p>Here's the current limitation (at least as of when this was written): ChatGPT will only talk to custom MCP Servers that expose <strong>two specific tools</strong>:</p>
-<ol>
-<li class="">
-<p><a href="https://platform.openai.com/docs/mcp#search-tool" target="_blank" rel="noopener noreferrer" class=""><code>search</code></a> – Let’s ChatGPT ask your server what resources are available.</p>
-<ul>
-<li class="">
-<p>Think of it like browsing an API catalog.</p>
-</li>
-<li class="">
-<p>Example: ChatGPT can "search" for available endpoints, functions, or datasets.</p>
-</li>
-</ul>
-</li>
-<li class="">
-<p><a href="https://platform.openai.com/docs/mcp#fetch-tool" target="_blank" rel="noopener noreferrer" class=""><code>fetch</code></a> – Let’s ChatGPT request a resource by name.</p>
-<ul>
-<li class="">
-<p>Think of it like hitting "download" on the resource you found.</p>
-</li>
-<li class="">
-<p>Example: ChatGPT can "fetch" a specific record, report, or file.</p>
-</li>
-</ul>
-</li>
-</ol>
-<p>👉 Without these two, ChatGPT won't know how to interact with your MCP Server, and as of now, it won't work at all, even if your MCP server exposes other tools. You will get an error: “This MCP server doesn’t implement <a href="https://platform.openai.com/docs/mcp" target="_blank" rel="noopener noreferrer" class="">our specification</a>. “</p>
-<p><img decoding="async" loading="lazy" src="https://rebelion.la/es/assets/images/d56e2797-6080-45dc-afaf-04690316d058-532f4acd61219e53d8443c289f440d4a.png" width="380" height="567" class="img_ev3q"></p>
-<p>This is important. It means that if you're building your own MCP, you need to <strong>start with</strong> <code>search</code> and <code>fetch</code> as your baseline tools, at least for now, if you want ChatGPT to connect.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="️-step-1-build-your-first-mcp-with-hapi">🛠️ Step 1: Build Your First MCP with HAPI<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#%EF%B8%8F-step-1-build-your-first-mcp-with-hapi" class="hash-link" aria-label="Enlace directo al 🛠️ Step 1: Build Your First MCP with HAPI" title="Enlace directo al 🛠️ Step 1: Build Your First MCP with HAPI" translate="no">​</a></h2>
-<p>Here's where it gets exciting.</p>
-<p>With <strong>HAPI MCP Servers</strong>, you don't have to reinvent the wheel. HAPI gives you a framework to:</p>
-<ul>
-<li class="">
-<p>Take your API logic.</p>
-</li>
-<li class="">
-<p>Wrap it in MCP's protocol.</p>
-</li>
-<li class="">
-<p>Expose it so ChatGPT can connect.</p>
-</li>
-</ul>
-<p>Think of HAPI as a <strong>Gateway for MCP Servers</strong>—a lightweight, flexible way to spin up a server that speaks MCP fluently.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-step-2-point-hapi-to-your-openapiswagger-auto-generates-search">🧩 Step 2: Point HAPI to your OpenAPI/Swagger (auto-generates <code>search</code>)<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-step-2-point-hapi-to-your-openapiswagger-auto-generates-search" class="hash-link" aria-label="Enlace directo al -step-2-point-hapi-to-your-openapiswagger-auto-generates-search" title="Enlace directo al -step-2-point-hapi-to-your-openapiswagger-auto-generates-search" translate="no">​</a></h2>
-<p>With HAPI MCP Servers, you don't implement <code>search</code>. HAPI reads your OpenAPI/Swagger spec and auto-builds the resource catalog, exposing a standards-compliant <code>search</code> tool automatically.</p>
-<p>What to do:</p>
-<ul>
-<li class="">
-<p>Provide your OpenAPI/Swagger spec (file or URL).</p>
-</li>
-<li class="">
-<p>Start HAPI MCP against that spec.</p>
-</li>
-</ul>
-<p>Example (pay attention to the <code>--chatgpt</code> flag):</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#F8F8F2"><span class="token plain"># Local file</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">hapi serve petstore --headless --chatgpt</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"># Or remote spec</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">hapi serve --openapi https://petstore3.swagger.io/api/v3/openapi.json</span><br></div></code></pre></div></div>
-<p>Result:</p>
-<ul>
-<li class="">
-<p><code>search</code> is available immediately, listing operations/resources derived from your spec (endpoints, tags, summaries, etc.).</p>
-</li>
-<li class="">
-<p>No custom code required.</p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-step-3-zerocode-fetch-auto-generated">🧩 Step 3: Zero‑code <code>fetch</code> (auto-generated)<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-step-3-zerocode-fetch-auto-generated" class="hash-link" aria-label="Enlace directo al -step-3-zerocode-fetch-auto-generated" title="Enlace directo al -step-3-zerocode-fetch-auto-generated" translate="no">​</a></h2>
-<p>You also don't implement <code>fetch</code>. HAPI maps each searchable resource to a concrete retrieval operation using your OpenAPI details (paths, params, auth, and response schemas).</p>
-<p>What you get:</p>
-<ul>
-<li class="">
-<p><code>fetch</code> executes the proper request and returns JSON/text per the spec.</p>
-</li>
-<li class="">
-<p>Response shaping and content-type handling come out of the box.</p>
-</li>
-</ul>
-<p>Optional:</p>
-<ul>
-<li class="">You can override defaults (e.g., auth, headers, timeouts), but it's not required for ChatGPT connectivity.</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-step-4-connect-it-to-chatgpt">🔌 Step 4: Connect It to ChatGPT<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-step-4-connect-it-to-chatgpt" class="hash-link" aria-label="Enlace directo al 🔌 Step 4: Connect It to ChatGPT" title="Enlace directo al 🔌 Step 4: Connect It to ChatGPT" translate="no">​</a></h2>
-<p>OpenAI's MCP docs show how to connect MCP Servers. Here's the gist:</p>
-<ol>
-<li class="">
-<p>Run your HAPI MCP Server locally or in the cloud.</p>
-<ol>
-<li class="">
-<p>If you run it locally, use a tool like <a href="https://ngrok.com/" target="_blank" rel="noopener noreferrer" class="">ngrok</a> to expose it publicly.</p>
-</li>
-<li class="">
-<p>If you want to run it in the cloud, <a href="https://docs.mcp.com.ai/components/hapi-server/hapi-cli" target="_blank" rel="noopener noreferrer" class="">install it</a> on any VM server or use <a href="https://run.mcp.com.ai/" target="_blank" rel="noopener noreferrer" class="">runMCP</a>.</p>
-</li>
-</ol>
-</li>
-<li class="">
-<p>Go to your ChatGPT settings → Connectors → Create.</p>
-</li>
-<li class="">
-<p>Fire up ChatGPT and test!</p>
-</li>
-</ol>
-<p><img decoding="async" loading="lazy" src="https://rebelion.la/es/assets/images/d69107bf-e34c-4ae7-9b87-9eeb0b79ab1f-3f2f1d400aa36767902842680c8b24ef.png" width="670" height="611" class="img_ev3q"></p>
-<p>From that point on, ChatGPT treats your MCP like a first-class citizen. Ask it:</p>
-<blockquote>
-<p>"What's in my Q1 Revenue Report?"</p>
-</blockquote>
-<p>And instead of hallucinating, ChatGPT <strong>fetches real data from your MCP.</strong> Is RAG from your own systems!</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="demo-time">Demo Time!<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#demo-time" class="hash-link" aria-label="Enlace directo al Demo Time!" title="Enlace directo al Demo Time!" translate="no">​</a></h2>
-<p>Here's a quick demo of how it works in practice:</p>
-<div class="lr-media-embed"><iframe src="https://www.youtube.com/embed/-Vwh37i1ERI" title="Embedded media" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe></div>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-business-impact-why-this-matters">🎯 Business Impact: Why This Matters<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-business-impact-why-this-matters" class="hash-link" aria-label="Enlace directo al 🎯 Business Impact: Why This Matters" title="Enlace directo al 🎯 Business Impact: Why This Matters" translate="no">​</a></h2>
-<p>Let's translate the tech into business value.</p>
-<ul>
-<li class="">
-<p><strong>For executives</strong>: This reduces integration costs and speeds up AI adoption.</p>
-</li>
-<li class="">
-<p><strong>For PMs</strong>: You can now think of MCPs as <strong>product features</strong>. Want ChatGPT to "understand your platform"? Wrap your API in MCP and ship it.</p>
-</li>
-<li class="">
-<p><strong>For engineers</strong>: It's one spec to learn. One server to implement. No more writing custom ChatGPT plugins.</p>
-</li>
-<li class="">
-<p><strong>For designers &amp; end-users</strong>: It means faster, smoother, and more reliable AI-powered workflows. Less "Sorry, I don't know that" and more <strong>real answers from real systems.</strong></p>
-</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-a-guided-path-from-zero-to-mcp">📚 A Guided Path: From Zero to MCP<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-a-guided-path-from-zero-to-mcp" class="hash-link" aria-label="Enlace directo al 📚 A Guided Path: From Zero to MCP" title="Enlace directo al 📚 A Guided Path: From Zero to MCP" translate="no">​</a></h2>
-<p>Here's how you can get started:</p>
-<ol>
-<li class="">
-<p><strong>Read the MCP spec</strong> – <a href="https://platform.openai.com/docs/mcp" target="_blank" rel="noopener noreferrer" class="">OpenAI's MCP docs</a>.</p>
-</li>
-<li class="">
-<p><strong>Use HAPI</strong> – the quickest way to spin up your MCP Server.</p>
-</li>
-<li class="">
-<p><strong>Start small</strong> – customize <code>search</code> and <code>fetch</code>. Test them with ChatGPT.</p>
-</li>
-<li class="">
-<p><strong>Iterate</strong> – add more tools once the basics work.</p>
-</li>
-</ol>
-<p>And remember: these are early days. My expectations are high. The current limitation (only <code>search</code> + <code>fetch</code>) will expand. Soon, you'll be able to expose more advanced tools and workflows. 🤞🏽</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What's Next?<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#whats-next" class="hash-link" aria-label="Enlace directo al What's Next?" title="Enlace directo al What's Next?" translate="no">​</a></h2>
-<p>Here's where I see this going:</p>
-<ul>
-<li class="">
-<p><strong>Beyond</strong> <code>search</code> and <code>fetch</code> – Future versions of ChatGPT will support richer tools. Imagine <code>create</code>, <code>update</code>, <code>delete</code>, or even full workflow orchestration.</p>
-</li>
-<li class="">
-<p><strong>Enterprise MCPs</strong> – Companies will wrap entire business systems in MCP to make them AI-ready.</p>
-</li>
-<li class="">
-<p><strong>Agent-to-Agent Communication</strong> – MCP makes it possible for different AI agents (not just ChatGPT) to talk to the same backend services consistently.</p>
-</li>
-</ul>
-<p>This isn't just a developer milestone—it's a <strong>paradigm shift for AI-powered business workflows.</strong></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="-final-thoughts">✅ Final Thoughts<a href="https://rebelion.la/es/chatgpt-meets-custom-mcps#-final-thoughts" class="hash-link" aria-label="Enlace directo al ✅ Final Thoughts" title="Enlace directo al ✅ Final Thoughts" translate="no">​</a></h2>
-<p>The integration of <strong>ChatGPT with custom MCP Servers</strong> is one of those rare shifts that unlocks a cascade of possibilities.</p>
-<p>Today, it's simple: <strong>implement</strong> <code>search</code> and <code>fetch</code>. Tomorrow, it's expansive: <strong>AI systems deeply integrated with your data, tools, and workflows.</strong></p>
-<p>With <strong>HAPI MCP Servers</strong>, you don't just consume this future—you build it.</p>
-<p>So, the question isn't "<em>Should I try this?</em>" It's: <strong>How fast can you wrap your API in MCP and let ChatGPT talk to it?</strong></p>
-<hr>
-<p>🔗 <strong>Resources</strong></p>
-<ul>
-<li class="">
-<p><a href="https://platform.openai.com/docs/mcp" target="_blank" rel="noopener noreferrer" class="">OpenAI MCP Documentation</a></p>
-</li>
-<li class="">
-<p><a href="https://docs.mcp.com.ai/components/hapi-server" target="_blank" rel="noopener noreferrer" class="">HAPI MCP Servers</a></p>
-</li>
-</ul>]]></content:encoded>
-            <category>ai</category>
-            <category>chatgpt</category>
             <category>mcp</category>
         </item>
     </channel>
