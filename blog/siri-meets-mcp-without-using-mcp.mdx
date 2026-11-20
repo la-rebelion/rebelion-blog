@@ -1,0 +1,77 @@
+---
+title: "Siri Meets MCP, Without Using MCP"
+description: "Apple's Siri AI preview lets apps expose App Intents as tools Siri can call. It isn't MCP, but it raises the same question: should every assistant get its own implementation of your business capabilities?"
+tags:
+  - mcp
+  - ai-agents
+  - api-first
+  - architecture
+authors: [adrianescutia]
+image: /img/blog/siri-meets-mcp-without-using-mcp.jpg
+date: 2026-10-20T00:00:00Z
+---
+
+import Head from '@docusaurus/Head';
+import harnessPoster from '/img/blog/siri-meets-mcp-without-using-mcp.jpg';
+
+<Head>
+  <meta property="og:image" content={harnessPoster} />
+</Head>
+
+"Hey Siri, order me a pad thai."
+
+The food delivery app takes the order, and nobody opens it. No home screen, no menu, no banner ads. Just a card and a Confirm button.
+
+Is that the future of apps, or their disappearance?
+
+{/* truncate */}
+
+## Apple Opens Siri to Every App
+
+The story started with a [LinkedIn post by Rich Holmes](https://www.linkedin.com/posts/rholmes84_apple-has-officially-opened-siri-ai-to-every-share-7523716894936215552-ca4w). According to the post and [Apple's developer news](https://developer.apple.com/news/?id=gdk2umrf), Apple is opening Siri AI to every app. In the iOS 27.3 beta, any app can turn its App Intents into tools that Siri can call.
+
+In plain words: Siri can use your app on someone's behalf.
+
+## How a Request Flows
+
+Take the pad thai order:
+
+1. **Someone asks, and never opens the app.** Siri picks your app, but it can only use the actions you have exposed: find a dish, add it to the basket, quote delivery.
+2. **An app skill guides Siri.** Skills tell Siri which of your actions to run, and in what order, for a single request.
+3. **The answer comes back as your card snippet**, in your app's own design. That card is the only place your brand shows up.
+4. **The user checks the card and taps Confirm.**
+5. **Follow-ups just work.** Once the order becomes a Live Activity, requests like "leave it at the side door" work without naming the app.
+
+## The Fine Print
+
+<MediaEmbed url="https://youtu.be/ecBF4WdEtk4?autoplay=1" />
+
+This is a preview. According to the [Siri AI developer preview documentation](https://developer.apple.com/documentation/appintents/siri-ai-developer-preview), it runs only on Apple Intelligence devices and only for internal TestFlight testers. Siri also has a reputation to repair.
+
+Still, if Apple gets this right, it could open a major new distribution channel for headless use cases on iOS. That raises an uncomfortable question for product teams: would you accept an app that is basically invisible? Judging by how many companies already build for MCP, ChatGPT, and Gemini, the answer looks like yes.
+
+## Sound Familiar?
+
+Actions an assistant can discover. A guide for chaining them. A result rendered back to the user.
+
+That is what the MCP community has been building toward: AI assistants that don't just answer questions, but execute real operations against real systems.
+
+To be clear, Apple's approach isn't MCP. It's App Intents. But it looks like the Apple way of building an MCP, kind of. Same idea, with Apple's walls, Apple's rules, and Apple's polish.
+
+## One Capability, Many Assistants
+
+Here is the bigger question. If Siri, ChatGPT, Claude, and tomorrow's agents all need the same business capabilities, should we build and maintain a separate implementation for each one?
+
+AI made code cheap. Ownership is still expensive. Every copy is more code to secure, test, and keep in sync. The day one copy drifts, your customers get different answers depending on which assistant they asked.
+
+Maybe the future isn't about picking which AI protocol wins. Maybe it is about making your business capabilities reachable through all of them, from one source of truth, without duplicating the systems behind them.
+
+## Where I Land
+
+MCP may not become the universal protocol. But the capability-driven architecture it helped popularize could become universal.
+
+Design your capabilities once, keep your API as the contract, and let each assistant plug in through its own adapter. Siri today. Whatever comes next, tomorrow. Read more about our [API-first](https://mcp.com.ai/tags/api-first) approach in our MCP posts.
+
+Would you let your app go invisible? And how many times are you willing to rebuild the same capability for every assistant?
+
+BeHAPI and GoRebels! ✊🏽
