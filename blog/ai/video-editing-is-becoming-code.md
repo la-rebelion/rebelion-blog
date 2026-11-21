@@ -5,11 +5,11 @@ authors: [adrianescutia]
 date: 2026-11-17T00:00:00Z
 tags: [AI, Coding Agents, Video Production, Content Creation, Automation, Qontent Tube]
 keywords: [AI video production, video as code, AI coding agents, programmable video, reusable video templates, content creation workflow]
-image: /img/blog/video-factory_code-to-story.png
+image: /img/blog/video-editing-is-now-code.png
 ---
 
 import Head from '@docusaurus/Head';
-import harnessPoster from '/img/blog/video-factory_code-to-story.png';
+import harnessPoster from '/img/blog/video-editing-is-now-code.png';
 
 <Head>
   <meta property="og:image" content={harnessPoster} />
